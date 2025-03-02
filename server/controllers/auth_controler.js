@@ -21,8 +21,6 @@ export const auth_user = async (req,res,next) => {
             return res.json({message: 'user found', status: true, data: user})
         }
 
-
-
     }
     catch (error) {
         next(error)

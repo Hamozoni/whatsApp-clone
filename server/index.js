@@ -1,15 +1,17 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+import user_auth_router from "./routes/auth_route";
 
 dotenv.config();
 
-const app = express();
+const server = express();
 
-app.use(cors())  
-app.use(express.json());
+server.use(cors())  
+server.use(express.json());
+server.use('/api/auth',user_auth_router);
 
 
-const server = app.listen(process.env.PORT,()=> {
+server.listen(process.env.PORT,()=> {
     console.log(`server is listening to port ${process.env.PORT}`)
 });
