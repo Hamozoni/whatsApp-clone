@@ -1,15 +1,19 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const cors = require('cors');
-import user_auth_router from "./routes/auth_route";
+// const express = require('express');
+// const dotenv = require('dotenv');
+// const cors = require('cors');
 
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors"
+
+import  find_user  from "./controllers/auth_controller.js";
 dotenv.config();
 
 const server = express();
 
 server.use(cors())  
 server.use(express.json());
-server.use('/api/auth',user_auth_router);
+server.use('/api/auth',find_user);
 
 
 server.listen(process.env.PORT,()=> {

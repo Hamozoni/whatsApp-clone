@@ -1,12 +1,12 @@
-
+// const express = require("express");
 import { Router } from "express";
 
-import { auth_user } from "../controllers/auth_controler";
+import find_user  from "../controllers/auth_controller.js";
 
 
 const router = Router();
 
-router.post("auth_user",auth_user);
+router.post("find_user",find_user);
 
 export default router;
 

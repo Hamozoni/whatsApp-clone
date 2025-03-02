@@ -1,5 +1,6 @@
 "use client"
 import { firebase_auth } from "@/utils/firebase_config";
+import axios from "axios";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 
@@ -13,10 +14,14 @@ export default function Login () {
         try {
             if(email) {
 
+                const data = await axios.post(`${process.env.HOST}/auth/find_user`,{email})
+
+                console.log(data)
+
             }
         }
         catch (error){
-
+            console.log(error)
         }
     };
 
