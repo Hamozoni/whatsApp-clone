@@ -8,11 +8,11 @@ export default function Login () {
     const handle_sigin =  async()=> {
         const provider = new GoogleAuthProvider();
         const {user: {email, displayName: user_name,photoURL: profile_image_url}} = await signInWithPopup(firebase_auth,provider);
-        console.log(user);
+        console.log(user_name,profile_image_url,email);
 
         try {
             if(email) {
-                
+
             }
         }
         catch (error){
