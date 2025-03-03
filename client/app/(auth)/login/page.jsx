@@ -6,6 +6,8 @@ import { FcGoogle } from "react-icons/fc";
 
 export default function Login () {
 
+    console.log(process.env.NEXT_PUBLIC_API_URL)
+
     const handle_sigin =  async()=> {
         const provider = new GoogleAuthProvider();
         const {user: {email, displayName: user_name,photoURL: profile_image_url}} = await signInWithPopup(firebase_auth,provider);
@@ -14,7 +16,7 @@ export default function Login () {
         try {
             if(email) {
 
-                const {data} = await axios.post('http://localhost:4400/api/auth/find_user',{email})
+                const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/find_user`,{email})
 
                 console.log(data)
 
