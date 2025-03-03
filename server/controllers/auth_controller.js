@@ -1,4 +1,5 @@
-import get_prisma_instance from "../utils/prisma_client.js";
+import prisma from "../lib/prisma_client.js";
+
 
 const find_user = async (req,res,next) => {
 
@@ -8,9 +9,7 @@ const find_user = async (req,res,next) => {
         if(!email) {
            return res.json({message: 'email is reqiured', status: false});
         };
-
-        const db = get_prisma_instance();
-        const user = await db.user.findUnique({where : {email}});
+        const user = await prisma.user.findUnique({where : {email}});
 
         if(!user) {
            return  res.json({message: 'user not found', status: false})
