@@ -14,7 +14,7 @@ export default function Login () {
         try {
             if(email) {
 
-                const data = await axios.post(`${process.env.HOST}/auth/find_user`,{email})
+                const {data} = await axios.post('http://localhost:4400/api/auth/find_user',{email})
 
                 console.log(data)
 
