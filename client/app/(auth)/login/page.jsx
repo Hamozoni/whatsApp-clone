@@ -1,7 +1,7 @@
 "use client"
 import { firebase_auth } from "@/utils/firebase_config";
 import axios from "axios";
-import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {EmailAuthProvider, GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
@@ -9,7 +9,7 @@ export default function Login () {
 
     const handle_sigin =  async(provider)=> {
         console.log(provider)
-        const auth_provider = provider === 'google' ? new GoogleAuthProvider() :  new GithubAuthProvider() 
+        const auth_provider = provider === 'google' ? new GoogleAuthProvider() : new GithubAuthProvider();
         await signInWithPopup(firebase_auth,auth_provider)
         .then(async({user})=> {
             console.log(user)
@@ -37,10 +37,10 @@ export default function Login () {
     const SignInBTN = ({provider,Icon})=> {
         return (
             <button 
-                className="flex justify-center items-center gap-2 px-3 py-1 rounded-sm bg-emerald-200 cursor-pointer"
+                className="flex justify-center items-center gap-2 px-3 py-1 rounded-sm bg-emerald-200 cursor-pointer capitalize"
                 onClick={()=> handle_sigin(provider)}
                 >
-                <Icon/>
+                <Icon size={28}/>
                 <span>{`sigin with ${provider}`}</span>
             </button>
         )
