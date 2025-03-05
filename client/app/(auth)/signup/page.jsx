@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Sigin_sith_prvider } from "@/components/auth/signin_with_prodider";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -149,18 +150,7 @@ export default function SignUp() {
             </button>
           </div>
         </form>
-
-        <div className="text-center">
-          <p className="text-sm text-gray-600">
-            Already have an account?{" "}
-            <Link
-              href="/signin"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-            >
-              Sign in here
-            </Link>
-          </p>
-        </div>
+        <Sigin_sith_prvider link_to='signin'/>
       </div>
     </div>
   );
