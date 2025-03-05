@@ -1,7 +1,7 @@
 "use client"
 import { firebase_auth } from "@/utils/firebase_config";
 import axios from "axios";
-import {EmailAuthProvider, GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
