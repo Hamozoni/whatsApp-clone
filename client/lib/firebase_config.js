@@ -3,13 +3,13 @@ import { initializeApp } from "firebase/app";
 import { getAuth }  from "firebase/auth"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCcP3nc-Q3mqwZfz4UD09BilY1rfUr_qzg",
-  authDomain: "watsapp-clone-4428c.firebaseapp.com",
-  projectId: "watsapp-clone-4428c",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
   storageBucket: "watsapp-clone-4428c.firebasestorage.app",
   messagingSenderId: "678825647216",
-  appId: "1:678825647216:web:5f70e47a489ab3048d28b5",
-  measurementId: "G-LYJ70F1YZF"
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
