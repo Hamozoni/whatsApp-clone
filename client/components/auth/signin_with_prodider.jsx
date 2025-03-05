@@ -1,24 +1,27 @@
+"use client"
 import Link from "next/link";
 import {GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { firebase_auth } from "@/lib/firebase_config";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 
 export function Sigin_sith_prvider ({link_to}) {
 
+    const [isLoading,setIsLoading] = useState(false);
+
     const router = useRouter()
 
     const handle_sigin = async (provider)=> {
-
-
-        const auth_provider = provider === 'GitHub' ? new GithubAuthProvider() : new GoogleAuthProvider();
+        setIsLoading(true)
+      const auth_provider = provider === 'GitHub' ? new GithubAuthProvider() : new GoogleAuthProvider();
        try {
           await signInWithPopup(firebase_auth,auth_provider)
           .then(async({user})=> {
             console.log(user);
-
+            setIsLoading(false);
             router.push('/');
 
           })
@@ -46,6 +49,7 @@ export function Sigin_sith_prvider ({link_to}) {
           <div className="mt-6 grid grid-cols-2 gap-3">
             <div>
               <button
+                disabled={isLoading}
                 onClick={()=> handle_sigin('Google')}
                 className="w-full cursor-pointer flex justify-center items-center gap-3 py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
               >
@@ -56,6 +60,7 @@ export function Sigin_sith_prvider ({link_to}) {
 
             <div>
               <button
+                 disabled={isLoading}
                  onClick={()=> handle_sigin('GitHub')}
                 className="w-full cursor-pointer flex justify-center items-center gap-3 py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
               >
