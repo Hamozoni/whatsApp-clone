@@ -1,6 +1,8 @@
 import "./globals.css";
 
 import {Auth_context_provider }from '@/components/auth/context';
+export const dynamic = 'force-dynamic';
+
 
 export const metadata = {
   title: "whatsApp home",
