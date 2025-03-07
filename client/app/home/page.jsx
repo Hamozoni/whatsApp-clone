@@ -1,40 +1,4 @@
-// 'use client'
-// import { Auth_context } from '@/components/auth/context';
-// import {firebase_auth} from '@/lib/firebase_config'
-// import { signOut } from 'firebase/auth';
-// import { redirect } from 'next/navigation';
-// import { useContext, useEffect } from 'react';
-
-// export default function Home() {
-
-
-//   const { user,isLoading } = useContext(Auth_context);
-
-
-//   useEffect(()=> {
-//     if(!user && !isLoading) {
-//       redirect('/signin');
-//     }
-//   },[user,isLoading]);
-
-//   if(isLoading) {
-//     return (
-//       <div className="">
-//         loading a user
-//       </div>
-//     )
-//   }
-
-
-//   return (
-//      <div className="">
-//        <h1>home</h1>
-//        <button
-//         onClick={()=> signOut(firebase_auth)}
-//        >sign out</button>
-//     </div>
-//   );
-// }
+// app/page.js
 'use client';
 
 import { useState } from 'react';
@@ -76,9 +40,9 @@ export default function WhatsAppHome() {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-[#f0f2f5]">
 
-      <div className="w-1/3 border-r">
+      <div className="w-1/3 border-r bg-white">
         <div className="p-4 bg-[#f0f2f5] border-b flex items-center justify-between">
           <div className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden">
             <img src="/avatars/user.jpg" alt="Profile" className="w-full h-full object-cover" />
@@ -129,7 +93,7 @@ export default function WhatsAppHome() {
 
       <div className="flex-1 flex flex-col">
 
-        <div className="p-4 shadow-sm flex items-center">
+        <div className="p-4 bg-[#f0f2f5] border-b flex items-center">
           <div className="w-10 h-10 rounded-full overflow-hidden">
             <img src="/avatars/1.jpg" alt="Profile" className="w-full h-full object-cover" />
           </div>
@@ -146,7 +110,7 @@ export default function WhatsAppHome() {
             <RxDotsVertical className="h-6 w-6 text-gray-600 cursor-pointer hover:text-gray-800" />
           </div>
         </div>
-        <div className="flex-1 overflow-y-auto p-4 bg-opacity-60 ">
+        <div className="flex-1 overflow-y-auto p-4 bg-[#efeae2] bg-opacity-60 bg-chat-pattern">
           <div className="space-y-2">
             {messageList.map(message => (
               <div
@@ -178,7 +142,7 @@ export default function WhatsAppHome() {
           </div>
         </div>
 
-        <div className="p-4 border-t border-b-amber-50">
+        <div className="p-4 bg-[#f0f2f5] border-t">
           <div className="flex items-center space-x-2">
             <HiOutlineEmojiHappy className="h-6 w-6 text-[#54656f] cursor-pointer hover:text-[#00a884]" />
             <HiMiniPaperClip className="h-6 w-6 text-[#54656f] cursor-pointer hover:text-[#00a884] rotate-90" />
