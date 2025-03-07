@@ -1,17 +1,27 @@
 "use client"
-import { createContext } from "react";
+import { firebase_auth } from "@/lib/firebase_config";
+import { createContext, useEffect, useState } from "react";
 
-const Auth_context = createContext();
+export const Auth_context = createContext();
 
 
-const Auth_context_provider = ()=> {
+export const  Auth_context_provider =  ({children})=> {
+
+    const [user,setUser] = useState(null);
+
+    useEffect(()=> {
+        setUser(firebase_auth.currentUser)
+        firebase_auth.onAuthStateChanged((user)=> {
+            setUser(user);
+            })
+    },[]);
 
     return (
-        <Auth_context.Provider>
-
+        <Auth_context.Provider value={{user}}>
+            {children}
         </Auth_context.Provider>
     )
 };
 
-export default Auth_context_provider;
+
 

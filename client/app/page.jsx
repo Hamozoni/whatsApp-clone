@@ -1,25 +1,29 @@
 'use client'
+import { Auth_context } from '@/components/auth/context';
 import {firebase_auth} from '@/lib/firebase_config'
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 
 export default function Home() {
 
-const router = useRouter()
+
+  const { user} = useContext(Auth_context);
+
+const router = useRouter();
 
 useEffect(()=> {
-  firebase_auth.onAuthStateChanged((user)=>{
 
-    console.log(user)
-    if(!user) {
-      router.push('/signin');
-    }
-  })
+  
+  const user = firebase_auth.currentUser
+  if(!user) {
+    router.push('/signin');
+  }
+  console.log(user);
 },[]);
 
   return (
-    <div className="">
+     <div className="">
        <h1>home</h1>
        <button
         onClick={()=> signOut(firebase_auth)}
