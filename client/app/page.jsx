@@ -26,12 +26,12 @@ export default function Home() {
       </div>
     )
   }
-
+  // bg-[#222e35]
 
   return (
     <main>
-        <div className="flex">
-            <Sidebar />
+        <div className="flex h-screen max-h-screen">
+            <Sidebar user={user} />
             <Chat_window />
         </div>
     </main>

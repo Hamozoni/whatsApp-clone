@@ -21,10 +21,10 @@ const Chat_list = ()=> {
     const [newMessage, setNewMessage] = useState('');
     const [messageList, setMessageList] = useState(messages);
     return (
-        <section>
-            <header>
-                <div className="">
-                    <h3>Chats</h3>
+        <section className="bg-[#111b21] text-[#f7f8fa]">
+            <header className="p-3">
+                <div className="flex items-center justify-between">
+                    <h3 className="text-xl font-bold">Chats</h3>
                     <div className="">
                         <div className="">
                             <RiChatNewLine/>
