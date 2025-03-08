@@ -21,17 +21,17 @@ const Chat_list = ()=> {
     const [newMessage, setNewMessage] = useState('');
     const [messageList, setMessageList] = useState(messages);
     return (
-        <section className="bg-[#111b21] text-[#f7f8fa]">
+        <section className="bg-[#111b21] text-[#f7f8fa] w-[337px]">
             <header className="p-3">
                 <div className="flex items-center justify-between">
                     <h3 className="text-xl font-bold">Chats</h3>
-                    <div className="">
-                        <div className="">
-                            <RiChatNewLine/>
+                    <div className="flex items-center">
+                        <div className="flex justify-center items-center px-3 py-2 rounded-md hover:bg-[#394b55] cursor-pointer">
+                            <RiChatNewLine size={18} className='text-[#f7f8fa]'/>
                         </div>
-                        <div className="">
-                            <PiDotsThreeOutlineVerticalFill />
-                        </div>
+                        <div className="flex justify-center items-center px-3 py-2 rounded-md hover:bg-[#394b55] cursor-pointer">
+                            <PiDotsThreeOutlineVerticalFill size={18} className='text-[#f7f8fa]'/>
+                        </div>    
                     </div>
                 </div>
                 <div className="">

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Chat_window = () => {
   return (
-    <div className="flex-1 h-screen flex flex-col bg-white">
+    <div className="flex-1 h-screen max-h-full flex flex-col bg-white">
       {/* Header */}
       <div className="p-4 bg-[#128C7E] text-white flex items-center justify-between">
         <div className="flex items-center">

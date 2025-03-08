@@ -30,7 +30,7 @@ export default function Home() {
 
   return (
     <main>
-        <div className="flex h-screen max-h-screen">
+        <div className="flex h-screen max-h-screen w-screen">
             <Sidebar user={user} />
             <Chat_window />
         </div>
