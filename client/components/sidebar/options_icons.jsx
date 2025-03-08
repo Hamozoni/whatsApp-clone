@@ -13,7 +13,7 @@ const options = [
     {Icon: MdOutlineGroups2,text: 'groups'},
 ]
 
-export default function Options_icons ({user_photo}) {
+export default function Options_icons ({user_photo,active_option,set_active_option}) {
 
     const Option = ({Icon,text})=> {
         return (
@@ -27,7 +27,7 @@ export default function Options_icons ({user_photo}) {
             <section className="">
                 {
                     options?.map(({Icon,text})=> (
-                        <Option Icon={Icon} text={text} />
+                        <Option Icon={Icon} text={text} key={text} />
                     ))
                 }
             </section >
