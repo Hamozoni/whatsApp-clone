@@ -21,7 +21,7 @@ const Chat_list = ()=> {
     const [newMessage, setNewMessage] = useState('');
     const [messageList, setMessageList] = useState(messages);
     return (
-        <section className="bg-[#111b21] text-[#f7f8fa] w-[337px]">
+        <section className="bg-[#111b21] text-[#f7f8fa] w-[337px] border-x-1 border-[#394b55]">
             <header className="p-3">
                 <div className="flex items-center justify-between mb-3">
                     <h3 className="text-xl font-bold">Chats</h3>
@@ -51,8 +51,8 @@ const Chat_list = ()=> {
                         <div
                             key={chat.id}
                             onClick={() => setActiveChat(chat.id)}
-                            className={`flex items-center p-4 border-b cursor-pointer hover:bg-[#f5f6f6] ${
-                            activeChat === chat.id ? 'bg-[#f0f2f5]' : '' }`}
+                            className={`flex items-center cursor-pointer px-3 hover:bg-[#31414b] ${
+                            activeChat === chat.id ? 'bg-[#222e35]' : '' }`}
                             >
                             <div className="relative">
                                 <div className="w-12 h-12 rounded-full overflow-hidden">
@@ -60,13 +60,13 @@ const Chat_list = ()=> {
                                 </div>
                                 {
                                     chat.online && (
-                                        <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+                                        <div className="absolute bottom-0 right-0 w-3 h-3 bg-[#00a884] rounded-full border-2 border-white"></div>
                                     )
                                 }
                             </div>
-                            <div className="ml-4 flex-1 min-w-0">
+                            <div className="ml-4 flex-1 py-3 min-w-0 border-b-1 border-[#222e35] text-[#f7f8fa]">
                                 <div className="flex justify-between items-center">
-                                    <h2 className="font-semibold text-[#111b21] truncate">{chat.name}</h2>
+                                    <h2 className="font-semibold truncate">{chat.name}</h2>
                                     <span className="text-xs text-[#667781]">{chat.timestamp}</span>
                                 </div>
                                 <div className="flex justify-between items-center">

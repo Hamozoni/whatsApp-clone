@@ -23,7 +23,7 @@ export default function Options_icons ({user_photo,active_option,set_active_opti
         )
     }
     return (
-        <section className=" flex flex-col justify-between items-center p-2 bg-[#222e35] border-r border-[#394b55]" >
+        <section className=" flex flex-col gap-1 justify-between items-center p-2 bg-[#222e35]" >
             <section className="">
                 {
                     options?.map(({Icon,text})=> (
