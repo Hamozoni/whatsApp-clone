@@ -23,22 +23,26 @@ const Chat_list = ()=> {
     return (
         <section className="bg-[#111b21] text-[#f7f8fa] w-[337px]">
             <header className="p-3">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mb-3">
                     <h3 className="text-xl font-bold">Chats</h3>
                     <div className="flex items-center">
-                        <div className="flex justify-center items-center px-3 py-2 rounded-md hover:bg-[#394b55] cursor-pointer">
+                        <div className="flex justify-center items-center p-2 rounded-md hover:bg-[#394b55] cursor-pointer">
                             <RiChatNewLine size={18} className='text-[#f7f8fa]'/>
                         </div>
-                        <div className="flex justify-center items-center px-3 py-2 rounded-md hover:bg-[#394b55] cursor-pointer">
+                        <div className="flex justify-center items-center p-2 rounded-md hover:bg-[#394b55] cursor-pointer">
                             <PiDotsThreeOutlineVerticalFill size={18} className='text-[#f7f8fa]'/>
                         </div>    
                     </div>
                 </div>
-                <div className="">
-                    <div className="">
-                        <BiSearchAlt2 />
-                    </div>
-                    <input type="text" placeholder="search" />
+                <div className="flex items-center bg-[#222e35] p-2 rounded-md">
+                    <button className="cursor-pointer px-2">
+                        <BiSearchAlt2 size={20} />
+                    </button>
+                    <input 
+                        type="text" 
+                        placeholder="search"
+                        className="w-full focus:outline-0"
+                         />
                 </div>
             </header>
             <div className="">
