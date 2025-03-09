@@ -7,6 +7,8 @@ export const dynamic = 'force-dynamic';
 export const metadata = {
   title: "whatsApp home",
   description: "WhatsApp home page",
+  favicon: '/favicon.ico'
+
 };
 
 export default function RootLayout({ children }) {

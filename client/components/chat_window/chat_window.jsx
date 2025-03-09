@@ -1,4 +1,4 @@
-"use client"
+
 import React, { useState } from 'react';
 import { HiOutlineEmojiHappy,HiOutlineDotsVertical } from "react-icons/hi";
 import { AiOutlinePaperClip } from "react-icons/ai";
@@ -54,7 +54,7 @@ const Chat_window = () => {
                 <div
                   className={`max-w-[65%] rounded-lg p-3 relative ${
                     message.sender === 'me'
-                      ? 'bg-[#00a884]  ml-12'
+                      ? 'bg-emerald-800  ml-12'
                       : 'bg-[#222e35] mr-12'
                   }`}
                   style={{
