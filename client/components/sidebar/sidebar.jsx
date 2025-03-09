@@ -39,13 +39,13 @@ const Sidebar = ({user}) => {
   // };
 
   return (
-    <section className='flex w-[400px] h-screen max-h-full'>
+    <section className='flex w-[450px] h-screen max-h-full'>
        <Options_icons 
          user_photo={user?.photoURL}
           active_option={active_option}
           set_active_option={set_active_option}
         />
-        <div className="">
+        <div className="grow">
           <Chat_list />
         </div>
 
