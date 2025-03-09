@@ -42,7 +42,7 @@ export const Message_input = ()=> {
 
                         <button
                             onClick={handleSendMessage}
-                            className="bg-[#00a884] px-2 py-3 rounded-md text-white hover:bg-[#375f56] transition-colors"
+                            className="px-2 py-3 rounded-md text-white transition-colors"
                         >
                            {
                               newMessage?.length > 0 ? 

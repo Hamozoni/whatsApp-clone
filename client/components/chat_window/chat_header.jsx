@@ -1,5 +1,6 @@
 import { GoSearch } from "react-icons/go"
 import { HiOutlineDotsVertical } from "react-icons/hi"
+import { IoCallOutline,IoVideocamOutline  } from "react-icons/io5";
 
 
 export const Chat_header = ()=> {
@@ -17,9 +18,20 @@ export const Chat_header = ()=> {
                 {true ? 'online' : 'offline'}
                 </p>
             </div>
-            <div className="flex space-x-4">
-                <GoSearch className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#afb3b9] " />
-                <HiOutlineDotsVertical className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#bcc0c7]" />
+            <div className="flex gap-5 items-center">
+                <div className="flex items-center bg-[#394b55] rounded-md">
+                    <button className="flex justify-center items-center p-2 rounded-md hover:bg-[#00a884] cursor-pointer">
+                        <IoCallOutline size={18} className='text-[#f7f8fa]'/>
+                    </button>
+                    <div className="w-[1px] min-w[1px] h-[20px] min-h-[20px] bg-[#ffffff]">  </div>
+                    <button className="flex justify-center items-center p-2 rounded-md hover:bg-[#00a884] cursor-pointer">
+                        <IoVideocamOutline size={18} className='text-[#f7f8fa]'/>
+                    </button>
+                </div>
+                <div className="flex items-center gap-2">
+                    <GoSearch className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#afb3b9] " />
+                    <HiOutlineDotsVertical className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#bcc0c7]" />
+                </div>
             </div>
         </div>
     )
