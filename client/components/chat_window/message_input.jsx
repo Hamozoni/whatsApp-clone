@@ -1,35 +1,61 @@
+"use client";
+import { useState } from "react";
 import { AiOutlinePaperClip } from "react-icons/ai"
 import { HiOutlineEmojiHappy } from "react-icons/hi"
 import { SlMicrophone } from "react-icons/sl"
+import { LuSendHorizontal } from "react-icons/lu";
 
 export const Message_input = ()=> {
+        const [newMessage, setNewMessage] = useState('');
+        const [messageList, setMessageList] = useState([]);
+    
+        const handleSendMessage = () => {
+          if (newMessage.trim()) {
+            const newMsg = {
+              id: messageList.length + 1,
+              text: newMessage,
+              sender: 'me',
+              timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              status: 'sent'
+            };
+            setMessageList([...messageList, newMsg]);
+            setNewMessage('');
+          }
+        };
     return (
-        <div className="p-4 bg-[#f0f2f5] border-t">
-        <div className="flex items-center space-x-2">
-          <HiOutlineEmojiHappy className="h-6 w-6 text-[#54656f] cursor-pointer hover:text-[#00a884]" />
-          <AiOutlinePaperClip className="h-6 w-6 text-[#54656f] cursor-pointer hover:text-[#00a884] rotate-90" />
-          
-          <div className="flex-1 relative">
-            <input
-              type="text"
-            //   value={newMessage}
-            //   onChange={(e) => setNewMessage(e.target.value)}
-            //   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-              placeholder="Type a message"
-              className="w-full pl-4 pr-12 py-2 rounded-lg bg-white border focus:outline-none focus:border-[#00a884] text-[#111b21]"
-            />
-            <SlMicrophone className="h-6 w-6 text-[#54656f] absolute right-2 top-2 cursor-pointer hover:text-[#00a884]" />
-          </div>
+        <div className="p-3 bg-[#222e35]">
+            <div className="flex items-center gap-2">
+                <AiOutlinePaperClip className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#00a884] rotate-90" />
+                
+                <div className="flex items-center rounded-md  flex-1 relative bg-[#111b21] px-3 py-2">
+                    <HiOutlineEmojiHappy className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#00a884]" />
+                    <input
+                        type="text"
+                          value={newMessage}
+                          onChange={(e) => setNewMessage(e.target.value)}
+                          onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                        placeholder="Type a message"
+                        className="w-full focus:outline-none text-[#f7f8fa] px-2 py-1"
+                    />
+                </div>
+                <div className="">
 
-          <button
-            // onClick={handleSendMessage}
-            className="bg-[#00a884] p-2 rounded-full text-white hover:bg-[#008f76] transition-colors"
-          >
-            <svg viewBox="0 0 24 24" width="24" height="24" className="fill-current">
-              <path d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z"/>
-            </svg>
-          </button>
+                        <button
+                            onClick={handleSendMessage}
+                            className="bg-[#00a884] px-2 py-3 rounded-md text-white hover:bg-[#375f56] transition-colors"
+                        >
+                           {
+                              newMessage?.length > 0 ? 
+                              <LuSendHorizontal className="h-6 w-6 text-[#f7f8fa] cursor-pointer" />
+                              :
+                              <SlMicrophone className="h-6 w-6 text-[#f7f8fa] cursor-pointer" />
+                            }
+                        </button>
+                
+                    
+                </div>
+
+            </div>
         </div>
-      </div>
     )
 }

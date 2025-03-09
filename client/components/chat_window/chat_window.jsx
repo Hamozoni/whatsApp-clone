@@ -42,27 +42,11 @@ const Chat_window = () => {
 
   return (
     <div className="flex-1 h-screen max-h-full flex flex-col text-[#f7f8fa]">
-      {/* Header */}
-      {/* <header className="p-3 bg-[#222e35] text-white flex items-center justify-between">
-        <div className="flex items-center">
-          <img
-            src="https://i.pravatar.cc/150?img=1"
-            alt="Profile"
-            className="w-10 h-10 rounded-full object-cover mr-3"
-          />
-          <div>
-            <div className="font-semibold">John Doe</div>
-            <div className="text-sm">Last seen recently</div>
-          </div>
-        </div>
-        <div className="text-xl cursor-pointer">⋮</div>
-      </header> */}
-
       <Chat_header />
-
-      <div className="flex-1 overflow-y-auto p-4 bg-[#efeae2] bg-opacity-60 bg-chat-pattern">
-          <div className="space-y-2">
-            {messageList.map(message => (
+      <div className="flex-1 overflow-y-auto p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern">
+          <div className="space-y-2 text-[#f7f8fa]">
+            {
+            messageList.map(message => (
               <div
                 key={message.id}
                 className={`flex ${message.sender === 'me' ? 'justify-end' : 'justify-start'}`}
@@ -70,18 +54,20 @@ const Chat_window = () => {
                 <div
                   className={`max-w-[65%] rounded-lg p-3 relative ${
                     message.sender === 'me'
-                      ? 'bg-[#d9fdd3] ml-12'
-                      : 'bg-white mr-12'
+                      ? 'bg-[#00a884]  ml-12'
+                      : 'bg-[#222e35] mr-12'
                   }`}
                   style={{
                     boxShadow: '0 1px 0.5px rgba(11,20,26,.13)'
                   }}
                 >
-                  <p className="text-[#111b21] text-sm">{message.text}</p>
+                  <p className="text-sm">{message.text}</p>
                   <div className="flex items-center justify-end space-x-1 mt-1">
-                    <span className="text-[10px] text-[#667781]">{message.timestamp}</span>
+                    <span className="text-[10px] ">
+                        {message.timestamp}
+                    </span>
                     {message.sender === 'me' && (
-                      <span className="text-[10px] text-[#667781]">
+                      <span className="text-[10px]">
                         {message.status === 'read' ? '✓✓' : message.status === 'delivered' ? '✓' : '◷'}
                       </span>
                     )}
