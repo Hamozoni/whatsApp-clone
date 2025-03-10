@@ -20,7 +20,7 @@ export default function Options_icons ({user_photo,active_option,set_active_opti
             <button 
                 onClick={()=> set_active_option(text)} 
                 className={`relative flex justify-center items-center px-3 py-2 rounded-md hover:bg-[#394b55] cursor-pointer ${active_option === text && 'bg-[#394b55]'}`}>
-                <Icon size={20} className='text-[#f7f8fa]'/>
+                <Icon size={20} className={`${active_option === text ? 'text-emerald-400' :'text-[#f7f8fa]'}`}/>
                 {
                     active_option === text && <div className="absolute top-[6px] left-[-2px] w-[4px] h-[26px] bg-emerald-400 rounded-full"></div>
                 }
