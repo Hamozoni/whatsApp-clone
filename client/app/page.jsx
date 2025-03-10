@@ -1,6 +1,7 @@
 'use client'
 import { Auth_context } from '@/components/auth/context';
 import Chat_window from '@/components/chat_window/chat_window';
+import { Loading } from '@/components/loading';
 import Sidebar from '@/components/sidebar/sidebar';
 import {firebase_auth} from '@/lib/firebase_config'
 import { signOut } from 'firebase/auth';
@@ -21,12 +22,9 @@ export default function Home() {
 
   if(isLoading) {
     return (
-      <div className="">
-        loading a user
-      </div>
+      <Loading />
     )
   }
-  // bg-[#222e35]
 
   return (
     <main>
