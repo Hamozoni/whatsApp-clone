@@ -1,3 +1,7 @@
+import {User }from "../models/user.js";
+
+
+
 // import User from "../models/user";
 const find_user = async (req,res,next) => {
 
@@ -7,10 +11,12 @@ const find_user = async (req,res,next) => {
         if(!email) {
            return res.json({message: 'email is reqiured', status: false});
         };
-        const user = ''
+        // const user = await User.findOne({email});
 
-        if(!user) {
-           return  res.json({message: 'user not found', status: false})
+        if('') {
+        //   user =  await User.create(req.body)
+
+           return   res.json({message: 'user created', status: true, data: user})
         }else {
             return res.json({message: 'user found', status: true, data: user})
         };

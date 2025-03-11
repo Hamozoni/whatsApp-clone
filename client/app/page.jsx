@@ -3,8 +3,6 @@ import { Auth_context } from '@/components/auth/context';
 import Chat_window from '@/components/chat_window/chat_window';
 import { Loading } from '@/components/loading';
 import Sidebar from '@/components/sidebar/sidebar';
-import {firebase_auth} from '@/lib/firebase_config'
-import { signOut } from 'firebase/auth';
 import { redirect } from 'next/navigation';
 import { useContext, useEffect } from 'react';
 

@@ -29,28 +29,28 @@ export default function Options_icons ({user_photo,active_option,set_active_opti
         )
     }
     return (
-        <section className=" flex flex-col justify-between items-center px-2 py-4  bg-[#222e35]" >
-            <nav className="flex flex-col gap-2">
+        <nav className=" flex flex-col justify-between items-center px-2 py-4  bg-[#222e35]" >
+            <section className="flex flex-col gap-2">
                 {
                     options?.map(({Icon,text})=> (
                         <Option Icon={Icon} text={text} key={text} />
                     ))
                 }
-            </nav >
+            </section >
             <section>
 
-                <nav className="mb-5 flex flex-col gap-2">
+                <section className="mb-5 flex flex-col gap-2">
                     <Option Icon={IoIosStarOutline} text='starred messages' />
                     <Option Icon={BsArchive} text='archived chats' />
-                </nav>
+                </section>
                 <hr className="text-[#394b55]" />
-                <nav className="mt-5">
+                <section className="mt-5">
                     <Option Icon={IoSettingsOutline} text='settings' />
                     <div className="cursor-pointer mt-3">
                         <Image src={user_photo || 'https://via.placeholder.com/150'} width={35} height={35} alt="user photo" className="rounded-full" />
                     </div>
-                </nav>
+                </section>
             </section>
-        </section>
+        </nav>
     )
 }

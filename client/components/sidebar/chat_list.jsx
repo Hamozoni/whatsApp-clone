@@ -23,7 +23,7 @@ const Chat_list = ()=> {
     const [activeChat, setActiveChat] = useState(1);
 
     return (
-        <section className="bg-[#111b21] text-[#f7f8fa] border-x-1 border-[#394b55] h-screen max-h-screen">
+        <div className="">
             <header className="p-3">
                 <div className="flex items-center justify-between mb-3">
                     <h3 className="text-xl font-bold">Chats</h3>
@@ -59,7 +59,7 @@ const Chat_list = ()=> {
                     ))}
                 </div>
             </div>
-        </section>
+        </div>
     )
 };
 

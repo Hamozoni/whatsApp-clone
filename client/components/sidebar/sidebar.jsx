@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import Options_icons from './options_icons';
 import Chat_list from './chat_list';
+import { Setting } from './setting';
 
 
 const chats = [
@@ -45,14 +46,15 @@ const Sidebar = ({user}) => {
           active_option={active_option}
           set_active_option={set_active_option}
         />
-        <div className="grow">
-          <Chat_list />
-        </div>
-
-
-    </section>
-
-    
+        <section className="grow bg-[#111b21] text-[#f7f8fa] border-x-1 border-[#394b55] h-screen max-h-screen">
+          {
+            active_option === 'chats' ? 
+            <Chat_list /> :
+            active_option === 'settings' ? 
+            <Setting /> : ''
+          }
+        </section>
+    </section> 
   );
 };
 
