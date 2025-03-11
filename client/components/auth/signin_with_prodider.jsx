@@ -4,9 +4,8 @@ import {GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { firebase_auth } from "@/lib/firebase_config";
-import { useRouter } from "next/navigation";
+import {  useRouter } from "next/navigation";
 import { useState } from "react";
-import axios from "axios";
 
 
 export function Sigin_sith_prvider ({link_to}) {
@@ -14,31 +13,20 @@ export function Sigin_sith_prvider ({link_to}) {
     const [isLoading,setIsLoading] = useState(false);
 
     const router = useRouter()
-
     const handle_sigin = async (provider)=> {
         setIsLoading(true)
       const auth_provider = provider === 'GitHub' ? new GithubAuthProvider() : new GoogleAuthProvider();
-       try {
-          await signInWithPopup(firebase_auth,auth_provider)
-          .then(async({user})=> {
+         await signInWithPopup(firebase_auth,auth_provider)
+         .then(({user})=> {
+          console.log(user)
+          router.push('/onboarding');
 
-            const {displayName:name,email,photoURL:profile_picture} = user
-
-            try {
-              const {data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/find_user`,{name,email,profile_picture});
-              console.log(data);
-            }
-            catch (error) {
-
-            }
-            console.log(user);
-            setIsLoading(false);
-            router.push('/');
-
-          })
-       } catch(err) {
-        console.log(err)
-       }
+         })
+         .catch((error)=>{
+          router.push('/error')
+          console.log(error)
+         })
+      
 
     }
 

@@ -9,4 +9,6 @@ const USER_SCHEMA = new mongoose.Schema({
     contacts: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
 },{timestamps: true});
 
-export const User = mongoose.model('User',USER_SCHEMA);
+ const User = mongoose.model('User',USER_SCHEMA);
+
+ export default User;

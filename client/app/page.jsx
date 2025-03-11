@@ -9,16 +9,16 @@ import { useContext, useEffect } from 'react';
 export default function Home() {
 
 
-  const { user,isLoading } = useContext(Auth_context);
+  const { user,is_loading } = useContext(Auth_context);
 
 
   useEffect(()=> {
-    if(!user && !isLoading) {
+    if(!user && !is_loading) {
       redirect('/signin');
     }
-  },[user,isLoading]);
+  },[user,is_loading]);
 
-  if(isLoading) {
+  if(is_loading) {
     return (
       <Loading />
     )

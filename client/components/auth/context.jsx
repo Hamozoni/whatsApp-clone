@@ -8,17 +8,19 @@ export const Auth_context = createContext();
 
 export const  Auth_context_provider =  ({children})=> {
 
-    const [user,setUser] = useState(null);
-    const [isLoading,setIsLoading] = useState(true);
+    const [user,set_user] = useState(null);
+    const [is_loading,set_is_loading] = useState(true);
+    
     useEffect(() => {
-        setIsLoading(true);
+
+      set_is_loading(true);
         const initializeAuth = async () => {
 
           // Set explicit persistence
           await setPersistence(firebase_auth, browserLocalPersistence);
           const unsubscribe = firebase_auth.onAuthStateChanged(user => {
-            setUser(user);
-            setIsLoading(false);
+            set_user(user);
+            set_is_loading(false);
           });
     
           return unsubscribe;
@@ -27,10 +29,8 @@ export const  Auth_context_provider =  ({children})=> {
         initializeAuth();
       }, []);
 
-      console.log(user)
-
     return (
-        <Auth_context.Provider value={{user,isLoading}}>
+        <Auth_context.Provider value={{user,is_loading}}>
             {children}
         </Auth_context.Provider>
     )

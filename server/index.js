@@ -11,7 +11,11 @@ connect_db()
 
 const server = express();
 
-server.use(cors())  
+server.use(cors({
+    origin: "http://localhost:3000", // Replace with your Next.js app's origin
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true, // Enable if using cookies/auth
+  }))  
 server.use(express.json());
 
 server.use('/api/auth',auth_route);
