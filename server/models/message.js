@@ -6,7 +6,7 @@ const MESSAGE_SCHEMA = new mongoose.Schema({
     text: { type: String },
     media: { type: String },
     type: {type: String,enum: ['TEXT', 'AUDIO', 'PHOTO','VIDEO','DOCUMENT'], 
-        default: 'SENT'},
+        default: 'TEXT'},
     status: { 
         type: String, 
         enum: ['SENT', 'DELIVERED', 'READ'], 
