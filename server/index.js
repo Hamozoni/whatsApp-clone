@@ -1,14 +1,13 @@
-// const express = require('express');
-// const dotenv = require('dotenv');
-// const cors = require('cors');
-
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors"
 
 import  auth_route  from "./routes/auth_route.js";
+import connect_db from "./lib/database.js";
 
 dotenv.config();
+
+connect_db()
 
 const server = express();
 
