@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 const USER_SCHEMA = new mongoose.Schema({
     name: {type: String,require: true},
     email: {type: String,require: true},
+    phone: {type: String,require: false},
+    about: {type: String,require: false},
     is_online: {type: Boolean, default: false },
     profile_picture: {type: String,require: false},
     chats: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Chat' }],

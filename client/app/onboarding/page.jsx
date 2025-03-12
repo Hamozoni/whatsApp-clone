@@ -1,8 +1,10 @@
 "use client";
+import 'react-international-phone/style.css';
 import { Auth_context } from "@/components/auth/context";
 import { Loading } from "@/components/loading";
 import { useContext, useEffect } from "react";
 import { useState } from 'react';
+import { PhoneInput } from "react-international-phone";
 
 export default function OnboardingForm() {
 
@@ -11,8 +13,9 @@ export default function OnboardingForm() {
     
     const [avatarPreview, setAvatarPreview] = useState('');
     const [name, set_name] = useState('');
+    const [phone, set_phone] = useState('');
     const [email, set_email] = useState('');
-    const [status, setStatus] = useState('active');
+    const [about, set_about] = useState('');
     
     
     useEffect(()=> {
@@ -85,6 +88,7 @@ export default function OnboardingForm() {
               id="name"
               required
               value={name}
+              onChange={(e)=> set_name(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
               placeholder="John Doe"
             />
@@ -99,6 +103,7 @@ export default function OnboardingForm() {
               type="email"
               id="email"
               value={email}
+              onChange={e=> set_email(e.target.value)}
               required
               disabled
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
@@ -107,36 +112,36 @@ export default function OnboardingForm() {
           </div>
 
           {/* Phone Number */}
+          <div className="">
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                  Phone Number
+              </label>
+              
+              <div className="">
+                  <PhoneInput
+                      defaultCountry="sa"
+                      value={phone}
+                      onChange={value=> set_phone(value)}
+                      inputClassName="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  />
+              </div>
+          </div>
+
+          {/* about */}
           <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-              Phone Number
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+               About
             </label>
             <input
-              type="tel"
-              id="phone"
-              required
+              type="text"
+              id="about"
+              required={false}
+              value={about}
+              onChange={(e)=> set_about(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
-              placeholder="(123) 456-7890"
+              placeholder="about you..   (optional)"
             />
           </div>
-
-          {/* Status */}
-          <div>
-            <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
-              Status
-            </label>
-            <select
-              id="status"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
-            >
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-              <option value="pending">Pending</option>
-            </select>
-          </div>
-
           {/* Submit Button */}
           <button
             type="submit"
