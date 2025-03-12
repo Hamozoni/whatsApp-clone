@@ -13,17 +13,31 @@ export default function SignIn() {
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-blue-50 py-12 px-4 sm:px-6 lg:px-8 ">
-      <div className="max-w-md w-full space-y-8 shadow p-3">
+    <div className="min-h-screen flex items-center justify-center bg-[#111b21] text-[#f7f8fa] p-3">
+      <div className="max-w-md w-full space-y-8 shadow-lg shadow-[#29343b77] p-3 bg-[#131e25] h-fit rounded-md md:p-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-6 text-center text-3xl font-extrabold">
             Sign in to your account
           </h2>
         </div>
-        <form className="mt-8 space-y-4" >
-          <div className="">
-            <Input label='Email address' type='email' value={email} set_value={set_email} placeholder="Email address" required={true}/>
-            <Input label='Password' type='password' value={password} set_value={set_password} placeholder="Password" required={true}/>
+        <form className="mt-8 space-y-5" >
+          <div className="flex flex-col gap-4">
+            <Input 
+                label='Email address' 
+                type='email' 
+                value={email} 
+                set_value={set_email} 
+                placeholder="Email address" 
+                required={true}
+                />
+            <Input 
+                label='Password' 
+                type='password' 
+                value={password} 
+                set_value={set_password} 
+                placeholder="Password" 
+                required={true}
+              />
           </div>
 
           {error && (

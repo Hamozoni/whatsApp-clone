@@ -4,7 +4,7 @@ export const Input = ({label,type,value,set_value,required,placeholder})=> {
 
     return (
         <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="name" className="block text-sm font-medium text-[#f7f8fa] mb-1">
                 {label}
             </label>
             <input

@@ -39,7 +39,7 @@ export function Sigin_sith_prvider ({link_to}) {
               <div className="w-full border-t border-gray-300" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-blue-50 text-gray-700">
+              <span className="px-2 bg-[#111b21] text-[#f7f8fa]">
                 Or continue with
               </span>
             </div>
@@ -69,11 +69,11 @@ export function Sigin_sith_prvider ({link_to}) {
             </div>
           </div>
           <div className="text-center mt-3">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-[#f7f8fa]">
               { link_to === 'signup' ? 'do not': ''} have an account?{" "}
               <Link
                 href={`/${link_to}`}
-                className="font-medium text-indigo-600 hover:text-indigo-500"
+                className="font-medium text-indigo-400 hover:text-indigo-300"
               >
                 {link_to === 'signin' ?  'Sign in here' : 'Sign up here'}
               </Link>
