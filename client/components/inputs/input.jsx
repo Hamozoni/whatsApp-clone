@@ -22,8 +22,14 @@ export const Input = ({label,type,value,set_value,required,placeholder})=> {
                 placeholder={placeholder}
                 />
                 {
-                    <div className="absolute">
-
+                    type === 'password' &&
+                    <div 
+                        onClick={()=> set_input_type(input_type === 'text' ? 'password' : 'text')} 
+                        className="absolute bottom-0 -translate-y-[13px] right-4 cursor-pointer"
+                        >
+                        {
+                            input_type === 'text' ? <FaRegEye /> : <FaEyeSlash />
+                        }
                     </div>
                 }
         </div>

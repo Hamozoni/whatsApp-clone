@@ -7,12 +7,13 @@ import { useState } from 'react';
 import { Input } from '@/components/inputs/input';
 import { Phone_input } from "@/components/inputs/phone_input";
 import { ImFilePicture } from "react-icons/im";
+import { useRouter } from "next/navigation";
 
 export default function OnboardingForm() {
 
 
     const { user,is_loading } = useContext(Auth_context);
-    
+    const router = useRouter()
     const [avatar, set_avatar] = useState(null);
     const [name, set_name] = useState(null);
     const [phone, set_phone] = useState(null);
@@ -22,7 +23,7 @@ export default function OnboardingForm() {
     
     useEffect(()=> {
       if(!user && !is_loading) {
-        redirect('/signin');
+        router.push('/signin');
       }
       if(user && !is_loading) {
         set_avatar(user?.photoURL);

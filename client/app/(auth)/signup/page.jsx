@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { Sigin_sith_prvider } from "@/components/auth/signin_with_prodider";
 import { Input } from "@/components/inputs/input";
 import { Submit_btn } from "@/components/inputs/submit_btn";
+import {signInWithEmailAndPassword} from 'firebase/auth'
+import { firebase_auth } from "@/lib/firebase_config";
 
 export default function SignUp() {
 
@@ -39,22 +41,19 @@ export default function SignUp() {
     set_error("");
 
     try {
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-        }),
-      });
+     
+      await signInWithEmailAndPassword(firebase_auth, email, password)
+       .then((user)=> {
+        console.log(user)
+        //  router.push("/onboarding");
+       })
+       .catch((err)=> {
+        console.log(err?.message);
+        set_error(err.message);
+        // router.push("/error");
+       })
 
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || "Signup failed");
-
-      router.push("/signin");
+      
     } catch (err) {
       set_error(err.message);
     } finally {

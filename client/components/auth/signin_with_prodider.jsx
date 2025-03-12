@@ -39,7 +39,7 @@ export function Sigin_sith_prvider ({link_to}) {
               <div className="w-full border-t border-gray-300" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-[#111b21] text-[#f7f8fa]">
+              <span className="px-2 bg-[#131e25] text-[#f7f8fa]">
                 Or continue with
               </span>
             </div>
