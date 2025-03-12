@@ -1,10 +1,12 @@
 "use client";
-import 'react-international-phone/style.css';
+
 import { Auth_context } from "@/components/auth/context";
 import { Loading } from "@/components/loading";
 import { useContext, useEffect } from "react";
 import { useState } from 'react';
-import { PhoneInput } from "react-international-phone";
+import { Input } from '@/components/inputs/input';
+import { Phone_input } from "@/components/inputs/phone_input";
+import { ImFilePicture } from "react-icons/im";
 
 export default function OnboardingForm() {
 
@@ -49,7 +51,7 @@ export default function OnboardingForm() {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md">
-        <form className="space-y-6">
+        <form className="space-y-4">
           {/* Avatar Upload */}
           <div className="flex flex-col items-center">
             <div className="relative inline-block">
@@ -65,83 +67,43 @@ export default function OnboardingForm() {
                   onChange={handleAvatarUpload}
                   className="hidden"
                 />
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-2.465a.5.5 0 01-.354-.146l-1.414-1.414A2 2 0 0010.343 4H8.343a2 2 0 00-1.414.586L5.465 6H4z" />
-                  <path d="M10 9a2 2 0 100-4 2 2 0 000 4z" />
-                </svg>
+                <ImFilePicture size={24}/>
               </label>
             </div>
           </div>
 
           {/* Full Name */}
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-              Full Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              required
-              value={name}
-              onChange={(e)=> set_name(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+          <Input 
+              label='Full Name' 
+              value={name} 
+              set_value={set_name} 
+              type='text'
+              required={true} 
               placeholder="John Doe"
             />
-          </div>
 
           {/* Email */}
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-              Email Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={e=> set_email(e.target.value)}
-              required
-              disabled
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+          <Input 
+              label='Email Address' 
+              value={email} 
+              set_value={set_email} 
+              type='email'
+              required={true} 
               placeholder="john@example.com"
             />
-          </div>
 
           {/* Phone Number */}
-          <div className="">
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                  Phone Number
-              </label>
-              
-              <div className="">
-                  <PhoneInput
-                      defaultCountry="sa"
-                      value={phone}
-                      onChange={value=> set_phone(value)}
-                      inputClassName="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                  />
-              </div>
-          </div>
+          <Phone_input value={phone} set_value={set_phone}/>
 
           {/* about */}
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-               About
-            </label>
-            <input
-              type="text"
-              id="about"
-              required={false}
-              value={about}
-              onChange={(e)=> set_about(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
-              placeholder="about you..   (optional)"
+          <Input 
+              label='About' 
+              value={about} 
+              set_value={set_about} 
+              type='text'
+              required={false} 
+             placeholder="about you..   (optional)"
             />
-          </div>
           {/* Submit Button */}
           <button
             type="submit"
