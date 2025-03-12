@@ -6,26 +6,26 @@ import { Input } from "@/components/inputs/input";
 import { Submit_btn } from "@/components/inputs/submit_btn";
 
 export default function SignUp() {
-  
+
   const [name, set_name] = useState("");
   const [email, set_email] = useState("");
   const [password, set_password] = useState("");
   const [confirm_password, set_confirm_password] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [error, set_error] = useState("");
+  const [loading, set_loading] = useState(false);
   const router = useRouter();
 
   const validateForm = () => {
     if (!name || !email || !password || !confirm_password) {
-      setError("All fields are required");
+      set_error("All fields are required");
       return false;
     }
     if (password !== confirm_password) {
-      setError("Passwords do not match");
+      set_error("Passwords do not match");
       return false;
     }
     if (password.length < 6) {
-      setError("Password must be at least 6 characters");
+      set_error("Password must be at least 6 characters");
       return false;
     }
     return true;
@@ -35,8 +35,8 @@ export default function SignUp() {
     e.preventDefault();
     if (!validateForm()) return;
 
-    setLoading(true);
-    setError("");
+    set_loading(true);
+    set_error("");
 
     try {
       const response = await fetch("/api/auth/signup", {
@@ -56,9 +56,9 @@ export default function SignUp() {
 
       router.push("/signin");
     } catch (err) {
-      setError(err.message);
+      set_error(err.message);
     } finally {
-      setLoading(false);
+      set_loading(false);
     }
   };
 

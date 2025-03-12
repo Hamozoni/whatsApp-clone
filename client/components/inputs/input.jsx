@@ -1,14 +1,19 @@
+"use client";
+
+import { useState } from "react";
+import { FaRegEye,FaEyeSlash } from "react-icons/fa";
 
 export const Input = ({label,type,value,set_value,required,placeholder})=> {
 
+    const [input_type,set_input_type] = useState(type);
 
     return (
-        <div>
+        <div className="relative">
             <label htmlFor="name" className="block text-sm font-medium text-[#f7f8fa] mb-1">
                 {label}
             </label>
             <input
-                type={type}
+                type={input_type}
                 id={label}
                 required={required}
                 value={value || ''}
@@ -16,6 +21,11 @@ export const Input = ({label,type,value,set_value,required,placeholder})=> {
                 className="w-full px-3 py-2 border border-[#283741] rounded-lg focus:outline-none  focus:border-[#467b9c]"
                 placeholder={placeholder}
                 />
+                {
+                    <div className="absolute">
+
+                    </div>
+                }
         </div>
     )
 }
