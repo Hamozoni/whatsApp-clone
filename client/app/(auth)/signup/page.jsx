@@ -6,6 +6,7 @@ import { Input } from "@/components/inputs/input";
 import { Submit_btn } from "@/components/inputs/submit_btn";
 
 export default function SignUp() {
+  
   const [name, set_name] = useState("");
   const [email, set_email] = useState("");
   const [password, set_password] = useState("");
@@ -15,11 +16,11 @@ export default function SignUp() {
   const router = useRouter();
 
   const validateForm = () => {
-    if (!name || !email || !password || !confirmPassword) {
+    if (!name || !email || !password || !confirm_password) {
       setError("All fields are required");
       return false;
     }
-    if (password !== confirmPassword) {
+    if (password !== confirm_password) {
       setError("Passwords do not match");
       return false;
     }
@@ -71,11 +72,39 @@ export default function SignUp() {
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-4">
-          <Input label='Full Name' type='text' value={name} set_value={set_name} placeholder="Full Name" required={true}/>
+            <Input 
+                label='Full Name' 
+                type='text' 
+                value={name} 
+                set_value={set_name} 
+                placeholder="Full Name" 
+                required={true}
+              />
             
-            <Input label='Email address' type='email' value={email} set_value={set_email} placeholder="Email address" required={true}/>
-            <Input label='Password' type='password' value={password} set_value={set_password} placeholder="Password" required={true}/>
-            <Input label=' Confirm Password' type='password' value={confirm_password} set_value={set_confirm_password} placeholder=" Confirm Password" required={true}/>
+            <Input 
+                label='Email address' 
+                type='email' 
+                value={email} 
+                set_value={set_email} 
+                placeholder="Email address" 
+                required={true}
+              />
+            <Input 
+                label='Password' 
+                type='password' 
+                value={password} 
+                set_value={set_password} 
+                placeholder="Password" 
+                required={true}
+              />
+            <Input 
+                label='Confirm Password' 
+                type='password' 
+                value={confirm_password}
+                set_value={set_confirm_password} 
+                placeholder=" Confirm Password" 
+                required={true}
+              />
           </div>
 
           {error && (
