@@ -15,17 +15,20 @@ export default function SignIn() {
   const [error, set_error] = useState("");
 
   const router = useRouter();
-  
+
   const handle_submit = async(e)=> {
-    e.preventDefault()
+    e.preventDefault();
+    set_is_loading(true);
     try {
       await signInWithEmailAndPassword(firebase_auth,email,password)
       .then(()=> {
+        set_is_loading(false);
         router.push('/onboarding');
       })
     }
     catch (error) {
-      set_error(error?.message)
+      set_error(error?.message);
+      set_is_loading(false);
     }
   }
 
