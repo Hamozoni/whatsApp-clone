@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Sigin_sith_prvider } from "@/components/auth/signin_with_prodider";
 import { Input } from "@/components/inputs/input";
 import { Submit_btn } from "@/components/inputs/submit_btn";
-import {signInWithEmailAndPassword} from 'firebase/auth'
+import {createUserWithEmailAndPassword } from 'firebase/auth'
 import { firebase_auth } from "@/lib/firebase_config";
 
 export default function SignUp() {
@@ -42,7 +42,7 @@ export default function SignUp() {
 
     try {
      
-      await signInWithEmailAndPassword(firebase_auth, email, password)
+      await createUserWithEmailAndPassword(firebase_auth, email, password)
        .then((user)=> {
         console.log(user)
         //  router.push("/onboarding");

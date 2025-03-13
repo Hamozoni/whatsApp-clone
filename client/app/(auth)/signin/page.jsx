@@ -4,13 +4,30 @@ import { useState } from "react";
 import { Sigin_sith_prvider } from "@/components/auth/signin_with_prodider";
 import { Input } from "@/components/inputs/input";
 import { Submit_btn } from "@/components/inputs/submit_btn";
+import {signInWithEmailAndPassword} from 'firebase/auth'
+import { firebase_auth } from "@/lib/firebase_config";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
   const [email, set_email] = useState("");
   const [password, set_password] = useState("");
   const [is_loading, set_is_loading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, set_error] = useState("");
 
+  const router = useRouter();
+  
+  const handle_submit = async(e)=> {
+    e.preventDefault()
+    try {
+      await signInWithEmailAndPassword(firebase_auth,email,password)
+      .then(()=> {
+        router.push('/onboarding');
+      })
+    }
+    catch (error) {
+      set_error(error?.message)
+    }
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#111b21] text-[#f7f8fa] p-3">
@@ -20,7 +37,7 @@ export default function SignIn() {
             Sign in to your account
           </h2>
         </div>
-        <form className="mt-8 space-y-5" >
+        <form onSubmit={handle_submit} className="mt-8 space-y-5" >
           <div className="flex flex-col gap-4">
             <Input 
                 label='Email address' 

@@ -47,7 +47,7 @@ export default function Options_icons ({user_photo,active_option,set_active_opti
                 <section className="mt-5">
                     <Option Icon={IoSettingsOutline} text='settings' />
                     <div className="cursor-pointer mt-3">
-                        <Image src={user_photo || 'https://via.placeholder.com/150'} width={35} height={35} alt="user photo" className="rounded-full" />
+                        <Image src={user_photo || '/placeholder_avatar.jpg'} width={35} height={35} alt="user photo" className="rounded-full" />
                     </div>
                 </section>
             </section>
