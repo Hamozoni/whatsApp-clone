@@ -6,16 +6,13 @@ import User from "../models/user.js";
 const find_user = async (req,res,next) => {
     
     res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+    const {email,displayName : name,photoURL:profile_picture,phoneNumber:phone_number,emailVerified:email_verified} = req.body;
 
+    if(!email) {
+       return res.json({message: 'email is reqiured', status: false});
+    };
+    
     try {
-        const {email,displayName : name,photoURL:profile_picture,phoneNumber:phone_number,emailVerified:email_verified} = req.body;
-
-        console.log(req.body);
-
-        if(!email) {
-           return res.json({message: 'email is reqiured', status: false});
-        };
-
         const exist_user = await User.findOne({email});
 
         if(exist_user) {

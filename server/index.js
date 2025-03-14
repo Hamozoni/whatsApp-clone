@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import  auth_route  from "./routes/auth_route.js";
+import chats_contacts_route from "./routes/chats_contacts_route.js";
 import connect_db from "./lib/database.js";
 
 dotenv.config();
@@ -19,6 +20,7 @@ server.use(cors({
 server.use(express.json());
 
 server.use('/api/auth',auth_route);
+server.use('/api',chats_contacts_route);
 
 
 server.listen(process.env.PORT,()=> {
