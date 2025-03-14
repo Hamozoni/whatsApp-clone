@@ -6,6 +6,7 @@ import { Input } from "@/components/inputs/input";
 import { Submit_btn } from "@/components/inputs/submit_btn";
 import {createUserWithEmailAndPassword,updateProfile } from 'firebase/auth'
 import { firebase_auth } from "@/lib/firebase_config";
+import axios from "axios";
 
 export default function SignUp() {
 
@@ -47,7 +48,10 @@ export default function SignUp() {
         console.log(user);
         await updateProfile(user,{
           displayName:  name
-        })
+        });
+
+
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/find_user`,{email,name})
          router.push("/onboarding");
        })
        .catch((err)=> {

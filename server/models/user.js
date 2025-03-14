@@ -8,6 +8,7 @@ const USER_SCHEMA = new mongoose.Schema({
     email_verified:{type: Boolean, default: false },
     is_online: {type: Boolean, default: false },
     profile_picture: {type: String,require: false},
+    picture_id: {type: String,require: false},
     chats: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Chat' }],
     contacts: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
 },{timestamps: true});
