@@ -3,8 +3,7 @@ import { IoCallOutline,IoSettingsOutline } from "react-icons/io5";
 import { SiGradleplaypublisher } from "react-icons/si";
 import { MdOutlineGroups2 } from "react-icons/md";
 import { IoIosStarOutline } from "react-icons/io";
-
-import Image from "next/image";
+import { Avatar } from "../avatar";
 
 const options = [
     {Icon: BsChatText,text: 'chats'},
@@ -39,16 +38,14 @@ export default function Options_icons ({user_photo,active_option,set_active_opti
             </section >
             <section>
 
-                <section className="mb-5 flex flex-col gap-2">
+                <section className="flex flex-col gap-2">
                     <Option Icon={IoIosStarOutline} text='starred messages' />
                     <Option Icon={BsArchive} text='archived chats' />
                 </section>
-                <hr className="text-[#394b55]" />
-                <section className="mt-5">
+                <hr className="text-[#394b55] my-5" />
+                <section className="flex flex-col gap-3" >
                     <Option Icon={IoSettingsOutline} text='settings' />
-                    <div className="cursor-pointer mt-3">
-                        <Image src={user_photo || '/placeholder_avatar.jpg'} width={35} height={35} alt="user photo" className="rounded-full" />
-                    </div>
+                    <Avatar user_photo={user_photo} />
                 </section>
             </section>
         </nav>

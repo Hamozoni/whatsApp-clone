@@ -9,6 +9,8 @@ const USER_SCHEMA = new mongoose.Schema({
     is_online: {type: Boolean, default: false },
     profile_picture: {type: String,require: false},
     picture_id: {type: String,require: false},
+    password: {type: String,require: false},
+    provider :{type: String,require: false},
     chats: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Chat' }],
     contacts: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
 },{timestamps: true});
