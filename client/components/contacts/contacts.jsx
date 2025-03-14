@@ -1,4 +1,4 @@
-import { MdArrowBack } from "react-icons/md";
+import { FaArrowLeftLong } from "react-icons/fa6";
 import { Search_form } from "../inputs/search_form";
 import { useState } from "react";
 import { GrGroup,GrUserAdd } from "react-icons/gr";
@@ -6,11 +6,11 @@ import { GrGroup,GrUserAdd } from "react-icons/gr";
 const Button = ({Icon,text,handle_cleck})=> {
 
     return (
-        <button onClick={handle_cleck} className="cursor-pointer flex items-center gap-3">
+        <button onClick={handle_cleck} className="cursor-pointer flex items-center gap-3 w-full p-2">
              <div className="">
                 <Icon />
              </div>
-             <div className="flex items-center border border-b-amber-50">
+             <div className="flex items-center border-b flex-1 border-b-[#1b363f]">
                 <h5>{text}</h5>
              </div>
         </button>
@@ -23,11 +23,11 @@ export const Contacts = ({set_is_contact})=> {
 
     return (
         <div className="">
-            <header>
-                <div className="">
-                    <button onClick={()=> set_is_contact(false)}>
+            <header className="p-3">
+                <div className="mb-2 flex items-center gap-6">
+                    <button className=" cursor-pointer" onClick={()=> set_is_contact(false)}>
 
-                       <MdArrowBack />
+                       <FaArrowLeftLong size={22} />
                     </button>
                     <h4>new chat</h4>
                 </div>
