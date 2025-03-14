@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { FaRegEye,FaEyeSlash } from "react-icons/fa";
 
-export const Input = ({label,type,value,set_value,required,placeholder})=> {
+export const Input = ({label,type,value,set_value,required,placeholder,disabled=false})=> {
 
     const [input_type,set_input_type] = useState(type);
 
@@ -20,6 +20,7 @@ export const Input = ({label,type,value,set_value,required,placeholder})=> {
                 onChange={(e)=> set_value(e.target.value)}
                 className="w-full px-3 py-2 border border-[#283741] rounded-lg focus:outline-none  focus:border-[#467b9c]"
                 placeholder={placeholder}
+                disabled={disabled}
                 />
                 {
                     type === 'password' &&

@@ -5,6 +5,7 @@ const USER_SCHEMA = new mongoose.Schema({
     email: {type: String,require: true},
     phone: {type: String,require: false},
     about: {type: String,require: false},
+    email_verified:{type: Boolean, default: false },
     is_online: {type: Boolean, default: false },
     profile_picture: {type: String,require: false},
     chats: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Chat' }],

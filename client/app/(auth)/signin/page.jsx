@@ -21,9 +21,9 @@ export default function SignIn() {
     set_is_loading(true);
     try {
       await signInWithEmailAndPassword(firebase_auth,email,password)
-      .then(()=> {
+      .then(_=> {
         set_is_loading(false);
-        router.push('/onboarding');
+        router.push('/');
       })
     }
     catch (error) {
