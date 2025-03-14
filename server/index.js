@@ -22,5 +22,5 @@ server.use('/api/auth',auth_route);
 
 
 server.listen(process.env.PORT,()=> {
-    console.log(`server is listening to port ${process.env.PORT}`)
+    console.log(`server is listening to port ${process.env.PORT}`);
 });
