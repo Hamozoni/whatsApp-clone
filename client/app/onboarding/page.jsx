@@ -8,6 +8,7 @@ import { Input } from '@/components/inputs/input';
 import { Phone_input } from "@/components/inputs/phone_input";
 import { ImFilePicture } from "react-icons/im";
 import { useRouter } from "next/navigation";
+import { Submit_btn } from "@/components/inputs/submit_btn";
 
 export default function OnboardingForm() {
 
@@ -29,8 +30,7 @@ export default function OnboardingForm() {
         set_avatar(user?.photoURL);
         set_name(user?.displayName);
         set_email(user?.email);
-
-        console.log(user)
+        set_phone(user?.phoneNumber);
       }
     },[user,is_loading]);
   
@@ -40,7 +40,7 @@ export default function OnboardingForm() {
       )
     }
 
-  const handleAvatarUpload = (e) => {
+  const handle_vatar = (e) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -52,10 +52,15 @@ export default function OnboardingForm() {
     }
   };
 
+  const handle_submit = (e) => {
+    e.preventDefault();
+
+  }
+
   return (
     <div className="min-h-screen bg-[#111b21] text-[#f7f8fa] flex items-center justify-center p-4">
       <div className="max-w-md w-full space-y-8 shadow-lg shadow-[#29343b77] p-3 bg-[#131e25] h-fit rounded-md md:p-8">
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handle_submit}>
           {/* Avatar Upload */}
           <div className="flex flex-col items-center">
             <div className="relative inline-block">
@@ -68,7 +73,7 @@ export default function OnboardingForm() {
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={handleAvatarUpload}
+                  onChange={handle_vatar}
                   className="hidden"
                 />
                 <ImFilePicture size={24}/>
@@ -110,12 +115,7 @@ export default function OnboardingForm() {
              placeholder="about you..   (optional)"
             />
           {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-          >
-            Edit
-          </button>
+          <Submit_btn text='save' is_loading={false} />
         </form>
       </div>
     </div>

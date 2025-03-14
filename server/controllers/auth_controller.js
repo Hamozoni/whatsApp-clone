@@ -19,7 +19,7 @@ const find_user = async (req,res,next) => {
         const exist_user = await User.findOne({email});
 
         if(exist_user) {
-            return res.json({message: 'user is found', status: true, user: exist_user})
+            return res.json({message: 'user is found', status: true, user: exist_user,is_new: false})
         }
         if(!exist_user) {
             const user = {
@@ -30,7 +30,7 @@ const find_user = async (req,res,next) => {
                 phone_number
             }
             const created_user = await User.create(user)
-            return res.json({message: 'user has been created', status: true, user: created_user})
+            return res.json({message: 'user has been created', status: true, user: created_user,is_new: true})
         }
 
     }

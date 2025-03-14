@@ -17,7 +17,7 @@ export function Sigin_sith_prvider ({link_to}) {
 
     const handle_sigin = async (provider)=> {
 
-        setIsLoading(true)
+        setIsLoading(true);
       const auth_provider = provider === 'GitHub' ? new GithubAuthProvider() : new GoogleAuthProvider();
 
          await signInWithPopup(firebase_auth,auth_provider)
@@ -36,18 +36,29 @@ export function Sigin_sith_prvider ({link_to}) {
           const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/find_user`,user_data);
 
           console.log(data);
+          setIsLoading(false);
+
+
+          const {is_new } = data;
+
+          if(is_new) {
+            router.push('/onboarding');
+
+          }else {
+            setIsLoading(false);
+            router.push('/');
+          }
 
 
 
 
 
           // console.log(user)
-          // router.push('/onboarding');
 
          })
          .catch((error)=>{
-          router.push('/error')
-          console.log(error?.message)
+          console.log(error?.message);
+          setIsLoading(false);
          })
       
 
