@@ -28,7 +28,8 @@ const CHAT_SCHEMA = new mongoose.Schema({
       media: { type: String },
       type: {type: String,enum: ['TEXT', 'AUDIO', 'PHOTO','VIDEO','DOCUMENT','VIDEO_CALL','AUDIO_CALL'], 
           default: 'TEXT'},
-      timestamp : {type: Date, default: Date.now()}
+      created_at : {type: Date, default: Date.now()},
+      updated_at : {type: Date, default: Date.now()},
     }],
     created_at : {type: Date, default: Date.now()},
     updated_at : {type: Date, default: Date.now()},

@@ -13,10 +13,8 @@ import { User_context } from "../context";
 const Chat_list = ()=> {
 
 
-    const {chats} = useContext(User_context);
+    const {user,chats,active_chat_id,set_active_chat} = useContext(User_context);
     
-
-    const [activeChat, setActiveChat] = useState(1);
     const [search_value,set_search_value] = useState('');
     const [is_contacts,set_is_contact] = useState(false);
 
@@ -39,16 +37,18 @@ const Chat_list = ()=> {
                 <Search_form value={search_value} set_value={set_search_value} handle_search={()=> ''} />
             </header>
             <div className="overflow-y-auto max-h[calc(100vh-110px)] h-[calc(100vh-110px)]">
-                {/* <div className="">
-                    {chats.map(chat => (
+                <div className="">
+                    {chats?.map(chat => (
+                        chat?.last_message?.length > 0 &&
                         <Chat_card 
-                            activeChat={activeChat} 
-                            setActiveChat={setActiveChat} 
+                            user_id={user?.id}
+                            active_chat={active_chat_id} 
+                            set_active_chat={set_active_chat} 
                             key={chat?.id} 
                             chat={chat} 
                         />
                     ))}
-                </div> */}
+                </div>
             </div>
         </div>
     )
