@@ -42,19 +42,17 @@ const Chat_window = () => {
     
     useEffect(()=> {
      const chat = chats?.filter(e=> e.id === active_chat_id)[0]
-     console.log(active_chat_id);
       set_resiver(chat?.members?.filter(e=> e.id !== user?.uid)[0]);
-
-      console.log(chat?.members?.filter(e=> e.id !== user?.uid)[0])
-    },[active_chat_id])
+    },[active_chat_id]);
 
 
   return (
+    active_chat_id &&
     <div className="flex-1 h-screen max-h-full flex flex-col text-[#f7f8fa]">
       <Chat_header resiver={resiver} />
       <div className="flex-1 overflow-y-auto p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern">
           <div className="space-y-2 text-[#f7f8fa]">
-            {
+            {/* {
             messageList.map(message => (
               <div
                 key={message.id}
@@ -83,7 +81,7 @@ const Chat_window = () => {
                   </div>
                 </div>
               </div>
-            ))}
+            ))} */}
           </div>
         </div>
 

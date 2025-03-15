@@ -112,14 +112,15 @@ export const Contacts = ({set_is_contact})=> {
         };
 
         if(chats?.length > 0) {
-            if(chats?.members?.includes({id})) {
-                set_active_chat_id(chats?.id);
+            if(chats?.includes(e=> e.members.includes({id}))) {
+                set_active_chat_id(id);
             }else {
                 set_chats(prev=> [new_chat,...prev]);
+                set_active_chat_id(new_chat?.id);
             }
         }else {
             set_chats(prev=> [new_chat,...prev]);
-            set_active_chat_id(null);
+            set_active_chat_id(new_chat?.id);
         };
         console.log(chats)
 
