@@ -1,6 +1,6 @@
 import "./globals.css";
 
-import {Auth_context_provider }from '@/components/auth/context';
+import {User_context_provider }from '@/components/context';
 export const dynamic = 'force-dynamic';
 
 
@@ -17,9 +17,9 @@ export default function RootLayout({ children }) {
       <body
         className={``}
       >
-        <Auth_context_provider >
+        <User_context_provider >
             {children}
-        </Auth_context_provider>
+        </User_context_provider>
       </body>
     </html>
   );

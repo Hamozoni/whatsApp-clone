@@ -22,6 +22,7 @@
     "react-international-phone": "^4.5.0",
     "react-spinners": "^0.15.0",
     "socket.io-client": "^4.8.1",
+    "uuid": "^11.1.0",
     "wavesurfer.js": "^7.9.1"
   },
   "devDependencies": {

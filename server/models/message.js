@@ -5,7 +5,7 @@ const MESSAGE_SCHEMA = new mongoose.Schema({
     sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     text: { type: String },
     media: { type: String },
-    type: {type: String,enum: ['TEXT', 'AUDIO', 'PHOTO','VIDEO','DOCUMENT'], 
+    type: {type: String,enum: ['TEXT', 'AUDIO', 'PHOTO','VIDEO','DOCUMENT','VIDEO_CALL','AUDIO_CALL'], 
         default: 'TEXT'},
     status: { 
         type: String, 

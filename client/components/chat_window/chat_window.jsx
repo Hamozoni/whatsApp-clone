@@ -1,11 +1,8 @@
 
-import React, { useState } from 'react';
-import { HiOutlineEmojiHappy,HiOutlineDotsVertical } from "react-icons/hi";
-import { AiOutlinePaperClip } from "react-icons/ai";
-import { SlMicrophone } from "react-icons/sl";
-import { GoSearch } from "react-icons/go";
+import React, { useContext, useState } from 'react';
 import { Chat_header } from './chat_header';
 import { Message_input } from './message_input';
+import { User_context } from '../context';
 
 const chats = [
   { id: 1, name: 'John Doe', lastMessage: 'Hey, how are you?', timestamp: '10:30 AM', unread: 2, online: true, avatar: '/whatsapp_bg.png' },
@@ -20,6 +17,8 @@ const messages = [
 ];
 
 const Chat_window = () => {
+
+    const {chats,set_chats,active_chat_id} = useContext(User_context);
 
     const [activeChat, setActiveChat] = useState(1);
     const [newMessage, setNewMessage] = useState('');

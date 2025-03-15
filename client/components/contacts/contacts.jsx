@@ -2,9 +2,11 @@
 
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { Search_form } from "../inputs/search_form";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { GrGroup,GrUserAdd } from "react-icons/gr";
 import Image from "next/image";
+import { User_context } from "../context";
+import { v4 as uuid } from "uuid";
 
 const contacts = [
     {
@@ -65,6 +67,8 @@ const contacts = [
 
 const Button = ({Icon,text,handle_cleck})=> {
 
+  
+
     return (
         <button onClick={handle_cleck} className="cursor-pointer flex items-center gap-3 w-full px-3 hover:bg-[#222e35]">
              <div className="p-3 my-2 bg-emerald-600 flex items-center justify-center rounded-full">
@@ -79,7 +83,28 @@ const Button = ({Icon,text,handle_cleck})=> {
 
 export const Contacts = ({set_is_contact})=> {
 
+    const {chats,set_chats,set_active_chat_id} = useContext(User_context);
+
     const [search_value,set_search_value] = useState('');
+
+    const handle_open_chat = (_id,name,email,profile_picture) => {
+
+        if(chats?.length > 0) {
+            if(chats?.members?.includes({_id})) {
+                set_active_chat_id(chats?._id);
+            }
+        }else {
+            const new_chat = {
+                id: uuid,
+
+
+            };
+
+            set_chats(prev=> [new_chat,...prev])
+            set_active_chat_id(null);
+        }
+
+    }
 
     return (
         <div className="h-screen max-h-screen overflow-y-auto">
@@ -103,7 +128,10 @@ export const Contacts = ({set_is_contact})=> {
                 <div className="">
                     {
                         contacts?.map(({_id,name,email,profile_picture})=> (
-                            <div key={_id} className="cursor-pointer flex items-center gap-3 w-full px-3 hover:bg-[#222e35]">
+                            <div 
+                                onClick={()=>handle_open_chat(_id,name,email,profile_picture)}
+                                key={_id} 
+                                className="cursor-pointer flex items-center gap-3 w-full px-3 hover:bg-[#222e35]">
                                 <Image 
                                     className="flex items-center justify-center rounded-full"
                                     src={profile_picture} 

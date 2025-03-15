@@ -4,15 +4,16 @@ import { createContext, useEffect, useState } from "react";
 import { setPersistence, browserLocalPersistence } from 'firebase/auth';
 import axios from "axios";
 
-export const Auth_context = createContext();
+export const User_context = createContext();
 
 
-export const  Auth_context_provider =  ({children})=> {
+export const  User_context_provider =  ({children})=> {
 
     const [user,set_user] = useState(null);
     const [is_loading,set_is_loading] = useState(true);
     const [contacts,set_contacts] = useState(null);
     const [chats,set_chats] = useState(null);
+    const [active_chat_id,set_active_chat_id] = useState('')
     
     useEffect(() => {
 
@@ -46,9 +47,9 @@ export const  Auth_context_provider =  ({children})=> {
       }, []);
 
     return (
-        <Auth_context.Provider value={{user,is_loading,contacts,chats}}>
+        <User_context.Provider value={{user,is_loading,contacts,set_contacts,chats,set_chats,active_chat_id,set_active_chat_id}}>
             {children}
-        </Auth_context.Provider>
+        </User_context.Provider>
     )
 };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Auth_context } from "@/components/auth/context";
+import { User_context } from "@/components/context";
 import { Loading } from "@/components/loading";
 import { useContext, useEffect } from "react";
 import { useState } from 'react';
@@ -13,7 +13,7 @@ import { Submit_btn } from "@/components/inputs/submit_btn";
 export default function OnboardingForm() {
 
 
-    const { user,is_loading } = useContext(Auth_context);
+    const { user,is_loading } = useContext(User_context);
     const router = useRouter()
     const [avatar, set_avatar] = useState(null);
     const [name, set_name] = useState(null);
