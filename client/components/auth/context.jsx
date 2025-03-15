@@ -25,7 +25,9 @@ export const  Auth_context_provider =  ({children})=> {
             set_user(user);
             console.log(user?.email)
             try {
-              const{ data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/chats_contacts`,{email:user?.email})
+              const{ data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/chats_contacts`,{
+                params : { email:user?.email }
+              })
               set_chats(data?.chats);
               // set_contacts(data?.contacts)
               set_is_loading(false);
