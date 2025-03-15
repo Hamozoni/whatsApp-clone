@@ -1,21 +1,24 @@
+
 import { GoSearch } from "react-icons/go"
 import { HiOutlineDotsVertical } from "react-icons/hi"
 import { IoCallOutline,IoVideocamOutline  } from "react-icons/io5";
 
 
-export const Chat_header = ()=> {
+export const Chat_header = ({resiver})=> {
+
+
     return (
         <div className="p-3 bg-[#222e35] text-[#f7f8fa] flex items-center">
             <div className="w-10 h-10 rounded-full overflow-hidden">
-                <img src="/whatsapp_bg.png" alt="Profile" className="w-full h-full object-cover" />
+                <img src={resiver?.profile_picture} alt="Profile" className="w-full h-full object-cover" />
             </div>
             <div className="ml-4 flex-1">
                 <h2 className="font-semibold text-[#f7f8fa]">
                 {/* {chats.find(chat => chat.id === activeChat)?.name} */}
-                    Mohamed Yahia
+                   {resiver?.name}
                 </h2>
                 <p className="text-sm font-light text-[#f7f8fa]">
-                {true ? 'online' : 'offline'}
+                {resiver?.in_online ? 'online' : 'offline'}
                 </p>
             </div>
             <div className="flex gap-5 items-center">

@@ -13,7 +13,7 @@ import { User_context } from "../context";
 const Chat_list = ()=> {
 
 
-    const {user,chats,active_chat_id,set_active_chat} = useContext(User_context);
+    const {chats} = useContext(User_context);
     
     const [search_value,set_search_value] = useState('');
     const [is_contacts,set_is_contact] = useState(false);
@@ -39,11 +39,8 @@ const Chat_list = ()=> {
             <div className="overflow-y-auto max-h[calc(100vh-110px)] h-[calc(100vh-110px)]">
                 <div className="">
                     {chats?.map(chat => (
-                        chat?.last_message?.length > 0 &&
+                        // chat?.last_message?.length > 0 &&
                         <Chat_card 
-                            user_id={user?.id}
-                            active_chat={active_chat_id} 
-                            set_active_chat={set_active_chat} 
                             key={chat?.id} 
                             chat={chat} 
                         />

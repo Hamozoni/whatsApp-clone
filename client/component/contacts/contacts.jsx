@@ -88,41 +88,39 @@ export const Contacts = ({set_is_contact})=> {
     const [search_value,set_search_value] = useState('');
 
     const handle_open_chat = (id,name,email,profile_picture) => {
+        const new_chat = {
+            id: uuid(),
+            is_new: true,
+            members: [
+                {
+                    id,
+                    name,
+                    email,
+                    profile_picture,
+                    is_online: false
+                },
+                {
+                    id: user?.uid,
+                    name: user?.name,
+                    email:  user?.email,
+                    profile_picture: user?.photoURL,
+                    is_online: false
+                },
 
-        if(chats?.length > 0) {
-            if(chats?.members?.includes({_id})) {
-                set_active_chat_id(chats?._id);
-            }
-        }else {
-            const new_chat = {
-                id: uuid(),
-                members: [
-                    {
-                        id,
-                        name,
-                        email,
-                        profile_picture
-                    },
-                    {
-                        id: user?.uid,
-                        name: user?.name,
-                        email:  user?.email,
-                        profile_picture: user?.photoURL
-                    },
+            ]
 
-                ]
-
-            };
-
-            set_chats(prev=> [new_chat,...prev]);
-
-
-
-
-
-            set_active_chat_id(null);
         };
 
+        if(chats?.length > 0) {
+            if(chats?.members?.includes({id})) {
+                set_active_chat_id(chats?.id);
+            }else {
+                set_chats(prev=> [new_chat,...prev]);
+            }
+        }else {
+            set_chats(prev=> [new_chat,...prev]);
+            set_active_chat_id(null);
+        };
         console.log(chats)
 
     }

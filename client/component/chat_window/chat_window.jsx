@@ -1,5 +1,6 @@
 
-import React, { useContext, useState } from 'react';
+"use client";
+import React, { useContext, useEffect, useState } from 'react';
 import { Chat_header } from './chat_header';
 import { Message_input } from './message_input';
 import { User_context } from '../context';
@@ -18,11 +19,12 @@ const messages = [
 
 const Chat_window = () => {
 
-    const {chats,set_chats,active_chat_id} = useContext(User_context);
+    const {user,chats,set_chats,active_chat_id} = useContext(User_context);
 
-    const [activeChat, setActiveChat] = useState(1);
+
     const [newMessage, setNewMessage] = useState('');
     const [messageList, setMessageList] = useState(messages);
+    const [resiver, set_resiver] = useState(null);
 
     const handleSendMessage = () => {
       if (newMessage.trim()) {
@@ -37,11 +39,19 @@ const Chat_window = () => {
         setNewMessage('');
       }
     };
+    
+    useEffect(()=> {
+     const chat = chats?.filter(e=> e.id === active_chat_id)[0]
+     console.log(active_chat_id);
+      set_resiver(chat?.members?.filter(e=> e.id !== user?.uid)[0]);
+
+      console.log(chat?.members?.filter(e=> e.id !== user?.uid)[0])
+    },[active_chat_id])
 
 
   return (
     <div className="flex-1 h-screen max-h-full flex flex-col text-[#f7f8fa]">
-      <Chat_header />
+      <Chat_header resiver={resiver} />
       <div className="flex-1 overflow-y-auto p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern">
           <div className="space-y-2 text-[#f7f8fa]">
             {

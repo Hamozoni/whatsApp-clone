@@ -1,18 +1,24 @@
+import { useContext } from "react";
+import { User_context } from "../context";
 
 
-export const Chat_card = ({user_id,chat,active_chat,set_active_chat})=> {
+export const Chat_card = ({chat})=> {
 
-    const sender = chat?.members?.fillter(e=> e.id === user_id);
+    const {user,active_chat_id,set_active_chat_id} = useContext(User_context);
+
+    const sender = chat?.members?.filter(e=> e.id !== user?.uid)[0];
+
+    console.log(sender)
 
     return (
         <div
-            onClick={() => set_active_chat(chat.id)}
+            onClick={() => set_active_chat_id(chat.id)}
             className={`flex items-center cursor-pointer px-3 hover:bg-[#31414b] ${
-            active_chat === chat.id ? 'bg-[#222e35]' : '' }`}
+                active_chat_id === chat.id ? 'bg-[#222e35]' : '' }`}
             >
             <div className="relative">
                 <div className="w-12 h-12 rounded-full overflow-hidden">
-                    <img src={sender?.profile_picure} alt={sender.name} className="w-full h-full object-cover" />
+                    <img src={sender?.profile_picture} alt={sender.name} className="w-full h-full object-cover" />
                 </div>
                 {/* {
                     chat.online && (
@@ -23,7 +29,7 @@ export const Chat_card = ({user_id,chat,active_chat,set_active_chat})=> {
             <div className="ml-4 flex-1 py-3 min-w-0 border-b-1 border-[#222e35] text-[#f7f8fa]">
                 <div className="flex justify-between items-center">
                     <h2 className="font-semibold truncate">{sender.name}</h2>
-                    <span className="text-xs text-[#667781]">{chat.created_at}</span>
+                    {/* <span className="text-xs text-[#667781]">{chat.created_at}</span> */}
                 </div>
                 <div className="flex justify-between items-center">
                     {/* <p className="text-sm text-[#667781] truncate">{}</p> */}
