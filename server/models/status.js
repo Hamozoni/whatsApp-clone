@@ -25,7 +25,7 @@ const STATUS_SCHEMA = new mongoose.Schema({
     created_at : {type: Date, default: Date.now()},
     updated_at : {type: Date, default: Date.now()},
     expires_at: {type: Date, require: true}
-},{timestamps: false, _id: false});
+},{timestamps: false});
 
 STATUS_SCHEMA.index({expires_at: 1},{ expireAfterSeconds: 0 });
 

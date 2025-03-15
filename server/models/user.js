@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import {v4 as uuid} from 'uuid';
 
 const USER_SCHEMA = new mongoose.Schema({
     id: {
@@ -17,7 +18,7 @@ const USER_SCHEMA = new mongoose.Schema({
     provider :{type: String,require: false},
     created_at : {type: Date, default: Date.now()},
     updated_at : {type: Date, default: Date.now()},
-},{timestamps: false, _id: false});
+},{timestamps: false});
 
  const User = mongoose.model('User',USER_SCHEMA);
 

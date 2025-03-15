@@ -23,14 +23,15 @@ export function Sigin_sith_prvider ({link_to}) {
          await signInWithPopup(firebase_auth,auth_provider)
          .then(async({user})=> {
 
-          const {email,displayName,photoURL,phoneNumber,emailVerified} = user;
+          const {email,displayName,photoURL,phoneNumber,emailVerified,uid} = user;
 
           const user_data = {
             email,
             displayName,
             photoURL,
             phoneNumber,
-            emailVerified
+            emailVerified,
+            uid
           }
 
           const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/find_user`,user_data);

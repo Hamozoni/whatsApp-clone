@@ -30,7 +30,7 @@ const MESSAGE_SCHEMA = new mongoose.Schema({
     created_at : {type: Date, default: Date.now()},
     updated_at : {type: Date, default: Date.now()},
 
-},{timestamps: false, _id: false});
+},{timestamps: false});
 
 const Message = mongoose.model('Message',MESSAGE_SCHEMA);
 

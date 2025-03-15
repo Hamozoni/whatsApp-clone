@@ -1,10 +1,10 @@
 'use client'
-import { User_context } from '@/components/context';
-import Chat_window from '@/components/chat_window/chat_window';
-import { Loading } from '@/components/loading';
-import Sidebar from '@/components/sidebar/sidebar';
+import { User_context } from '@/component/context';
+import Chat_window from '@/component/chat_window/chat_window';
+import Sidebar from '@/component/sidebar/sidebar';
 import { redirect } from 'next/navigation';
 import { useContext, useEffect } from 'react';
+import { Loading_component } from '@/component/loading_component';
 
 export default function Home() {
 
@@ -20,7 +20,7 @@ export default function Home() {
 
   if(is_loading) {
     return (
-      <Loading />
+      <Loading_component />
     )
   }
 

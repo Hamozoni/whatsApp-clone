@@ -1,14 +1,14 @@
 "use client";
 
-import { User_context } from "@/components/context";
-import { Loading } from "@/components/loading";
+import { User_context } from "@/component/context";
 import { useContext, useEffect } from "react";
 import { useState } from 'react';
-import { Input } from '@/components/inputs/input';
-import { Phone_input } from "@/components/inputs/phone_input";
+import { Input } from '@/component/inputs/input';
+import { Phone_input } from "@/component/inputs/phone_input";
 import { ImFilePicture } from "react-icons/im";
 import { useRouter } from "next/navigation";
-import { Submit_btn } from "@/components/inputs/submit_btn";
+import { Submit_btn } from "@/component/inputs/submit_btn";
+import { Loading_component } from "@/component/loading_component";
 
 export default function OnboardingForm() {
 
@@ -36,7 +36,7 @@ export default function OnboardingForm() {
   
     if(is_loading) {
       return (
-        <Loading />
+        <Loading_component />
       )
     }
 

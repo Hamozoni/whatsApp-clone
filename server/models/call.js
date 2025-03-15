@@ -31,7 +31,7 @@ const CALL_SCHEMA = new mongoose.Schema({
     call_status: {type: String, enum: ['PENDING','ACCEPTED','REJECTED','ENDED']},
     created_at : {type: Date, default: Date.now()},
     updated_at : {type: Date, default: Date.now()},
-},{timestamps: false,_id: false});
+},{timestamps: false});
 
 const Call = mongoose.Model('Call',CALL_SCHEMA);
 

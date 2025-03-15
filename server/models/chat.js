@@ -33,7 +33,7 @@ const CHAT_SCHEMA = new mongoose.Schema({
     created_at : {type: Date, default: Date.now()},
     updated_at : {type: Date, default: Date.now()},
 
-  }, { timestamps: false, _id: false });
+  }, { timestamps: false});
 
   const Chat = mongoose.model('Chat',CHAT_SCHEMA);
 
