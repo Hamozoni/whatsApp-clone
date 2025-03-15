@@ -1,10 +1,20 @@
 
-
+import { v4 as uuid } from "uuid";
 import mongoose from "mongoose";
 
 const CHAT_SCHEMA = new mongoose.Schema({
+    id: {
+          type: String,
+          unique: true,
+          default: uuid,
+    },
     members: [{ 
-      _id : {type: String, require: true},
+      id: {
+        type: String,
+        unique: true,
+        default: uuid,
+      },
+      is_online: {type: Boolean, default: false },
       name: {type: String, require: true},
       email: {type: String, require: true,unique: true},
       profile_picture: {type: String, require: true}
@@ -19,8 +29,11 @@ const CHAT_SCHEMA = new mongoose.Schema({
       type: {type: String,enum: ['TEXT', 'AUDIO', 'PHOTO','VIDEO','DOCUMENT','VIDEO_CALL','AUDIO_CALL'], 
           default: 'TEXT'},
       timestamp : {type: Date, default: Date.now()}
-    }] 
-  }, { timestamps: true });
+    }],
+    created_at : {type: Date, default: Date.now()},
+    updated_at : {type: Date, default: Date.now()},
+
+  }, { timestamps: false, _id: false });
 
   const Chat = mongoose.model('Chat',CHAT_SCHEMA);
 
