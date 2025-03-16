@@ -13,7 +13,7 @@ export const  User_context_provider =  ({children})=> {
     const [is_loading,set_is_loading] = useState(true);
     const [contacts,set_contacts] = useState(null);
     const [chats,set_chats] = useState(null);
-    const [active_chat,set_active_chat] = useState({})
+    const [active_chat,set_active_chat] = useState(null)
     
     useEffect(() => {
 
