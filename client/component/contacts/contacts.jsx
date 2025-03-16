@@ -83,12 +83,12 @@ const Button = ({Icon,text,handle_cleck})=> {
 
 export const Contacts = ({set_is_contact})=> {
 
-    const {user,chats,set_chats,set_active_chat_id} = useContext(User_context);
+    const {user,set_active_chat} = useContext(User_context);
 
     const [search_value,set_search_value] = useState('');
 
     const handle_open_chat = (id,name,email,profile_picture) => {
-        const new_chat = {
+        const new_ative_chat = {
             id: uuid(),
             is_new: true,
             members: [
@@ -110,19 +110,8 @@ export const Contacts = ({set_is_contact})=> {
             ]
 
         };
-
-        if(chats?.length > 0) {
-            if(chats?.includes(e=> e.members.includes({id}))) {
-                set_active_chat_id(id);
-            }else {
-                set_chats(prev=> [new_chat,...prev]);
-                set_active_chat_id(new_chat?.id);
-            }
-        }else {
-            set_chats(prev=> [new_chat,...prev]);
-            set_active_chat_id(new_chat?.id);
-        };
-        console.log(chats)
+        set_active_chat(new_ative_chat);
+        set_is_contact(false)
 
     }
 

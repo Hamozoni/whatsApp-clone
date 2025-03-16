@@ -13,7 +13,7 @@ export const  User_context_provider =  ({children})=> {
     const [is_loading,set_is_loading] = useState(true);
     const [contacts,set_contacts] = useState(null);
     const [chats,set_chats] = useState(null);
-    const [active_chat_id,set_active_chat_id] = useState('')
+    const [active_chat,set_active_chat] = useState({})
     
     useEffect(() => {
 
@@ -47,7 +47,19 @@ export const  User_context_provider =  ({children})=> {
       }, []);
 
     return (
-        <User_context.Provider value={{user,is_loading,contacts,set_contacts,chats,set_chats,active_chat_id,set_active_chat_id}}>
+        <User_context.Provider 
+            value={
+              {
+                user,
+                is_loading,
+                contacts,
+                set_contacts,
+                chats,
+                set_chats,
+                set_active_chat,
+                active_chat
+              }
+            }>
             {children}
         </User_context.Provider>
     )

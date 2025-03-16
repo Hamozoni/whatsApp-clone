@@ -19,7 +19,7 @@ const messages = [
 
 const Chat_window = () => {
 
-    const {user,chats,set_chats,active_chat_id} = useContext(User_context);
+    const {user,active_chat} = useContext(User_context);
 
 
     const [newMessage, setNewMessage] = useState('');
@@ -41,13 +41,12 @@ const Chat_window = () => {
     };
     
     useEffect(()=> {
-     const chat = chats?.filter(e=> e.id === active_chat_id)[0]
-      set_resiver(chat?.members?.filter(e=> e.id !== user?.uid)[0]);
-    },[active_chat_id]);
+      set_resiver(active_chat?.members?.filter(e=> e.id !== user?.uid)[0]);
+    },[active_chat]);
 
 
   return (
-    active_chat_id &&
+    active_chat &&
     <div className="flex-1 h-screen max-h-full flex flex-col text-[#f7f8fa]">
       <Chat_header resiver={resiver} />
       <div className="flex-1 overflow-y-auto p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern">

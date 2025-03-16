@@ -4,7 +4,7 @@ import { User_context } from "../context";
 
 export const Chat_card = ({chat})=> {
 
-    const {user,active_chat_id,set_active_chat_id} = useContext(User_context);
+    const {user,active_chat,set_active_chat} = useContext(User_context);
 
     const sender = chat?.members?.filter(e=> e.id !== user?.uid)[0];
 
@@ -12,9 +12,9 @@ export const Chat_card = ({chat})=> {
 
     return (
         <div
-            onClick={() => set_active_chat_id(chat.id)}
+            onClick={() => set_active_chat(chat)}
             className={`flex items-center cursor-pointer px-3 hover:bg-[#31414b] ${
-                active_chat_id === chat.id ? 'bg-[#222e35]' : '' }`}
+                active_chat?.id === chat.id ? 'bg-[#222e35]' : '' }`}
             >
             <div className="relative">
                 <div className="w-12 h-12 rounded-full overflow-hidden">
