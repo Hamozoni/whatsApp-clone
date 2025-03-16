@@ -6,6 +6,7 @@ import User from "../models/user.js";
 const find_user = async (req,res,next) => {
     
     res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+    
     const {email,displayName : name,photoURL:profile_picture,phoneNumber:phone_number,emailVerified:email_verified,uid: id} = req.body;
 
     if(!email) {

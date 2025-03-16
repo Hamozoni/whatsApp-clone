@@ -115,7 +115,7 @@ export default function OnboardingForm() {
              placeholder="about you..   (optional)"
             />
           {/* Submit Button */}
-          <Submit_btn text='save' is_loading={false} />
+          <Submit_btn text='update' is_loading={false} />
         </form>
       </div>
     </div>

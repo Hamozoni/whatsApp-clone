@@ -45,13 +45,13 @@ export default function SignUp() {
      
     await createUserWithEmailAndPassword(firebase_auth, email, password)
        .then(async({user})=> {
-        console.log(user);
         await updateProfile(user,{
           displayName:  name
         });
 
+        // const {email,profilePicure,phoneNumber,emailVerified} = user
 
-        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/find_user`,{email,name})
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/create_user`,{email:user?.email,name})
          router.push("/onboarding");
        })
        .catch((err)=> {
