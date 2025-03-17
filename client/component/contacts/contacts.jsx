@@ -1,6 +1,5 @@
 "use client";
 
-import { FaArrowLeftLong } from "react-icons/fa6";
 import { Search_form } from "../inputs/search_form";
 import { useContext, useState } from "react";
 import { GrGroup,GrUserAdd } from "react-icons/gr";
@@ -128,7 +127,13 @@ export const Contacts = ({set_is_contact})=> {
                         search_value={search_value}
                         set_search_value={set_search_value}
                         handle_search={()=> ''}
-                        />
+                        >
+                            <Search_form  
+                                value={search_value} 
+                                set_value={set_search_value} 
+                                handle_search={()=> ''}
+                            />
+                    </Contact_header>
                     <div className="">
                         <Button Icon={GrGroup} text='new group' handle_cleck={()=> ''} />
                         <Button Icon={GrUserAdd} text='new contact' handle_cleck={()=> set_is_new_contact(true)} /> 
