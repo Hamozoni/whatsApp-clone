@@ -77,7 +77,6 @@ export default function SignUp() {
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-4">
             <Input 
                 label='Full Name' 
                 type='text' 
@@ -111,7 +110,6 @@ export default function SignUp() {
                 placeholder=" Confirm Password" 
                 required={true}
               />
-          </div>
 
           {error && (
             <p className="text-red-500 text-sm text-center">{error}</p>

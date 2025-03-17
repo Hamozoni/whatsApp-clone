@@ -41,7 +41,6 @@ export default function SignIn() {
           </h2>
         </div>
         <form onSubmit={handle_submit} className="mt-8 space-y-5" >
-          <div className="flex flex-col gap-4">
             <Input 
                 label='Email address' 
                 type='email' 
@@ -58,7 +57,6 @@ export default function SignIn() {
                 placeholder="Password" 
                 required={true}
               />
-          </div>
 
           {error && (
             <p className="text-red-500 text-sm text-center">{error}</p>
