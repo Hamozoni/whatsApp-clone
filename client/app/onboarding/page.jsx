@@ -1,44 +1,23 @@
 "use client";
-
 import { User_context } from "@/component/context";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useState } from 'react';
 import { Input } from '@/component/inputs/input';
 import { Phone_input } from "@/component/inputs/phone_input";
 import { ImFilePicture } from "react-icons/im";
-import { useRouter } from "next/navigation";
 import { Submit_btn } from "@/component/inputs/submit_btn";
-import { Loading_component } from "@/component/loading_component";
 
 export default function OnboardingForm() {
 
 
-    const { user,is_loading } = useContext(User_context);
-    const router = useRouter()
-    const [avatar, set_avatar] = useState(null);
-    const [name, set_name] = useState(null);
-    const [phone, set_phone] = useState(null);
-    const [email, set_email] = useState(null);
+    const { user } = useContext(User_context);
+    const [avatar, set_avatar] = useState(user?.photoURL);
+    const [name, set_name] = useState(user?.displayName);
+    const [phone, set_phone] = useState(user?.phoneNumber);
+    const [email, set_email] = useState(user?.email);
     const [about, set_about] = useState(null);
     
     
-    useEffect(()=> {
-      if(!user && !is_loading) {
-        router.push('/signin');
-      }
-      if(user && !is_loading) {
-        set_avatar(user?.photoURL);
-        set_name(user?.displayName);
-        set_email(user?.email);
-        set_phone(user?.phoneNumber);
-      }
-    },[user,is_loading]);
-  
-    if(is_loading) {
-      return (
-        <Loading_component />
-      )
-    }
 
   const handle_vatar = (e) => {
     const file = e.target.files?.[0];
@@ -115,7 +94,7 @@ export default function OnboardingForm() {
              placeholder="about you..   (optional)"
             />
           {/* Submit Button */}
-          <Submit_btn text='update' is_loading={false} />
+          <Submit_btn text='save' is_loading={false} />
         </form>
       </div>
     </div>

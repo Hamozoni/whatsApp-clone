@@ -4,6 +4,6 @@ import create_contact_controller from '../controllers/create_contact_controller.
 
 const router = Router();
 
-router.post('/create_contact',create_contact_controller);
+router.post('/craete_contact',create_contact_controller);
 
 export default router;

@@ -1,4 +1,5 @@
 
+"use client"
 import React, { useState } from 'react';
 import Options_icons from './options_icons';
 import Chat_list from './chat_list';

@@ -3,6 +3,8 @@ import { firebase_auth } from "@/lib/firebase_config";
 import { createContext, useEffect, useState } from "react";
 import { setPersistence, browserLocalPersistence } from 'firebase/auth';
 import axios from "axios";
+import { Loading_component } from "./loading_component";
+import { useRouter } from "next/navigation";
 
 export const User_context = createContext();
 
@@ -13,7 +15,9 @@ export const  User_context_provider =  ({children})=> {
     const [is_loading,set_is_loading] = useState(true);
     const [contacts,set_contacts] = useState(null);
     const [chats,set_chats] = useState(null);
-    const [active_chat,set_active_chat] = useState(null)
+    const [active_chat,set_active_chat] = useState(null);
+
+    const router = useRouter();
     
     useEffect(() => {
 
@@ -45,6 +49,18 @@ export const  User_context_provider =  ({children})=> {
     
         initializeAuth();
       }, []);
+
+      useEffect(()=> {
+        if(!user && !is_loading) {
+          router.push('/signin');
+        }
+      },[user,is_loading]);
+    
+      if(is_loading) {
+        return (
+          <Loading_component />
+        )
+      }
 
     return (
         <User_context.Provider 

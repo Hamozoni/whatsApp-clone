@@ -51,7 +51,7 @@ export default function SignUp() {
 
         // const {email,profilePicure,phoneNumber,emailVerified} = user
 
-        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/create_user`,{email:user?.email,name})
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/create_user`,{email:user?.email,name,id:user?.uid})
          router.push("/onboarding");
        })
        .catch((err)=> {
