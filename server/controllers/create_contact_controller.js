@@ -33,4 +33,6 @@ const create_contact_controller = async (req,res,next)=> {
     catch (error){
         next(error);
     }
-}
+};
+
+export default create_contact_controller;
