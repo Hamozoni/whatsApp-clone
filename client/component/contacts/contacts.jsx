@@ -123,7 +123,7 @@ export const Contacts = ({set_is_contact})=> {
                  :
                 <div className="">
                     <Contact_header 
-                        title='new contact' 
+                        title='new chat' 
                         set_backword={set_is_contact}
                         search_value={search_value}
                         set_search_value={set_search_value}
