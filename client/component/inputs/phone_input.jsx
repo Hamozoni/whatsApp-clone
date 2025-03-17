@@ -3,7 +3,7 @@ import { PhoneInput } from "react-international-phone"
 
 export const Phone_input = ({value,set_value})=> {
     return (
-        <div className="">
+        <div className="my-4">
             <label htmlFor="phone" className="block text-sm font-medium mb-2">
                 Phone Number
             </label>
