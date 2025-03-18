@@ -14,10 +14,13 @@ export const New_contact = ({set_is_new_contact})=> {
     const [search_value,set_search_value] = useState('');
     const [name,set_name] = useState('');
     const [email,set_email] = useState('');
+    const [is_loading,set_is_loading] = useState(false);
+    const [error,set_error] = useState(null);
 
     const handle_contact = async (e) => {
-
         e.preventDefault();
+        set_is_loading(true);
+        set_error(null);
         try {
             const body = {
                 user_email  : user?.email,
@@ -25,14 +28,22 @@ export const New_contact = ({set_is_new_contact})=> {
                 contact_email: email,
             };
             const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/craete_contact`,body);
-
+            if(!data?.status) {
+                set_error(data?.message)
+            }else {
+                set_error(null)
+            }
             console.log(data);
-
+           
 
 
         }
         catch (error) {
             console.log(error);
+            set_error(error?.message);
+        }
+        finally {
+            set_is_loading(false);
         }
 
     }
@@ -44,9 +55,11 @@ export const New_contact = ({set_is_new_contact})=> {
                 set_backword={set_is_new_contact} 
                 />
             <form onSubmit={handle_contact} className="p-3">
-                <Input label='Contact Name' type='text' value={name} set_value={set_name} placeholder='john deo'/>
                 <Input label='Contact Email' type='email' value={email} set_value={set_email} placeholder='exable@gmail.com'/>
-                <Submit_btn text='save contact' is_loading={false} />
+                {error && (
+                        <p className="text-red-500 text-sm text-center mb-3">{error}</p>
+                )}
+                <Submit_btn text='find contact' is_loading={is_loading} />
             </form>
 
         </div>

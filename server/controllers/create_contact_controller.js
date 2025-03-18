@@ -7,11 +7,11 @@ const create_contact_controller = async (req,res,next)=> {
     console.log(req.body);
     
     if(!user_email) {
-        return res.json({message: 'user id is requared ',status: false});
+        return res.json({message: 'user email is requared ',status: false});
     };
 
     if(!contact_email) {
-        return res.json({message: 'provide at least one email or phone number ',status: false});
+        return res.json({message: 'contact email is requared ',status: false});
     }
 
     try {
