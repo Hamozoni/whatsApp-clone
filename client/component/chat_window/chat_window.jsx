@@ -20,8 +20,6 @@ const Chat_window = () => {
     
     useEffect(() => {
       set_receiver(active_chat?.members?.filter(e=> e.id !== user?.uid)[0]);
-
-
       const fetch_messages = async ()=> {
         try{
   
@@ -38,7 +36,7 @@ const Chat_window = () => {
       }
 
       fetch_messages();
-      
+
     },[active_chat]);
 
 
@@ -60,7 +58,7 @@ const Chat_window = () => {
                 ))}
               </div>
             </div>
-            <Message_input />
+            <Message_input set_message={set_message} message={message} handle_send={()=> ''}/>
         </div> 
         : 
         <div className=" h-screen max-h-full flex items-center justify-center bg-[#222e35]">

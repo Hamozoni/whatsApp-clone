@@ -5,32 +5,41 @@ import { v4 as uuid } from "uuid";
 
 export const Contact_card = ({id,email,profile_picture,name,set_is_contact})=> {
 
-    const {user,set_active_chat} = useContext(User_context);
+    const {user,set_active_chat,chats} = useContext(User_context);
 
     const handle_open_chat = (id,name,email,profile_picture) => {
-        const new_ative_chat = {
-            id: uuid(),
-            is_new: true,
-            members: [
-                {
-                    id,
-                    name,
-                    email,
-                    profile_picture,
-                    is_online: false
-                },
-                {
-                    id: user?.uid,
-                    name: user?.name,
-                    email:  user?.email,
-                    profile_picture: user?.photoURL,
-                    is_online: false
-                },
 
-            ]
+        const exist_chat = chats.find(e=> e?.members?.some(member=> member?.email === email) && e?.members?.some(member=> member?.is_group === false));
 
-        };
-        set_active_chat(new_ative_chat);
+
+        if(!exist_chat) {
+            const new_ative_chat = {
+                id: uuid(),
+                is_group: false,
+                members: [
+                    {
+                        id,
+                        name,
+                        email,
+                        profile_picture,
+                        is_online: false
+                    },
+                    {
+                        id: user?.uid,
+                        name: user?.name,
+                        email:  user?.email,
+                        profile_picture: user?.photoURL,
+                        is_online: false
+                    },
+    
+                ]
+    
+            };
+            set_active_chat(new_ative_chat);
+
+        }else {
+            set_active_chat(exist_chat);
+        }
         set_is_contact(false);
 
     }
