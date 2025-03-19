@@ -3,11 +3,7 @@ import Chat from '../models/chat.js';
 
 const get_chats_contacts = async (req,res,next) => {
 
-    // res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
-
     const {email} = req.query;
-
-    console.log(email);
 
     if(!email) {
         return res.json({message: 'email is reqiured', status: false});
@@ -15,7 +11,6 @@ const get_chats_contacts = async (req,res,next) => {
     try {
 
         const user = await User.findOne({email});
-        console.log(user);
 
         if(!user) {
             return res.json({message: 'user is not found', status: false});
@@ -27,7 +22,6 @@ const get_chats_contacts = async (req,res,next) => {
         if(!chats) {
             return res.json({message: 'user does not have a chat', status: false, chats: null})
         };
-        console.log(chats);
 
         return res.json({message: 'user chats found', status: true, chats});
 

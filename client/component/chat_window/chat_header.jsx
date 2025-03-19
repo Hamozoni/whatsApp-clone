@@ -4,21 +4,21 @@ import { HiOutlineDotsVertical } from "react-icons/hi"
 import { IoCallOutline,IoVideocamOutline  } from "react-icons/io5";
 
 
-export const Chat_header = ({resiver})=> {
+export const Chat_header = ({receiver})=> {
 
 
     return (
         <div className="p-3 bg-[#222e35] text-[#f7f8fa] flex items-center">
             <div className="w-10 h-10 rounded-full overflow-hidden">
-                <img src={resiver?.profile_picture} alt="Profile" className="w-full h-full object-cover" />
+                <img src={receiver?.profile_picture} alt="Profile" className="w-full h-full object-cover" />
             </div>
             <div className="ml-4 flex-1">
                 <h2 className="font-semibold text-[#f7f8fa]">
                 {/* {chats.find(chat => chat.id === activeChat)?.name} */}
-                   {resiver?.name}
+                   {receiver?.name}
                 </h2>
                 <p className="text-sm font-light text-[#f7f8fa]">
-                {resiver?.in_online ? 'online' : 'offline'}
+                {receiver?.in_online ? 'online' : 'offline'}
                 </p>
             </div>
             <div className="flex gap-5 items-center">

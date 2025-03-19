@@ -24,25 +24,29 @@ app.use(cors({
     credentials: true, // Enable if using cookies/auth
   }));
 
+  const socket_io = new Server(server, {
+    cors: {
+      origin: "http://localhost:3000",
+      methods: ["GET", "POST"],
+      allowedHeaders: ["Authorization"], // If using auth headers
+      credentials: true // Only needed if using cookies/auth
+    }
+  });
 
-const socket_io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Authorization"], // If using auth headers
-    credentials: true // Only needed if using cookies/auth
-  }
-});
   
   
-app.use(express.json());
+  app.use(express.json());
+  
+  app.use('/api/auth',auth_route);
+  app.use('/api',chats_contacts_route);
+  app.use('/api',create_user_route);
+  app.use('/api',create_contact_route);
 
-app.use('/api/auth',auth_route);
-app.use('/api',chats_contacts_route);
-app.use('/api',create_user_route);
-app.use('/api',create_contact_route);
-
-
+  socket_io.on('connection',socket => {
+    console.log('User connected:', socket.id);
+  })
+  
+  
 server.listen(process.env.PORT,()=> {
     console.log(`server is listening to port ${process.env.PORT}`);
 });

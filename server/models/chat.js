@@ -30,6 +30,11 @@ const CHAT_SCHEMA = new mongoose.Schema({
           default: 'TEXT'},
       created_at : {type: Date, default: Date.now()},
       updated_at : {type: Date, default: Date.now()},
+      status: { 
+        type: String, 
+        enum: ['SENT', 'DELIVERED', 'READ'], 
+        default: 'SENT' 
+      },
     }],
     created_at : {type: Date, default: Date.now()},
     updated_at : {type: Date, default: Date.now()},

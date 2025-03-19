@@ -24,7 +24,6 @@ const create_contact_controller = async (req,res,next)=> {
         };
 
         const user_contacts = existing_user?.contacts?.find(e=> e.email === contact_email);
-        console.log(user_contacts)
 
         if(user_contacts) {
             return res.json({message: 'contact is one of your contacts',status: false,contact: user_contacts});
