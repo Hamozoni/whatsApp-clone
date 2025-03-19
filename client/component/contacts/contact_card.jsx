@@ -9,7 +9,7 @@ export const Contact_card = ({id,email,profile_picture,name,set_is_contact})=> {
 
     const handle_open_chat = (id,name,email,profile_picture) => {
 
-        const exist_chat = chats.find(e=> e?.members?.some(member=> member?.email === email) && e?.members?.some(member=> member?.is_group === false));
+        const exist_chat = chats?.find(e=> e?.members?.some(member=> member?.email === email) && e?.members?.some(member=> member?.is_group === false));
 
 
         if(!exist_chat) {

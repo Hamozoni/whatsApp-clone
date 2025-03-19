@@ -2,11 +2,7 @@ import mongoose from 'mongoose';
 import {v4 as uuid} from 'uuid';
 
 const USER_SCHEMA = new mongoose.Schema({
-    id: {
-        type: String,
-        unique: true,
-        default: uuid,
-    },
+    _id: {type: String,require: true,default:uuid},
     name: {type: String,require: true},
     email: {type: String,require: true,unique: true},
     phone: {type: String,require: false},
@@ -16,9 +12,9 @@ const USER_SCHEMA = new mongoose.Schema({
     picture_id: {type: String,require: false},
     password: {type: String,require: false},
     provider :{type: String,require: false},
-    created_at : {type: Date, default: Date.now()},
-    updated_at : {type: Date, default: Date.now()},
-},{timestamps: false});
+    chats: [{type: String, ref: 'Chat'}],
+    contact: [{type: String, ref: 'User'}],
+},{timestamps: true});
 
  const User = mongoose.model('User',USER_SCHEMA);
 

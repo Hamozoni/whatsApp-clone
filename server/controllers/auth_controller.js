@@ -7,7 +7,7 @@ const find_user = async (req,res,next) => {
     
     res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
     
-    const {email,displayName : name,photoURL:profile_picture,phoneNumber:phone_number,emailVerified:email_verified,uid: id} = req.body;
+    const {email,displayName : name,photoURL:profile_picture,phoneNumber:phone_number,emailVerified:email_verified,uid: _id} = req.body;
 
     if(!email) {
        return res.json({message: 'email is reqiured', status: false});
@@ -21,7 +21,7 @@ const find_user = async (req,res,next) => {
         }
         if(!exist_user) {
             const user = {
-                id,
+                _id,
                 email,
                 name,
                 profile_picture,
