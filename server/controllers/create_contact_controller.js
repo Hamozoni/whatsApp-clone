@@ -2,12 +2,14 @@ import User from "../models/user.js";
 
 const create_contact_controller = async (req,res,next)=> {
 
-    const {user_email,contact_name,contact_email} = req.body;
-
-    console.log(req.body);
+    const {user_email,contact_email} = req.body;
     
     if(!user_email) {
         return res.json({message: 'user email is requared ',status: false});
+    };
+
+    if(user_email === contact_email) {
+        return res.json({message: 'you can not send to your self',status: false});
     };
 
     if(!contact_email) {

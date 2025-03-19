@@ -119,6 +119,7 @@ export const Contacts = ({set_is_contact})=> {
                                         email={email} 
                                         profile_picture={profile_picture} 
                                         name={name}
+                                        set_is_contact={set_is_contact}
                                         /> 
                                 ))
                             }

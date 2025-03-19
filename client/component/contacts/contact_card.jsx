@@ -3,7 +3,7 @@ import { Avatar } from "../avatar";
 import { User_context } from "../context";
 import { v4 as uuid } from "uuid";
 
-export const Contact_card = ({email,profile_picture,name,set_is_contact})=> {
+export const Contact_card = ({id,email,profile_picture,name,set_is_contact})=> {
 
     const {user,set_active_chat} = useContext(User_context);
 
@@ -38,7 +38,7 @@ export const Contact_card = ({email,profile_picture,name,set_is_contact})=> {
 
     return (
         <div 
-            onClick={ ()=> handle_open_chat(_id,name,email,profile_picture)}
+            onClick={ ()=> handle_open_chat(id,name,email,profile_picture)}
             className="cursor-pointer flex items-center gap-3 w-full px-3 hover:bg-[#222e35]">
                 <Avatar size='lg' user_photo={profile_picture} />
                 <div className="flex flex-col border-b flex-1 border-b-[#222e35] py-3">

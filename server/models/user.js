@@ -12,7 +12,7 @@ const USER_SCHEMA = new mongoose.Schema({
     phone: {type: String,require: false},
     about: {type: String,require: false},
     email_verified:{type: Boolean, default: false },
-    profile_picture: {type: String,require: false,default: '/placehodler_avatar.jpg'},
+    profile_picture: {type: String,require: false,default: '/placeholder_avatar.jpg'},
     picture_id: {type: String,require: false},
     password: {type: String,require: false},
     provider :{type: String,require: false},
