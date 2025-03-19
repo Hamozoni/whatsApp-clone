@@ -11,9 +11,9 @@ export default function OnboardingForm() {
 
 
     const { user } = useContext(User_context);
-    const [avatar, set_avatar] = useState(user?.photoURL);
-    const [name, set_name] = useState(user?.displayName);
-    const [phone, set_phone] = useState(user?.phoneNumber);
+    const [avatar, set_avatar] = useState(user?.profile_picture);
+    const [name, set_name] = useState(user?.name);
+    const [phone, set_phone] = useState(user?.phone);
     const [email, set_email] = useState(user?.email);
     const [about, set_about] = useState(null);
     

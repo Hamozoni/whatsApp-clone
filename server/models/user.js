@@ -13,7 +13,7 @@ const USER_SCHEMA = new mongoose.Schema({
     password: {type: String,require: false},
     provider :{type: String,require: false},
     chats: [{type: String, ref: 'Chat'}],
-    contact: [{type: String, ref: 'User'}],
+    contacts: [{type: String, ref: 'User'}],
 },{timestamps: true});
 
  const User = mongoose.model('User',USER_SCHEMA);

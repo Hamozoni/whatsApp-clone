@@ -4,11 +4,11 @@ import cors from "cors";
 import http from 'http'
 import { Server } from "socket.io";
 
-import  auth_route  from "./routes/auth_route.js";
-import chats_contacts_route from "./routes/chats_contacts_route.js";
-import create_user_route from './routes/create_user_route.js';
-import create_contact_route from "./routes/create_contact_route.js"
 import connect_db from "./lib/database.js";
+
+import  auth_route  from "./routes/auth_route.js";
+import create_contact_route from "./routes/create_contact_route.js"
+import user_router from "./routes/user_route.js";
 
 
 dotenv.config();
@@ -38,8 +38,7 @@ app.use(cors({
   app.use(express.json());
   
   app.use('/api/auth',auth_route);
-  app.use('/api',chats_contacts_route);
-  app.use('/api',create_user_route);
+  app.use('/api',user_router);
   app.use('/api',create_contact_route);
 
   socket_io.on('connection',socket => {
