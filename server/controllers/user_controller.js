@@ -11,13 +11,23 @@ export const get_user_controller = async (req,res,next) => {
 
     try {
 
-        const user = await User.findOne({email: user_email}).populate('contacts').populate('chats').exec()
+        const user = await User.findOne({email: user_email})
 
         if(!user) {
             return res.json({message: 'user is not found', status: false});
         }
+        
+        const user_info = await User.findById(user?._id).populate({
+            path: 'contacts',
+            options: { 
+              allowEmptyArray: true,
+              retainNullValues: true 
+            }
+          })
 
-        return res.json({message: 'user info found', status: true, user,contacts: user?.contacts,chats: user?.chats});
+          console.log(user_info)
+        
+        return res.json({message: 'user info found', status: true, user,contacts: user_info?.contacts});
 
     }
     catch (error) {
