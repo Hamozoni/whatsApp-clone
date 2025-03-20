@@ -12,6 +12,7 @@ const USER_SCHEMA = new mongoose.Schema({
     picture_id: {type: String,require: false},
     password: {type: String,require: false},
     provider :{type: String,require: false},
+    is_online: {type: Boolean,default: false},
     contacts: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
 },{timestamps: true});
 

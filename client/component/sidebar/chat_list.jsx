@@ -41,7 +41,7 @@ const Chat_list = ()=> {
                     {chats?.map(chat => (
                         // chat?.last_message?.length > 0 &&
                         <Chat_card 
-                            key={chat?.id} 
+                            key={chat?._id} 
                             chat={chat} 
                         />
                     ))}
