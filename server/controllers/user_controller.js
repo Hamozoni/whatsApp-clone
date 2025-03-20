@@ -49,7 +49,6 @@ export const post_user_controller = async (req,res,next)=> {
         if(!exist_user) {
             const user = {
                 id: uid,
-                _id: uid,
                 email,
                 name,
                 profile_picture,
