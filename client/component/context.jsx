@@ -30,7 +30,7 @@ export const  User_context_provider =  ({children})=> {
             set_user_auth(user)
             try {
               const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user`,{
-                params : {user_id: user?.uid }
+                params : {user_email: user?.email }
               })
               set_user(data?.user);
               set_is_loading(false);
@@ -47,7 +47,7 @@ export const  User_context_provider =  ({children})=> {
         };
     
         initializeAuth();
-      }, []);
+      }, [user_auth]);
 
       useEffect(()=> {
         if(!user_auth && !is_loading) {

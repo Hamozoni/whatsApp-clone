@@ -1,8 +1,17 @@
 import mongoose from 'mongoose';
-import {v4 as uuid} from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 const USER_SCHEMA = new mongoose.Schema({
-    _id: {type: String,require: true,default:uuid},
+    _id: {
+        type: String,
+        default: () => uuidv4(),
+        required: true
+      },
+      id: {
+        type: String,
+        default: () => uuidv4(),
+        required: true
+      },
     name: {type: String,require: true},
     email: {type: String,require: true,unique: true},
     phone: {type: String,require: false},
@@ -12,8 +21,8 @@ const USER_SCHEMA = new mongoose.Schema({
     picture_id: {type: String,require: false},
     password: {type: String,require: false},
     provider :{type: String,require: false},
-    chats: [{type: String, ref: 'Chat'}],
-    contacts: [{type: String, ref: 'User'}],
+    chats: [{type: mongoose.Schema.Types.ObjectId, ref: 'Chat'}],
+    contacts: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
 },{timestamps: true});
 
  const User = mongoose.model('User',USER_SCHEMA);

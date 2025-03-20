@@ -1,13 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import http from 'http'
+import http from 'http';
+
 import { Server } from "socket.io";
 
 import connect_db from "./lib/database.js";
-
-import  auth_route  from "./routes/auth_route.js";
-import create_contact_route from "./routes/create_contact_route.js"
 import user_router from "./routes/user_route.js";
 
 
@@ -37,9 +35,8 @@ app.use(cors({
   
   app.use(express.json());
   
-  app.use('/api/auth',auth_route);
   app.use('/api',user_router);
-  app.use('/api',create_contact_route);
+  // app.use('/api',create_contact_route);
 
   socket_io.on('connection',socket => {
     console.log('User connected:', socket.id);

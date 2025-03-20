@@ -39,33 +39,41 @@ export default function SignUp() {
     if (!validateForm()) return;
 
     set_loading(true);
-    set_error("");
+    set_error(null);
 
     try {
      
-    await createUserWithEmailAndPassword(firebase_auth, email, password)
-       .then(async({user})=> {
-        await updateProfile(user,{
-          displayName:  name
-        });
+        await createUserWithEmailAndPassword(firebase_auth, email, password)
+        .then(async({user})=> {
 
-        // const {email,profilePicure,phoneNumber,emailVerified} = user
+          const {email,photoURL,phoneNumber,emailVerified,uid} = user;
 
-        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user`,{email:user?.email,name,_id:user?.uid})
-         router.push("/onboarding");
-       })
-       .catch((err)=> {
-        console.log(err?.message);
-        set_error(err.message);
-        // router.push("/error");
-       })
+          const user_data = {
+            uid,
+            email,
+            displayName: name,
+            photoURL,
+            phoneNumber,
+            emailVerified,
+          }
 
+          const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user`,user_data);
+
+          console.log(data);
+
+            router.push('/onboarding')
+
+        })
+        .catch((error)=> {
+          console.log(error)
+        })
       
-    } catch (err) {
-      set_error(err.message);
-    } finally {
-      set_loading(false);
-    }
+      } catch (err) {
+        set_error(err.message);
+        console.log(error)
+      } finally {
+        set_loading(false);
+      }
   };
 
   return (

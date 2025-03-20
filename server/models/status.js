@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import {v4 as uuid} from 'uuid';
+// import {v4 as uuid} from 'uuid';
 
 const STATUS_SCHEMA = new mongoose.Schema({
-    _id: {type: String,require: true,default:uuid},
+
     text: {type: String},
     media: {type: String},
     aother: {type: String, ref: 'User'},
@@ -12,7 +12,7 @@ const STATUS_SCHEMA = new mongoose.Schema({
     expires_at: {type: Date, require: true}
 },{timestamps: true});
 
-STATUS_SCHEMA.index({expires_at: 1},{ expireAfterSeconds: 0 });
+STATUS_SCHEMA.index({expires_at: 1},{ expireAfterSeconds: 0 })
 
 
 const Status = mongoose.model('Status',STATUS_SCHEMA);

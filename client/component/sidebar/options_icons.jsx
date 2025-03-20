@@ -4,6 +4,8 @@ import { SiGradleplaypublisher } from "react-icons/si";
 import { MdOutlineGroups2 } from "react-icons/md";
 import { IoIosStarOutline } from "react-icons/io";
 import { Avatar } from "../avatar";
+import { useContext } from "react";
+import { User_context } from "../context";
 
 const options = [
     {Icon: BsChatText,text: 'chats'},
@@ -12,7 +14,9 @@ const options = [
     {Icon: MdOutlineGroups2,text: 'groups'},
 ]
 
-export default function Options_icons ({user_photo,active_option,set_active_option}) {
+export default function Options_icons ({active_option,set_active_option}) {
+
+    const {user} = useContext(User_context);
 
     const Option = ({Icon,text})=> {
         return (
@@ -26,7 +30,8 @@ export default function Options_icons ({user_photo,active_option,set_active_opti
                 <div className=""></div>
             </button>
         )
-    }
+    };
+
     return (
         <nav className=" flex flex-col justify-between items-center px-2 py-4  bg-[#222e35]" >
             <section className="flex flex-col gap-2">
@@ -45,7 +50,7 @@ export default function Options_icons ({user_photo,active_option,set_active_opti
                 <hr className="text-[#394b55] my-5" />
                 <section className="flex flex-col gap-3" >
                     <Option Icon={IoSettingsOutline} text='settings' />
-                    <Avatar user_photo={user_photo} />
+                    <Avatar user_photo={user?.profile_picture} />
                 </section>
             </section>
         </nav>

@@ -19,7 +19,7 @@ const messages = [
 ];
 
 
-const Sidebar = ({user}) => {
+const Sidebar = () => {
 
   const [active_option,set_active_option] = useState('chats');
   const [activeChat, setActiveChat] = useState(1);
@@ -43,7 +43,6 @@ const Sidebar = ({user}) => {
   return (
     <section className='flex w-[450px] h-screen max-h-full'>
        <Options_icons 
-         user_photo={user?.photoURL}
           active_option={active_option}
           set_active_option={set_active_option}
         />

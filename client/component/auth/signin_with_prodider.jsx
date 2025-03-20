@@ -26,15 +26,15 @@ export function Sigin_sith_prvider ({link_to}) {
           const {email,displayName,photoURL,phoneNumber,emailVerified,uid} = user;
 
           const user_data = {
+            uid,
             email,
             displayName,
             photoURL,
             phoneNumber,
             emailVerified,
-            uid
           }
 
-          const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/find_user`,user_data);
+          const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user`,user_data);
 
           console.log(data);
           setIsLoading(false);

@@ -11,7 +11,7 @@ import { Message_card } from './message_card';
 
 const Chat_window = () => {
 
-    const {user,active_chat,chats,set_chats} = useContext(User_context);
+    const {user,active_chat} = useContext(User_context);
 
 
     const [message, set_message] = useState('');
