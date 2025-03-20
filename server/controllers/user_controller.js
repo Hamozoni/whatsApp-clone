@@ -51,7 +51,7 @@ export const post_user_controller = async (req,res,next)=> {
                 id: uid,
                 email,
                 name,
-                profile_picture,
+                profile_picture : profile_picture || '/placeholder_avatar.jpg',
                 email_verified,
                 phone_number
             }
