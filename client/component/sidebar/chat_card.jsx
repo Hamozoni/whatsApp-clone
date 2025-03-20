@@ -6,9 +6,8 @@ export const Chat_card = ({chat})=> {
 
     const {user,active_chat,set_active_chat} = useContext(User_context);
 
-    const sender = chat?.members?.filter(e=> e.id !== user?.uid)[0];
+    const sender = chat?.members?.filter(e=> e?._id !== user?._id)[0];
 
-    console.log(sender)
 
     return (
         <div

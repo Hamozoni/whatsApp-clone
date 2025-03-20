@@ -35,7 +35,7 @@ export const  User_context_provider =  ({children})=> {
                 params : {user_email: user?.email }
               })
               set_user(data?.user);
-              set_contacts(data?.contacts);
+              set_contacts(data?.user?.contacts);
               set_chats(data?.chats);
               set_is_loading(false);
 
@@ -75,7 +75,9 @@ export const  User_context_provider =  ({children})=> {
                 set_contacts,
                 is_loading,
                 set_active_chat,
-                active_chat
+                active_chat,
+                chats,
+                set_chats
               }
             }>
             {children}

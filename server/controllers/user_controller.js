@@ -1,3 +1,4 @@
+import Chat from '../models/chat.js';
 import User from '../models/user.js';
 
 export const get_user_controller = async (req,res,next) => {  
@@ -11,23 +12,23 @@ export const get_user_controller = async (req,res,next) => {
 
     try {
 
-        const user = await User.findOne({email: user_email})
+        const user = await User.findOne({email: user_email}).populate('contacts').exec()
 
         if(!user) {
             return res.json({message: 'user is not found', status: false});
         }
         
-        const user_info = await User.findById(user?._id).populate({
-            path: 'contacts',
-            options: { 
-              allowEmptyArray: true,
-              retainNullValues: true 
-            }
-          })
+        // const user_info = await User.findById(user?._id).populate({
+        //     path: 'contacts',
+        //     options: { 
+        //       allowEmptyArray: true,
+        //       retainNullValues: true 
+        //     }
+        //   });
 
-          console.log(user_info)
+        const chats = await Chat.find({members: user?._id}).populate('members').populate('last_message')
         
-        return res.json({message: 'user info found', status: true, user,contacts: user_info?.contacts});
+        return res.json({message: 'user info found', status: true, user,chats});
 
     }
     catch (error) {

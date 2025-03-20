@@ -33,6 +33,8 @@ export const Message_input = ()=> {
 
             console.log(data);
 
+            set_message('')
+
         }
         catch (error) {
             console.log(error);

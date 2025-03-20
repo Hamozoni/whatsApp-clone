@@ -4,11 +4,11 @@ import { User_context } from "../context";
 
 export const Contact_card = ({_id,email,profile_picture,name,set_is_contact})=> {
 
-    const {user,set_active_chat} = useContext(User_context);
+    const {user,chats,set_active_chat} = useContext(User_context);
 
     const handle_open_chat = () => {
 
-        const exist_chat = user?.chats?.find(e=> e === _id && e?.is_group === false);
+        const exist_chat = chats?.find(e=> e?.members.includes(_id)  && e?.is_group === false);
         
         if(!exist_chat) {
             const new_ative_chat = {
