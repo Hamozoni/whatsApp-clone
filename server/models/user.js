@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import {v4 as uuidv4} from 'uuid';
 
 const USER_SCHEMA = new mongoose.Schema({
+    id: {type: String, require: true,unique: true, default: ()=> uuidv4()},
     name: {type: String,require: true},
     email: {type: String,require: true,unique: true},
     phone: {type: String,require: false},

@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 // import {v4 as uuid} from 'uuid';
 
 const STATUS_SCHEMA = new mongoose.Schema({
-
     text: {type: String},
     media: {type: String},
     aother: {type: String, ref: 'User'},
