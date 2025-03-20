@@ -33,10 +33,8 @@ export const update_contact_controller = async (req,res,next)=> {
 
     const {user_id,contact_id} = req.body;
 
-    console.log({user_id,contact_id});
-
     if(!user_id || !contact_id) {
-        return res.json({message: 'user or contact IDs is missing ', status: fals})
+        return res.json({message: 'user or contact IDs is missing ', status: false})
     };
 
 
@@ -45,13 +43,19 @@ export const update_contact_controller = async (req,res,next)=> {
         const user = await User.findById(user_id);
 
         if(!user) {
-            return res.json({message: 'user is not found', status: fals})
+            return res.json({message: 'user is not found', status: false})
         }
 
         const contact = await User.findById(contact_id);
 
         if(!contact) {
-            return res.json({message: 'contact is not found', status: fals})
+            return res.json({message: 'contact is not found', status: false})
+        };
+
+        const exist_contact = await User.findById({_id: user_id,contacts: contact_id});
+
+        if(exist_contact) {
+            return res.json({message: 'user is one of your contact',status: false})
         };
 
 
@@ -60,6 +64,7 @@ export const update_contact_controller = async (req,res,next)=> {
                 $addToSet :{ contacts: contact_id}
             },{ new: true }
         ).populate('contacts');
+
 
         return res.json({message: 'contact has been created',status: true,user:updated_user})
     }

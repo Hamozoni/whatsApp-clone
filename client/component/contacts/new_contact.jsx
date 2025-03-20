@@ -64,11 +64,14 @@ export const New_contact = ({set_is_new_contact})=> {
         try {
             const {data} = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/contact`,body);
 
-            set_contacts(prev=> [data?.user?.contacts,...prev])
+            if(data?.status) {
+                set_contacts(data?.user?.contacts)
+            }
+
             console.log(data);
         }
         catch (error) {
-
+            console.log(error)
         }
         finally {
             set_is_loading(false)
@@ -108,7 +111,7 @@ export const New_contact = ({set_is_new_contact})=> {
                                     <p className="text-red-500 text-sm text-center mb-3">{error}</p>
                             )}
                             { 
-                            !contacts?.find(e=> e.email === email) &&
+                            !contacts?.find(e=> e.email === contact?.email) &&
                             <form onSubmit={handle_adding_contact} className="p-3">
                                 <Submit_btn text='Add To Your Contact' is_loading={is_loading} />
                             </form>

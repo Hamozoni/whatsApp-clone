@@ -72,6 +72,7 @@ export const  User_context_provider =  ({children})=> {
                 user_auth,
                 user,
                 contacts,
+                set_contacts,
                 is_loading,
                 set_active_chat,
                 active_chat
