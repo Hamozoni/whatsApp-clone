@@ -48,11 +48,14 @@ export const Contact_card = ({id,email,profile_picture,name,set_is_contact})=> {
     return (
         <div 
             onClick={ ()=> handle_open_chat(id,name,email,profile_picture)}
-            className="cursor-pointer flex items-center gap-3 w-full px-3 hover:bg-[#222e35]">
-                <Avatar size='lg' user_photo={profile_picture} />
-                <div className="flex flex-col border-b flex-1 border-b-[#222e35] py-3">
+            className="cursor-pointer flex items-center gap-3 w-full px-3 hover:bg-[#222e35]"
+            >
+            <Avatar size='lg' user_photo={profile_picture} />
+            <div className="flex flex-col border-b flex-1 border-b-[#222e35] py-3">
                 <h5>{name}</h5>
-                <span className="text-xs font-light text-gray-400">{email}</span>
+                <span className="text-xs font-light text-gray-400">
+                    {email}
+                </span>
             </div>
         </div>
     )

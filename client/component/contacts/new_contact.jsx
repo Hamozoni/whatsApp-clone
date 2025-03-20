@@ -22,12 +22,14 @@ export const New_contact = ({set_is_new_contact})=> {
         set_contact(null);
         set_is_loading(true);
         set_error(null);
+        if(email === user?.email) {
+            set_error('you can not add your email');
+            set_is_loading(false);
+            return;
+        }
         try {
-            const body = {
-                user_email  : user?.email,
-                contact_email: email,
-            };
-            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/craete_contact`,body);
+
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/contact?user_email=${user?.email}&contact_email=${email}`);
             if(!data?.status) {
                 set_error(data?.message)
             }else {
@@ -47,6 +49,32 @@ export const New_contact = ({set_is_new_contact})=> {
             set_is_loading(false);
         }
 
+    };
+
+    const handle_adding_contact = async(e)=> {
+        e.preventDefault();
+        set_error(null);
+        set_is_loading(true);
+
+        const body = {
+            user_id: user?._id,
+            contact_id : contact?._id
+        }
+
+        try {
+            const {data} = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/contact`,body);
+
+            
+
+
+            console.log(data);
+        }
+        catch (error) {
+
+        }
+        finally {
+            set_is_loading(false)
+        }
     }
 
     return (
@@ -57,16 +85,19 @@ export const New_contact = ({set_is_new_contact})=> {
                 />
             <form onSubmit={handle_contact} className="p-3">
                 <Input label='Contact Email' type='email' value={email} set_value={set_email} placeholder='exable@gmail.com'/>
-                {error && (
+                {(!contact && error) && (
                         <p className="text-red-500 text-sm text-center mb-3">{error}</p>
                 )}
-                <Submit_btn text='find contact' is_loading={is_loading} />
+                {
+                    contact?.email !== email &&
+                   <Submit_btn text='find contact' is_loading={is_loading} />
+                }
             </form>
 
                 {
                     contact && (
                     <div className="bt-3">
-                        <h6 className="p-3">search results : </h6>
+                        <h6 className="p-3">search result : </h6>
                         <Contact_card 
                             id={contact?.id}
                             email={contact?.email}
@@ -75,6 +106,12 @@ export const New_contact = ({set_is_new_contact})=> {
                             set_is_contact={set_is_new_contact}
                         
                              />
+                           {(contact && error) && (
+                                    <p className="text-red-500 text-sm text-center mb-3">{error}</p>
+                            )}
+                         <form onSubmit={handle_adding_contact} className="p-3">
+                            <Submit_btn text='Add To Your Contact' is_loading={is_loading} />
+                         </form>
                      </div>
                     )
                 }

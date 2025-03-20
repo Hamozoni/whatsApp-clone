@@ -15,6 +15,8 @@ export const  User_context_provider =  ({children})=> {
     const [user_auth,set_user_auth] = useState(null);
     const [is_loading,set_is_loading] = useState(true);
     const [active_chat,set_active_chat] = useState(null);
+    const [contacts,set_contacts] = useState([]);
+    const [chats,set_chats] = useState([]);
 
     const router = useRouter();
     
@@ -33,12 +35,14 @@ export const  User_context_provider =  ({children})=> {
                 params : {user_email: user?.email }
               })
               set_user(data?.user);
+              set_contacts(data?.contacts);
+              set_chats(data?.chats);
               set_is_loading(false);
-              console.log(data);
+
+              console.log(data)
 
             }
             catch(error) {
-              console.log(error?.message)
               set_is_loading(false);
             }
           });

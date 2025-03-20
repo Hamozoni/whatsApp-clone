@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { post_contact_controller } from "../controllers/contact_controllerjs";
+import { get_contact_controller, update_contact_controller } from "../controllers/contact_controller.js";
 
 
 const router = Router();
 
-router.post('/craete_contact',post_contact_controller);
+router.get('/contact',get_contact_controller);
+router.put('/contact',update_contact_controller);
 
 export default router;

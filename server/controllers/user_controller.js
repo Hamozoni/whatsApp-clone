@@ -8,17 +8,16 @@ export const get_user_controller = async (req,res,next) => {
     if(!user_email) {
         return res.json({message: 'user email is reqiured', status: false});
      };
+
     try {
 
-        const user = await User.findOne({email: user_email});
+        const user = await User.findOne({email: user_email}).populate('contacts').populate('chats').exec()
 
         if(!user) {
             return res.json({message: 'user is not found', status: false});
         }
 
-        const user_info = await User.findOne({email: user_email});
-
-        return res.json({message: 'user info found', status: true, user: user_info});
+        return res.json({message: 'user info found', status: true, user,contacts: user?.contacts,chats: user?.chats});
 
     }
     catch (error) {

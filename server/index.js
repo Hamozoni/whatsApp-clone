@@ -7,6 +7,7 @@ import { Server } from "socket.io";
 
 import connect_db from "./lib/database.js";
 import user_router from "./routes/user_route.js";
+import contact_route from "./routes/contact_route.js"
 
 
 dotenv.config();
@@ -36,7 +37,7 @@ app.use(cors({
   app.use(express.json());
   
   app.use('/api',user_router);
-  // app.use('/api',create_contact_route);
+  app.use('/api',contact_route);
 
   socket_io.on('connection',socket => {
     console.log('User connected:', socket.id);
