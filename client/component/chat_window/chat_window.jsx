@@ -12,10 +12,6 @@ import { Message_card } from './message_card';
 const Chat_window = () => {
 
     const {user,active_chat} = useContext(User_context);
-
-
-
-    const [message, set_message] = useState('');
     const [messages, set_messages] = useState([]);
     const [receiver, set_receiver] = useState(null);
     
@@ -24,7 +20,7 @@ const Chat_window = () => {
       const fetch_messages = async ()=> {
         try{
   
-          const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/chat_messages/:chat_id`);
+          const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/chat`);
   
           console.log(data);
   
@@ -37,7 +33,6 @@ const Chat_window = () => {
       }
 
       fetch_messages();
-      console.log(active_chat)
 
     },[active_chat]);
 
@@ -60,7 +55,7 @@ const Chat_window = () => {
                 ))}
               </div>
             </div>
-            <Message_input set_message={set_message} message={message} handle_send={()=> ''}/>
+            <Message_input receiver={receiver?._id}/>
         </div> 
         : 
         <div className=" h-screen max-h-full flex items-center justify-center bg-[#222e35]">

@@ -6,25 +6,10 @@ import Chat_list from './chat_list';
 import { Setting } from './setting';
 
 
-const chats = [
-  { id: 1, name: 'John Doe', lastMessage: 'Hey, how are you?', timestamp: '10:30 AM', unread: 2, online: true, avatar: '/avatars/1.jpg' },
-  { id: 2, name: 'Jane Smith', lastMessage: 'See you tomorrow!', timestamp: '9:45 AM', unread: 0, online: false, avatar: '/avatars/2.jpg' },
-  { id: 3, name: 'Mike Johnson', lastMessage: 'Thanks for the help!', timestamp: 'Yesterday', unread: 1, online: true, avatar: '/avatars/3.jpg' },
-];
-
-const messages = [
-  { id: 1, text: 'Hey, how are you?', sender: 'them', timestamp: '10:30 AM', status: 'delivered' },
-  { id: 2, text: 'I\'m good, thanks! How about you?', sender: 'me', timestamp: '10:31 AM', status: 'read' },
-  { id: 3, text: 'Pretty good! Want to grab lunch?', sender: 'them', timestamp: '10:32 AM', status: 'delivered' },
-];
-
 
 const Sidebar = () => {
 
   const [active_option,set_active_option] = useState('chats');
-  const [activeChat, setActiveChat] = useState(1);
-  const [newMessage, setNewMessage] = useState('');
-  const [messageList, setMessageList] = useState(messages);
 
   // const handleSendMessage = () => {
   //   if (newMessage.trim()) {

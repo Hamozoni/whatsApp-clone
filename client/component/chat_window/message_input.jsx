@@ -7,11 +7,9 @@ import { useContext, useState } from "react";
 import { User_context } from "../context";
 import axios from "axios";
 
-export const Message_input = ()=> {
+export const Message_input = ({receiver})=> {
 
     const {user,active_chat} = useContext(User_context);
-
-    console.log(active_chat)
 
     const [message,set_message] = useState('');
 
@@ -21,6 +19,7 @@ export const Message_input = ()=> {
         try {
 
             const body = {
+                receiver,
                 chat_id: active_chat?._id,
                 sender : user?._id,
                 text: message,
