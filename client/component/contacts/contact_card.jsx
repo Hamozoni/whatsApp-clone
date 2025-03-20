@@ -3,29 +3,28 @@ import { Avatar } from "../avatar";
 import { User_context } from "../context";
 import { v4 as uuid } from "uuid";
 
-export const Contact_card = ({id,email,profile_picture,name,set_is_contact})=> {
+export const Contact_card = ({_id,email,profile_picture,name,set_is_contact})=> {
 
     const {user,set_active_chat} = useContext(User_context);
 
-    const handle_open_chat = (id,name,email,profile_picture) => {
+    const handle_open_chat = () => {
 
-        const exist_chat = user?.chats?.find(e=> e?.members?.some(member=> member?.email === email) && e?.members?.some(member=> member?.is_group === false));
-
-
+        const exist_chat = user?.chats?.find(e=> e === _id && e?.is_group === false);
+        
         if(!exist_chat) {
             const new_ative_chat = {
                 id: uuid(),
                 is_group: false,
                 members: [
                     {
-                        id,
+                        _id: _id,
                         name,
                         email,
                         profile_picture,
                         is_online: false
                     },
                     {
-                        id: user?.uid,
+                        _id: user?._id,
                         name: user?.name,
                         email:  user?.email,
                         profile_picture: user?.photoURL,
@@ -47,7 +46,7 @@ export const Contact_card = ({id,email,profile_picture,name,set_is_contact})=> {
 
     return (
         <div 
-            onClick={ ()=> handle_open_chat(id,name,email,profile_picture)}
+            onClick={handle_open_chat}
             className="cursor-pointer flex items-center gap-3 w-full px-3 hover:bg-[#222e35]"
             >
             <Avatar size='lg' user_photo={profile_picture} />

@@ -5,64 +5,8 @@ import { GrGroup,GrUserAdd } from "react-icons/gr";
 import { Contact_header } from "./contact_header";
 import { New_contact } from "./new_contact";
 import { Contact_card } from "./contact_card";
-import { useState } from "react";
-
-const contacts = [
-    {
-        id: 1,
-        name: 'Ahmed Hamed',
-        email: 'ahmed122@gmail.com',
-        profile_picture: '/placeholder_avatar.jpg'
-    },
-    {
-        id: 2,
-        name: 'osama ahmed',
-        email: 'osama@gmail.com',
-        profile_picture: '/placeholder_avatar.jpg'
-    },
-    {
-        id: 3,
-        name: 'reem mohamed',
-        email: 'reemmo@gmail.com',
-        profile_picture: '/placeholder_avatar.jpg'
-    },
-    {
-        id: 4,
-        name: 'Ahmed Hamed',
-        email: 'ahmed122@gmail.com',
-        profile_picture: '/placeholder_avatar.jpg'
-    },
-    {
-        id: 5,
-        name: 'osama ahmed',
-        email: 'osama@gmail.com',
-        profile_picture: '/placeholder_avatar.jpg'
-    },
-    {
-        id: 6,
-        name: 'reem mohamed',
-        email: 'reemmo@gmail.com',
-        profile_picture: '/placeholder_avatar.jpg'
-    },
-    {
-        id: 7,
-        name: 'Ahmed Hamed',
-        email: 'ahmed122@gmail.com',
-        profile_picture: '/placeholder_avatar.jpg'
-    },
-    {
-        id: 8,
-        name: 'osama ahmed',
-        email: 'osama@gmail.com',
-        profile_picture: '/placeholder_avatar.jpg'
-    },
-    {
-        id: 10,
-        name: 'reem mohamed',
-        email: 'reemmo@gmail.com',
-        profile_picture: '/placeholder_avatar.jpg'
-    },
-]
+import { useContext, useState } from "react";
+import { User_context } from "../context";
 
 const Button = ({Icon,text,handle_cleck})=> {
     return (
@@ -78,6 +22,8 @@ const Button = ({Icon,text,handle_cleck})=> {
 };
 
 export const Contacts = ({set_is_contact})=> {
+
+    const {contacts} = useContext(User_context)
 
 
     const [search_value,set_search_value] = useState('');
@@ -113,9 +59,10 @@ export const Contacts = ({set_is_contact})=> {
                         </h6>
                         <div className="">
                             {
-                                contacts?.map(({id,name,email,profile_picture})=> (
+                                contacts?.map(({_id,name,email,profile_picture})=> (
                                     <Contact_card 
-                                        key={id}
+                                        key={_id}
+                                        _id={_id}
                                         email={email} 
                                         profile_picture={profile_picture} 
                                         name={name}
