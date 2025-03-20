@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Avatar } from "../avatar";
 import { User_context } from "../context";
-import { v4 as uuid } from "uuid";
 
 export const Contact_card = ({_id,email,profile_picture,name,set_is_contact})=> {
 
@@ -13,7 +12,7 @@ export const Contact_card = ({_id,email,profile_picture,name,set_is_contact})=> 
         
         if(!exist_chat) {
             const new_ative_chat = {
-                id: uuid(),
+                _id: null,
                 is_group: false,
                 members: [
                     {

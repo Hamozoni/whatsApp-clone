@@ -1,9 +1,43 @@
+"user client"
 import { AiOutlinePaperClip } from "react-icons/ai"
 import { HiOutlineEmojiHappy } from "react-icons/hi"
 import { SlMicrophone } from "react-icons/sl"
 import { LuSendHorizontal } from "react-icons/lu";
+import { useContext, useState } from "react";
+import { User_context } from "../context";
+import axios from "axios";
 
-export const Message_input = ({set_message,message,handle_send})=> {
+export const Message_input = ()=> {
+
+    const {user,active_chat} = useContext(User_context);
+
+    console.log(active_chat)
+
+    const [message,set_message] = useState('');
+
+
+    const handle_send = async ()=> {
+
+        try {
+
+            const body = {
+                chat_id: active_chat?._id,
+                sender : user?._id,
+                text: message,
+                media: null,
+                type : 'TEXT',
+                status: 'SENT'
+            }
+
+            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/message`,body);
+
+            console.log(data);
+
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <div className="p-3 bg-[#222e35]">

@@ -14,6 +14,7 @@ const Chat_window = () => {
     const {user,active_chat} = useContext(User_context);
 
 
+
     const [message, set_message] = useState('');
     const [messages, set_messages] = useState([]);
     const [receiver, set_receiver] = useState(null);
@@ -36,6 +37,7 @@ const Chat_window = () => {
       }
 
       fetch_messages();
+      console.log(active_chat)
 
     },[active_chat]);
 
