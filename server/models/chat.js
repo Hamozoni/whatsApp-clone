@@ -13,7 +13,6 @@ const CHAT_SCHEMA = new mongoose.Schema({
     group_name: String,
     group_admin: {type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     last_message: { type: mongoose.Schema.Types.ObjectId, ref: 'Message' },
-    messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }]
 
   }, { timestamps: true});
 
