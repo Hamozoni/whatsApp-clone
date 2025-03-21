@@ -1,13 +1,28 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { User_context } from "../context";
 
 export const Chat_card = ({chat})=> {
 
+
+
     const {user,active_chat,set_active_chat} = useContext(User_context);
 
-    const contact = chat?.members?.filter(e=> e?._id !== user?._id)[0];
+    const [contact,set_contact] = useState(null);
+    const [text_time,set_text_time] = useState(null);
 
-    const text_time = new Date(chat?.last_message?.createdAt).toLocaleDateString([],{hour: '2-digit', minute: '2-digit'})
+
+    useEffect(()=> {
+
+        const contact = chat?.members?.filter(e=> e?._id !== user?._id)[0];
+        set_contact(contact);
+        const text_time = new Date(chat?.last_message?.createdAt).toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
+
+        set_text_time(text_time)
+
+    },[])
+
+    // const contact = ;
+
 
     // new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 
@@ -39,7 +54,8 @@ export const Chat_card = ({chat})=> {
                      <p className="text-sm text-[#667781] truncate">
                         {
                         user?._id === chat?.last_message?.sender && (
-                        <span className={chat?.last_message?.status === 'DELIVERED' ? 'text-emerald-600' : ''}>{chat?.last_message?.status === 'SENT' ? '✓ ' :  '✓✓ ' }</span>)
+                        <span className={chat?.last_message?.status === 'READ' ? 'text-emerald-400' : ''}>
+                            {chat?.last_message?.status === 'SENT' ? '✓ ' :  '✓✓ ' }</span>)
                         }
                         {chat?.last_message?.text}
                     </p> 

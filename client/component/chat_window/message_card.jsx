@@ -1,8 +1,13 @@
-
+"use client";
+import { useEffect, useState } from "react";
 
 export const Message_card = ({user_id,message})=> {
 
-    const is_my_message = message?.sender?.id === user_id;
+    const [is_my_message,set_is_my_message] = useState(false)
+
+    useEffect(()=> {
+        set_is_my_message(message?.sender === user_id)
+    },[]);
 
     return (
         <div
@@ -20,12 +25,12 @@ export const Message_card = ({user_id,message})=> {
             >
             <p className="text-sm">{message?.text}</p>
             <div className="flex items-center justify-end space-x-1 mt-1">
-                <span className="text-[10px] ">
-                    {message?.created_at}
+                <span className="text-[10px] text-gray-300 font-[100]">
+                    {new Date(message?.createdAt).toLocaleTimeString([],{hour: '2-digit',minute: '2-digit'})}
                 </span>
                 {is_my_message && (
-                <span className="text-[10px]">
-                    {message?.status === 'READ' ? '✓✓' : message?.status === 'DELIVERED' ? '✓' : '◷'}
+                <span className={`${message?.status === 'READ' ? 'text-emerald-300' :''} text-[10px]`}>
+                    {message?.status === 'SENT' ? '✓' : '✓✓'}
                 </span>
                 )}
             </div>

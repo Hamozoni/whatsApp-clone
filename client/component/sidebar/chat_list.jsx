@@ -12,7 +12,6 @@ import { User_context } from "../context";
 
 const Chat_list = ()=> {
 
-
     const {chats} = useContext(User_context);
     
     const [search_value,set_search_value] = useState('');
