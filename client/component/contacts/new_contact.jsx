@@ -67,8 +67,6 @@ export const New_contact = ({set_is_new_contact})=> {
             if(data?.status) {
                 set_contacts(data?.user?.contacts)
             }
-
-            console.log(data);
         }
         catch (error) {
             console.log(error)
@@ -79,15 +77,15 @@ export const New_contact = ({set_is_new_contact})=> {
     }
 
     return (
-        <div className="">
+        <div className="hide_model">
             <Contact_header 
                 title='new contact' 
                 set_backword={set_is_new_contact} 
                 />
-            <form onSubmit={handle_contact} className="p-3">
+            <form onSubmit={handle_contact} className="p-3 hide_model">
                 <Input label='Contact Email' type='email' value={email} set_value={set_email} placeholder='exable@gmail.com'/>
                 {(!contact && error) && (
-                        <p className="text-red-500 text-sm text-center mb-3">{error}</p>
+                        <p className="text-red-500 text-sm text-center mb-3 hide_model">{error}</p>
                 )}
                 {
                     contact?.email !== email &&
@@ -97,8 +95,8 @@ export const New_contact = ({set_is_new_contact})=> {
 
                 {
                     contact && (
-                    <div className="bt-3">
-                        <h6 className="p-3">search result : </h6>
+                    <div className="bt-3 hide_model">
+                        <h6 className="p-3 hide_model">search result : </h6>
                         <Contact_card 
                             id={contact?.id}
                             email={contact?.email}
@@ -108,12 +106,12 @@ export const New_contact = ({set_is_new_contact})=> {
                         
                              />
                            {(contact && error) && (
-                                    <p className="text-red-500 text-sm text-center mb-3">{error}</p>
+                                    <p className="text-red-500 text-sm text-center mb-3 hide_model">{error}</p>
                             )}
                             { 
                             !contacts?.find(e=> e.email === contact?.email) &&
-                            <form onSubmit={handle_adding_contact} className="p-3">
-                                <Submit_btn text='Add To Your Contact' is_loading={is_loading} />
+                            <form onSubmit={handle_adding_contact} className="p-3 hide_model">
+                                <Submit_btn text='Add To Your Contact hide_model' is_loading={is_loading} />
                             </form>
 
                             }

@@ -45,12 +45,12 @@ const Chat_window = () => {
 
 
   return (
-    <div className="text-[#f7f8fa] flex-1">
+    <div className="text-[#f7f8fa] flex-1 hide_model">
       {
         active_chat ?
-        <div className=" h-screen max-h-full flex flex-col ">
+        <div className=" h-screen max-h-full flex flex-col hide_model">
           <Chat_header receiver={receiver} />
-          <div className="flex-1 overflow-y-auto p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern">
+          <div className="flex-1 overflow-y-auto p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern hide_model">
               <div className="space-y-2 text-[#f7f8fa]">
                 {
                   messages.map(message => (
@@ -65,12 +65,12 @@ const Chat_window = () => {
             <Message_input receiver={receiver?._id}/>
         </div> 
         : 
-        <div className=" h-screen max-h-full flex items-center justify-center bg-[#222e35]">
-          <div className="flex flex-col justify-center items-center">
+        <div className=" h-screen max-h-full flex items-center justify-center bg-[#222e35] hide_model">
+          <div className="flex flex-col justify-center items-center hide_model">
               <Image src={'/chat_window.png'} width={300} height={300} alt='chat window' />
-              <div className="text-center mt-6 max-w-[500px]">
-                   <h4 className='text-3xl font-light'>download WhatsApp for Windows</h4>
-                   <p className='text-center text-sm font-light mt-4'>Make calls, share your screen and get a faster experience when you download the Windows app.</p>
+              <div className="text-center mt-6 max-w-[500px] hide_model">
+                   <h4 className='text-3xl font-light hide_model'>download WhatsApp for Windows</h4>
+                   <p className='text-center text-sm font-light mt-4 hide_model'>Make calls, share your screen and get a faster experience when you download the Windows app.</p>
               </div>
           </div>
         </div>

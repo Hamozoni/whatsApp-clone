@@ -46,12 +46,12 @@ export const Contact_card = ({_id,email,profile_picture,name,set_is_contact})=> 
     return (
         <div 
             onClick={handle_open_chat}
-            className="cursor-pointer flex items-center gap-3 w-full px-3 hover:bg-[#222e35]"
+            className="cursor-pointer flex items-center gap-3 w-full px-3 hover:bg-[#222e35] hide_model"
             >
             <Avatar size='lg' user_photo={profile_picture} />
-            <div className="flex flex-col border-b flex-1 border-b-[#222e35] py-3">
+            <div className="flex flex-col border-b flex-1 border-b-[#222e35] py-3 hide_model">
                 <h5>{name}</h5>
-                <span className="text-xs font-light text-gray-400">
+                <span className="text-xs font-light text-gray-400 hide_model">
                     {email}
                 </span>
             </div>

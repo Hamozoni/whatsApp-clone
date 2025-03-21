@@ -6,7 +6,7 @@ export default function Home() {
 
   return (
     <main>
-        <div className="flex h-screen max-h-screen w-screen">
+        <div className="flex h-screen max-h-screen w-screen hide_model">
             <Sidebar />
             <Chat_window />
         </div>

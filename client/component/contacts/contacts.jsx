@@ -31,12 +31,12 @@ export const Contacts = ({set_is_contact})=> {
 
 
     return (
-        <div className="h-screen max-h-screen overflow-y-auto">
+        <div className="h-screen max-h-screen overflow-y-auto hide_model">
             {
                 is_new_contact ? 
                  <New_contact set_is_new_contact={set_is_new_contact}/>
                  :
-                <div className="">
+                <div className="hide_model">
                     <Contact_header 
                         title='new chat' 
                         set_backword={set_is_contact}
@@ -50,14 +50,14 @@ export const Contacts = ({set_is_contact})=> {
                                 handle_search={()=> ''}
                             />
                     </Contact_header>
-                    <div className="">
+                    <div className="hide_model">
                         <Button Icon={GrGroup} text='new group' handle_cleck={()=> ''} />
                         <Button Icon={GrUserAdd} text='new contact' handle_cleck={()=> set_is_new_contact(true)} /> 
 
-                            <h6 className="px-5 py-3 text-xs text-emerald-300">
+                            <h6 className="px-5 py-3 text-xs text-emerald-300 hide_model">
                             contacts on whatsapp
                         </h6>
-                        <div className="">
+                        <div className="hide_model">
                             {
                                 contacts?.map(({_id,name,email,profile_picture})=> (
                                     <Contact_card 

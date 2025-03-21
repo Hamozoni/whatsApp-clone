@@ -11,27 +11,14 @@ const Sidebar = () => {
 
   const [active_option,set_active_option] = useState('chats');
 
-  // const handleSendMessage = () => {
-  //   if (newMessage.trim()) {
-  //     const newMsg = {
-  //       id: messageList.length + 1,
-  //       text: newMessage,
-  //       sender: 'me',
-  //       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-  //       status: 'sent'
-  //     };
-  //     setMessageList([...messageList, newMsg]);
-  //     setNewMessage('');
-  //   }
-  // };
 
   return (
-    <section className='flex w-[450px] h-screen max-h-full'>
+    <section className='flex w-[450px] h-screen max-h-full hide_model'>
        <Options_icons 
           active_option={active_option}
           set_active_option={set_active_option}
         />
-        <section className="grow bg-[#111b21] text-[#f7f8fa] border-x-1 border-[#394b55] h-screen max-h-screen">
+        <section className="grow bg-[#111b21] text-[#f7f8fa] border-x-1 border-[#394b55] h-screen max-h-screen hide_model">
           {
             active_option === 'chats' ? 
             <Chat_list /> :
