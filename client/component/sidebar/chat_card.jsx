@@ -39,7 +39,7 @@ export const Chat_card = ({chat})=> {
                      <p className="text-sm text-[#667781] truncate">
                         {
                         user?._id === chat?.last_message?.sender && (
-                        <span className={chat?.last_message?.status === 'DELIVERED' && 'text-emerald-600'}>{chat?.last_message?.status === 'SENT' ? '✓ ' :  '✓✓ ' }</span>)
+                        <span className={chat?.last_message?.status === 'DELIVERED' ? 'text-emerald-600' : ''}>{chat?.last_message?.status === 'SENT' ? '✓ ' :  '✓✓ ' }</span>)
                         }
                         {chat?.last_message?.text}
                     </p> 

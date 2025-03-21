@@ -16,11 +16,13 @@ const Chat_window = () => {
     const [receiver, set_receiver] = useState(null);
     
     useEffect(() => {
+
       set_receiver(active_chat?.members?.filter(e=> e.id !== user?.id)[0]);
+
       const fetch_messages = async ()=> {
         try{
   
-          const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/chat`);
+          const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/message?chat_id=${active_chat?._id}`);
   
           console.log(data);
   
@@ -30,9 +32,12 @@ const Chat_window = () => {
   
         }
 
+      };
+
+      if(active_chat?._id) {
+        fetch_messages();
       }
 
-      fetch_messages();
 
     },[active_chat]);
 
@@ -48,9 +53,9 @@ const Chat_window = () => {
                 {
                   messages.map(message => (
                     <Message_card 
-                      key={message?.id} 
+                      key={message?._id} 
                       message={message} 
-                      user_id={user?.id}
+                      user_id={user?._id}
                     />
                 ))}
               </div>
