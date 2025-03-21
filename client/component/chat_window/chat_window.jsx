@@ -36,6 +36,8 @@ const Chat_window = () => {
 
       if(active_chat?._id) {
         fetch_messages();
+      }else {
+        set_messages([])
       }
 
 
