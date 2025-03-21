@@ -52,8 +52,8 @@ export const update_contact_controller = async (req,res,next)=> {
             return res.json({message: 'contact is not found', status: false})
         };
 
-        const exist_contact = await User.findById({_id: user_id,contacts: contact_id});
-
+        const exist_contact = await User.findOne({ $and :[{_id: user_id},{contacts: contact_id}] });
+        console.log(exist_contact);
         if(exist_contact) {
             return res.json({message: 'user is one of your contact',status: false})
         };
