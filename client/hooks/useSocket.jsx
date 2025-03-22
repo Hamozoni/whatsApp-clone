@@ -9,7 +9,7 @@ export const useSocket = ()=> {
 
     useEffect(()=> {
 
-        const new_socket = io(process.env.NEXT_PUBLIC_API_URL);
+        const new_socket = io('http://localhost:4400');
 
         set_socket(new_socket)
 

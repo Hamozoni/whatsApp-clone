@@ -8,7 +8,9 @@ export const Contact_card = ({_id,email,profile_picture,name,set_is_contact})=> 
 
     const handle_open_chat = () => {
 
-        const exist_chat = chats?.find(e=> e?.members.includes(_id)  && e?.is_group === false);
+        const exist_chat = chats?.find(e=> e?.members.some(e=> e?._id === _id));
+
+        console.log(exist_chat)
         
         if(!exist_chat) {
             const new_ative_chat = {

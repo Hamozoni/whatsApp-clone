@@ -14,9 +14,14 @@ export const Message_input = ({receiver})=> {
     const [message,set_message] = useState('');
     const [show_emoji,set_show_emoji] = useState(false);
 
+    useEffect(()=> {
+        set_message('')
+    },[active_chat])
+
 
     const handle_send = async ()=> {
 
+        if(message?.length < 0) return
         try {
 
             const body = {

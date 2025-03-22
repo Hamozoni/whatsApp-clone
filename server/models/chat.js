@@ -5,8 +5,9 @@ import mongoose from "mongoose";
 const CHAT_SCHEMA = new mongoose.Schema({
     id: {
       type: String,
+      unique: true,
+      required: true,
       default: () => uuidv4(),
-      required: true
     },
     members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     is_group: { type: Boolean, default: false },
