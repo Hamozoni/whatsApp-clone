@@ -17,7 +17,9 @@ const Chat_window = () => {
     
     useEffect(() => {
 
-      set_receiver(active_chat?.members?.filter(e=> e.id !== user?.id)[0]);
+      set_receiver(active_chat?.members?.filter(e=> e._id !== user?._id)[0]);
+
+      console.log(active_chat?.members?.filter(e=> e._id !== user?._id)[0])
 
       const fetch_messages = async ()=> {
         try{

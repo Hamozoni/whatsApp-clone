@@ -83,18 +83,22 @@ export const Message_input = ({receiver})=> {
                     />
                 </div>
                 <div className="hide_model">
-
+                    {
+                        message?.length > 0 ? 
                         <button
-                            onClick={handle_send}
+                                onClick={handle_send}
+                                className="px-2 py-3 rounded-md text-white transition-colors hide_model"
+                            >
+                            <LuSendHorizontal className="h-6 w-6 text-[#f7f8fa] cursor-pointer " />
+                       </button>
+                       :
+                        <button
                             className="px-2 py-3 rounded-md text-white transition-colors hide_model"
                         >
-                           {
-                              message?.length > 0 ? 
-                              <LuSendHorizontal className="h-6 w-6 text-[#f7f8fa] cursor-pointer " />
-                              :
-                              <SlMicrophone className="h-6 w-6 text-[#f7f8fa] cursor-pointer" />
-                            }
+                            <SlMicrophone className="h-6 w-6 text-[#f7f8fa] cursor-pointer" />
                         </button>
+                    }
+
                 
                     
                 </div>
