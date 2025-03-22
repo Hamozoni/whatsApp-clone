@@ -98,7 +98,7 @@ export const New_contact = ({set_is_new_contact})=> {
                     <div className="bt-3 hide_model">
                         <h6 className="p-3 hide_model">search result : </h6>
                         <Contact_card 
-                            id={contact?.id}
+                            _id={contact?._id}
                             email={contact?.email}
                             profile_picture={contact?.profile_picture}
                             name={contact?.name}
