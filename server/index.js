@@ -1,27 +1,16 @@
-import express from "express";
+
 import dotenv from "dotenv";
-import cors from "cors";
 import http from 'http';
-
+import app from "./src/app.js";
 import { Server } from "socket.io";
-
-import connect_db from "./lib/database.js";
-import user_router from "./routes/user_route.js";
-import contact_route from "./routes/contact_route.js"
-import message_route from "./routes/message_route.js"
+import connect_db from "./src/config.js/db.js";
 
 
 dotenv.config();
 connect_db();
 
-const app = express();
 const server = http.createServer(app)
 
-app.use(cors({
-  origin: "http://localhost:3000", // Replace with your Next.js app's origin
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true, // Enable if using cookies/auth
-}));
 
 const socket_io = new Server(server, {
   cors: {
@@ -32,18 +21,16 @@ const socket_io = new Server(server, {
   }
 });
 
-app.use(express.json());
 app.set('io', socket_io);
 
-  
-  
 
-app.use('/api',user_router);
-app.use('/api',contact_route);
-app.use('/api',message_route);
 
 socket_io.on('connection',socket => {
   console.log('User connected:', socket.id);
+
+  socket.on('join_chat',(chat_id)=> {
+    socket.join(chat_id);
+  });
 })
   
   

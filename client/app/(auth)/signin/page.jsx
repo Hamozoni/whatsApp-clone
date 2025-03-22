@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 
-import { Sigin_sith_prvider } from "@/component/auth/signin_with_prodider";
-import { Input } from "@/component/inputs/input";
-import { Submit_btn } from "@/component/inputs/submit_btn";
+import { Sigin_sith_prvider } from "@/components/auth/signin_with_prodider";
+import { Input } from "@/components/ui/input";
+import { Submit_btn } from "@/components/ui/submit_btn";
 import {signInWithEmailAndPassword} from 'firebase/auth'
 import { firebase_auth } from "@/lib/firebase_config";
 import { useRouter } from "next/navigation";
