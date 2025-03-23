@@ -1,4 +1,4 @@
-import "../../style/globals.css";
+import "../style/globals.css";
 
 import {User_context_provider }from '@/contexts/context';
 export const dynamic = 'force-dynamic';
@@ -17,9 +17,11 @@ export default function RootLayout({ children }) {
       <body
         className={``}
       >
-        <User_context_provider >
-            {children}
-        </User_context_provider>
+        <main>
+          <User_context_provider >
+              {children}
+          </User_context_provider>
+        </main>
       </body>
     </html>
   );
