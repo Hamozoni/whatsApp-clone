@@ -1,6 +1,6 @@
 import "../../style/globals.css";
 
-import {User_context_provider }from '@/components/context';
+import {User_context_provider }from '@/contexts/context';
 export const dynamic = 'force-dynamic';
 
 

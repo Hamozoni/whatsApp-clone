@@ -1,9 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-import { User_context } from "../context";
+import { User_context } from "../../contexts/context";
 
 export const Chat_card = ({chat})=> {
-
-
 
     const {user,active_chat,set_active_chat} = useContext(User_context);
 
@@ -16,15 +14,9 @@ export const Chat_card = ({chat})=> {
         const contact = chat?.members?.filter(e=> e?._id !== user?._id)[0];
         set_contact(contact);
         const text_time = new Date(chat?.last_message?.createdAt).toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
+        set_text_time(text_time);
 
-        set_text_time(text_time)
-
-    },[])
-
-    // const contact = ;
-
-
-    // new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    },[]);
 
 
     return (

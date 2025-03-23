@@ -3,17 +3,14 @@ import { firebase_auth } from "@/lib/firebase_config";
 import { createContext, useEffect, useState } from "react";
 import { setPersistence, browserLocalPersistence } from 'firebase/auth';
 import axios from "axios";
-import { Loading_component } from "./ui/loading_component";
+import { Loading_component } from "../components/ui/loading_component";
 import { useRouter } from "next/navigation";
-import { useSocket } from "@/hooks/useSocket";
 
 export const User_context = createContext();
 
 
 export const  User_context_provider =  ({children})=> {
   
-    const socket_io = useSocket()
-
     const [user,set_user] = useState(null);
     const [user_auth,set_user_auth] = useState(null);
     const [is_loading,set_is_loading] = useState(true);
@@ -21,11 +18,9 @@ export const  User_context_provider =  ({children})=> {
     const [contacts,set_contacts] = useState([]);
     const [chats,set_chats] = useState([]);
 
-
     const router = useRouter();
     
     useEffect(() => {
-      console.log(socket_io)
 
       set_is_loading(true);
         const initializeAuth = async () => {

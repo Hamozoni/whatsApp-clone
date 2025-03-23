@@ -4,7 +4,7 @@ import { HiOutlineEmojiHappy } from "react-icons/hi"
 import { SlMicrophone } from "react-icons/sl"
 import { LuSendHorizontal } from "react-icons/lu";
 import { useContext, useEffect, useState } from "react";
-import { User_context } from "../context";
+import { User_context } from "../../contexts/context";
 import EmojiPicker from "emoji-picker-react";
 import axios from "axios";
 

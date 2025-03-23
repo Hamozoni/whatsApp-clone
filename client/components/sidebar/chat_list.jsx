@@ -2,20 +2,32 @@
 import { RiChatNewLine } from "react-icons/ri";
 import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 import { Chat_card } from "./chat_card";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Search_form } from "../ui/search_form";
 import { Contacts } from "../contacts/contacts";
-import { User_context } from "../context";
+import { User_context } from "../../contexts/context";
+import { useSocket } from "@/hooks/useSocket";
 
 
 
 
 const Chat_list = ()=> {
 
+    const socket = useSocket('chat');
+
     const {chats} = useContext(User_context);
-    
     const [search_value,set_search_value] = useState('');
     const [is_contacts,set_is_contact] = useState(false);
+
+
+    useEffect(()=> {
+
+        if(!socket) return
+
+        // socket.on('re')
+
+
+    },[socket]);
 
 
     return (

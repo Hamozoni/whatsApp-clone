@@ -5,7 +5,7 @@ import { MdOutlineGroups2 } from "react-icons/md";
 import { IoIosStarOutline } from "react-icons/io";
 import { Avatar } from "../ui/avatar";
 import { useContext } from "react";
-import { User_context } from "../context";
+import { User_context } from "../../contexts/context";
 
 const options = [
     {Icon: BsChatText,text: 'chats'},

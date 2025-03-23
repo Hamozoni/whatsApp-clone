@@ -4,7 +4,6 @@ import User from '../models/user.model.js';
 export const get_user_controller = async (req,res,next) => {  
 
     const {user_email} = req.query;
-    console.log(user_email)
 
     if(!user_email) {
         return res.json({message: 'user email is reqiured', status: false});
@@ -18,13 +17,6 @@ export const get_user_controller = async (req,res,next) => {
             return res.json({message: 'user is not found', status: false});
         }
         
-        // const user_info = await User.findById(user?._id).populate({
-        //     path: 'contacts',
-        //     options: { 
-        //       allowEmptyArray: true,
-        //       retainNullValues: true 
-        //     }
-        //   });
 
         const chats = await Chat.find({members: user?._id}).populate('members').populate('last_message')
         
@@ -37,8 +29,6 @@ export const get_user_controller = async (req,res,next) => {
 
 
 };
-
-
 
 export const post_user_controller = async (req,res,next)=> {
     

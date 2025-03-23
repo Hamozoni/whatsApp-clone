@@ -1,5 +1,5 @@
 "use client";
-import { User_context } from "@/components/context";
+import { User_context } from "@/contexts/context";
 import { useContext } from "react";
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
