@@ -82,7 +82,7 @@ const Chat_window = () => {
                 ))}
               </div>
             </div>
-            <Message_input receiver={receiver?._id}/>
+            <Message_input receiver={receiver?._id} set_messages={set_messages}/>
         </div> 
         : 
         <div className=" h-screen max-h-full flex items-center justify-center bg-[#222e35] hide_model">

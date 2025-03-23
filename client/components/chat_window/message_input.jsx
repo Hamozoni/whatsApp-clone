@@ -8,7 +8,7 @@ import { User_context } from "../../contexts/context";
 import EmojiPicker from "emoji-picker-react";
 import axios from "axios";
 
-export const Message_input = ({receiver})=> {
+export const Message_input = ({receiver,set_messages})=> {
 
     const {user,active_chat} = useContext(User_context);
     const [message,set_message] = useState('');
@@ -33,11 +33,10 @@ export const Message_input = ({receiver})=> {
                 type : 'TEXT',
                 status: 'SENT'
             }
-
             const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/message`,body);
-
             console.log(data);
 
+            set_messages(prev=> [...prev,data?.message]);
             set_message('')
 
         }

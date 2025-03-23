@@ -15,11 +15,12 @@ export const post_message_controller = async (req,res,next) => {
         if(chat_id) {
     
             const message = await Message.create({chat_id,sender,text,media,type,status});
-            const last_message = await Chat.findByIdAndUpdate(chat_id,
-                {last_message: message?._id}
+
+            await Chat.findByIdAndUpdate(chat_id,
+                 {last_message: message?._id}
             ).populate('last_message').exec();
     
-            return res.json({message: 'message has been sent',status: true,last_message})
+            return res.json({message: 'message has been sent',status: true,message})
     
     
         }else {
