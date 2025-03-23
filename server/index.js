@@ -26,11 +26,11 @@ app.set('io', socket_io);
 
 
 socket_io.on('connection',socket => {
-  console.log('User connected:', socket.id);
-
   socket.on('join_chat',(chat_id)=> {
     socket.join(chat_id);
   });
+
+  
 })
   
   

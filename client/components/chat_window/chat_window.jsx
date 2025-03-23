@@ -8,8 +8,6 @@ import Image from 'next/image';
 import axios from 'axios';
 import { Message_card } from './message_card';
 import { Loading_component } from '../ui/loading_component';
-import { useSocket } from '@/hooks/useSocket';
-
 
 const Chat_window = () => {
 
@@ -18,8 +16,6 @@ const Chat_window = () => {
     const [receiver, set_receiver] = useState(null);
     const [is_loading, set_is_loading] = useState(true);
     const [error, set_error] = useState(null);
-
-    const socket = useSocket('chat');
     
     useEffect(() => {
 
@@ -49,18 +45,6 @@ const Chat_window = () => {
 
 
     },[active_chat]);
-
-    useEffect(()=>{
-      if(!socket) return
-
-      socket.on('new_message',new_message=> {
-        console.log(new_message)
-      });
-
-      return ()=> socket.off('new_message')
-
-    },[socket])
-
 
   return (
     <div className="text-[#f7f8fa] flex-1 hide_model">

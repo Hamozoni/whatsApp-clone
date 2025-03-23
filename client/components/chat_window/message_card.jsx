@@ -6,7 +6,7 @@ export const Message_card = ({user_id,message})=> {
     const [is_my_message,set_is_my_message] = useState(false)
 
     useEffect(()=> {
-        set_is_my_message(message?.sender === user_id)
+        set_is_my_message(message?.sender === user_id);
     },[]);
 
     return (
