@@ -12,12 +12,10 @@ import axios from "axios";
 export function Sigin_sith_prvider ({link_to}) {
 
     const [isLoading,setIsLoading] = useState(false);
-
     const router = useRouter();
-
     const handle_sigin = async (provider)=> {
 
-        setIsLoading(true);
+      setIsLoading(true);
       const auth_provider = provider === 'GitHub' ? new GithubAuthProvider() : new GoogleAuthProvider();
 
          await signInWithPopup(firebase_auth,auth_provider)
@@ -35,11 +33,6 @@ export function Sigin_sith_prvider ({link_to}) {
           }
 
           const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user`,user_data);
-
-          console.log(data);
-          setIsLoading(false);
-
-
           const {is_new } = data;
 
           if(is_new) {
@@ -50,16 +43,11 @@ export function Sigin_sith_prvider ({link_to}) {
             router.push('/');
           }
 
-
-
-
-
-          // console.log(user)
-
          })
          .catch((error)=>{
-          console.log(error?.message);
-          setIsLoading(false);
+        })
+        .finally (()=> {
+           setIsLoading(false);
          })
       
 
