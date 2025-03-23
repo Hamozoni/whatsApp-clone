@@ -8,14 +8,17 @@ import Image from 'next/image';
 import axios from 'axios';
 import { Message_card } from './message_card';
 import { Loading_component } from '../ui/loading_component';
+import { useSocket } from '@/hooks/useSocket';
 
 const Chat_window = () => {
-
+  
+  const socket = useSocket()
     const {user,active_chat} = useContext(User_context);
     const [messages, set_messages] = useState([]);
     const [receiver, set_receiver] = useState(null);
     const [is_loading, set_is_loading] = useState(true);
     const [error, set_error] = useState(null);
+
     
     useEffect(() => {
 
@@ -46,6 +49,27 @@ const Chat_window = () => {
 
     },[active_chat]);
 
+    
+    useEffect(()=> {
+      if(!socket) return
+      console.log(socket)
+       socket.emit('join_room',active_chat?._id);
+       socket.on('receive_message',new_message=> {
+           if(new_message?.chat_id === active_chat?._id) {
+            set_messages(prev=> [...prev,new_message]);
+           }
+       });
+
+       return ()=> {
+        socket.off('receive_message')
+        socket.emit('leave_chat',active_chat?._id)
+      }
+
+
+    },[socket,active_chat?._id])
+
+
+
   return (
     <div className="text-[#f7f8fa] flex-1 hide_model">
       {
@@ -66,7 +90,7 @@ const Chat_window = () => {
                 ))}
               </div>
             </div>
-            <Message_input receiver={receiver?._id} set_messages={set_messages}/>
+            <Message_input receiver={receiver?._id}/>
         </div> 
         : 
         <div className=" h-screen max-h-full flex items-center justify-center bg-[#222e35] hide_model">

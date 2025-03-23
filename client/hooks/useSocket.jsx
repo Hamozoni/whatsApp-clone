@@ -9,7 +9,7 @@ export const useSocket = ()=> {
 
     useEffect(()=> {
 
-        const new_socket = io(`http://localhost:4400/`);
+        const new_socket = io('http://localhost:4400');
 
         set_socket(new_socket)
 

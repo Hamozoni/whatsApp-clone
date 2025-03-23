@@ -21,16 +21,24 @@ const socket_io = new Server(server, {
   }
 });
 
-app.set('io', socket_io);
+// app.set('io', socket_io);
 
 
 
 socket_io.on('connection',socket => {
-  socket.on('join_chat',(chat_id)=> {
-    socket.join(chat_id);
+
+  console.log('user id'+socket?.id)
+
+  socket.on('join_room',(chat_id)=> {
+    console.log('chat id'+chat_id)
+    socket.join(chat_id)
+
   });
 
-  
+  socket.on('send_message',(message)=> {
+    socket_io.to(message?.chat_id).emit('receive_message',message)
+  });
+
 })
   
   

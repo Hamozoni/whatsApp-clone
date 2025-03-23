@@ -7,19 +7,23 @@ import { useContext, useEffect, useState } from "react";
 import { User_context } from "../../contexts/context";
 import EmojiPicker from "emoji-picker-react";
 import axios from "axios";
+import { useSocket } from "@/hooks/useSocket";
 
-export const Message_input = ({receiver,set_messages})=> {
+export const Message_input = ({receiver})=> {
 
     const {user,active_chat} = useContext(User_context);
     const [message,set_message] = useState('');
     const [show_emoji,set_show_emoji] = useState(false);
+    const socket = useSocket()
 
     useEffect(()=> {
-        set_message('')
+        set_message('');
     },[active_chat])
 
 
     const handle_send = async ()=> {
+
+        if(!socket) return
 
         if(message?.length < 0) return
         try {
@@ -34,9 +38,8 @@ export const Message_input = ({receiver,set_messages})=> {
                 status: 'SENT'
             }
             const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/message`,body);
-            console.log(data);
-
-            set_messages(prev=> [...prev,data?.message]);
+            socket.emit('join_room',active_chat?._id);
+            socket.emit('send_message',data?.message);
             set_message('')
 
         }
