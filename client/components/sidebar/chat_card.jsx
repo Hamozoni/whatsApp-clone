@@ -26,7 +26,11 @@ export const Chat_card = ({chat_info})=> {
         socket.emit('join_room',chat?._id);
 
         socket.on('receive_message',new_message=> {
-            set_chat(prev=> ({...prev,last_message:new_message}))
+            set_chat(prev=> ({...prev,last_message:new_message}));
+
+            if(user?._id !== new_message?.sender) {
+                socket.emit('message_delivered',new_message?._id)
+            }
         });
 
         return ()=> socket.disconnect();

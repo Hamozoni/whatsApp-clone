@@ -22,7 +22,7 @@ const Chat_window = () => {
     
     const scroll_bottom = ()=> {
       if(chat_container_ref.current) {
-        chat_container_ref.current.scrollTop = chat_container_ref.current.scrollHeight;
+        chat_container_ref?.current?.scrollIntoView({ behavior: "smooth" });
 
         console.log(chat_container_ref.current.scrollHeight)
       }
@@ -37,7 +37,6 @@ const Chat_window = () => {
         try{
           const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/message?chat_id=${active_chat?._id}`);
           set_messages(data?.messages);
-          router.push('#scroll_end');
 
         }
         catch (error) {
@@ -56,29 +55,18 @@ const Chat_window = () => {
         set_messages([])
       }
 
-
-    },[active_chat]);
-
-    
-    useEffect(()=> {
-      
       if(!socket) return
       console.log(socket)
        socket.emit('join_room',active_chat?._id);
        socket.on('receive_message',new_message=> {
            if(new_message?.chat_id === active_chat?._id) {
             set_messages(prev=> [...prev,new_message]);
-             
            }
        });
 
-       return ()=> {
-        socket.off('receive_message')
-        socket.emit('leave_chat',active_chat?._id);        
-      }
 
+    },[active_chat]);
 
-    },[socket,active_chat?._id])
 
 
   return (
@@ -87,17 +75,24 @@ const Chat_window = () => {
         active_chat ?
         <div className=" h-screen max-h-full flex flex-col hide_model">
           <Chat_header receiver={receiver} />
-          <div ref={chat_container_ref} className="flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern hide_model">
-               {
-                 is_loading ? 
-                  <Loading_component />
-                  : messages.map(message => (
-                    <Message_card 
-                      key={message?._id} 
-                      message={message} 
-                      user_id={user?._id}
-                    />
-                ))}
+          <div className="flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern hide_model">
+             <>
+              {
+                  is_loading ? 
+                    <Loading_component />
+                    : messages.map(message => (
+                      <Message_card 
+                        key={message?._id} 
+                        message={message} 
+                        user_id={user?._id}
+                      />
+                  ))
+                }
+                <div ref={chat_container_ref} className="w-full h-[2px]">
+                   
+                </div>
+             </>  
+                
             </div>
             <Message_input receiver={receiver?._id}/>
         </div> 

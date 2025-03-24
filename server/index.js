@@ -39,6 +39,10 @@ socket_io.on('connection',socket => {
     socket_io.to(message?.chat_id).emit('receive_message',message)
   });
 
+  socket.on('message_read',id=> {
+    console.log('message_id ' + id)
+  })
+
 })
   
   
