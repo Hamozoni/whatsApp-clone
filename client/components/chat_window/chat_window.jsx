@@ -1,6 +1,6 @@
 
 "use client";
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Chat_header } from './chat_header';
 import { Message_input } from './message_input';
 import { User_context } from '../../contexts/context';
@@ -18,8 +18,15 @@ const Chat_window = () => {
     const [receiver, set_receiver] = useState(null);
     const [is_loading, set_is_loading] = useState(true);
     const [error, set_error] = useState(null);
-
+    const chat_container_ref = useRef(null)
     
+    const scroll_bottom = ()=> {
+      if(chat_container_ref.current) {
+        chat_container_ref.current.scrollTop = chat_container_ref.current.scrollHeight;
+
+        console.log(chat_container_ref.current.scrollHeight)
+      }
+    } 
     useEffect(() => {
 
       set_receiver(active_chat?.members?.filter(e=> e._id !== user?._id)[0]);
@@ -29,13 +36,16 @@ const Chat_window = () => {
         set_error(null)
         try{
           const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/message?chat_id=${active_chat?._id}`);
-          set_messages(data?.messages)
+          set_messages(data?.messages);
+          router.push('#scroll_end');
+
         }
         catch (error) {
           set_error(error?.message)
         }
         finally {
-          set_is_loading(false)
+          set_is_loading(false);
+          scroll_bottom();
         }
 
       };
@@ -51,23 +61,24 @@ const Chat_window = () => {
 
     
     useEffect(()=> {
+      
       if(!socket) return
       console.log(socket)
        socket.emit('join_room',active_chat?._id);
        socket.on('receive_message',new_message=> {
            if(new_message?.chat_id === active_chat?._id) {
             set_messages(prev=> [...prev,new_message]);
+             
            }
        });
 
        return ()=> {
         socket.off('receive_message')
-        socket.emit('leave_chat',active_chat?._id)
+        socket.emit('leave_chat',active_chat?._id);        
       }
 
 
     },[socket,active_chat?._id])
-
 
 
   return (
@@ -76,9 +87,8 @@ const Chat_window = () => {
         active_chat ?
         <div className=" h-screen max-h-full flex flex-col hide_model">
           <Chat_header receiver={receiver} />
-          <div className="flex-1 overflow-y-auto p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern hide_model">
-              <div className="space-y-2 text-[#f7f8fa]">
-                {
+          <div ref={chat_container_ref} className="flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern hide_model">
+               {
                  is_loading ? 
                   <Loading_component />
                   : messages.map(message => (
@@ -88,7 +98,6 @@ const Chat_window = () => {
                       user_id={user?._id}
                     />
                 ))}
-              </div>
             </div>
             <Message_input receiver={receiver?._id}/>
         </div> 

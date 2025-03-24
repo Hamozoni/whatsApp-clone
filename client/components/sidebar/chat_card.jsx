@@ -1,22 +1,36 @@
 import { useContext, useEffect, useState } from "react";
 import { User_context } from "../../contexts/context";
+import { useSocket } from "@/hooks/useSocket";
 
-export const Chat_card = ({chat})=> {
+export const Chat_card = ({chat_info})=> {
 
     const {user,active_chat,set_active_chat} = useContext(User_context);
 
     const [contact,set_contact] = useState(null);
     const [text_time,set_text_time] = useState(null);
+    const [chat,set_chat] = useState(chat_info);
+    const socket = useSocket()
 
 
     useEffect(()=> {
-
         const contact = chat?.members?.filter(e=> e?._id !== user?._id)[0];
         set_contact(contact);
         const text_time = new Date(chat?.last_message?.createdAt).toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
         set_text_time(text_time);
 
     },[]);
+
+    useEffect(()=> {
+        if(!socket) return;
+
+        socket.emit('join_room',chat?._id);
+
+        socket.on('receive_message',new_message=> {
+            set_chat(prev=> ({...prev,last_message:new_message}))
+        });
+
+        return ()=> socket.disconnect();
+    },[socket]);
 
 
     return (
