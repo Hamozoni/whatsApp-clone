@@ -1,10 +1,10 @@
 
-export const post_chat_controller = async (req,res,next)=> {
+// export const put_chat_controller = async (req,res,next)=> {
 
-    const {id,last_message,members,group_name,is_group,group_admin} = req.body;
-
-
+//     const {id,members,group_name,is_group,group_admin} = req.body;
 
 
 
-}
+
+
+// }

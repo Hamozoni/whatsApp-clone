@@ -63,3 +63,20 @@ export const get_message_controller = async (req,res,next) => {
     }
 
 }
+
+export const put_message_status_controller = async (req,res,next)=> {
+
+    const {chat_id,receiver,status}  = req.body;
+
+    if(!chat_id || !receiver) {
+        return res.json({message:'chat id and receiver id are required',status: false})
+    }
+
+    try{
+        await Message.updateMany({chat_id,sender:{$ne: receiver}},{status});
+        return res.json({message: 'messages updated ',status: true})
+    }
+    catch(error) {
+        next(error);
+    }
+}
