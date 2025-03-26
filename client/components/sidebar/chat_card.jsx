@@ -46,9 +46,12 @@ export const Chat_card = ({chat_info})=> {
     },[socket]);
 
 
+    const handle_chat = ()=> {
+        set_active_chat(chat)
+    }
     return (
         <div
-            onClick={() => set_active_chat(chat)}
+            onClick={handle_chat}
             className={`flex items-center cursor-pointer px-3 hover:bg-[#31414b] ${
                 active_chat?.id === chat.id ? 'bg-[#222e35]' : '' }`}
             >
