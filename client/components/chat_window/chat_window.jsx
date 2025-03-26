@@ -26,7 +26,8 @@ const Chat_window = () => {
 
         console.log(chat_container_ref.current.scrollHeight)
       }
-    } 
+    };
+
     useEffect(() => {
 
       set_receiver(active_chat?.members?.filter(e=> e._id !== user?._id)[0]);
@@ -63,9 +64,16 @@ const Chat_window = () => {
             set_messages(prev=> [...prev,new_message]);
            }
        });
+       socket.on('message_seen_by_receiver',message=> {
+        let new_messages = []
+        messages.forEach((e)=> {
+          new_messages.push({...e,status: 'READ'})
+        })
+        set_messages(new_messages)
+      })
 
 
-    },[active_chat]);
+    },[active_chat,socket]);
 
 
 
