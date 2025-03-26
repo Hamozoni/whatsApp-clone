@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { User_context } from "../../contexts/context";
 import { useSocket } from "@/hooks/useSocket";
+import axios from "axios";
 
 export const Chat_card = ({chat_info})=> {
 
@@ -25,13 +26,21 @@ export const Chat_card = ({chat_info})=> {
 
         socket.emit('join_room',chat?._id);
 
-        socket.on('receive_message',new_message=> {
+        socket.on('receive_message',async new_message=> {
             set_chat(prev=> ({...prev,last_message:new_message}));
 
             if(user?._id !== new_message?.sender) {
-                socket.emit('message_delivered',new_message?._id)
+
+                await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,{receiver: user?._id,chat_id: chat?._id,status: 'DELIVERED'});
+                socket.emit('message_deliverd',{...new_message,status: 'DELIVERED'})
             }
         });
+
+        socket.on('message_arived',message=> {
+            if(user?._id === message?.sender) {
+                set_chat(prev=> ({...prev,last_message:{...message,status: 'DELIVERED'}}));
+            }
+        })
 
         return ()=> socket.disconnect();
     },[socket]);
