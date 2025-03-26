@@ -65,11 +65,14 @@ const Chat_window = () => {
            }
        });
        socket.on('message_seen_by_receiver',message=> {
-        let new_messages = []
-        messages.forEach((e)=> {
-          new_messages.push({...e,status: 'READ'})
-        })
-        set_messages(new_messages)
+        if(user?._id !== message?.sender) {
+            let new_messages = []
+            messages.forEach((e)=> {
+              new_messages.push({...e,status: 'READ'})
+            })
+            set_messages(new_messages)
+
+        }
       })
 
 
