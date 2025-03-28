@@ -51,7 +51,9 @@ const Chat_window = () => {
 
     },[active_chat]);
 
-    useEffect(()=> {
+
+
+    useEffect(async()=> {
 
       if(!socket) return;
 
@@ -62,13 +64,23 @@ const Chat_window = () => {
          set_messages(prev=> [...prev,message]);
       });
 
-      socket.on('message_arived',messages => {
-        console.log(messages)
+      socket.on('message_arived', messages => {
          set_messages(messages);
       });
 
-      return ()=> socket.off('receive_message')
-        // socket.off('message_arived')
+      socket.emit('messages_readed',{user_id:sender?._id,chat_id:active_chat?._id});
+
+      socket.on('message_seen_by_receiver',async ({chat_id,user_id})=> {
+        const {data} = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,{sender:user_id, chat_id,status: 'READ'});
+        set_messages(data?.messages);
+
+      });
+        
+
+      return ()=>{ 
+        socket.off('receive_message')
+        socket.off('message_arived')
+      }
       
     },[socket,active_chat]);
 

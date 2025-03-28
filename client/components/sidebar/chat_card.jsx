@@ -28,15 +28,19 @@ export const Chat_card = ({chat_info})=> {
 
         socket.on('receive_message',async last_message=> {
             set_chat(prev=> ({...prev,last_message}));
-
-            if(user?._id !== contact?._id) {
-             const {data} = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,{sender:contact?._id,chat_id: chat?._id,status: 'DELIVERED'});
-                 console.log(data?.messages)
-                socket.emit('message_deliverd',data?.messages);
-                set_chat(prev=> ({...prev,last_message: {...last_message,status: 'DELIVERED'}}));
-            }
+                if(user?._id !== last_message?.sender) {
+                        const {data} = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,{sender:last_message?.sender, chat_id :chat?._id,status: 'DELIVERED'});
+                    socket.emit('message_deliverd',data?.messages);
+                    set_chat(prev=> ({...prev,last_message: {...last_message,status: 'DELIVERED'}}));
+                }
         });
 
+        socket.on('message_seen_by_receiver',async ({chat_id,user_id})=> {
+
+            if(user?._id !== user_id) {
+                set_chat(prev=> ({...prev,last_message: {...prev?.last_message,status: 'READ'}}));
+            }
+        });
         return ()=> socket.off('receive_message')
     },[socket]);
 
