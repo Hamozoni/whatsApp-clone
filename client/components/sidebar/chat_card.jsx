@@ -26,38 +26,38 @@ export const Chat_card = ({chat_info})=> {
 
         socket.emit('join_room',chat?._id);
 
-        socket.on('receive_message',async new_message=> {
-            set_chat(prev=> ({...prev,last_message:new_message}));
+        socket.on('receive_message',async last_message=> {
+            set_chat(prev=> ({...prev,last_message}));
 
-            if(user?._id !== new_message?.sender) {
-
-                await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,{receiver: user?._id,chat_id: chat?._id,status: 'DELIVERED'});
-                socket.emit('message_deliverd',{...new_message,status: 'DELIVERED'})
+            if(user?._id !== contact?._id) {
+             const messages = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,{sender:contact?._id,chat_id: chat?._id,status: 'DELIVERED'});
+                socket.emit('message_deliverd',messages);
+                set_chat(prev=> ({...prev,last_message: {...last_message,status: 'DELIVERED'}}));
             }
         });
-
-        socket.on('message_arived',message=> {
-                set_chat(prev=> ({...prev,last_message:message}));
-        });
-
-        socket.on('message_seen_by_receiver',message=> {
-            set_chat(prev=> ({...prev,last_message:message}));
-        })
 
         return ()=> socket.disconnect();
     },[socket]);
 
 
-    const handle_chat = async()=> {
-        set_active_chat(chat);
-        await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,{receiver: user?._id,chat_id: chat?._id,status: 'READ'});
-        if(user?._id !== chat_info?.last_message?.sender) {
-            socket.emit('message_read',{...chat_info?.last_message,status: 'READ'})
-        }
-    }
+    // const handle_chat = async()=> {
+
+    //     if(!socket) return;
+    //     socket.emit('join_room',chat?._id);
+    //     set_active_chat(chat);
+        
+    //     if(user?._id !== contact?._id) { 
+    //         const messages = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,{sender: contact?._id,chat_id: chat?._id,status: 'READ'});
+    //         socket.emit('message_deliverd',messages);
+    //         set_chat(prev=> ({...prev,last_message: {...prev?.last_message,status: 'READ'}}));
+
+    //     }
+    // };
+
+
     return (
         <div
-            onClick={handle_chat}
+            onClick={()=> set_active_chat(chat)}
             className={`flex items-center cursor-pointer px-3 hover:bg-[#31414b] ${
                 active_chat?.id === chat.id ? 'bg-[#222e35]' : '' }`}
             >

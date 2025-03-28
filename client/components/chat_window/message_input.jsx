@@ -49,7 +49,6 @@ export const Message_input = ({receiver})=> {
     };
 
     const handle_emoji = (emojiObject)=> {
-        console.log(emojiObject.emoji)
         set_message(message + emojiObject.emoji );
     }
 

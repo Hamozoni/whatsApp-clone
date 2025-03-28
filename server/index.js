@@ -36,11 +36,11 @@ socket_io.on('connection',socket => {
   });
 
   socket.on('send_message',(message)=> {
-    socket_io.to(message?.chat_id).emit('receive_message',message)
+    socket_io.to(message?.chat_id).emit('receive_message',message);
   });
 
-  socket.on('message_deliverd',message => {
-    socket_io.to(message?.chat_id).emit('message_arived',message)
+  socket.on('message_deliverd',messages => {
+    socket_io.to(messages[0]?.chat_id).emit('message_arived',messages);
   });
 
   socket.on('message_read',message=>  {

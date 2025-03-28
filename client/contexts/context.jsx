@@ -54,6 +54,7 @@ export const  User_context_provider =  ({children})=> {
       }, [user_auth]);
 
       useEffect(()=> {
+        set_active_chat(null)
         if(!user_auth && !is_loading) {
           router.push('/signin');
         }
