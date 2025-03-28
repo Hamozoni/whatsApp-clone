@@ -12,7 +12,8 @@ import { useSocket } from '@/hooks/useSocket';
 
 const Chat_window = () => {
   
-  const socket = useSocket()
+    const socket = useSocket();
+
     const {user,active_chat} = useContext(User_context);
     const [messages, set_messages] = useState([]);
     const [receiver, set_receiver] = useState(null);
@@ -50,20 +51,26 @@ const Chat_window = () => {
 
     },[active_chat]);
 
-    // useEffect(()=> {
-    //   if(!socket) return
+    useEffect(()=> {
 
-    //   socket.emit('join_room',active_chat?._id);
-    //   socket.on('receive_message',message=> {
-    //      set_messages(prev=> [...prev,message]);
-    //   });
+      if(!socket) return;
 
-    //   socket.on('message_arived',messages => {
-    //      set_messages(messages);
-    //   })
+      console.log(socket)
 
-    //   return ()=> socket.disconnect()
-    // },[socket,active_chat]);
+      socket.emit('join_room',active_chat?._id);
+      socket.on('receive_message',message=> {
+         set_messages(prev=> [...prev,message]);
+      });
+
+      socket.on('message_arived',messages => {
+        console.log(messages)
+         set_messages(messages);
+      });
+
+      return ()=> socket.off('receive_message')
+        // socket.off('message_arived')
+      
+    },[socket,active_chat]);
 
 
 
