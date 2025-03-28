@@ -39,16 +39,17 @@ export const Message_input = ({contact_id})=> {
 
             if(active_chat?._id){
                 const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/message`,body);
+
+                console.log(data)
                 socket.emit('join_room',data?.chat?._id);
-                socket.emit('send_message',data?.chat?.last_message);
-                set_message('')
+                socket.emit('send_message',data?.chat);
+                set_message('');
             }else {
 
-                const members = [user?._id,contact_id]
+            const members = [user?._id,contact_id]
               const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/chat`,{members,message: body});
-              
               socket.emit('join_room',data?.chat?._id);
-              socket.emit('send_message',data?.chat?.last_message);
+              socket.emit('send_message',data?.chat);
               set_message('');
               set_chats(prev=> [data?.chat,...prev])
             }
@@ -58,7 +59,7 @@ export const Message_input = ({contact_id})=> {
             console.log(error);
         }
         finally {
-            socket.off('send_message')
+            // socket.off('send_message')
         }
     };
 

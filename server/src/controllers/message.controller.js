@@ -15,7 +15,7 @@ export const post_message_controller = async (req,res,next) => {
         const message = await Message.create({chat_id,sender,text,media,type,status});
 
       const chat =  await Chat.findByIdAndUpdate(chat_id,
-             {last_message: message?._id}
+             {last_message: message?._id},{new: true}
         ).populate('last_message').exec();
 
         return res.json({message: 'message has been sent',status: true,chat})
@@ -57,8 +57,6 @@ export const put_message_status_controller = async (req,res,next)=> {
     try{
         await Message.updateMany({chat_id,sender},{status});
         const messages = await Message.find({chat_id});
-
-        console.log(messages)
         return res.json({message: 'messages updated ',status: true,messages})
     }
     catch(error) {

@@ -24,24 +24,7 @@ export const Chat_card = ({chat_info})=> {
     useEffect(()=> {
         if(!socket) return;
 
-        socket.emit('join_room',chat?._id);
-
-        socket.on('receive_message',async last_message=> {
-            set_chat(prev=> ({...prev,last_message}));
-                if(user?._id !== last_message?.sender) {
-                        const {data} = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,{sender:last_message?.sender, chat_id :chat?._id,status: 'DELIVERED'});
-                    socket.emit('message_deliverd',data?.messages);
-                    set_chat(prev=> ({...prev,last_message: {...last_message,status: 'DELIVERED'}}));
-                }
-        });
-
-        socket.on('message_seen_by_receiver',({chat_id,user_id})=> {
-
-            if(user?._id === user_id) {
-                set_chat(prev=> ({...prev,last_message: {...chat?.last_message,status: 'READ'}}));
-            }
-        });
-        return ()=> socket.off('receive_message')
+        socket
     },[socket]);
 
     return (
