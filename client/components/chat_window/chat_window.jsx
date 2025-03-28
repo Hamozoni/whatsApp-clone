@@ -57,24 +57,15 @@ const Chat_window = () => {
       }
 
       if(!socket) return
-      console.log(socket)
+
        socket.emit('join_room',active_chat?._id);
-       socket.on('receive_message',new_message=> {
-           if(new_message?.chat_id === active_chat?._id) {
-            set_messages(prev=> [...prev,new_message]);
-           }
+       socket.on('receive_message',message=> {
+          set_messages(prev=> [...prev,message]);
        });
-       socket.on('message_seen_by_receiver',message=> {
-        if(user?._id !== message?.sender) {
-            let new_messages = []
-            messages.forEach((e)=> {
-              new_messages.push({...e,status: 'READ'})
-            })
-            set_messages(new_messages)
 
-        }
-      })
-
+       socket.on('message_arived',messages => {
+          set_messages(messages);
+       })
 
     },[active_chat,socket]);
 
