@@ -35,16 +35,17 @@ export const Chat_card = ({chat_info})=> {
                 }
         });
 
-        socket.on('message_seen_by_receiver',async ({chat_id,user_id})=> {
+        socket.on('message_seen_by_receiver',({chat_id,user_id})=> {
 
-            if(user?._id !== user_id) {
-                set_chat(prev=> ({...prev,last_message: {...prev?.last_message,status: 'READ'}}));
+            if(user?._id === user_id) {
+                set_chat(prev=> ({...prev,last_message: {...chat?.last_message,status: 'READ'}}));
             }
         });
         return ()=> socket.off('receive_message')
     },[socket]);
 
     return (
+        chat?.last_message &&
         <div
             onClick={()=> set_active_chat(chat)}
             className={`flex items-center cursor-pointer px-3 hover:bg-[#31414b] ${

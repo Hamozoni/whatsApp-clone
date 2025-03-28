@@ -5,38 +5,20 @@ import Message from "../models/message.model.js"
 
 export const post_message_controller = async (req,res,next) => {
     
-    const {receiver,chat_id,sender,text,media,type,status} = req.body
+    const {chat_id,sender,text,media,type,status} = req.body
 
-    if(!sender) {
+    if(!sender || !chat_id) {
         return res.json({message: 'sender id is reqiure',status: false});
     }
 
     try {
-        if(chat_id) {
-    
-            const message = await Message.create({chat_id,sender,text,media,type,status});
+        const message = await Message.create({chat_id,sender,text,media,type,status});
 
-            await Chat.findByIdAndUpdate(chat_id,
-                 {last_message: message?._id}
-            ).populate('last_message').exec();
-    
-            return res.json({message: 'message has been sent',status: true,message})
-    
-    
-        }else {
-            
-            
-            const chat = await Chat.create({members:[sender,receiver]})
-            
-            const message = await Message.create({chat_id:chat?._id,sender,text,media,type,status})
-    
-            const last_message = await Chat.findByIdAndUpdate(chat?._id,{
-            last_message: message?._id 
-            }).populate('last_message').exec();
-    
-    
-            return res.json({message: 'message has been sent',status: true,last_message})
-        }
+      const chat =  await Chat.findByIdAndUpdate(chat_id,
+             {last_message: message?._id}
+        ).populate('last_message').exec();
+
+        return res.json({message: 'message has been sent',status: true,chat})
 
     }
     catch (error) {

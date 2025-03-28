@@ -17,67 +17,72 @@ const Chat_window = () => {
     const {user,active_chat} = useContext(User_context);
     const [messages, set_messages] = useState([]);
     const [receiver, set_receiver] = useState(null);
-    const [is_loading, set_is_loading] = useState(true);
+    const [is_loading, set_is_loading] = useState(false);
     const [error, set_error] = useState(null);
     const chat_container_ref = useRef(null)
     
+    const fetch_messages = async ()=> {
+      set_is_loading(true);
+      set_error(null)
+      try{
+        const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/message?chat_id=${active_chat?._id}`);
+        set_messages(data?.messages);
+
+      }
+      catch (error) {
+        set_error(error?.message)
+      }
+      finally {
+      };
+        set_is_loading(false);
+    };
 
     useEffect(() => {
 
       set_receiver(active_chat?.members?.filter(e=> e._id !== user?._id)[0]);
 
-      const fetch_messages = async ()=> {
-        set_is_loading(true);
-        set_error(null)
-        try{
-          const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/message?chat_id=${active_chat?._id}`);
-          set_messages(data?.messages);
+      console.log(active_chat?.members?.filter(e=> e._id !== user?._id)[0])
 
-        }
-        catch (error) {
-          set_error(error?.message)
-        }
-        finally {
-          set_is_loading(false);
-        }
 
-      };
-
-      if(active_chat?._id) {
-        fetch_messages();
-      }else {
+      if(!active_chat?._id) {
         set_messages([])
-      }
+      }else {
+        fetch_messages();
+      };
 
     },[active_chat]);
 
 
 
-    useEffect(async()=> {
+    useEffect(()=> {
 
       if(!socket) return;
 
-      console.log(socket)
+      console.log(active_chat?._id);
 
-      socket.emit('join_room',active_chat?._id);
-      socket.on('receive_message',message=> {
-         set_messages(prev=> [...prev,message]);
-      });
+      if(active_chat?._id){
+        socket.emit('join_room',active_chat?._id);
+        socket.on('receive_message',message=> {
+           set_messages(prev=> [...prev,message]);
+        });
+  
+        socket.on('message_arived', messages => {
+           set_messages(messages);
+        });
+  
+        socket.emit('messages_readed',{user_id:receiver?._id,chat_id:active_chat?._id});
+  
+        socket.on('message_seen_by_receiver',async ({chat_id,user_id})=> {
+          const {data} = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,{sender:user_id, chat_id,status: 'READ'});
+          set_messages(data?.messages);
+  
+        });
 
-      socket.on('message_arived', messages => {
-         set_messages(messages);
-      });
+      }
 
-      socket.emit('messages_readed',{user_id:sender?._id,chat_id:active_chat?._id});
-
-      socket.on('message_seen_by_receiver',async ({chat_id,user_id})=> {
-        const {data} = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,{sender:user_id, chat_id,status: 'READ'});
-        set_messages(data?.messages);
-
-      });
         
 
-      return ()=>{ 
+      return ()=> { 
         socket.off('receive_message')
         socket.off('message_arived')
       }
@@ -97,7 +102,7 @@ const Chat_window = () => {
               {
                   is_loading ? 
                     <Loading_component />
-                    : messages.map(message => (
+                    : messages?.map(message => (
                       <Message_card 
                         key={message?._id} 
                         message={message} 
@@ -111,7 +116,7 @@ const Chat_window = () => {
              </>  
                 
             </div>
-            <Message_input receiver={receiver?._id}/>
+            <Message_input contact_id={receiver?._id}/>
         </div> 
         : 
         <div className=" h-screen max-h-full flex items-center justify-center bg-[#222e35] hide_model">

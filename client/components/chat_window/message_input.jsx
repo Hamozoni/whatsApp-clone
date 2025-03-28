@@ -9,9 +9,9 @@ import EmojiPicker from "emoji-picker-react";
 import axios from "axios";
 import { useSocket } from "@/hooks/useSocket";
 
-export const Message_input = ({receiver})=> {
+export const Message_input = ({contact_id})=> {
 
-    const {user,active_chat} = useContext(User_context);
+    const {user,active_chat,set_chats} = useContext(User_context);
     const [message,set_message] = useState('');
     const [show_emoji,set_show_emoji] = useState(false);
     const socket = useSocket()
@@ -29,18 +29,29 @@ export const Message_input = ({receiver})=> {
         try {
 
             const body = {
-                receiver,
                 chat_id: active_chat?._id,
                 sender : user?._id,
                 text: message,
                 media: null,
                 type : 'TEXT',
                 status: 'SENT'
+            };
+
+            if(active_chat?._id){
+                const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/message`,body);
+                socket.emit('join_room',data?.chat?._id);
+                socket.emit('send_message',data?.chat?.last_message);
+                set_message('')
+            }else {
+
+                const members = [user?._id,contact_id]
+              const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/chat`,{members,message: body});
+              
+              socket.emit('join_room',data?.chat?._id);
+              socket.emit('send_message',data?.chat?.last_message);
+              set_message('');
+              set_chats(prev=> [data?.chat,...prev])
             }
-            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/message`,body);
-            socket.emit('join_room',data?.message?.chat_id);
-            socket.emit('send_message',data?.message);
-            set_message('')
 
         }
         catch (error) {
