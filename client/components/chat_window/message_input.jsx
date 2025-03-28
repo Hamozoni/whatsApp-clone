@@ -38,13 +38,16 @@ export const Message_input = ({receiver})=> {
                 status: 'SENT'
             }
             const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/message`,body);
-            socket.emit('join_room',active_chat?._id);
-            socket.emit('send_message',data?.message);
+            // socket.emit('join_room',active_chat?._id);
+            // socket.emit('send_message',data?.message);
             set_message('')
 
         }
         catch (error) {
             console.log(error);
+        }
+        finally {
+            socket.disconnect()
         }
     };
 

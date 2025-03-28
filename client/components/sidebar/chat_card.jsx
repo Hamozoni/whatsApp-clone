@@ -35,25 +35,7 @@ export const Chat_card = ({chat_info})=> {
                 set_chat(prev=> ({...prev,last_message: {...last_message,status: 'DELIVERED'}}));
             }
         });
-
-        return ()=> socket.disconnect();
     },[socket]);
-
-
-    // const handle_chat = async()=> {
-
-    //     if(!socket) return;
-    //     socket.emit('join_room',chat?._id);
-    //     set_active_chat(chat);
-        
-    //     if(user?._id !== contact?._id) { 
-    //         const messages = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,{sender: contact?._id,chat_id: chat?._id,status: 'READ'});
-    //         socket.emit('message_deliverd',messages);
-    //         set_chat(prev=> ({...prev,last_message: {...prev?.last_message,status: 'READ'}}));
-
-    //     }
-    // };
-
 
     return (
         <div

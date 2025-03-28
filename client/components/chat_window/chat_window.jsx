@@ -20,13 +20,6 @@ const Chat_window = () => {
     const [error, set_error] = useState(null);
     const chat_container_ref = useRef(null)
     
-    const scroll_bottom = ()=> {
-      if(chat_container_ref.current) {
-        chat_container_ref?.current?.scrollIntoView({ behavior: "smooth" });
-
-        console.log(chat_container_ref.current.scrollHeight)
-      }
-    };
 
     useEffect(() => {
 
@@ -45,7 +38,6 @@ const Chat_window = () => {
         }
         finally {
           set_is_loading(false);
-          scroll_bottom();
         }
 
       };
@@ -56,18 +48,22 @@ const Chat_window = () => {
         set_messages([])
       }
 
-      if(!socket) return
+    },[active_chat]);
 
-       socket.emit('join_room',active_chat?._id);
-       socket.on('receive_message',message=> {
-          set_messages(prev=> [...prev,message]);
-       });
+    // useEffect(()=> {
+    //   if(!socket) return
 
-       socket.on('message_arived',messages => {
-          set_messages(messages);
-       })
+    //   socket.emit('join_room',active_chat?._id);
+    //   socket.on('receive_message',message=> {
+    //      set_messages(prev=> [...prev,message]);
+    //   });
 
-    },[active_chat,socket]);
+    //   socket.on('message_arived',messages => {
+    //      set_messages(messages);
+    //   })
+
+    //   return ()=> socket.disconnect()
+    // },[socket,active_chat]);
 
 
 
@@ -90,7 +86,7 @@ const Chat_window = () => {
                       />
                   ))
                 }
-                <div ref={chat_container_ref} className="w-full h-[2px]">
+                <div className="w-full h-[2px]">
                    
                 </div>
              </>  
