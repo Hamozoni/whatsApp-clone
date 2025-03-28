@@ -44,7 +44,7 @@ socket_io.on('connection',socket => {
   });
 
   socket.on('message_read',message=>  {
-    socket_io.to(message?.chat_id).emit('message_seen_by_receiver'.message)
+    socket_io.to(message?.chat_id).emit('message_seen_by_receiver',message)
   })
 
 })

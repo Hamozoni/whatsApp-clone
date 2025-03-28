@@ -51,8 +51,8 @@ export const Chat_card = ({chat_info})=> {
     const handle_chat = async()=> {
         set_active_chat(chat);
         await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,{receiver: user?._id,chat_id: chat?._id,status: 'READ'});
-        if(user?._id !== new_message?.sender) {
-            socket.emit('message_READ',{...chat_info?.last_message,status: 'READ'})
+        if(user?._id !== chat_info?.last_message?.sender) {
+            socket.emit('message_read',{...chat_info?.last_message,status: 'READ'})
         }
     }
     return (
