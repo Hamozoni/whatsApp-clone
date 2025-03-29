@@ -52,16 +52,16 @@ const Chat_window = () => {
     
     
     useEffect(()=> {
-      if(!socket)  return
+      if(!socket)  return;
+      console.log(socket)
       socket.emit('join_room',active_chat?._id);
       socket.on('message_sent',chat => {
   
         console.log(chat)
          set_messages(prev=> [...prev,chat?.last_message]);
       });
-
       
-  },[socket]);
+  },[socket,active_chat]);
 
   return (
     <div className="text-[#f7f8fa] flex-1 hide_model">
