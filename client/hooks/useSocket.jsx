@@ -1,25 +1,24 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import {io} from 'socket.io-client';
 
 
 export const useSocket = ()=> {
 
-    const [socket,set_socket] = useState(null);
+    const socket= useRef(null);
 
     useEffect(()=> {
 
-        const new_socket = io('http://localhost:4400');
-
-        set_socket(new_socket)
-
-        return ()=> new_socket.disconnect()
-        // if()
+        socket.current = io('http://localhost:4400',{
+                reconnection: true,
+                reconnectionAttempts: 5,
+                transports: ['websocket'] // Force WebSocket transport
+        });
 
     },[]);
 
 
-    return socket;
+    return socket.current;
 
 };
 

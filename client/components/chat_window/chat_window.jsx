@@ -20,7 +20,8 @@ const Chat_window = () => {
     const [receiver, set_receiver] = useState(null);
     const [is_loading, set_is_loading] = useState(false);
     const [error, set_error] = useState(null);
-    const chat_container_ref = useRef(null)
+    const chat_container_ref = useRef(null);
+    const socket = useSocket();
     
     useEffect(() => {
       set_messages([]);
@@ -51,7 +52,7 @@ const Chat_window = () => {
     
     
     useEffect(()=> {
-       const socket = io('http://localhost:4400');
+      if(!socket)  return
       socket.emit('join_room',active_chat?._id);
       socket.on('message_sent',chat => {
   
@@ -59,11 +60,8 @@ const Chat_window = () => {
          set_messages(prev=> [...prev,chat?.last_message]);
       });
 
-      // return () => {
-      //   if (socket) socket.disconnect();
-      // };
       
-  },[]);
+  },[socket]);
 
   return (
     <div className="text-[#f7f8fa] flex-1 hide_model">
