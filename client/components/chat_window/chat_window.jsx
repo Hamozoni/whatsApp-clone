@@ -51,38 +51,42 @@ const Chat_window = () => {
     
     
     
-    useEffect(()=> {
+    useEffect(() => {
       if(!socket)  return;
       console.log(socket);
       socket.emit('join_room',active_chat?._id);
-      socket.on('message_sent',async chat => {
+      socket.on('message_sent',chat => {
         set_messages(prev=> [...prev,chat?.last_message]);
-
-
-        if(user?._id !== chat?.last_message?.sender) {
-
-          const body = {
-            chat_id: chat?._id,
-            sender: chat?.last_message?.sender,
-            status : 'READ'
-          }
-              const {data} = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,body);
-
-              socket.emit('message_read',data?.messages);
-
-              console.log(data)
-        }
       });
 
-      socket.on('message_seen', messages => {
-         set_messages(messages)
-      });
 
-      return ()=> {
-        socket.off('message_sent');
-        socket.off('message_seen');
-      }
+      return ()=> socket.off('message_sent');
+      
   },[socket,active_chat?._id]);
+
+  useEffect(()=> {
+    if(!socket)  return;
+    const update_status = async ()=> {
+      const body = {
+        chat_id: active_chat?._id,
+        sender: receiver?._id,
+        status : 'READ'
+      };
+
+      const {data} =  await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,body);
+      socket.emit('message-read',data?.messages);
+      
+    };
+
+    update_status();
+    
+    socket.on('message_seen', messages => {
+       set_messages(messages)
+    });
+
+    return ()=> socket.off('message_seen')
+
+  },[messages])
 
   return (
     <div className="text-[#f7f8fa] flex-1 hide_model">
