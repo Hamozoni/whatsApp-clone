@@ -62,7 +62,7 @@ const Chat_window = () => {
         if(user?._id !== chat?.last_message?.sender) {
 
           const body = {
-            chat_id: chat?.chat_id,
+            chat_id: chat?._id,
             sender: chat?.last_message?.sender,
             status : 'READ'
           }
@@ -70,11 +70,11 @@ const Chat_window = () => {
 
               socket.emit('message_read',data?.messages);
 
-              console.log(data?.messages)
+              console.log(data)
         }
       });
       
-  },[socket,active_chat]);
+  },[socket,active_chat?._id]);
 
   return (
     <div className="text-[#f7f8fa] flex-1 hide_model">
