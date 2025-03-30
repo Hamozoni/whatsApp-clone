@@ -53,14 +53,24 @@ const Chat_window = () => {
     
     useEffect(()=> {
       if(!socket)  return;
-      console.log(socket)
+      console.log(socket);
       socket.emit('join_room',active_chat?._id);
-      socket.on('message_sent',chat => {
-  
-        console.log(chat);
+      socket.on('message_sent',async chat => {
+        set_messages(prev=> [...prev,chat?.last_message]);
 
-        if(!messages.find(e=> e?._id === chat?.last_message?._id)) {
-          set_messages(prev=> [...prev,chat?.last_message]);
+
+        if(user?._id !== chat?.last_message?.sender) {
+
+          const body = {
+            chat_id: chat?.chat_id,
+            sender: chat?.last_message?.sender,
+            status : 'READ'
+          }
+              const {data} = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,body);
+
+              socket.emit('message_read',data?.messages);
+
+              console.log(data?.messages)
         }
       });
       
