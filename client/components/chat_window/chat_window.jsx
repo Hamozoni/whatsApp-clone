@@ -46,7 +46,7 @@ const Chat_window = () => {
       if(active_chat?._id) {
         fetch_messages();
       }
-    },[active_chat]);
+    },[active_chat?._id]);
 
     
     
@@ -73,7 +73,15 @@ const Chat_window = () => {
               console.log(data)
         }
       });
-      
+
+      socket.on('message_seen', messages => {
+         set_messages(messages)
+      });
+
+      return ()=> {
+        socket.off('message_sent');
+        socket.off('message_seen');
+      }
   },[socket,active_chat?._id]);
 
   return (

@@ -41,8 +41,8 @@ socket_io.on('connection',socket => {
     socket_io.to(messages[0]?.chat_id).emit('message_arived',messages);
   });
 
-  socket.on('messages_readed',({chat_id,user_id})=>  {
-    socket_io.to(chat_id).emit('message_seen_by_receiver',{chat_id,user_id})
+  socket.on('message_read',(messages)=>  {
+    socket_io.to(messages[0]?.chat_id).emit('message_seen',messages)
   })
 
 })
