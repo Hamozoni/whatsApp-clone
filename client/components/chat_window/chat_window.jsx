@@ -57,8 +57,11 @@ const Chat_window = () => {
       socket.emit('join_room',active_chat?._id);
       socket.on('message_sent',chat => {
   
-        console.log(chat)
-         set_messages(prev=> [...prev,chat?.last_message]);
+        console.log(chat);
+
+        if(!messages.find(e=> e?._id === chat?.last_message?._id)) {
+          set_messages(prev=> [...prev,chat?.last_message]);
+        }
       });
       
   },[socket,active_chat]);
