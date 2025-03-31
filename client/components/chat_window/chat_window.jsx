@@ -65,7 +65,7 @@ const Chat_window = () => {
   },[socket,active_chat?._id]);
 
   useEffect(()=> {
-    if(!socket)  return;
+    socket.emit('join_room',active_chat?._id);
     const update_status = async ()=> {
       const body = {
         chat_id: active_chat?._id,
@@ -86,7 +86,7 @@ const Chat_window = () => {
 
     return ()=> socket.off('message_seen')
 
-  },[messages])
+  },[messages,socket,active_chat?._id])
 
   return (
     <div className="text-[#f7f8fa] flex-1 hide_model">
