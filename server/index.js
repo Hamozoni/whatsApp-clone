@@ -37,12 +37,14 @@ socket_io.on('connection',socket => {
     socket_io.to(chat?._id).emit('message_sent',chat);
   });
 
-  socket.on('message_deliverd',messages => {
+  socket.on('message_deliverd',(messages) => {
     socket_io.to(messages[0]?.chat_id).emit('message_arived',messages);
   });
 
-  socket.on('message_read',(messages)=>  {
-    socket_io.to(messages[0]?.chat_id).emit('message_seen',messages)
+  socket.on('messag_read',(data)=>  {
+
+    console.log(data)
+    socket_io.to(data?.chat_id).emit('message_seen',data?.messages)
   })
 
 })

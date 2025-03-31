@@ -9,14 +9,12 @@ import axios from 'axios';
 import { Message_card } from './message_card';
 import { Loading_component } from '../ui/loading_component';
 import { useSocket } from '@/hooks/useSocket';
-import { io } from 'socket.io-client';
-
 
 const Chat_window = () => {
   
   
-  const {user,active_chat} = useContext(User_context);
-  const [messages, set_messages] = useState([]);
+    const {user,active_chat} = useContext(User_context);
+    const [messages, set_messages] = useState([]);
     const [receiver, set_receiver] = useState(null);
     const [is_loading, set_is_loading] = useState(false);
     const [error, set_error] = useState(null);
@@ -27,6 +25,7 @@ const Chat_window = () => {
       set_messages([]);
       set_receiver(active_chat?.members?.filter(e=> e._id !== user?._id)[0]);
 
+      console.log(active_chat?.members?.filter(e=> e._id !== user?._id)[0])
       const fetch_messages = async ()=> {
         set_is_loading(true);
         set_error(null)
@@ -48,45 +47,57 @@ const Chat_window = () => {
       }
     },[active_chat?._id]);
 
-    
-    
-    
-    useEffect(() => {
-      if(!socket)  return;
-      console.log(socket);
-      socket.emit('join_room',active_chat?._id);
-      socket.on('message_sent',chat => {
-        set_messages(prev=> [...prev,chat?.last_message]);
-      });
-
-
-      return ()=> socket.off('message_sent');
-      
-  },[socket,active_chat?._id]);
-
-  useEffect(()=> {
-    socket.emit('join_room',active_chat?._id);
     const update_status = async ()=> {
+
       const body = {
         chat_id: active_chat?._id,
         sender: receiver?._id,
         status : 'READ'
       };
 
+      console.log(receiver?._id)
+
       const {data} =  await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,body);
-      socket.emit('message-read',data?.messages);
+
+      console.log(data);
+      console.log(socket);
+
+      if(data?.status) return;
+
+      const socket_data = {
+        messages: data?.messages,
+        chat_id
+      }
+      socket.emit('messag_read',socket_data);
       
     };
-
-    update_status();
     
-    socket.on('message_seen', messages => {
-       set_messages(messages)
-    });
+    
+    useEffect(() => {
+      if(!socket || !active_chat?._id )  return;
+      console.log(socket);
+      socket.emit('join_room',active_chat?._id);
+      
+      update_status();
+      socket.on('message_sent',chat => {
+        set_messages(prev=> [...prev,chat?.last_message]);
+        update_status();
+      });
 
-    return ()=> socket.off('message_seen')
+      socket.on('message_seen', (messages) => {
 
-  },[messages,socket,active_chat?._id])
+        console.log(messages)
+        // set_messages(messages)
+     });
+
+
+      return ()=> {
+        socket.off('message_sent');
+        socket.off('message_seen');
+      }
+      
+  },[socket,active_chat?._id]);
+
 
   return (
     <div className="text-[#f7f8fa] flex-1 hide_model">
