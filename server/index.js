@@ -42,8 +42,6 @@ socket_io.on('connection',socket => {
   });
 
   socket.on('messag_read',(data)=>  {
-
-    console.log(data)
     socket_io.to(data?.chat_id).emit('message_seen',data?.messages)
   })
 

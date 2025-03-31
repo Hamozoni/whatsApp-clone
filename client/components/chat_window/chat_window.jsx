@@ -20,74 +20,63 @@ const Chat_window = () => {
     const [error, set_error] = useState(null);
     const chat_container_ref = useRef(null);
     const socket = useSocket();
-    
+  
+
+    const update_status = async ()=> {
+      set_is_loading(true);
+      set_error(null)
+      update_status();
+      
+      try {
+        const body = {
+          chat_id: active_chat?._id,
+          sender: receiver?._id,
+          status : 'READ'
+        };
+  
+        const {data} =  await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,body);
+        if(!data?.status) return;
+
+        set_messages(data?.messages)
+  
+        const socket_data = {
+          messages: data?.messages,
+          chat_id: active_chat?._id
+        }
+        socket.emit('messag_read',socket_data);
+
+      }
+      catch (error) {
+        set_error(error?.message)
+      }
+      finally {
+      };
+      set_is_loading(false);
+
+      
+    };
+
     useEffect(() => {
       set_messages([]);
       set_receiver(active_chat?.members?.filter(e=> e._id !== user?._id)[0]);
 
-      console.log(active_chat?.members?.filter(e=> e._id !== user?._id)[0])
-      const fetch_messages = async ()=> {
-        set_is_loading(true);
-        set_error(null)
-        try{
-          const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/message?chat_id=${active_chat?._id}`);
-          set_messages(data?.messages);
-  
-        }
-        catch (error) {
-          set_error(error?.message)
-        }
-        finally {
-        };
-        set_is_loading(false);
-      };
-      
       if(active_chat?._id) {
-        fetch_messages();
+        update_status();
       }
-    },[active_chat?._id]);
-
-    const update_status = async ()=> {
-
-      const body = {
-        chat_id: active_chat?._id,
-        sender: receiver?._id,
-        status : 'READ'
-      };
-
-      console.log(receiver?._id)
-
-      const {data} =  await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,body);
-
-      console.log(data);
-      console.log(socket);
-
-      if(data?.status) return;
-
-      const socket_data = {
-        messages: data?.messages,
-        chat_id
-      }
-      socket.emit('messag_read',socket_data);
-      
-    };
+    },[active_chat]);
     
     
     useEffect(() => {
       if(!socket || !active_chat?._id )  return;
       console.log(socket);
       socket.emit('join_room',active_chat?._id);
-      
-      update_status();
       socket.on('message_sent',chat => {
         set_messages(prev=> [...prev,chat?.last_message]);
         update_status();
       });
 
       socket.on('message_seen', (messages) => {
-
-        console.log(messages)
-        // set_messages(messages)
+        set_messages(messages)
      });
 
 
@@ -96,7 +85,7 @@ const Chat_window = () => {
         socket.off('message_seen');
       }
       
-  },[socket,active_chat?._id]);
+  },[socket,active_chat]);
 
 
   return (
