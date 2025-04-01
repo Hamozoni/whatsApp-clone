@@ -18,15 +18,10 @@ const Chat_window = () => {
     const [receiver, set_receiver] = useState(null);
     const [is_loading, set_is_loading] = useState(false);
     const [error, set_error] = useState(null);
-    const chat_container_ref = useRef(null);
     const socket = useSocket();
   
 
     const update_status = async ()=> {
-      set_is_loading(true);
-      set_error(null)
-      update_status();
-      
       try {
         const body = {
           chat_id: active_chat?._id,
@@ -49,18 +44,39 @@ const Chat_window = () => {
       catch (error) {
         set_error(error?.message)
       }
-      finally {
-      };
-      set_is_loading(false);
-
-      
+ 
     };
+
+
+    const fetch_messages = async ()=> {
+
+      set_is_loading(true);
+      set_error(null);
+      try {
+
+        const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/message?chat_id=${active_chat?._id}`);
+
+        if(data?.status) {
+            set_messages(data?.messages);
+        }
+        else {
+          set_error(data?.message)
+        }
+      }
+      catch (error) {
+        set_error(error?.message)
+      }
+      finally {
+        set_is_loading(false)
+      }
+    }
 
     useEffect(() => {
       set_messages([]);
       set_receiver(active_chat?.members?.filter(e=> e._id !== user?._id)[0]);
 
       if(active_chat?._id) {
+        fetch_messages()
         update_status();
       }
     },[active_chat]);
