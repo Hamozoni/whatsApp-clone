@@ -92,11 +92,15 @@ const Chat_window = () => {
       socket.on('message_seen', (messages) => {
         set_messages(messages)
      });
+     socket.on('message_arived',(messages) => {
+      set_messages(messages)
+     });
 
 
       return ()=> {
         socket.off('message_sent');
         socket.off('message_seen');
+        socket.off('message_arived');
       }
       
   },[socket,active_chat]);
