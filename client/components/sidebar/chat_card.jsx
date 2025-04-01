@@ -10,7 +10,7 @@ export const Chat_card = ({chat_info})=> {
     const [contact,set_contact] = useState(null);
     const [text_time,set_text_time] = useState(null);
     const [chat,set_chat] = useState(chat_info);
-    const socket = useSocket()
+    const socket = useSocket();
 
 
     useEffect(()=> {
@@ -21,10 +21,17 @@ export const Chat_card = ({chat_info})=> {
 
     },[]);
 
+    const update_status = async ()=> {
+        try {
+            const {data} = await axios.put()
+        }
+        catch (error){
+
+        }
+    }
+
     useEffect(()=> {
         if(!socket) return;
-
-        socket
     },[socket]);
 
     return (

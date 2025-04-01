@@ -9,6 +9,7 @@ import axios from 'axios';
 import { Message_card } from './message_card';
 import { Loading_component } from '../ui/loading_component';
 import { useSocket } from '@/hooks/useSocket';
+import update_status from '@/utils/update_mesages_status';
 
 const Chat_window = () => {
 
@@ -21,33 +22,6 @@ const Chat_window = () => {
     const [error, set_error] = useState(null);
     const socket = useSocket();
   
-
-    const update_status = async ()=> {
-      try {
-        const body = {
-          chat_id: active_chat?._id,
-          sender: active_chat.members.filter(e=> e._id !== user?._id)[0]?._id,
-          status : 'READ'
-        };
-  
-        const {data} =  await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,body);
-        if(!data?.status) return;
-
-        set_messages(data?.messages)
-  
-        const socket_data = {
-          messages: data?.messages,
-          chat_id: active_chat?._id
-        }
-        socket.emit('messag_read',socket_data);
-
-      }
-      catch (error) {
-        set_error(error?.message)
-      }
- 
-    };
-
 
     const fetch_messages = async ()=> {
 
@@ -76,9 +50,10 @@ const Chat_window = () => {
       set_messages([]);
       
       if(active_chat) {
-        set_receiver(active_chat.members.filter(e=> e._id !== user?._id)[0]);
+        const receiver = active_chat.members.filter(e=> e._id !== user?._id)[0]
+        set_receiver(receiver);
         fetch_messages()
-        update_status();
+        update_status(socket,active_chat?._id,receiver?._id,'READ',set_error);
       }
     },[active_chat]);
     
