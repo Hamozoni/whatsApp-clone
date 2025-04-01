@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { User_context } from "../../contexts/context";
 import { useSocket } from "@/hooks/useSocket";
 import axios from "axios";
+import update_status from "@/utils/update_mesages_status";
 
 export const Chat_card = ({chat_info})=> {
 
@@ -13,26 +14,45 @@ export const Chat_card = ({chat_info})=> {
     const socket = useSocket();
 
 
+    const updated_data = ()=> {
+        const data = {
+            chat_id: chat?._id,
+            sender: chat?.members?.filter(e=> e?._id !== user?._id)[0]?._id,
+            status: 'DELIVERED'
+        };
+
+        update_status(data)
+        .then((data)=> {
+            if(data?.status) {
+                const info = {
+                    chat_id: chat?._id,
+                    messages: data?.messages
+                  };
+                  socket.emit('join_room',chat?._id);
+                  socket.emit('messag_read',info)
+            }
+        })
+    };
+
     useEffect(()=> {
+        if(!socket) return;
         const contact = chat?.members?.filter(e=> e?._id !== user?._id)[0];
         set_contact(contact);
         const text_time = new Date(chat?.last_message?.createdAt).toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
         set_text_time(text_time);
+        updated_data();
 
-    },[]);
-
-    const update_status = async ()=> {
-        try {
-            const {data} = await axios.put()
-        }
-        catch (error){
-
-        }
-    }
+    },[chat]);
 
     useEffect(()=> {
         if(!socket) return;
-    },[socket]);
+        socket.emit('join_room',chat?._id);
+        socket.on('message_sent',chat => {
+            updated_data();
+            set_chat(prev=> ({...prev,last_message: chat?.last_message}))
+
+        })
+    },[socket,chat]);
 
     return (
         chat?.last_message &&

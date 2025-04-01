@@ -44,6 +44,27 @@ const Chat_window = () => {
       finally {
         set_is_loading(false)
       }
+    };
+
+    const read_messages = ()=> {
+
+      const updated = {
+        chat_id: active_chat._id,
+        sender: active_chat.members.filter(e=> e._id !== user?._id)[0]._id,
+        status: 'READ',
+      }
+      update_status(updated)
+      .then((data)=> {
+        if(data?.status) {
+
+          const info = {
+            chat_id: active_chat?._id,
+            messages: data?.messages
+          }
+          socket.emit('join_room',active_chat?._id);
+          socket.emit('messag_read',info)
+        }
+      })
     }
 
     useEffect(() => {
@@ -52,8 +73,9 @@ const Chat_window = () => {
       if(active_chat) {
         const receiver = active_chat.members.filter(e=> e._id !== user?._id)[0]
         set_receiver(receiver);
-        fetch_messages()
-        update_status(socket,active_chat?._id,receiver?._id,'READ',set_error);
+        fetch_messages();
+        read_messages()
+
       }
     },[active_chat]);
     
@@ -64,7 +86,7 @@ const Chat_window = () => {
       socket.emit('join_room',active_chat?._id);
       socket.on('message_sent',chat => {
         set_messages(prev=> [...prev,chat?.last_message]);
-        update_status();
+        read_messages();
       });
 
       socket.on('message_seen', (messages) => {
