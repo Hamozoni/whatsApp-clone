@@ -11,9 +11,10 @@ import { Loading_component } from '../ui/loading_component';
 import { useSocket } from '@/hooks/useSocket';
 
 const Chat_window = () => {
+
+    
+  const {user,active_chat} = useContext(User_context);
   
-  
-    const {user,active_chat} = useContext(User_context);
     const [messages, set_messages] = useState([]);
     const [receiver, set_receiver] = useState(null);
     const [is_loading, set_is_loading] = useState(false);
@@ -25,7 +26,7 @@ const Chat_window = () => {
       try {
         const body = {
           chat_id: active_chat?._id,
-          sender: receiver?._id,
+          sender: active_chat.members.filter(e=> e._id !== user?._id)[0]?._id,
           status : 'READ'
         };
   
@@ -73,9 +74,9 @@ const Chat_window = () => {
 
     useEffect(() => {
       set_messages([]);
-      set_receiver(active_chat?.members?.filter(e=> e._id !== user?._id)[0]);
-
-      if(active_chat?._id) {
+      
+      if(active_chat) {
+        set_receiver(active_chat.members.filter(e=> e._id !== user?._id)[0]);
         fetch_messages()
         update_status();
       }
@@ -131,19 +132,15 @@ const Chat_window = () => {
             </div>
             <Message_input contact_id={receiver?._id}/>
         </div> 
-        : 
-        <div className=" h-screen max-h-full flex items-center justify-center bg-[#222e35] hide_model">
-          <div className="flex flex-col justify-center items-center hide_model">
-              <Image src={'/chat_window.png'} width={300} height={300} alt='chat window' />
-              <div className="text-center mt-6 max-w-[500px] hide_model">
-                   <h4 className='text-3xl font-light hide_model'>download WhatsApp for Windows</h4>
-                   <p className='text-center text-sm font-light mt-4 hide_model'>Make calls, share your screen and get a faster experience when you download the Windows app.</p>
-              </div>
-          </div>
+        :
+        <div className="flex flex-col justify-center items-center bg-[#111b21] h-screen hide_model">
+            <Image src={'/chat_window.png'} width={300} height={300} alt='chat window' />
+            <div className="text-center mt-6 max-w-[500px] hide_model">
+                <h4 className='text-3xl font-light hide_model'>download WhatsApp for Windows</h4>
+                <p className='text-center text-sm font-light mt-4 hide_model'>Make calls, share your screen and get a faster experience when you download the Windows app.</p>
+            </div>
         </div>
-
       }
-
     </div>
   );
 };
