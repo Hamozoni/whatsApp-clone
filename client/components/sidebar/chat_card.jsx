@@ -30,6 +30,7 @@ export const Chat_card = ({chat_info})=> {
                   };
                   socket.emit('join_room',chat?._id);
                   socket.emit('message_delivered',info);
+
             }
         })
     };
@@ -49,19 +50,12 @@ export const Chat_card = ({chat_info})=> {
         socket.emit('join_room',chat?._id);
 
         socket.on('message_sent',chat => {
-            updated_data();
             set_chat(prev=> ({...prev,last_message: chat?.last_message}));
             if(user?._id !== chat?.last_message?.sender) {
-
+                updated_data();
             }
 
         });
-        socket.on('message_arived',(messages) => {
-           set_chat(prev=> ({...prev,last_message: messages[messages.length - 1]}));
-        });
-        // socket.on('message_seen', (messages) => {
-        //     set_chat(prev=> ({...prev,last_message: messages[messages.length - 1]}));
-        //  });
 
         return ()=> {
             socket.off('message_sent');
