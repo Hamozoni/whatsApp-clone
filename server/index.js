@@ -44,7 +44,7 @@ socket_io.on('connection',socket => {
 
   socket.on('message_delivered',(data)=>  {
     socket_io.to(data?.chat_id).emit('message_arived',data?.messages)
-  })
+  });
 
 })
   

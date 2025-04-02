@@ -6,14 +6,31 @@ import { useContext, useEffect, useState } from "react";
 import { Search_form } from "../ui/search_form";
 import { Contacts } from "../contacts/contacts";
 import { User_context } from "../../contexts/context";
+import { useSocket } from "@/hooks/useSocket";
 
 
 const Chat_list = ()=> {
 
-    const {chats} = useContext(User_context);
+    const socket = useSocket()
+
+    const {chats,set_chats} = useContext(User_context);
     const [search_value,set_search_value] = useState('');
     const [is_contacts,set_is_contact] = useState(false);
 
+    useEffect(()=> {
+        if(!socket) return;
+
+        socket.on('message_sent',chat => {
+
+            const exsist_chat = chats?.find(e=> e?._id === chat?._id);
+            if(!exsist_chat) return;
+
+            set_chats(prev=> [chat,...prev]);
+
+        });
+
+        return ()=> socket.off('chat_created');
+    },[socket])
 
     return (
         is_contacts ? <Contacts set_is_contact={set_is_contact}  /> :

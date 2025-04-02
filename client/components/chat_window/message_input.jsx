@@ -11,7 +11,7 @@ import { useSocket } from "@/hooks/useSocket";
 
 export const Message_input = ({contact_id})=> {
 
-    const {user,active_chat,set_chats} = useContext(User_context);
+    const {user,active_chat,set_active_chat} = useContext(User_context);
     const [message,set_message] = useState('');
     const [show_emoji,set_show_emoji] = useState(false);
     const socket = useSocket()
@@ -51,7 +51,7 @@ export const Message_input = ({contact_id})=> {
               socket.emit('join_room',data?.chat?._id);
               socket.emit('send_message',data?.chat);
               set_message('');
-              set_chats(prev=> [data?.chat,...prev])
+              set_active_chat(prev=> ({...prev,_id:data?.chat?._id}));
             }
 
         }

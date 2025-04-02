@@ -1,17 +1,16 @@
 
 "use client";
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Chat_header } from './chat_header';
 import { Message_input } from './message_input';
 import { User_context } from '../../contexts/context';
-import Image from 'next/image';
 import axios from 'axios';
 import { Message_card } from './message_card';
 import { Loading_component } from '../ui/loading_component';
 import { useSocket } from '@/hooks/useSocket';
 import update_status from '@/utils/update_mesages_status';
 
-const Chat_window = () => {
+const Active_chat = () => {
 
     
   const {user,active_chat} = useContext(User_context);
@@ -24,7 +23,7 @@ const Chat_window = () => {
   
 
     const fetch_messages = async ()=> {
-
+        
       set_is_loading(true);
       set_error(null);
       try {
@@ -50,7 +49,7 @@ const Chat_window = () => {
 
       const updated = {
         chat_id: active_chat._id,
-        sender: active_chat.members.filter(e=> e._id !== user?._id)[0]._id,
+        sender: active_chat?.members?.filter(e=> e._id !== user?._id)[0]._id,
         status: 'READ',
       }
       update_status(updated)
@@ -61,6 +60,8 @@ const Chat_window = () => {
             chat_id: active_chat?._id,
             messages: data?.messages
           }
+          
+          if(!socket) return
           socket.emit('join_room',active_chat?._id);
           socket.emit('messag_read',info)
         }
@@ -69,15 +70,15 @@ const Chat_window = () => {
 
     useEffect(() => {
       set_messages([]);
+      const receiver = active_chat.members.filter(e=> e._id !== user?._id)[0]
+      set_receiver(receiver);
       
-      if(active_chat) {
-        const receiver = active_chat.members.filter(e=> e._id !== user?._id)[0]
-        set_receiver(receiver);
+      if(!active_chat?._id) return
         fetch_messages();
-        read_messages()
+        read_messages();
 
-      }
-    },[active_chat]);
+    
+    },[active_chat?._id]);
     
     
     useEffect(() => {
@@ -88,6 +89,11 @@ const Chat_window = () => {
         set_messages(prev=> [...prev,chat?.last_message]);
         read_messages();
       });
+
+      socket.on('chat_created', chat => {
+        set_messages(prev=> [...prev,chat?.last_message]);
+        read_messages();
+      })
 
       socket.on('message_seen', (messages) => {
         set_messages(messages)
@@ -108,8 +114,6 @@ const Chat_window = () => {
 
   return (
     <div className="text-[#f7f8fa] flex-1 hide_model">
-      {
-        active_chat ?
         <div className=" h-screen max-h-full flex flex-col hide_model">
           <Chat_header receiver={receiver} />
           <div className="flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern hide_model">
@@ -133,17 +137,8 @@ const Chat_window = () => {
             </div>
             <Message_input contact_id={receiver?._id}/>
         </div> 
-        :
-        <div className="flex flex-col justify-center items-center bg-[#111b21] h-screen hide_model">
-            <Image src={'/chat_window.png'} width={300} height={300} alt='chat window' />
-            <div className="text-center mt-6 max-w-[500px] hide_model">
-                <h4 className='text-3xl font-light hide_model'>download WhatsApp for Windows</h4>
-                <p className='text-center text-sm font-light mt-4 hide_model'>Make calls, share your screen and get a faster experience when you download the Windows app.</p>
-            </div>
-        </div>
-      }
     </div>
   );
 };
 
-export default Chat_window;
+export default Active_chat;

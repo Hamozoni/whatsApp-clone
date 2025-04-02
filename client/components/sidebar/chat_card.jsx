@@ -36,9 +36,9 @@ export const Chat_card = ({chat_info})=> {
     };
 
     useEffect(()=> {
-        if(!socket) return;
         const contact = chat?.members?.filter(e=> e?._id !== user?._id)[0];
         set_contact(contact);
+        if(!socket) return;
         const text_time = new Date(chat?.last_message?.createdAt).toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
         set_text_time(text_time);
         updated_data();
@@ -51,6 +51,7 @@ export const Chat_card = ({chat_info})=> {
 
         socket.on('message_sent',chat => {
             set_chat(prev=> ({...prev,last_message: chat?.last_message}));
+
             if(user?._id !== chat?.last_message?.sender) {
                 updated_data();
             }
@@ -63,7 +64,6 @@ export const Chat_card = ({chat_info})=> {
 
         return ()=> {
             socket.off('message_sent');
-            socket.off('message_seen');
             socket.off('message_arived');
           }
     },[socket]);
