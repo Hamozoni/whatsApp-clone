@@ -57,6 +57,10 @@ export const Chat_card = ({chat_info})=> {
 
         });
 
+        socket.on('message_arived',messages => {
+            set_chat(prev=> ({...prev,last_message: messages[messages?.length - 1]}));
+        })
+
         return ()=> {
             socket.off('message_sent');
             socket.off('message_seen');
