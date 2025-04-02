@@ -55,7 +55,12 @@ export const put_message_status_controller = async (req,res,next)=> {
     }
 
     try{
-        await Message.updateMany({chat_id,sender},{status});
+
+        if(status === 'DELIVERED') {
+            await Message.updateMany({chat_id,sender,status: 'SENT'},{status});
+        }else {
+            await Message.updateMany({chat_id,sender, status: 'DELIVERED'},{status}); 
+        }
         const messages = await Message.find({chat_id});
         return res.json({message: 'messages updated ',status: true,messages})
     }
