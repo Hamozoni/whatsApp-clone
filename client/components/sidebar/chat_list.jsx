@@ -13,12 +13,14 @@ const Chat_list = ()=> {
 
     const socket = useSocket()
 
-    const {chats,set_chats} = useContext(User_context);
+    const {chats,set_chats,active_chat} = useContext(User_context);
     const [search_value,set_search_value] = useState('');
     const [is_contacts,set_is_contact] = useState(false);
 
     useEffect(()=> {
         if(!socket) return;
+
+        socket.emit('join_room',active_chat?._id)
 
         socket.on('message_sent',chat => {
 
@@ -29,8 +31,8 @@ const Chat_list = ()=> {
 
         });
 
-        return ()=> socket.off('chat_created');
-    },[socket])
+        return ()=> socket.off('message_sent');
+    },[socket,active_chat])
 
     return (
         is_contacts ? <Contacts set_is_contact={set_is_contact}  /> :
