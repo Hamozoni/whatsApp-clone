@@ -22,10 +22,8 @@ export const  User_context_provider =  ({children})=> {
     
     useEffect(() => {
 
-      set_is_loading(true);
+        set_is_loading(true);
         const initializeAuth = async () => {
-
-          // Set explicit persistence
           await setPersistence(firebase_auth, browserLocalPersistence);
           const unsubscribe = firebase_auth.onAuthStateChanged(async user => {
             console.log(user);
