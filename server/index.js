@@ -40,6 +40,12 @@ socket.on('register_user',user_id=> {
     socket_io.to(chat?._id).emit('message_sent',chat);
   });
 
+  socket.on('new_chat',data=> {
+
+    const receiver_socket_id = users_socket.get(data?.contact_id)
+    socket.to(receiver_socket_id).emit('chat_created',data?.chat);
+  })
+
 
   socket.on('messag_read',(data)=>  {
     socket_io.to(data?.chat_id).emit('message_seen',data?.messages)

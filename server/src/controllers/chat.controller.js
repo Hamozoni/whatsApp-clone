@@ -15,7 +15,7 @@ export const post_chat_controller = async (req,res,next)=> {
 
       const last_message = await Message.create({...message,chat_id:chat?._id});
 
-      const updated_chat = await Chat.findByIdAndUpdate(chat?._id,{last_message})
+      const updated_chat = await Chat.findByIdAndUpdate(chat?._id,{last_message},{new: true}).populate('members')
 
         return res.json({message: 'chat has been created',status: true,chat:updated_chat})
 

@@ -18,20 +18,29 @@ const Chat_list = ()=> {
     const [is_contacts,set_is_contact] = useState(false);
 
     useEffect(()=> {
-        if(!socket) return;
 
-        socket.emit('join_room',active_chat?._id)
+        socket?.emit('join_room',active_chat?._id)
 
-        socket.on('message_sent',chat => {
+        socket?.on('message_sent',chat => {
 
             const exsist_chat = chats?.find(e=> e?._id === chat?._id);
-            if(!exsist_chat) return;
+            if(exsist_chat) return;
 
             set_chats(prev=> [chat,...prev]);
 
         });
 
-        return ()=> socket.off('message_sent');
+        socket?.on('chat_created', data => {
+            
+            const exsist_chat = chats?.find(e=> e?._id === data?._id);
+            if(exsist_chat) return;
+            set_chats(prev=> [data,...prev]);
+        })
+
+        return ()=> {
+            socket?.off('message_sent');
+            socket?.off('chat_created');
+        };
     },[socket,active_chat])
 
     return (

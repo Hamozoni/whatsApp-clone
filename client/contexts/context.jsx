@@ -35,9 +35,7 @@ export const  User_context_provider =  ({children})=> {
               set_user(data?.user);
               set_contacts(data?.user?.contacts);
               set_chats(data?.chats);
-              set_is_loading(false);
-
-              console.log(data)
+              set_is_loading(false)
 
             }
             catch(error) {

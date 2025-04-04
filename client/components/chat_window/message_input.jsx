@@ -23,8 +23,6 @@ export const Message_input = ({contact_id})=> {
 
     const handle_send = async ()=> {
 
-        if(!socket) return
-
         if(message?.length < 0) return
         try {
 
@@ -37,21 +35,18 @@ export const Message_input = ({contact_id})=> {
                 status: 'SENT'
             };
 
-            if(active_chat?._id){
+            if(active_chat._id){
                 const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/message`,body);
-
-                console.log(data)
-                socket.emit('join_room',data?.chat?._id);
-                socket.emit('send_message',data?.chat);
+                socket?.emit('join_room',data?.chat?._id);
+                socket?.emit('send_message',data?.chat);
                 set_message('');
             }else {
 
             const members = [user?._id,contact_id]
               const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/chat`,{members,message: body});
-              socket.emit('join_room',data?.chat?._id);
-              socket.emit('send_message',data?.chat);
+              socket?.emit('new_chat',{contact_id,chat:data?.chat});
               set_message('');
-              set_active_chat(prev=> ({...prev,_id:data?.chat?._id}));
+              set_active_chat(data?.chat);
             }
 
         }
