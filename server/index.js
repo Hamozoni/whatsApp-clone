@@ -32,17 +32,19 @@ socket.on('register_user',user_id=> {
 })
   socket.on('join_room',(chat_id)=> {
     socket.join(chat_id)
-
   });
 
   socket.on('send_message',chat=> {
-    console.log(chat?._id)
+    console.log(chat?._id);
+
     socket_io.to(chat?._id).emit('message_sent',chat);
   });
 
   socket.on('new_chat',data=> {
 
-    const receiver_socket_id = users_socket.get(data?.contact_id)
+    const receiver_socket_id = users_socket.get(data?.contact_id);
+
+    socket.join(receiver_socket_id)
     socket.to(receiver_socket_id).emit('chat_created',data?.chat);
   })
 
