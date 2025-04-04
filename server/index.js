@@ -23,10 +23,13 @@ const socket_io = new Server(server, {
 
 // app.set('io', socket_io);
 
-
+const users_socket = new Map();
 
 socket_io.on('connection',socket => {
 
+socket.on('register_user',user_id=> {
+  users_socket.set(user_id,socket.id);
+})
   socket.on('join_room',(chat_id)=> {
     socket.join(chat_id)
 
@@ -46,7 +49,7 @@ socket_io.on('connection',socket => {
     socket_io.to(data?.chat_id).emit('message_arived',data?.messages)
   });
 
-})
+});
   
   
 server.listen(process.env.PORT,()=> {
