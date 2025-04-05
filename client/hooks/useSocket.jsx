@@ -12,22 +12,18 @@ export const useSocket = ()=> {
 
     useEffect(()=> {
 
-        socket.current = io('http://localhost:4400',{
+        socket.current = io.connect('http://localhost:4400',{
             reconnection: true,
             reconnectionAttempts: 5,
-            transports: ['websocket'] // Force WebSocket transport
+            transports: ['websocket'],
+            query : {
+                user_id: user?._id
+            }
         });
 
-        socket.current.on('connect',()=> {
-            socket.current.emit('register_user',user?._id)
-        })
 
-        return ()=> {
-            socket.current.off('connect')
-            socket.current.disconnect()
-        };
-
-    },[])
+        return ()=> socket.current.disconnect()
+    },[user]);
 
 
     return socket.current;
