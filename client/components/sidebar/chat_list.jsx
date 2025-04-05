@@ -17,31 +17,31 @@ const Chat_list = ()=> {
     const [search_value,set_search_value] = useState('');
     const [is_contacts,set_is_contact] = useState(false);
 
-    useEffect(()=> {
+    // useEffect(()=> {
 
-        socket?.emit('join_room',active_chat?._id)
+    //     socket?.emit('join_room',active_chat?._id)
 
-        socket?.on('message_sent',chat => {
+    //     socket?.on('message_sent',chat => {
 
-            const exsist_chat = chats?.find(e=> e?._id === chat?._id);
-            if(exsist_chat) return;
+    //         const exsist_chat = chats?.find(e=> e?._id === chat?._id);
+    //         if(exsist_chat) return;
 
-            set_chats(prev=> [chat,...prev]);
+    //         set_chats(prev=> [chat,...prev]);
 
-        });
+    //     });
 
-        socket?.on('chat_created', data => {
+    //     socket?.on('chat_created', data => {
             
-            const exsist_chat = chats?.find(e=> e?._id === data?._id);
-            if(exsist_chat) return;
-            set_chats(prev=> [data,...prev]);
-        })
+    //         const exsist_chat = chats?.find(e=> e?._id === data?._id);
+    //         if(exsist_chat) return;
+    //         set_chats(prev=> [data,...prev]);
+    //     })
 
-        return ()=> {
-            socket?.off('message_sent');
-            socket?.off('chat_created');
-        };
-    },[socket,active_chat])
+    //     return ()=> {
+    //         socket?.off('message_sent');
+    //         socket?.off('chat_created');
+    //     };
+    // },[socket,active_chat])
 
     return (
         is_contacts ? <Contacts set_is_contact={set_is_contact}  /> :

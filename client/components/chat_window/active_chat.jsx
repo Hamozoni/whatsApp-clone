@@ -45,28 +45,25 @@ const Active_chat = () => {
       }
     };
 
-    const read_messages = ()=> {
+    // const read_messages = ()=> {
 
-      const updated = {
-        chat_id: active_chat._id,
-        sender: active_chat?.members?.filter(e=> e._id !== user?._id)[0]._id,
-        status: 'READ',
-      }
-      update_status(updated)
-      .then((data)=> {
-        if(data?.status) {
+    //   const updated = {
+    //     chat_id: active_chat._id,
+    //     sender: active_chat?.members?.filter(e=> e._id !== user?._id)[0]._id,
+    //     status: 'READ',
+    //   }
+    //   update_status(updated)
+    //   .then((data)=> {
+    //     if(data?.status) {
 
-          const info = {
-            chat_id: active_chat?._id,
-            messages: data?.messages
-          }
-          
-          if(!socket) return
-          socket.emit('join_room',active_chat?._id);
-          socket.emit('messag_read',info)
-        }
-      })
-    }
+    //       const info = {
+    //         chat_id: active_chat?._id,
+    //         messages: data?.messages
+    //       }
+    //       socket?.emit('messag_read',info)
+    //     }
+    //   })
+    // }
 
     useEffect(() => {
       set_messages([]);
@@ -75,38 +72,21 @@ const Active_chat = () => {
       
       if(!active_chat?._id) return
         fetch_messages();
-        read_messages();
+        // read_messages();
 
-    
     },[active_chat?._id]);
     
     
     useEffect(() => {
-      if(!socket || !active_chat?._id )  return;
-      console.log(socket);
-      socket.emit('join_room',active_chat?._id);
-      socket.on('message_sent',chat => {
+      if(!active_chat?._id )  return;
+
+      socket?.emit('join_room',active_chat?._id)
+      socket?.on('message_sent',chat => {
         set_messages(prev=> [...prev,chat?.last_message]);
-        read_messages();
       });
 
-      socket.on('chat_created', chat => {
-        set_messages(prev=> [...prev,chat?.last_message]);
-        read_messages();
-      })
-
-      socket.on('message_seen', (messages) => {
-        set_messages(messages)
-     });
-     socket.on('message_arived',(messages) => {
-      set_messages(messages)
-     });
-
-
       return ()=> {
-        socket.off('message_sent');
-        socket.off('message_seen');
-        socket.off('message_arived');
+        socket?.off('message_sent');
       }
       
   },[socket,active_chat]);

@@ -37,7 +37,6 @@ export const Message_input = ({contact_id})=> {
 
             if(active_chat._id){
                 const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/message`,body);
-                socket?.emit('join_room',data?.chat?._id);
                 socket?.emit('send_message',data?.chat);
                 set_message('');
             }else {
