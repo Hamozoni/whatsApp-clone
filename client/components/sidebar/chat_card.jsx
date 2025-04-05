@@ -30,6 +30,11 @@ export const Chat_card = ({chat_info})=> {
                   };
                   socket?.emit('join_room',chat?._id);
                   socket?.emit('messages_reveived',info);
+                  
+                if(user?._id !== chat?.last_message?.sender && chat?.last_message?.status === 'SENT') {
+                    socket?.emit('message_received',{...chat?.last_message,status: 'DELIVERED'});
+                };
+
             }
         })
     };
@@ -46,10 +51,9 @@ export const Chat_card = ({chat_info})=> {
     useEffect(()=> {
         socket?.emit('join_room',chat?._id);
         socket?.on('message_sent',chat => {
-
             set_chat(prev=> ({...prev,last_message: chat?.last_message}));
-            if(user?._id !== chat?.last_message?.sender) {
-                socket.emit('message_received',{...chat?.last_message,status: 'DELIVERED'});
+            if(user?._id !== chat?.last_message?.sender && chat?.last_message?.status === 'SENT') {
+                socket?.emit('message_received',{...chat?.last_message,status: 'DELIVERED'});
             };
 
 
@@ -59,14 +63,9 @@ export const Chat_card = ({chat_info})=> {
             set_chat(prev=> ({...prev,last_message: message}));
         });
 
-        socket?.on('messages_delivered',messages=> {
-            set_chat(prev=> ({...prev,last_message: messages[messages?.length - 1]}));
-        })
-
         return ()=> {
             socket?.off('message_sent');
             socket?.off('message_delivered');
-            socket?.off('messages_delivered');
         }
     },[socket]);
 

@@ -89,7 +89,7 @@ const Active_chat = () => {
         set_messages(prev=> {
 
           let new_messages = []
-          prev.forEach(e=> {
+          prev?.forEach(e=> {
             if(e._id === message?._id && e.status === 'SENT'){
               new_messages.push({...message,status: 'DELIVERD'})
             }else {
