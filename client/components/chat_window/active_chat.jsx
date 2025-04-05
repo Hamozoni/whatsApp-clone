@@ -84,9 +84,31 @@ const Active_chat = () => {
       socket?.on('message_sent',chat => {
         set_messages(prev=> [...prev,chat?.last_message]);
       });
+      
+      socket?.on('message_delivered',message=> {
+        set_messages(prev=> {
+
+          let new_messages = []
+          prev.forEach(e=> {
+            if(e._id === message?._id && e.status === 'SENT'){
+              new_messages.push({...message,status: 'DELIVERD'})
+            }else {
+              new_messages.push(e)
+            }
+
+            return [...new_messages]
+          })
+        });
+    });
+
+    socket?.on('messages_delivered',messages=> {
+      set_messages(messages);
+    })
 
       return ()=> {
         socket?.off('message_sent');
+        socket?.off('message_delivered');
+        socket?.off('messages_delivered');
       }
       
   },[socket,active_chat]);

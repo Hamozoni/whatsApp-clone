@@ -44,6 +44,10 @@ socket_io.on('connection',socket => {
     socket_io.to(message?.chat_id).emit('message_delivered',message);
   })
 
+  socket.on('messages_reveived',data => {
+    socket_io.to(data?.chat_id).emit('messages_delivered',data?.messages);
+  })
+
   socket.on('disconnect',()=> {
     users_socket.delete(user_id);
     console.log(users_socket);

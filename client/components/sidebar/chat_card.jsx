@@ -14,33 +14,32 @@ export const Chat_card = ({chat_info})=> {
     const socket = useSocket();
 
 
-    // const updated_data = ()=> {
-    //     const data = {
-    //         chat_id: chat?._id,
-    //         sender: chat?.members?.filter(e=> e?._id !== user?._id)[0]?._id,
-    //         status: 'DELIVERED'
-    //     };
+    const updated_data = ()=> {
+        const data = {
+            chat_id: chat?._id,
+            sender: chat?.members?.filter(e=> e?._id !== user?._id)[0]?._id,
+            status: 'DELIVERED'
+        };
 
-    //     update_status(data)
-    //     .then((data)=> {
-    //         if(data?.status) {
-    //             const info = {
-    //                 chat_id: chat?._id,
-    //                 messages: data?.messages
-    //               };
-    //               socket.emit('join_room',chat?._id);
-    //               socket.emit('message_delivered',info);
-
-    //         }
-    //     })
-    // };
+        update_status(data)
+        .then((data)=> {
+            if(data?.status) {
+                const info = {
+                    chat_id: chat?._id,
+                    messages: data?.messages
+                  };
+                  socket?.emit('join_room',chat?._id);
+                  socket?.emit('messages_reveived',info);
+            }
+        })
+    };
 
     useEffect(()=> {
         const contact = chat?.members?.filter(e=> e?._id !== user?._id)[0];
         set_contact(contact);
         const text_time = new Date(chat?.last_message?.createdAt).toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
         set_text_time(text_time);
-        // updated_data();
+        updated_data()
 
     },[chat]);
 
@@ -49,7 +48,6 @@ export const Chat_card = ({chat_info})=> {
         socket?.on('message_sent',chat => {
 
             set_chat(prev=> ({...prev,last_message: chat?.last_message}));
-            console.log(user?._id !== chat?.last_message?.sender);
             if(user?._id !== chat?.last_message?.sender) {
                 socket.emit('message_received',{...chat?.last_message,status: 'DELIVERED'});
             };
@@ -59,11 +57,16 @@ export const Chat_card = ({chat_info})=> {
 
         socket?.on('message_delivered',message=> {
             set_chat(prev=> ({...prev,last_message: message}));
+        });
+
+        socket?.on('messages_delivered',messages=> {
+            set_chat(prev=> ({...prev,last_message: messages[messages?.length - 1]}));
         })
 
         return ()=> {
             socket?.off('message_sent');
             socket?.off('message_delivered');
+            socket?.off('messages_delivered');
         }
     },[socket]);
 
