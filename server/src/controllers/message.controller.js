@@ -50,6 +50,8 @@ export const put_message_status_controller = async (req,res,next)=> {
 
     const {chat_id,sender,status}  = req.body;
 
+    console.log({chat_id,sender,status})
+
     if(!chat_id || !sender) {
         return res.json({message:'chat id and receiver id are required',status: false})
     }
@@ -61,8 +63,7 @@ export const put_message_status_controller = async (req,res,next)=> {
         }else {
             await Message.updateMany({chat_id,sender, status: 'DELIVERED'},{status}); 
         }
-        const messages = await Message.find({chat_id});
-        return res.json({message: 'messages updated ',status: true,messages})
+        return res.json({message: 'messages updated ',status: true})
     }
     catch(error) {
         next(error);

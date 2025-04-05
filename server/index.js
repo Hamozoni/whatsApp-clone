@@ -40,12 +40,8 @@ socket_io.on('connection',socket => {
     socket_io.to(chat?._id).emit('message_sent',chat);
   });
 
-  socket.on('message_received',message => {
-    socket_io.to(message?.chat_id).emit('message_delivered',message);
-  })
-
-  socket.on('messages_reveived',data => {
-    socket_io.to(data?.chat_id).emit('messages_delivered',data?.messages);
+  socket.on('messages_status',data=> {
+    socket_io.to(data?.chat_id).emit('message_status_changed',data);
   })
 
   socket.on('disconnect',()=> {

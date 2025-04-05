@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { User_context } from "../../contexts/context";
 import { useSocket } from "@/hooks/useSocket";
-import axios from "axios";
-import update_status from "@/utils/update_mesages_status";
+import update_message_status from "@/utils/update_mesages_status.js";
 
 export const Chat_card = ({chat_info})=> {
 
@@ -13,59 +12,32 @@ export const Chat_card = ({chat_info})=> {
     const [chat,set_chat] = useState(chat_info);
     const socket = useSocket();
 
-
-    const updated_data = ()=> {
-        const data = {
-            chat_id: chat?._id,
-            sender: chat?.members?.filter(e=> e?._id !== user?._id)[0]?._id,
-            status: 'DELIVERED'
-        };
-
-        update_status(data)
-        .then((data)=> {
-            if(data?.status) {
-                const info = {
-                    chat_id: chat?._id,
-                    messages: data?.messages
-                  };
-                  socket?.emit('join_room',chat?._id);
-                  socket?.emit('messages_reveived',info);
-                  
-                if(user?._id !== chat?.last_message?.sender && chat?.last_message?.status === 'SENT') {
-                    socket?.emit('message_received',{...chat?.last_message,status: 'DELIVERED'});
-                };
-
-            }
-        })
-    };
-
     useEffect(()=> {
         const contact = chat?.members?.filter(e=> e?._id !== user?._id)[0];
         set_contact(contact);
         const text_time = new Date(chat?.last_message?.createdAt).toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
         set_text_time(text_time);
-        updated_data()
-
-    },[chat]);
+        update_message_status(socket,chat?._id,contact?._id,'DELIVERED',user?._id);
+    },[]);
 
     useEffect(()=> {
         socket?.emit('join_room',chat?._id);
         socket?.on('message_sent',chat => {
             set_chat(prev=> ({...prev,last_message: chat?.last_message}));
-            if(user?._id !== chat?.last_message?.sender && chat?.last_message?.status === 'SENT') {
-                socket?.emit('message_received',{...chat?.last_message,status: 'DELIVERED'});
+            if(user?._id !== chat?.last_message?.sender) {
+                update_message_status(socket,chat?._id,contact?._id,'DELIVERED',user?._id);
             };
 
 
         });
 
-        socket?.on('message_delivered',message=> {
-            set_chat(prev=> ({...prev,last_message: message}));
-        });
+        socket?.on('message_status_changed', data => {
+            set_chat(prev=> ({...prev,last_message: {...prev?.last_message,status: data?.status}}));
+        })
 
         return ()=> {
             socket?.off('message_sent');
-            socket?.off('message_delivered');
+            socket?.off('message_status_changed');
         }
     },[socket]);
 

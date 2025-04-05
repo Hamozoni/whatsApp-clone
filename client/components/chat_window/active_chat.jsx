@@ -8,7 +8,6 @@ import axios from 'axios';
 import { Message_card } from './message_card';
 import { Loading_component } from '../ui/loading_component';
 import { useSocket } from '@/hooks/useSocket';
-import update_status from '@/utils/update_mesages_status';
 
 const Active_chat = () => {
 
@@ -16,6 +15,7 @@ const Active_chat = () => {
   const {user,active_chat} = useContext(User_context);
   
     const [messages, set_messages] = useState([]);
+    const [status, set_status] = useState('SENT');
     const [receiver, set_receiver] = useState(null);
     const [is_loading, set_is_loading] = useState(false);
     const [error, set_error] = useState(null);
@@ -45,26 +45,6 @@ const Active_chat = () => {
       }
     };
 
-    // const read_messages = ()=> {
-
-    //   const updated = {
-    //     chat_id: active_chat._id,
-    //     sender: active_chat?.members?.filter(e=> e._id !== user?._id)[0]._id,
-    //     status: 'READ',
-    //   }
-    //   update_status(updated)
-    //   .then((data)=> {
-    //     if(data?.status) {
-
-    //       const info = {
-    //         chat_id: active_chat?._id,
-    //         messages: data?.messages
-    //       }
-    //       socket?.emit('messag_read',info)
-    //     }
-    //   })
-    // }
-
     useEffect(() => {
       set_messages([]);
       const receiver = active_chat.members.filter(e=> e._id !== user?._id)[0]
@@ -84,31 +64,19 @@ const Active_chat = () => {
       socket?.on('message_sent',chat => {
         set_messages(prev=> [...prev,chat?.last_message]);
       });
-      
-      socket?.on('message_delivered',message=> {
-        set_messages(prev=> {
 
-          let new_messages = []
-          prev?.forEach(e=> {
-            if(e._id === message?._id && e.status === 'SENT'){
-              new_messages.push({...message,status: 'DELIVERD'})
-            }else {
-              new_messages.push(e)
-            }
+      socket?.on('message_status_changed', data => {
 
-            return [...new_messages]
-          })
-        });
-    });
+        console.log('message_status_changed', data?.receiver !== user?._id,user?._id,data?.receiver )
 
-    socket?.on('messages_delivered',messages=> {
-      set_messages(messages);
-    })
+        if(data?.receiver !== user?._id) {
+          set_status(data?.status)
+        };
+      });
 
       return ()=> {
         socket?.off('message_sent');
-        socket?.off('message_delivered');
-        socket?.off('messages_delivered');
+        socket?.off('message_status_changed');
       }
       
   },[socket,active_chat]);
@@ -125,6 +93,7 @@ const Active_chat = () => {
                     <Loading_component />
                     : messages?.map(message => (
                       <Message_card 
+                        status={status}
                         key={message?._id} 
                         message={message} 
                         user_id={user?._id}
