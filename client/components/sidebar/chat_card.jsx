@@ -72,7 +72,7 @@ export const Chat_card = ({chat_info})=> {
                         <span className={chat?.last_message?.status === 'READ' ? 'text-emerald-400' : ''}>
                             {chat?.last_message?.status === 'SENT' ? '✓ ' :  '✓✓ ' }</span>)
                         }
-                        {chat?.last_message?.text}
+                        {chat?.last_message?.text?.length > 39 ? `${chat?.last_message?.text?.slice(0,39)}...`: chat?.last_message?.text}
                     </p> 
                      {/* {chat.unread > 0 && (
                         <span className="bg-emerald-800  text-white rounded-full px-2 py-1 text-xs min-w-[20px] text-center">
