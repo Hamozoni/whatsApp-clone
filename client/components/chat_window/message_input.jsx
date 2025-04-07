@@ -8,12 +8,14 @@ import { User_context } from "../../contexts/context";
 import EmojiPicker from "emoji-picker-react";
 import axios from "axios";
 import { useSocket } from "@/hooks/useSocket";
+import { Chose_document } from "../ui/chose_document";
 
 export const Message_input = ({set_messages,contact_id})=> {
 
     const {user,active_chat,set_active_chat} = useContext(User_context);
     const [message,set_message] = useState('');
     const [show_emoji,set_show_emoji] = useState(false);
+    const [is_document,set_is_document] = useState(false)
     const socket = useSocket()
 
     useEffect(()=> {
@@ -77,7 +79,10 @@ export const Message_input = ({set_messages,contact_id})=> {
     return (
         <div className="p-3 bg-[#222e35] relative hide_model">
             <div className="flex items-center gap-2 hide_model">
-                <AiOutlinePaperClip className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#00a884] rotate-90 hide_model"  />
+                {
+                    is_document && <Chose_document />
+                }
+                <AiOutlinePaperClip onClick={()=> set_is_document(!is_document)} className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#00a884] rotate-90 hide_model"  />
                 
                 <div className="flex items-center rounded-md  flex-1 relative bg-[#111b21] px-3 py-2 hide_model">
                     <HiOutlineEmojiHappy 
