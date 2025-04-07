@@ -9,6 +9,8 @@ const connect_db = async ()=> {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
+
+        console.log('connected to DB')
     } catch(error ){
         process.exit(1);
 

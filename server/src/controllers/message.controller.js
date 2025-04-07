@@ -50,8 +50,6 @@ export const put_message_status_controller = async (req,res,next)=> {
 
     const {chat_id,sender,status}  = req.body;
 
-    console.log({chat_id,sender,status})
-
     if(!chat_id || !sender) {
         return res.json({message:'chat id and receiver id are required',status: false})
     }

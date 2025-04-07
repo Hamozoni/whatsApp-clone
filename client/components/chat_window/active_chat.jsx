@@ -52,31 +52,32 @@ const Active_chat = () => {
       
       if(!active_chat?._id) return
         fetch_messages();
-        // read_messages();
-
     },[active_chat?._id]);
     
     
     useEffect(() => {
+
       if(!active_chat?._id )  return;
 
-      socket?.emit('join_room',active_chat?._id)
-      socket?.on('message_sent',chat => {
-        set_messages(prev=> [...prev,chat?.last_message]);
+      socket?.emit('join_room',active_chat?._id);
+      socket?.on('send_message',chat => {
+
+        if(chat?.last_message?.sender !== user?._id) {
+          set_messages(prev=> [...prev,chat?.last_message]);
+        }
+
       });
 
       socket?.on('message_status_changed', data => {
 
-        console.log('message_status_changed', data?.receiver !== user?._id,user?._id,data?.receiver )
-
-        if(data?.receiver !== user?._id) {
-          set_status(data?.status)
-        };
+        console.log(data);
+        // console.log('message_status_changed', data?.receiver !== user?._id,user?._id,data?.receiver )
+          set_status(data?.status);
       });
 
       return ()=> {
-        socket?.off('message_sent');
-        socket?.off('message_status_changed');
+        socket?.off('send_message');
+        // socket?.off('message_status_changed');
       }
       
   },[socket,active_chat]);
@@ -106,7 +107,7 @@ const Active_chat = () => {
              </>  
                 
             </div>
-            <Message_input contact_id={receiver?._id}/>
+            <Message_input set_messages={set_messages} contact_id={receiver?._id}/>
         </div> 
     </div>
   );

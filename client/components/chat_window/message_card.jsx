@@ -8,8 +8,14 @@ export const Message_card = ({user_id,message,status})=> {
 
     useEffect(()=> {
         set_is_my_message(message?.sender === user_id);
+        if(user_id !== message?.sender) {
 
-        set_message_status(message?.status !== 'SENT' ? message?.status : status )
+            console.log('yes')
+            set_message_status(message?.status !== 'SENT' ? message?.status : status )
+        }else {
+            set_message_status(message?.status)
+            console.log('no')
+        }
     },[status]);
 
     return (

@@ -33,15 +33,17 @@ socket_io.on('connection',socket => {
 
   socket.on('join_room',(chat_id)=> {
     socket.join(chat_id);
-    socket_io.to(chat_id).emit('user_connected',user_id);
+    socket.to(chat_id).emit('user_connected',user_id);
   });
 
   socket.on('send_message',(chat) => {
-    socket_io.to(chat?._id).emit('message_sent',chat);
+    socket.to(chat?._id).emit('send_message',chat);
   });
 
-  socket.on('messages_status',data=> {
-    socket_io.to(data?.chat_id).emit('message_status_changed',data);
+  socket.on('message_status_changed',data=> {
+
+    console.log('message_status_changed' +data )
+    socket.to(data?.chat_id).emit('message_status_changed',data);
   })
 
   socket.on('disconnect',()=> {

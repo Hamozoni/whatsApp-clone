@@ -17,15 +17,15 @@ export const Chat_card = ({chat_info})=> {
         set_contact(contact);
         const text_time = new Date(chat?.last_message?.createdAt).toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
         set_text_time(text_time);
-        update_message_status(socket,chat?._id,contact?._id,'DELIVERED',user?._id);
+        update_message_status(socket,chat?._id,contact?._id,'DELIVERED');
     },[]);
 
     useEffect(()=> {
         socket?.emit('join_room',chat?._id);
-        socket?.on('message_sent',chat => {
-            set_chat(prev=> ({...prev,last_message: chat?.last_message}));
+        socket?.on('send_message',chat => {
+            set_chat(prev=> ({...chat,members: prev?.members}));
             if(user?._id !== chat?.last_message?.sender) {
-                update_message_status(socket,chat?._id,contact?._id,'DELIVERED',user?._id);
+                update_message_status(socket,chat?._id,contact?._id,'DELIVERED');
             };
 
 
@@ -36,7 +36,7 @@ export const Chat_card = ({chat_info})=> {
         })
 
         return ()=> {
-            socket?.off('message_sent');
+            socket?.off('send_message');
             socket?.off('message_status_changed');
         }
     },[socket]);
@@ -72,7 +72,7 @@ export const Chat_card = ({chat_info})=> {
                         <span className={chat?.last_message?.status === 'READ' ? 'text-emerald-400' : ''}>
                             {chat?.last_message?.status === 'SENT' ? '✓ ' :  '✓✓ ' }</span>)
                         }
-                        {chat?.last_message?.text?.length > 39 ? `${chat?.last_message?.text?.slice(0,39)}...`: chat?.last_message?.text}
+                        {chat?.last_message?.text?.length > 29 ? `${chat?.last_message?.text?.slice(0,28)}...`: chat?.last_message?.text}
                     </p> 
                      {/* {chat.unread > 0 && (
                         <span className="bg-emerald-800  text-white rounded-full px-2 py-1 text-xs min-w-[20px] text-center">

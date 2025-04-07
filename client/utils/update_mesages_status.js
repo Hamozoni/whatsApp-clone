@@ -26,7 +26,7 @@ const update_message_status_db = async ({chat_id,sender,status})=> {
   };
 
 
-  const update_message_status = (socket,chat_id,sender,status,receiver)=> {
+  const update_message_status = (socket,chat_id,sender,status)=> {
 
       const data = {
           chat_id,
@@ -37,7 +37,7 @@ const update_message_status_db = async ({chat_id,sender,status})=> {
       .then((data)=> {
           if(data?.status) {
                 socket?.emit('join_room',chat_id);
-                socket?.emit('messages_status',{status,chat_id,receiver});
+                socket?.emit('message_status_changed',{status,chat_id,sender});
           }
       })
   };
