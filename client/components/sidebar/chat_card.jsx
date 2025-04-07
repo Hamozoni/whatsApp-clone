@@ -17,6 +17,10 @@ export const Chat_card = ({chat_info})=> {
     const fetch_unread_messages = async () => {
 
         try {
+            if(active_chat?._id === chat?._id) {
+                set_unread(0);
+                return;
+            }
             const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/chat?user_id=${user?._id}&chat_id=${chat?._id}`);
             set_unread(data?.unread_messages);
 
@@ -32,7 +36,7 @@ export const Chat_card = ({chat_info})=> {
         const text_time = new Date(chat?.last_message?.createdAt).toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
         set_text_time(text_time);
         fetch_unread_messages();
-    },[]);
+    },[active_chat]);
 
     useEffect(()=> {
         if(!socket) return;
@@ -43,8 +47,7 @@ export const Chat_card = ({chat_info})=> {
         socket?.on('send_message',chat => {
             set_chat(prev=> ({...chat,members: prev?.members}));
             if(user?._id !== chat?.last_message?.sender) {
-                sound_ref.current = new Audio('./new_message_sound.mp3');
-                sound_ref.current.play();
+                sound_ref?.current?.play();
                 fetch_unread_messages();
                 update_message_status(socket,chat?._id,contact?._id,'DELIVERED');
             };
@@ -99,6 +102,7 @@ export const Chat_card = ({chat_info})=> {
                      {unread > 0 && (
                         <span className="bg-emerald-800  text-white rounded-full px-2 py-1 text-xs min-w-[20px] text-center">
                         {unread}
+                        <audio ref={sound_ref} src="./new_message_sound.mp3" hidden autoPlay></audio>
                         </span>
                      )}
                 </div>
