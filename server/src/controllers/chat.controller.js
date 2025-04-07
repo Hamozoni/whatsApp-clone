@@ -6,7 +6,7 @@ export const post_chat_controller = async (req,res,next)=> {
     const {members,message} = req.body
 
     if(members?.length < 1) {
-        return res.json({message: ' members aer reqiure',status: false});
+        return res.json({message: ' members are reqiure',status: false});
     }
 
     try {
@@ -22,10 +22,24 @@ export const post_chat_controller = async (req,res,next)=> {
     }
     catch (error) {
         next(error)
+    };
+
+};
+
+export const get_chat_unread_messages = async (req,res,next)=> {
+    const {user_id,chat_id} = req.query;
+
+    try {
+        if(!user_id || !chat_id) {
+            return res.status(401).json({message: 'sender id or chat id is missing'})
+        };
+
+        const unread_messages = await Message.countDocuments({chat_id,sender: {$ne: user_id},status: {$ne : 'READ'}});
+
+
+        return res.status(200).json({message: 'unread messages found',unread_messages});
     }
-
-
-
-
-
+    catch (error) {
+        next(error?.message)
+    }
 }

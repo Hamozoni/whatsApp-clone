@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { User_context } from "../../contexts/context";
 import { useSocket } from "@/hooks/useSocket";
 import update_message_status from "@/utils/update_mesages_status.js";
+import axios from "axios";
 
 export const Chat_card = ({chat_info})=> {
 
@@ -10,13 +11,27 @@ export const Chat_card = ({chat_info})=> {
     const [contact,set_contact] = useState(null);
     const [text_time,set_text_time] = useState(null);
     const [chat,set_chat] = useState(chat_info);
+    const [unread,set_unread] = useState(0);
     const socket = useSocket();
+
+    const fetch_unread_messages = async () => {
+
+        try {
+            const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/chat?user_id=${user?._id}&chat_id=${chat?._id}`);
+            set_unread(data?.unread_messages);
+
+        }
+        catch(error) {
+            console.log(error.message)
+        }
+    }
 
     useEffect(()=> {
         const contact = chat?.members?.filter(e=> e?._id !== user?._id)[0];
         set_contact(contact);
         const text_time = new Date(chat?.last_message?.createdAt).toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
         set_text_time(text_time);
+        fetch_unread_messages();
     },[]);
 
     useEffect(()=> {
@@ -29,7 +44,8 @@ export const Chat_card = ({chat_info})=> {
             set_chat(prev=> ({...chat,members: prev?.members}));
             if(user?._id !== chat?.last_message?.sender) {
                 sound_ref.current = new Audio('./new_message_sound.mp3');
-                sound_ref.current.play()
+                sound_ref.current.play();
+                fetch_unread_messages();
                 update_message_status(socket,chat?._id,contact?._id,'DELIVERED');
             };
 
@@ -41,14 +57,9 @@ export const Chat_card = ({chat_info})=> {
             set_chat(prev=> ({...prev,last_message: {...prev?.last_message,status: data?.status}}));
         });
 
-        socket?.on('user_connected',(user_id)=>  {
-            console.log('user_connected',user_id)
-        });
-
         return ()=> {
             socket?.off('send_message');
             socket?.off('message_status_changed');
-            socket?.off('user_connected');
         }
     },[socket]);
 
@@ -85,11 +96,11 @@ export const Chat_card = ({chat_info})=> {
                         }
                         {chat?.last_message?.text?.length > 29 ? `${chat?.last_message?.text?.slice(0,28)}...`: chat?.last_message?.text}
                     </p> 
-                     {/* {chat.unread > 0 && (
+                     {unread > 0 && (
                         <span className="bg-emerald-800  text-white rounded-full px-2 py-1 text-xs min-w-[20px] text-center">
-                        {chat.unread}
+                        {unread}
                         </span>
-                     )} */}
+                     )}
                 </div>
             </div>
         </div>
