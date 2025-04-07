@@ -17,11 +17,14 @@ export const Chat_card = ({chat_info})=> {
         set_contact(contact);
         const text_time = new Date(chat?.last_message?.createdAt).toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
         set_text_time(text_time);
-        update_message_status(socket,chat?._id,contact?._id,'DELIVERED');
     },[]);
 
     useEffect(()=> {
+        if(!socket) return;
+
         socket?.emit('join_room',chat?._id);
+        update_message_status(socket,chat?._id,contact?._id,'DELIVERED');
+
         socket?.on('send_message',chat => {
             set_chat(prev=> ({...chat,members: prev?.members}));
             if(user?._id !== chat?.last_message?.sender) {
@@ -32,12 +35,18 @@ export const Chat_card = ({chat_info})=> {
         });
 
         socket?.on('message_status_changed', data => {
+            console.log(data)
             set_chat(prev=> ({...prev,last_message: {...prev?.last_message,status: data?.status}}));
-        })
+        });
+
+        socket?.on('user_connected',(user_id)=>  {
+            console.log('user_connected',user_id)
+        });
 
         return ()=> {
             socket?.off('send_message');
             socket?.off('message_status_changed');
+            socket?.off('user_connected');
         }
     },[socket]);
 

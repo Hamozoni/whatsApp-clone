@@ -8,6 +8,7 @@ import axios from 'axios';
 import { Message_card } from './message_card';
 import { Loading_component } from '../ui/loading_component';
 import { useSocket } from '@/hooks/useSocket';
+import update_message_status from '@/utils/update_mesages_status';
 
 const Active_chat = () => {
 
@@ -15,7 +16,6 @@ const Active_chat = () => {
   const {user,active_chat} = useContext(User_context);
   
     const [messages, set_messages] = useState([]);
-    const [status, set_status] = useState('SENT');
     const [receiver, set_receiver] = useState(null);
     const [is_loading, set_is_loading] = useState(false);
     const [error, set_error] = useState(null);
@@ -56,28 +56,38 @@ const Active_chat = () => {
     
     
     useEffect(() => {
-
-      if(!active_chat?._id )  return;
+      if(!socket || !active_chat?._id) return;
 
       socket?.emit('join_room',active_chat?._id);
+      update_message_status(socket,active_chat?._id,receiver?._id,'READ');
+
       socket?.on('send_message',chat => {
 
         if(chat?.last_message?.sender !== user?._id) {
           set_messages(prev=> [...prev,chat?.last_message]);
+          update_message_status(socket,active_chat?._id,receiver?._id,'READ');
         }
 
       });
 
       socket?.on('message_status_changed', data => {
+        set_messages(prev=> {
+          let new_messages = [];
+          prev?.forEach( e => {
+            if(e.sender === data?.sender && e.status !== 'READ') {
+              new_messages.push({...e,status: data?.status})
+            }else {
+              new_messages.push(e)
+            }
+          });
 
-        console.log(data);
-        // console.log('message_status_changed', data?.receiver !== user?._id,user?._id,data?.receiver )
-          set_status(data?.status);
+          return [...new_messages]
+        })
       });
 
       return ()=> {
         socket?.off('send_message');
-        // socket?.off('message_status_changed');
+        socket?.off('message_status_changed');
       }
       
   },[socket,active_chat]);
@@ -94,7 +104,6 @@ const Active_chat = () => {
                     <Loading_component />
                     : messages?.map(message => (
                       <Message_card 
-                        status={status}
                         key={message?._id} 
                         message={message} 
                         user_id={user?._id}
