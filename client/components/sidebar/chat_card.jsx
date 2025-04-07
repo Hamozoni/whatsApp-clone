@@ -19,10 +19,11 @@ export const Chat_card = ({chat_info})=> {
         try {
             if(active_chat?._id === chat?._id) {
                 set_unread(0);
-                return;
+            }else {
+                const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/chat?user_id=${user?._id}&chat_id=${chat?._id}`);
+                set_unread(data?.unread_messages);
+
             }
-            const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/chat?user_id=${user?._id}&chat_id=${chat?._id}`);
-            set_unread(data?.unread_messages);
 
         }
         catch(error) {
@@ -36,20 +37,37 @@ export const Chat_card = ({chat_info})=> {
         const text_time = new Date(chat?.last_message?.createdAt).toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
         set_text_time(text_time);
         fetch_unread_messages();
-    },[active_chat]);
+        update_message_status(socket,chat?._id,contact?._id,'DELIVERED');
+    },[]);
+
+    useEffect(()=>{
+        console.log('how many times', active_chat)
+        if(chat?._id === active_chat?._id){
+            set_unread(0);
+        }
+    },[active_chat,chat])
 
     useEffect(()=> {
-        if(!socket) return;
 
         socket?.emit('join_room',chat?._id);
-        update_message_status(socket,chat?._id,contact?._id,'DELIVERED');
+        
 
         socket?.on('send_message',chat => {
+
+            console.log('is the same chat ' , chat,active_chat)
             set_chat(prev=> ({...chat,members: prev?.members}));
             if(user?._id !== chat?.last_message?.sender) {
-                sound_ref?.current?.play();
-                fetch_unread_messages();
-                update_message_status(socket,chat?._id,contact?._id,'DELIVERED');
+
+                if(chat?.last_message?.status === 'SENT') {
+                    update_message_status(socket,chat?._id,contact?._id,'DELIVERED');
+                }
+                if(chat?._id !== active_chat?._id) {
+                    set_unread(prev=> prev + 1)
+                    sound_ref.current = new Audio('./new_message_sound.mp3')
+                    sound_ref.current.play();
+                }else {
+                    set_unread(0);
+                }
             };
 
 
@@ -102,7 +120,6 @@ export const Chat_card = ({chat_info})=> {
                      {unread > 0 && (
                         <span className="bg-emerald-800  text-white rounded-full px-2 py-1 text-xs min-w-[20px] text-center">
                         {unread}
-                        <audio ref={sound_ref} src="./new_message_sound.mp3" hidden autoPlay></audio>
                         </span>
                      )}
                 </div>

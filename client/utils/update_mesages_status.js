@@ -10,13 +10,7 @@ const update_message_status_db = async ({chat_id,sender,status})=> {
       };
 
       const {data} =  await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/message`,body);
-
-      if(data?.status) {
         return data;
-      } else {
-        return  {message:error?.message, status: false}
-      }
-
 
     }
     catch (error) {
@@ -37,7 +31,7 @@ const update_message_status_db = async ({chat_id,sender,status})=> {
       .then((data)=> {
           if(data?.status) {
                 socket?.emit('join_room',chat_id);
-                socket?.emit('message_status_changed',{status,chat_id,sender});
+                socket?.emit('message_status_changed',{status: data?.status,chat_id,sender});
           }
       })
   };

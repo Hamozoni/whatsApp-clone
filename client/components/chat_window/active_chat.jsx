@@ -1,6 +1,6 @@
 
 "use client";
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Chat_header } from './chat_header';
 import { Message_input } from './message_input';
 import { User_context } from '../../contexts/context';
@@ -20,6 +20,7 @@ const Active_chat = () => {
     const [is_loading, set_is_loading] = useState(false);
     const [error, set_error] = useState(null);
     const socket = useSocket();
+    const sound_ref = useRef(null);
   
 
     const fetch_messages = async ()=> {
@@ -52,23 +53,26 @@ const Active_chat = () => {
       
       if(!active_chat?._id) return
         fetch_messages();
+        update_message_status(socket,active_chat?._id,receiver?._id,'READ');
     },[active_chat?._id]);
     
     
     useEffect(() => {
-      if(!socket || !active_chat?._id) return;
+      if(!active_chat?._id) return;
 
       socket?.emit('join_room',active_chat?._id);
-      update_message_status(socket,active_chat?._id,receiver?._id,'READ');
-
       socket?.on('send_message',chat => {
 
         if(chat?.last_message?.sender !== user?._id) {
           set_messages(prev=> [...prev,chat?.last_message]);
           update_message_status(socket,active_chat?._id,receiver?._id,'READ');
+          
+          sound_ref.current = new Audio('./new_message_sound_2.mp3')
+          sound_ref.current.play();
         }
 
       });
+
 
       socket?.on('message_status_changed', data => {
         set_messages(prev=> {
