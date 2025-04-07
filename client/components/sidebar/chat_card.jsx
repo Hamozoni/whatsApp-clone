@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { User_context } from "../../contexts/context";
 import { useSocket } from "@/hooks/useSocket";
 import update_message_status from "@/utils/update_mesages_status.js";
@@ -6,7 +6,7 @@ import update_message_status from "@/utils/update_mesages_status.js";
 export const Chat_card = ({chat_info})=> {
 
     const {user,active_chat,set_active_chat} = useContext(User_context);
-
+    const sound_ref = useRef(null);
     const [contact,set_contact] = useState(null);
     const [text_time,set_text_time] = useState(null);
     const [chat,set_chat] = useState(chat_info);
@@ -28,6 +28,8 @@ export const Chat_card = ({chat_info})=> {
         socket?.on('send_message',chat => {
             set_chat(prev=> ({...chat,members: prev?.members}));
             if(user?._id !== chat?.last_message?.sender) {
+                sound_ref.current = new Audio('./new_message_sound.mp3');
+                sound_ref.current.play()
                 update_message_status(socket,chat?._id,contact?._id,'DELIVERED');
             };
 
