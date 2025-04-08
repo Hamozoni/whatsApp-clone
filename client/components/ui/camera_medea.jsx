@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react"
 
 
-export const Camera_photo = ({video_src})=> {
+export const camera_medea = ({video_src})=> {
 
 
     const [is_photo,set_is_photo] = useState(false);
@@ -17,7 +17,7 @@ export const Camera_photo = ({video_src})=> {
 
 
     return (
-        <div className=" absolute left-2 bottom-0 translate-y-[102%] w-full z-50">
+        <div className=" absolute left-2 bottom-0 translate-y-[102%] w-full">
             <header><span>cansel</span></header>
             <div className="min-w-full min-h-[calc(100vh - 400px)] ">
                 {

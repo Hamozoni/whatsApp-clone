@@ -6,89 +6,43 @@ import {
     MdOutlineVideoCall,MdOutlineLinkedCamera,
     MdOutlinePermContactCalendar 
 } from "react-icons/md";
-import { Camera_photo } from "./camera_photo";
 
 
-// const documents = [
-//     {
-//         id: 1,
-//         name: 'document',
-//         Icon: IoDocumentTextOutline,
-//         type: 'file',
-//     },
-//     {
-//         id: 2,
-//         name: 'photos',
-//         Icon: MdOutlineAddPhotoAlternate,
-//         type: 'flie',
-//     },
-//     {
-//         id: 3,
-//         name: 'videos',
-//         Icon: MdOutlineVideoCall,
-//         type: 'flie',
-//     },
-//     ,
-//     {
-//         id: 4,
-//         name: 'camera',
-//         Icon: MdOutlineLinkedCamera,
-//         type: 'camera',
-//     },
-//     {
-//         id: 5,
-//         name: 'contact',
-//         Icon: MdOutlinePermContactCalendar,
-//         type: 'contact',
-//     }
-// ]
+const optionas = [
+    {id: 1,  title: 'document', Icon: IoDocumentTextOutline, type: 'file', accept: 'application/pdf'},
+    { id: 2, title: 'photo', Icon: MdOutlineAddPhotoAlternate, type: 'file', accept: 'image/*'},
+    { id: 3, title: 'video', Icon: MdOutlineVideoCall, type: 'file', accept: 'video/*'},
+    { id: 4, title: 'camera', Icon: MdOutlineLinkedCamera, type: 'camera', accept: 'image_video' },
+    { id: 5, title: 'contact', Icon: MdOutlinePermContactCalendar, type: 'contact', accept: 'contacts' },
+];
+
+const className = "flex items-center gap-3 text-[#f7f8fa] rounded-md hover:bg-[#2b3c46] min-w-[150px] capitalize p-2"
 
 export const Chose_document = () => {
 
-
-    const [video_src,set_video_src]= useState(null);
-    // const handle_vatar = (e) => {
-    //     const file = e.target.files?.[0];
-    //     if (file) {
-    //       const reader = new FileReader();
-    //       reader.onloadend = () => {
-    //         set_avatar(reader?.result);
-    //         console.log(reader)
-    //       };
-    //       reader.readAsDataURL(file);
-    //     }
-    //   };
-
-    const handle_camera = async ()=> {
-       const stream = await navigator.mediaDevices.getUserMedia({video: true, audio: true})
-            set_video_src(stream);
-
-    }
     
     return (
         <div className=" absolute left-2 top-0 -translate-y-[103%] bg-[#222e35] p-3 rounded-md">
-            <ul className=" relative">
-                {/* {
-                    documents?.map(({id,name,Icon})=> (
-
+            <ul className="">
+                {
+                    optionas?.map(({id,title, Icon,type,accept})=> (
+                        <li key={id}>
+                            {
+                             (title === 'camera' || title === 'contact') ? 
+                             <div className={className}>
+                                < Icon size={24}/>
+                                <span>{title}</span> 
+                             </div>
+                            : 
+                                <label className={className}>
+                                    < Icon size={24}/>
+                                    <span>{title}</span> 
+                                    <input type={type} accept={accept} hidden/>
+                                </label>
+                            }
+                        </li>
                     ))
-                } */}
-                 <li 
-                     onClick={handle_camera} 
-                    className="flex items-center gap-3 text-[#f7f8fa] rounded-md hover:bg-[#2b3c46] min-w-[150px] capitalize p-2">
-                    {/* <label className="">
-                        <input type="file"
-                            accept="document/pdf"
-                            onChange={handle_vatar}
-                            className="hidden" />
-                        </label> */}
-                            <MdOutlineLinkedCamera size={24}/>
-                            <span>camera</span> 
-                  </li>
-
-            {
-                video_src && <Camera_photo video_src={video_src} />
-            }
+                }
             </ul>
         </div>
     )
