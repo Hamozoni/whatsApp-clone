@@ -1,8 +1,6 @@
 
 "use client";
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Chat_header } from './chat_header';
-import { Message_input } from './message_input';
 import { User_context } from '../../contexts/user.context';
 import axios from 'axios';
 import { Message_card } from './message_card';
@@ -98,31 +96,26 @@ const Active_chat = () => {
 
 
   return (
-    <div className="text-[#f7f8fa] flex-1 hide_model">
-        <div className=" h-screen max-h-full flex flex-col hide_model">
-          <Chat_header receiver={receiver} />
-          <div className="flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern hide_model">
-             <>
-              {
-                  is_loading ? 
-                    <Loading_component />
-                    : messages?.map(message => (
-                      <Message_card 
-                        key={message?._id} 
-                        message={message} 
-                        user_id={user?._id}
-                      />
-                  ))
-                }
-                <div className="w-full h-[2px]">
-                   
-                </div>
-             </>  
-                
-            </div>
-            <Message_input set_messages={set_messages} contact_id={receiver?._id}/>
-        </div> 
-    </div>
+              
+      <div className="flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern hide_model">
+            <>
+            {
+                is_loading ? 
+                  <Loading_component />
+                  : messages?.map(message => (
+                    <Message_card 
+                      key={message?._id} 
+                      message={message} 
+                      user_id={user?._id}
+                    />
+                ))
+              }
+              <div className="w-full h-[2px]">
+                  
+              </div>
+            </>  
+              
+     </div> 
   );
 };
 

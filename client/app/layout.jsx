@@ -1,3 +1,4 @@
+import { Chat_window_context_provider } from "@/contexts/chat_window.context";
 import "../style/globals.css";
 
 import {User_context_provider }from '@/contexts/user.context';
@@ -19,7 +20,9 @@ export default function RootLayout({ children }) {
       >
         <main>
           <User_context_provider >
-              {children}
+             <Chat_window_context_provider>
+                 {children}
+              </Chat_window_context_provider>
           </User_context_provider>
         </main>
       </body>

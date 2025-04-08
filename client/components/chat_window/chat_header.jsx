@@ -1,10 +1,14 @@
-
+"use client"
+import { Chat_window_context } from "@/contexts/chat_window.context";
+import { useContext } from "react";
 import { GoSearch } from "react-icons/go"
 import { HiOutlineDotsVertical } from "react-icons/hi"
 import { IoCallOutline,IoVideocamOutline  } from "react-icons/io5";
 
 
-export const Chat_header = ({receiver})=> {
+export const Chat_header = ()=> {
+
+    const {receiver } = useContext(Chat_window_context);
 
 
     return (

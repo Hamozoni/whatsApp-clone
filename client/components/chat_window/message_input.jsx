@@ -9,13 +9,16 @@ import EmojiPicker from "emoji-picker-react";
 import axios from "axios";
 import { useSocket } from "@/hooks/useSocket";
 import { Chose_document } from "../ui/chose_document";
+import { Chat_window_context } from "@/contexts/chat_window.context";
 
-export const Message_input = ({set_messages,contact_id})=> {
+export const Message_input = ()=> {
+
+      const {receiver,set_messages} = useContext(Chat_window_context);
 
     const {user,active_chat,set_active_chat} = useContext(User_context);
     const [message,set_message] = useState('');
     const [show_emoji,set_show_emoji] = useState(false);
-    const [is_document,set_is_document] = useState(false)
+    const [is_document,set_is_document] = useState(false);
     const socket = useSocket()
 
     useEffect(()=> {
@@ -44,9 +47,9 @@ export const Message_input = ({set_messages,contact_id})=> {
                 set_message('');
             }else {
 
-            const members = [user?._id,contact_id]
+            const members = [user?._id,receiver?._id]
               const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/chat`,{members,message: body});
-              socket?.emit('new_chat',{contact_id,chat:data?.chat});
+              socket?.emit('new_chat',{contact_id: receiver?._id,chat:data?.chat});
               set_message('');
               set_active_chat(data?.chat);
             }
