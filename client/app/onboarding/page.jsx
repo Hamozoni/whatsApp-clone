@@ -48,6 +48,7 @@ export default function OnboardingForm() {
                 alt="Avatar"
                 className="w-32 h-32 rounded-full border-4 border-green-500 object-cover"
               />
+              <ImFilePicture size={24}/>
               <label className="absolute bottom-0 right-0 bg-green-500 text-white rounded-full p-2 cursor-pointer hover:bg-green-600">
                 <input
                   type="file"
@@ -55,7 +56,6 @@ export default function OnboardingForm() {
                   onChange={handle_vatar}
                   className="hidden"
                 />
-                <ImFilePicture size={24}/>
               </label>
             </div>
           </div>
