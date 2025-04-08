@@ -5,7 +5,7 @@ import { Chat_card } from "./chat_card";
 import { useContext, useEffect, useState } from "react";
 import { Search_form } from "../ui/search_form";
 import { Contacts } from "../contacts/contacts";
-import { User_context } from "../../contexts/context";
+import { User_context } from "../../contexts/user.context";
 import { useSocket } from "@/hooks/useSocket";
 
 

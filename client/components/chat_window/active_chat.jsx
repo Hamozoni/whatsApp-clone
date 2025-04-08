@@ -3,7 +3,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Chat_header } from './chat_header';
 import { Message_input } from './message_input';
-import { User_context } from '../../contexts/context';
+import { User_context } from '../../contexts/user.context';
 import axios from 'axios';
 import { Message_card } from './message_card';
 import { Loading_component } from '../ui/loading_component';

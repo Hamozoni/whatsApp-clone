@@ -5,7 +5,7 @@ import { Input } from "../ui/input"
 // import { Phone_input } from "../inputs/phone_input";
 import { Submit_btn } from "../ui/submit_btn";
 import axios from "axios";
-import { User_context } from "../../contexts/context";
+import { User_context } from "../../contexts/user.context";
 import { Contact_card } from "./contact_card";
 
 export const New_contact = ({set_is_new_contact})=> {

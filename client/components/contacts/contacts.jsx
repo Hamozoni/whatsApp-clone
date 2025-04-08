@@ -6,7 +6,7 @@ import { Contact_header } from "./contact_header";
 import { New_contact } from "./new_contact";
 import { Contact_card } from "./contact_card";
 import { useContext, useState } from "react";
-import { User_context } from "../../contexts/context";
+import { User_context } from "../../contexts/user.context";
 
 const Button = ({Icon,text,handle_cleck})=> {
     return (

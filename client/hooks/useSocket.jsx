@@ -1,5 +1,5 @@
 "use client";
-import { User_context } from "@/contexts/context";
+import { User_context } from "@/contexts/user.context";
 import { useContext, useEffect, useRef, useState } from "react";
 import {io} from 'socket.io-client';
 

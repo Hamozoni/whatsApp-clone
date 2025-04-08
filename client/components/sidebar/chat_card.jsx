@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { User_context } from "../../contexts/context";
+import { User_context } from "../../contexts/user.context";
 import { useSocket } from "@/hooks/useSocket";
 import update_message_status from "@/utils/update_mesages_status.js";
 import axios from "axios";

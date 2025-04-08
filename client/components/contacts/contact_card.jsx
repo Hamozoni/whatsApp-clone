@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Avatar } from "../ui/avatar";
-import { User_context } from "../../contexts/context";
+import { User_context } from "../../contexts/user.context";
 
 export const Contact_card = ({_id,email,profile_picture,name,set_is_contact})=> {
 
