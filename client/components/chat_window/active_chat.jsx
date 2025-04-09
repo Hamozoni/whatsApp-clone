@@ -8,6 +8,7 @@ import { useSocket } from '@/hooks/useSocket';
 import update_message_status from '@/utils/update_mesages_status';
 import { Use_fetch } from '@/hooks/use_fetch';
 import { Chat_window_context } from '@/contexts/chat_window.context';
+import { AiOutlineWechatWork } from "react-icons/ai";
 
 const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern hide_model'
 
@@ -20,7 +21,10 @@ const Active_chat = () => {
   if(!active_chat._id) {
     return (
       <div className={className}>
-         <h4>no active_chat._id</h4>
+        <div className="flex flex-col w-full h-full justify-center items-center">
+              <AiOutlineWechatWork size={50}/>
+              <h4 className='text-2xl'>start new chat</h4>
+        </div>
       </div>
     )
   }

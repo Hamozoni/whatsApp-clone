@@ -3,6 +3,7 @@ import { User_context } from "../../contexts/user.context";
 import { useSocket } from "@/hooks/useSocket";
 import update_message_status from "@/utils/update_mesages_status.js";
 import axios from "axios";
+import { Use_fetch } from "@/hooks/use_fetch";
 
 export const Chat_card = ({chat_info})=> {
 
@@ -14,38 +15,27 @@ export const Chat_card = ({chat_info})=> {
     const [unread,set_unread] = useState(0);
     const socket = useSocket();
 
-    const fetch_unread_messages = async () => {
-
-        try {
-            if(active_chat?._id === chat?._id) {
-                set_unread(0);
-            }else {
-                const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/chat?user_id=${user?._id}&chat_id=${chat?._id}`);
-                set_unread(data?.unread_messages);
-
-            }
-
-        }
-        catch(error) {
-            console.log(error.message)
-        }
-    }
-
+    const {data,loading} = Use_fetch({end_point: `chat?user_id=${user?._id}&chat_id=${chat?._id}`});
+    
     useEffect(()=> {
         const contact = chat?.members?.filter(e=> e?._id !== user?._id)[0];
         set_contact(contact);
         const text_time = new Date(chat?.last_message?.createdAt).toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
         set_text_time(text_time);
-        fetch_unread_messages();
         update_message_status(socket,chat?._id,contact?._id,'DELIVERED');
     },[]);
 
+    useEffect(()=> {
+        set_unread(data?.unread_messages);
+    },[loading]);
+
+
     useEffect(()=>{
-        console.log('how many times', active_chat)
+        console.log('how many times')
         if(chat?._id === active_chat?._id){
             set_unread(0);
         }
-    },[active_chat,chat])
+    },[active_chat]);
 
     useEffect(()=> {
 
@@ -87,7 +77,7 @@ export const Chat_card = ({chat_info})=> {
     return (
         chat?.last_message &&
         <div
-            onClick={()=> set_active_chat(chat)}
+            onClick={()=> chat?._id === active_chat?._id ? '' : set_active_chat(chat)}
             className={`flex items-center cursor-pointer px-3 hover:bg-[#31414b] ${
                 active_chat?.id === chat.id ? 'bg-[#222e35]' : '' }`}
             >
