@@ -16,7 +16,7 @@ export const Chat_card = ({chat_info})=> {
     const socket = useSocket();
 
     const {data,loading} = Use_fetch({end_point: `chat?user_id=${user?._id}&chat_id=${chat?._id}`});
-    
+
     useEffect(()=> {
         const contact = chat?.members?.filter(e=> e?._id !== user?._id)[0];
         set_contact(contact);
@@ -51,12 +51,10 @@ export const Chat_card = ({chat_info})=> {
                 if(chat?.last_message?.status === 'SENT') {
                     update_message_status(socket,chat?._id,contact?._id,'DELIVERED');
                 }
-                if(chat?._id !== active_chat?._id) {
+                if(chat._id !== active_chat._id) {
                     set_unread(prev=> prev + 1)
                     sound_ref.current = new Audio('./new_message_sound.mp3')
                     sound_ref.current.play();
-                }else {
-                    set_unread(0);
                 }
             };
 

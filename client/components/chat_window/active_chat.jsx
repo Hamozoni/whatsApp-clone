@@ -14,10 +14,8 @@ const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-
 
 const Active_chat = () => {
 
-  
   const {user,active_chat} = useContext(User_context);
-  const {messages,set_messages} = useContext(Chat_window_context);
-
+  
   if(!active_chat._id) {
     return (
       <div className={className}>
@@ -27,14 +25,14 @@ const Active_chat = () => {
         </div>
       </div>
     )
-  }
+  };
+  
+  const {messages,set_messages,receiver} = useContext(Chat_window_context);
   const {data,loading,error} = Use_fetch({end_point:`/message?chat_id=${active_chat?._id}`});
-
   const socket = useSocket();
   const sound_ref = useRef(null);
 
   useEffect(()=> {
-    console.log(data,loading,error)
     set_messages(data?.messages);
   },[loading]);
 
