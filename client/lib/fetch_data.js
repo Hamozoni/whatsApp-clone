@@ -11,7 +11,8 @@ export const fetch_data = async (end_point,set_loading,set_error) => {
         return data
     }
     catch (error){
-        set_error(error?.message)
+        set_error(error?.message);
+        console.log(error?.message);
     }
     finally {
         set_loading(false)

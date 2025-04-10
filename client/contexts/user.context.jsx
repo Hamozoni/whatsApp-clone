@@ -11,7 +11,6 @@ export const User_context = createContext();
 
 export const  User_context_provider =  ({children})=> {
   
-    const [data,set_data] = useState(null);
     const [user,set_user] = useState(null);
     const [loading,set_loading] = useState(false);
     const [error,set_error] = useState(false);

@@ -5,10 +5,8 @@ export const get_user_controller = async (req,res,next) => {
 
     const {user_email} = req.query;
 
-    console.log(user_email)
-
     if(!user_email) {
-        return res.json({message: 'user email is reqiured', status: false});
+        return res.status(404).json({message: 'user email is reqiured'});
      };
 
     try {
@@ -16,13 +14,13 @@ export const get_user_controller = async (req,res,next) => {
         const user = await User.findOne({email: user_email}).populate('contacts').exec()
 
         if(!user) {
-            return res.json({message: 'user is not found', status: false});
+            return res.status(500).json({message: 'user is not found'});
         }
         
 
         const chats = await Chat.find({members: user?._id}).populate('members').populate('last_message')
         
-        return res.json({message: 'user info found', status: true, user,chats});
+        return res.status(200).json({message: 'user info found', user,chats});
 
     }
     catch (error) {

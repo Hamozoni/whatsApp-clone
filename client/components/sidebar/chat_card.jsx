@@ -4,6 +4,7 @@ import { useSocket } from "@/hooks/useSocket";
 import update_message_status from "@/utils/update_mesages_status.js";
 import axios from "axios";
 import { Use_fetch } from "@/hooks/use_fetch";
+import { fetch_data } from "@/lib/fetch_data";
 
 export const Chat_card = ({chat_info})=> {
     
@@ -13,10 +14,18 @@ export const Chat_card = ({chat_info})=> {
     const [text_time,set_text_time] = useState(null);
     const [chat,set_chat] = useState(chat_info);
     const [unread,set_unread] = useState(0);
+    const [loading,set_loading] = useState(false);
+    const [error,set_error] = useState(null);
     const socket = useSocket();
-    
-    console.log(user)
-    const {data,loading} = Use_fetch({end_point: `chat?user_id=${user?._id}&chat_id=${chat?._id}`});
+
+
+    const fetch_unread_messages = async (user_id,chat_id) => {
+        const data = await fetch_data(`chat?user_id=${user_id}&chat_id=${chat_id}`,set_loading,set_error);
+
+        if(data) {
+            set_unread(data?.unread)
+        }
+    };
 
 
     useEffect(()=> {
@@ -25,15 +34,10 @@ export const Chat_card = ({chat_info})=> {
         const text_time = new Date(chat?.last_message?.createdAt).toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
         set_text_time(text_time);
         update_message_status(socket,chat?._id,contact?._id,'DELIVERED');
+        fetch_unread_messages(user?._id,chat?._id);
     },[]);
 
-    useEffect(()=> {
-        set_unread(data?.unread_messages);
-    },[loading]);
-
-
     useEffect(()=>{
-        console.log('how many times')
         if(chat?._id === active_chat?._id){
             set_unread(0);
         }
