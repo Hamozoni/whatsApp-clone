@@ -2,61 +2,51 @@
 import { firebase_auth } from "@/lib/firebase_config";
 import { createContext, useEffect, useState } from "react";
 import { setPersistence, browserLocalPersistence } from 'firebase/auth';
-import axios from "axios";
 import { Loading_component } from "../components/ui/loading_component";
 import { useRouter } from "next/navigation";
+import { fetch_data } from "@/lib/fetch_data";
 
 export const User_context = createContext();
 
 
 export const  User_context_provider =  ({children})=> {
   
+    const [data,set_data] = useState(null);
     const [user,set_user] = useState(null);
-    const [user_auth,set_user_auth] = useState(null);
-    const [is_loading,set_is_loading] = useState(true);
+    const [loading,set_loading] = useState(false);
+    const [error,set_error] = useState(false);
     const [active_chat,set_active_chat] = useState(null);
     const [contacts,set_contacts] = useState([]);
     const [chats,set_chats] = useState([]);
 
     const router = useRouter();
-    
+
     useEffect(() => {
-
-        set_is_loading(true);
         const initializeAuth = async () => {
-          await setPersistence(firebase_auth, browserLocalPersistence);
-          const unsubscribe = firebase_auth.onAuthStateChanged(async user => {
-            console.log(user);
-            set_user_auth(user)
-            try {
-              const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user`,{
-                params : {user_email: user?.email }
-              })
-              set_user(data?.user);
-              set_contacts(data?.user?.contacts);
-              set_chats(data?.chats);
-              set_is_loading(false)
 
+          await setPersistence(firebase_auth, browserLocalPersistence);
+          firebase_auth.onAuthStateChanged(async user => {
+            if(!user) {
+              router.push('/signin')
+              return;
             }
-            catch(error) {
-              set_is_loading(false);
-            }
+           const data = await fetch_data(`user?user_email=${user?.email}`,set_loading,set_error);
+
+             if(data){
+               set_user(data?.user);
+               set_chats(data?.chats);
+               set_contacts(data?.user?.contacts);
+             }
+
+             set_active_chat(null);
           });
-    
-          return unsubscribe;
         };
     
         initializeAuth();
-      }, [user_auth]);
+      }, [firebase_auth]);
 
-      useEffect(()=> {
-        set_active_chat(null)
-        if(!user_auth && !is_loading) {
-          router.push('/signin');
-        }
-      },[user_auth,is_loading]);
     
-      if(is_loading) {
+      if(loading) {
         return (
           <Loading_component />
         )
@@ -66,11 +56,10 @@ export const  User_context_provider =  ({children})=> {
         <User_context.Provider 
             value={
               {
-                user_auth,
                 user,
                 contacts,
                 set_contacts,
-                is_loading,
+                loading,
                 set_active_chat,
                 active_chat,
                 chats,

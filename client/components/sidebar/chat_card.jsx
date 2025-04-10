@@ -6,7 +6,7 @@ import axios from "axios";
 import { Use_fetch } from "@/hooks/use_fetch";
 
 export const Chat_card = ({chat_info})=> {
-
+    
     const {user,active_chat,set_active_chat} = useContext(User_context);
     const sound_ref = useRef(null);
     const [contact,set_contact] = useState(null);
@@ -14,8 +14,10 @@ export const Chat_card = ({chat_info})=> {
     const [chat,set_chat] = useState(chat_info);
     const [unread,set_unread] = useState(0);
     const socket = useSocket();
-
+    
+    console.log(user)
     const {data,loading} = Use_fetch({end_point: `chat?user_id=${user?._id}&chat_id=${chat?._id}`});
+
 
     useEffect(()=> {
         const contact = chat?.members?.filter(e=> e?._id !== user?._id)[0];

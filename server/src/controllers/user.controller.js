@@ -5,6 +5,8 @@ export const get_user_controller = async (req,res,next) => {
 
     const {user_email} = req.query;
 
+    console.log(user_email)
+
     if(!user_email) {
         return res.json({message: 'user email is reqiured', status: false});
      };
