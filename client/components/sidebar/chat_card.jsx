@@ -2,12 +2,10 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { User_context } from "../../contexts/user.context";
 import update_message_status from "@/utils/update_mesages_status.js";
 import { fetch_data } from "@/lib/fetch_data";
-import { Chat_window_context } from "@/contexts/chat_window.context";
 
 export const Chat_card = ({chat_info})=> {
     
-    const {user,active_chat,set_active_chat} = useContext(User_context);
-    const {socket} = useContext(Chat_window_context);
+    const {user,active_chat,set_active_chat,socket} = useContext(User_context);
     const sound_ref = useRef(null);
     const [contact,set_contact] = useState(null);
     const [text_time,set_text_time] = useState(null);

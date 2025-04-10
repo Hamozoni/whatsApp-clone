@@ -12,9 +12,9 @@ import { Chat_window_context } from "@/contexts/chat_window.context";
 
 export const Message_input = ()=> {
 
-      const {receiver,set_messages,socket} = useContext(Chat_window_context);
+      const {receiver,set_messages} = useContext(Chat_window_context);
 
-    const {user,active_chat,set_active_chat} = useContext(User_context);
+    const {user,active_chat,set_active_chat,socket} = useContext(User_context);
     const [message,set_message] = useState('');
     const [show_emoji,set_show_emoji] = useState(false);
     const [is_document,set_is_document] = useState(false);

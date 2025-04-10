@@ -10,7 +10,7 @@ import { User_context } from "../../contexts/user.context";
 
 const Chat_list = ()=> {
 
-    const {chats,set_chats,active_chat} = useContext(User_context);
+    const {chats,set_chats,active_chat,socket} = useContext(User_context);
     const [search_value,set_search_value] = useState('');
     const [is_contacts,set_is_contact] = useState(false);
 

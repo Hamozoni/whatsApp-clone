@@ -13,7 +13,7 @@ const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-
 
 const Active_chat = () => {
 
-  const {user,active_chat} = useContext(User_context);
+  const {user,active_chat,socket} = useContext(User_context);
   
   if(!active_chat._id) {
     return (
@@ -26,7 +26,7 @@ const Active_chat = () => {
     )
   };
   
-  const {messages,set_messages,receiver,socket} = useContext(Chat_window_context);
+  const {messages,set_messages,receiver} = useContext(Chat_window_context);
 
   const [loading,set_loading] = useState(true);
   const [error,set_error] = useState(null);
