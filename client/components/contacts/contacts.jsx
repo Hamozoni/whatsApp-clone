@@ -31,51 +31,54 @@ export const Contacts = ({set_is_contact})=> {
 
 
     return (
-        <div className="h-screen max-h-screen overflow-y-auto hide_model">
-            {
-                is_new_contact ? 
-                 <New_contact set_is_new_contact={set_is_new_contact}/>
-                 :
-                <div className="hide_model">
-                    <Contact_header 
-                        title='new chat' 
-                        set_backword={set_is_contact}
-                        search_value={search_value}
-                        set_search_value={set_search_value}
-                        handle_search={()=> ''}
-                        >
-                            <Search_form  
-                                value={search_value} 
-                                set_value={set_search_value} 
-                                handle_search={()=> ''}
-                            />
-                    </Contact_header>
+        <div className="hide_model absolute left-0 top-0 w-full h-full bg-[#111b21] z-20">
+
+            <div className="h-screen max-h-screen overflow-y-auto hide_model">
+                {
+                    is_new_contact ? 
+                    <New_contact set_is_new_contact={set_is_new_contact}/>
+                    :
                     <div className="hide_model">
-                        <Button Icon={GrGroup} text='new group' handle_cleck={()=> ''} />
-                        <Button Icon={GrUserAdd} text='new contact' handle_cleck={()=> set_is_new_contact(true)} /> 
-
-                            <h6 className="px-5 py-3 text-xs text-emerald-300 hide_model">
-                            contacts on whatsapp
-                        </h6>
+                        <Contact_header 
+                            title='new chat' 
+                            set_backword={set_is_contact}
+                            search_value={search_value}
+                            set_search_value={set_search_value}
+                            handle_search={()=> ''}
+                            >
+                                <Search_form  
+                                    value={search_value} 
+                                    set_value={set_search_value} 
+                                    handle_search={()=> ''}
+                                />
+                        </Contact_header>
                         <div className="hide_model">
-                            {
-                                contacts?.map(({_id,name,email,profile_picture})=> (
-                                    <Contact_card 
-                                        key={_id}
-                                        _id={_id}
-                                        email={email} 
-                                        profile_picture={profile_picture} 
-                                        name={name}
-                                        set_is_contact={set_is_contact}
-                                        />
-                                        
-                                ))
-                            }
-                        </div>
-                    </div>
+                            <Button Icon={GrGroup} text='new group' handle_cleck={()=> ''} />
+                            <Button Icon={GrUserAdd} text='new contact' handle_cleck={()=> set_is_new_contact(true)} /> 
 
-                </div>
-            }
+                                <h6 className="px-5 py-3 text-xs text-emerald-300 hide_model">
+                                contacts on whatsapp
+                            </h6>
+                            <div className="hide_model">
+                                {
+                                    contacts?.map(({_id,name,email,profile_picture})=> (
+                                        <Contact_card 
+                                            key={_id}
+                                            _id={_id}
+                                            email={email} 
+                                            profile_picture={profile_picture} 
+                                            name={name}
+                                            set_is_contact={set_is_contact}
+                                            />
+                                            
+                                    ))
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
         </div>
     )
 }

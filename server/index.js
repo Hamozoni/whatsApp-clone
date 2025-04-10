@@ -37,6 +37,9 @@ socket_io.on('connection',socket => {
   });
 
   socket.on('send_message',(chat) => {
+
+    const socket_id = users_socket.get(chat?.last_message?.sender);
+    console.log(socket_id)
     socket.to(chat?._id).emit('send_message',chat);
   });
 

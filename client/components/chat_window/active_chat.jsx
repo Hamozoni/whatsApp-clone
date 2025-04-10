@@ -4,11 +4,10 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { User_context } from '../../contexts/user.context';
 import { Message_card } from './message_card';
 import { Loading_component } from '../ui/loading_component';
-import { useSocket } from '@/hooks/useSocket';
 import update_message_status from '@/utils/update_mesages_status';
-import { Use_fetch } from '@/hooks/use_fetch';
 import { Chat_window_context } from '@/contexts/chat_window.context';
 import { AiOutlineWechatWork } from "react-icons/ai";
+import { fetch_data } from '@/lib/fetch_data';
 
 const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern hide_model'
 
@@ -27,14 +26,25 @@ const Active_chat = () => {
     )
   };
   
-  const {messages,set_messages,receiver} = useContext(Chat_window_context);
-  const {data,loading,error} = Use_fetch({end_point:`/message?chat_id=${active_chat?._id}`});
-  const socket = useSocket();
+  const {messages,set_messages,receiver,socket} = useContext(Chat_window_context);
+
+  const [loading,set_loading] = useState(true);
+  const [error,set_error] = useState(null);
   const sound_ref = useRef(null);
 
   useEffect(()=> {
-    set_messages(data?.messages);
-  },[loading]);
+
+    const fetch_messages = async ()=> {
+      const data = await fetch_data(`/message?chat_id=${active_chat?._id}`,set_loading,set_error);
+
+      if(data){
+        set_messages(data?.messages);
+
+      }
+    };
+
+    fetch_messages()
+  },[active_chat]);
 
 
   useEffect(() => {

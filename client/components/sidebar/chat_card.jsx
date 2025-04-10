@@ -1,14 +1,13 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { User_context } from "../../contexts/user.context";
-import { useSocket } from "@/hooks/useSocket";
 import update_message_status from "@/utils/update_mesages_status.js";
-import axios from "axios";
-import { Use_fetch } from "@/hooks/use_fetch";
 import { fetch_data } from "@/lib/fetch_data";
+import { Chat_window_context } from "@/contexts/chat_window.context";
 
 export const Chat_card = ({chat_info})=> {
     
     const {user,active_chat,set_active_chat} = useContext(User_context);
+    const {socket} = useContext(Chat_window_context);
     const sound_ref = useRef(null);
     const [contact,set_contact] = useState(null);
     const [text_time,set_text_time] = useState(null);
@@ -16,14 +15,13 @@ export const Chat_card = ({chat_info})=> {
     const [unread,set_unread] = useState(0);
     const [loading,set_loading] = useState(false);
     const [error,set_error] = useState(null);
-    const socket = useSocket();
 
 
     const fetch_unread_messages = async (user_id,chat_id) => {
         const data = await fetch_data(`chat?user_id=${user_id}&chat_id=${chat_id}`,set_loading,set_error);
 
         if(data) {
-            set_unread(data?.unread)
+            set_unread(data?.unread_messages)
         }
     };
 
@@ -57,7 +55,7 @@ export const Chat_card = ({chat_info})=> {
                 if(chat?.last_message?.status === 'SENT') {
                     update_message_status(socket,chat?._id,contact?._id,'DELIVERED');
                 }
-                if(chat._id !== active_chat._id) {
+                if(chat._id !== active_chat?._id) {
                     set_unread(prev=> prev + 1)
                     sound_ref.current = new Audio('./new_message_sound.mp3')
                     sound_ref.current.play();

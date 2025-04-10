@@ -6,12 +6,9 @@ import { useContext, useEffect, useState } from "react";
 import { Search_form } from "../ui/search_form";
 import { Contacts } from "../contacts/contacts";
 import { User_context } from "../../contexts/user.context";
-import { useSocket } from "@/hooks/useSocket";
 
 
 const Chat_list = ()=> {
-
-    const socket = useSocket()
 
     const {chats,set_chats,active_chat} = useContext(User_context);
     const [search_value,set_search_value] = useState('');
@@ -44,8 +41,8 @@ const Chat_list = ()=> {
     // },[socket,active_chat])
 
     return (
-        is_contacts ? <Contacts set_is_contact={set_is_contact}  /> :
-        <div className="">
+        <div className=" relative">
+            {is_contacts && <Contacts set_is_contact={set_is_contact}  />}
             <header className="p-3">
                 <div className="flex items-center justify-between mb-3">
                     <h3 className="text-xl font-bold">Chats</h3>
