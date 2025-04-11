@@ -1,6 +1,6 @@
 "use client"
 import { firebase_auth } from "@/lib/firebase_config";
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { Loading_component } from "../components/ui/loading_component";
 import { useRouter } from "next/navigation";
@@ -15,7 +15,6 @@ export const  User_context_provider =  ({children})=> {
     const [user,set_user] = useState(null);
     const [loading,set_loading] = useState(false);
     const [error,set_error] = useState(false);
-    const [active_chat,set_active_chat] = useState(null);
     const [contacts,set_contacts] = useState([]);
     const [chats,set_chats] = useState([]);
     const [socket,set_socket] = useState(null)
@@ -50,8 +49,6 @@ export const  User_context_provider =  ({children})=> {
           });
 
           set_socket(socket)
-
-             set_active_chat(null);
           });
         };
     
@@ -75,8 +72,6 @@ export const  User_context_provider =  ({children})=> {
                 contacts,
                 set_contacts,
                 loading,
-                set_active_chat,
-                active_chat,
                 chats,
                 set_chats
               }

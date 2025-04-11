@@ -8,7 +8,8 @@ export const Chat_window_context = createContext(null);
 
 export const Chat_window_context_provider = ({children})=> {
 
-    const {user,active_chat,socket} = useContext(User_context);
+    const {user,socket} = useContext(User_context);
+    const [active_chat,set_active_chat] = useState(null);
     const [is_document,set_is_document] = useState(false);
     const [messages, set_messages] = useState([]);
     const [receiver, set_receiver] = useState(null);
@@ -39,7 +40,9 @@ export const Chat_window_context_provider = ({children})=> {
                     messages,
                     set_messages,
                     receiver,
-                    set_receiver
+                    set_receiver,
+                    active_chat,
+                    set_active_chat
                 }
                 }
         >
