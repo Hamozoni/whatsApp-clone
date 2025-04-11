@@ -4,7 +4,6 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { User_context } from '../../contexts/user.context';
 import { Message_card } from './message_card';
 import { Loading_component } from '../ui/loading_component';
-import update_message_status from '@/utils/update_mesages_status';
 import { Chat_window_context } from '@/contexts/chat_window.context';
 import { AiOutlineWechatWork } from "react-icons/ai";
 import { fetch_data } from '@/lib/fetch_data';
@@ -15,13 +14,10 @@ const Active_chat = () => {
 
   const {user} = useContext(User_context);
   const {messages,set_messages,active_chat} = useContext(Chat_window_context);
-
-    
-
   const [loading,set_loading] = useState(true);
   const [error,set_error] = useState(null);
-  const sound_ref = useRef(null);
-  
+
+
   if(!active_chat._id) {
     return (
       <div className={className}>
@@ -44,10 +40,9 @@ const Active_chat = () => {
       }
     };
 
-    fetch_messages()
+    fetch_messages();
+
   },[active_chat]);
-
-
 
   if(error){
     return (

@@ -12,14 +12,12 @@ import { Chat_window_context } from "@/contexts/chat_window.context";
 export const Message_input = ()=> {
 
     const {set_messages,set_active_chat,active_chat,message,set_message} = useContext(Chat_window_context);
-
-    const {user,socket} = useContext(User_context);
     const [show_emoji,set_show_emoji] = useState(false);
     const [is_document,set_is_document] = useState(false);
     const [text,set_text] = useState('');
 
     useEffect(()=> {
-        set_message({});
+        set_text('');
     },[active_chat])
 
     const handle_send = async ()=> {

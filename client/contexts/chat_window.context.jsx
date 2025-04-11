@@ -21,6 +21,12 @@ export const Chat_window_context_provider = ({children})=> {
     if(!active_chat) return;
 
       set_messages([]);
+      set_message({
+        user: user?._id,
+        contact: active_chat?.contact?._id,
+        text:''
+  
+      });
 
       if(!active_chat?._id) return;
         update_message_status(socket,active_chat?._id,receiver?._id,'READ');
