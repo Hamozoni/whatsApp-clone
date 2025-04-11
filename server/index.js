@@ -36,11 +36,11 @@ socket_io.on('connection',socket => {
     socket.to(chat_id).emit('user_connected',user_id);
   });
 
-  socket.on('send_message',(chat) => {
+  socket.on('message_sent',(data) => {
 
-    const socket_id = users_socket.get(chat?.last_message?.sender);
+    const socket_id = users_socket.get(data?.contact_chat?.user);
     console.log(socket_id)
-    socket.to(chat?._id).emit('send_message',chat);
+    socket.to(socket_id).emit('message_sent',data);
   });
 
   socket.on('message_status_changed',data=> {

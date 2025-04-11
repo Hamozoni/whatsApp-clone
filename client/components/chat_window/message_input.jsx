@@ -12,7 +12,8 @@ import { post_data } from "@/lib/post_data";
 
 export const Message_input = ()=> {
 
-    const {set_messages,set_active_chat,active_chat,message,set_message} = useContext(Chat_window_context);
+    const {set_messages,active_chat,message,set_message} = useContext(Chat_window_context);
+    const {socket} = useContext(User_context);
     const [show_emoji,set_show_emoji] = useState(false);
     const [is_document,set_is_document] = useState(false);
     const [text,set_text] = useState('');
@@ -30,7 +31,8 @@ export const Message_input = ()=> {
     const handle_send = async ()=> {
         console.log(message)
         const data = await post_data('message',message,set_loading,set_error);
-        set_text('')
+        set_text('');
+        socket?.emit('message_sent',data);
         console.log(data);
     };
 

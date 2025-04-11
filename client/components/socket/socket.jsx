@@ -11,8 +11,13 @@ export const Socket = ()=> {
 
 
     useEffect(()=>  {
+        socket?.on('message_sent',data=> {
+            console.log(data)
+        });
 
-        
+        return ()=> {
+            socket?.off('message_sent')
+        }
     },[socket]);
 
 

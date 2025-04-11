@@ -13,9 +13,8 @@ const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-
 export const Active_chat = () => {
 
   const {user} = useContext(User_context);
-  const {messages,set_messages,active_chat} = useContext(Chat_window_context);
-  const [loading,set_loading] = useState(true);
-  const [error,set_error] = useState(null);
+  const {messages,set_messages,active_chat,loading,error} = useContext(Chat_window_context);
+
 
 
   if(!active_chat._id) {
@@ -31,16 +30,6 @@ export const Active_chat = () => {
 
   useEffect(()=> {
 
-    const fetch_messages = async ()=> {
-      const data = await fetch_data(`/message?chat_id=${active_chat?._id}`,set_loading,set_error);
-      console.log(data)
-      if(data){
-        set_messages(data?.messages);
-
-      }
-    };
-
-    fetch_messages();
 
   },[active_chat]);
 
