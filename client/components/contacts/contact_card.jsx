@@ -6,23 +6,16 @@ import { Chat_window_context } from "@/contexts/chat_window.context";
 export const Contact_card = ({_id,email,profile_picture,name,set_is_contact})=> {
 
     const {user,chats} = useContext(User_context);
-    const {set_active_chat} = useContext(Chat_window_context);
+    const {set_active_chat,set_message} = useContext(Chat_window_context);
 
     const handle_open_chat = () => {
 
         const exist_chat = chats?.find(e=> e?.contact?._id === _id);
          set_active_chat({ 
             _id: exist_chat ? exist_chat?._id : null,
-            user:{
-                    _id: user?._id,
-                    name: user?.name,
-                    email:  user?.email,
-                    profile_picture: user?.photoURL,
-                },
-
-            contact: {_id,email,profile_picture,name}
+            contact: {_id,profile_picture,name}
         });
-            set_is_contact(false);
+        set_is_contact(false);
 
     }
 

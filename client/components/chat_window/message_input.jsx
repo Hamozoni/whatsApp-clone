@@ -21,10 +21,13 @@ export const Message_input = ()=> {
 
     useEffect(()=> {
         set_text('');
-    },[active_chat])
+    },[active_chat]);
+
+    useEffect(()=> {
+        set_message(prev=>  ({...prev,text}));
+    },[text]);
 
     const handle_send = async ()=> {
-        set_message(prev=>  ({...prev,text}));
         console.log(message)
         const data = await post_data('message',message,set_loading,set_error);
         set_text('')

@@ -11,14 +11,31 @@ export const get_user_controller = async (req,res,next) => {
 
     try {
 
-        const user = await User.findOne({email: user_email}).populate('contacts').exec()
+        const user = await User.findOne({email: user_email}).populate([
+            {
+              path: 'contacts',
+              select: 'name _id about profile_picture',
+            },
+          ])
+          .select('name _id about profile_picture')
 
         if(!user) {
             return res.status(500).json({message: 'user is not found'});
         }
         
 
-        const chats = await Chat.find({members: user?._id}).populate('members').populate('last_message')
+        const chats = await Chat.find({user: user?._id}).populate([
+            {
+              path: 'contact',
+              select: 'name _id about profile_picture',
+            },
+            {
+                path: 'last_message',
+                select: '_id sender status text type createdAt user'
+              },
+          ])
+          .select('createdAt contact last_message user _id')
+        
         
         return res.status(200).json({message: 'user info found', user,chats});
 

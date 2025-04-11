@@ -1,7 +1,7 @@
 "use cleint"
 import { Chat_window_context } from "@/contexts/chat_window.context";
 import { useContext } from "react"
-import Active_chat from "./active_chat";
+import{ Active_chat} from "./active_chat";
 import { Chat_header } from "./chat_header";
 import { Message_input } from "./message_input";
 

@@ -1,7 +1,6 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { User_context } from "./user.context";
-import update_message_status from "@/utils/update_mesages_status";
  
 
 export const Chat_window_context = createContext(null);
@@ -17,22 +16,16 @@ export const Chat_window_context_provider = ({children})=> {
   
 
     useEffect(() => {
-
-    if(!active_chat) return;
-
-      set_messages([]);
-      set_message({
-        chat_id: active_chat?._id ?  active_chat?._id : null,
-        sender: user?._id,
-        contact: active_chat?.contact?._id,
-        text:'',
-        type:'TEXT',
-        status: 'SENT'
-
-      });
-
-      if(!active_chat?._id) return;
-        update_message_status(socket,active_chat?._id,receiver?._id,'READ');
+        set_messages([]);
+        set_message({
+          chat_id: active_chat?._id ?  active_chat?._id : null,
+          sender: user?._id,
+          contact: active_chat?.contact?._id,
+          text:'',
+          type:'TEXT',
+          status: 'SENT'
+    
+        });
 
     },[active_chat]);
     

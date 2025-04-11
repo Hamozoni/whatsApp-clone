@@ -32,7 +32,7 @@ export const  User_context_provider =  ({children})=> {
             }
 
              const data = await fetch_data(`user?user_email=${user?.email}`,set_loading,set_error);
-
+             console.log(data)
              if(data){
                set_user(data?.user);
                set_chats(data?.chats);

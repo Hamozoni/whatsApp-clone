@@ -10,7 +10,7 @@ import { fetch_data } from '@/lib/fetch_data';
 
 const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern hide_model'
 
-const Active_chat = () => {
+export const Active_chat = () => {
 
   const {user} = useContext(User_context);
   const {messages,set_messages,active_chat} = useContext(Chat_window_context);
@@ -33,7 +33,7 @@ const Active_chat = () => {
 
     const fetch_messages = async ()=> {
       const data = await fetch_data(`/message?chat_id=${active_chat?._id}`,set_loading,set_error);
-
+      console.log(data)
       if(data){
         set_messages(data?.messages);
 
@@ -72,5 +72,3 @@ const Active_chat = () => {
      </div> 
   );
 };
-
-export default Active_chat;

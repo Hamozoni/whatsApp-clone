@@ -2,11 +2,12 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { User_context } from "../../contexts/user.context";
 import update_message_status from "@/utils/update_mesages_status.js";
 import { fetch_data } from "@/lib/fetch_data";
+import { Chat_window_context } from "@/contexts/chat_window.context";
 
 export const Chat_card = ({chat})=> {
     
-    const {user,active_chat,set_active_chat,socket} = useContext(User_context);
-    const sound_ref = useRef(null);
+    const {user,socket} = useContext(User_context);
+    const {active_chat,set_active_chat} = useContext(Chat_window_context);
     const [text_time,set_text_time] = useState(null);
     const [unread,set_unread] = useState(0);
     const [loading,set_loading] = useState(false);
@@ -25,7 +26,7 @@ export const Chat_card = ({chat})=> {
     useEffect(()=> {
         const text_time = new Date(chat?.last_message?.createdAt).toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
         set_text_time(text_time);
-        update_message_status(socket,chat?._id,contact?._id,'DELIVERED');
+        update_message_status(socket,chat?._id,chat?.contact?._id,'DELIVERED');
         fetch_unread_messages(user?._id,chat?._id);
     },[]);
 

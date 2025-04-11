@@ -1,13 +1,12 @@
 
 import Chat from "../models/chat.model.js";
-import Message from "../models/message.model.js"
-
+import Message from "../models/message.model.js";
 
 export const post_message_controller = async (req,res,next) => {
     
     
     try {
-        const {chat_id,sender,contact,text,media,type,status} = req.body;
+        const {sender,contact,text,media,type,status} = req.body;
 
         if(!sender || !contact) {
             return res.status(500).json({message: 'sender id is reqiure'});
@@ -52,13 +51,12 @@ export const get_message_controller = async (req,res,next) => {
     const {chat_id} = req.query;
 
     if(!chat_id) {
-        return res.json({message: 'chat id is reqiure',status: false})
+        return res.status(400).json({message: 'chat id is reqiure'})
     }
 
     try {
-
-        const messages = await Message.find({chat_id});
-        return res.json({messages: 'chat messages',status: true,messages})
+        const messages = await Chat.findById(chat_id).populate('messages')
+        return res.status(200).json({messages: messages?.messages})
     }
     catch(error) {
         next(error)
