@@ -11,9 +11,11 @@ const USER_SCHEMA = new mongoose.Schema({
     profile_picture: {type: String,require: true,default: '/placeholder_avatar.jpg'},
     picture_id: {type: String,require: false},
     password: {type: String,require: false},
-    provider :{type: String,require: false},
-    is_online: {type: Boolean,default: false},
+    chats:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}], 
+    groups:[{type: mongoose.Schema.Types.ObjectId, ref: 'Group'}], 
     contacts: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    calls: [{type: mongoose.Schema.Types.ObjectId, ref: 'Call'}],
+    status: [{type: mongoose.Schema.Types.ObjectId, ref: 'Status'}]
 },{timestamps: true});
 
  const User = mongoose.model('User',USER_SCHEMA);

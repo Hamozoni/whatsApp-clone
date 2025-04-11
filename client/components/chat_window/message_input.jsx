@@ -6,7 +6,6 @@ import { LuSendHorizontal } from "react-icons/lu";
 import { useContext, useEffect, useState } from "react";
 import { User_context } from "../../contexts/user.context";
 import EmojiPicker from "emoji-picker-react";
-import axios from "axios";
 import { Chose_document } from "../ui/chose_document";
 import { Chat_window_context } from "@/contexts/chat_window.context";
 
@@ -27,38 +26,7 @@ export const Message_input = ()=> {
     const handle_send = async ()=> {
 
         if(message?.length < 0) return
-        try {
 
-            const body = {
-                chat_id: active_chat?._id,
-                sender : user?._id,
-                text: message,
-                media: null,
-                type : 'TEXT',
-                status: 'SENT'
-            };
-
-            if(active_chat._id){
-                const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/message`,body);
-                socket?.emit('send_message',data?.chat);
-                set_messages(prev=> [...prev,data?.chat?.last_message])
-                set_message('');
-            }else {
-
-            const members = [user?._id,receiver?._id]
-              const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/chat`,{members,message: body});
-              socket?.emit('new_chat',{contact_id: receiver?._id,chat:data?.chat});
-              set_message('');
-              set_active_chat(data?.chat);
-            }
-
-        }
-        catch (error) {
-            console.log(error);
-        }
-        finally {
-            // socket.off('send_message')
-        }
     };
 
     const handle_emoji = (emojiObject)=> {

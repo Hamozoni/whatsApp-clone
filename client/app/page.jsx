@@ -2,6 +2,7 @@
 import { Chat_window } from '@/components/chat_window/chat_window';
 import { No_active_chat } from '@/components/chat_window/No_active_chat';
 import Sidebar from '@/components/sidebar/sidebar';
+import { Socket } from '@/components/socket/socket';
 import { User_context } from '@/contexts/user.context';
 import { useContext } from 'react';
 
@@ -13,6 +14,7 @@ export default function Home() {
   return (
     <main>
         <div className="flex h-screen max-h-screen w-screen hide_model">
+            <Socket />
             <Sidebar />
             {
               active_chat ? 

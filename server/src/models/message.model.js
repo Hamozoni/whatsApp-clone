@@ -1,12 +1,10 @@
 import mongoose from "mongoose";
 
 const MESSAGE_SCHEMA = new mongoose.Schema({
-    chat_id: {type: mongoose.Schema.Types.ObjectId, ref: "Chat"},
     sender: {type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     text: { type: String },
-    media: { type: String },
-    type: {type: String,enum: ['TEXT', 'AUDIO', 'PHOTO','VIDEO','DOCUMENT','VIDEO_CALL','AUDIO_CALL'], 
-        default: 'TEXT'},
+    media: [{ type: mongoose.Schema.Types.ObjectId,ref: 'Media' }],
+    type: {type: String,enum: ['TEXT', 'MEDIA'],default: 'TEXT'},
     status: { 
         type: String, 
         enum: ['SENT', 'DELIVERED', 'READ'], 

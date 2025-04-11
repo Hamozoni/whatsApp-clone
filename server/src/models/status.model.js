@@ -2,12 +2,10 @@ import mongoose from "mongoose";
 // import {v4 as uuid} from 'uuid';
 
 const STATUS_SCHEMA = new mongoose.Schema({
+    user: {type: String, ref: 'User'},
     text: {type: String},
-    media: {type: String},
-    aother: {type: String, ref: 'User'},
-    type: {type: String,enum: ['TEXT','PHOTO','VIDEO'], 
-        default: 'PHOTO'
-    },
+    media: [{type: mongoose.Schema.Types.ObjectId, ref: 'Media'}],
+    type: {type: String,enum: ['TEXT','MEDIA'],default: 'MEDIA'},
     expires_at: {type: Date, require: true}
 },{timestamps: true});
 
