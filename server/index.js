@@ -38,7 +38,7 @@ socket_io.on('connection',socket => {
 
   socket.on('message_sent',(data) => {
 
-    const socket_id = users_socket.get(data?.contact_chat?.user);
+    const socket_id = users_socket.get(data?.user);
     console.log(socket_id)
     socket.to(socket_id).emit('message_sent',data);
   });

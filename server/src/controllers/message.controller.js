@@ -3,7 +3,18 @@ import Chat from "../models/chat.model.js";
 import Message from "../models/message.model.js";
 
 export const post_message_controller = async (req,res,next) => {
-    
+
+    let sender_chat = null;
+    let contact_chat = null;
+    const populate = [
+        {
+            path: 'last_message'
+        },
+        {
+            path: 'contact',
+            select: 'name _id about profile_picture',
+        }
+    ];
     
     try {
         const {sender,contact,text,media,type,status} = req.body;
@@ -17,24 +28,30 @@ export const post_message_controller = async (req,res,next) => {
         const contact_chat_id = await Chat.findOne({user: contact,contact:sender});
         const sender_chat_id = await Chat.findOne({user: sender,contact:contact});
 
-        let sender_chat = null;
-        let contact_chat = null
-
         if(sender_chat_id) {
              sender_chat = await Chat.findByIdAndUpdate(sender_chat_id?._id,
                 {last_message: message?._id, $addToSet :{messages: message?._id}},{new: true}
-           ).populate('last_message').exec();
+                ).populate(populate)
+                .select('-messages')
 
         }else {
-             sender_chat = await Chat.create({user: sender,contact,last_message: message?._id,messages: message?._id})
+           const chat = await Chat.create({user: sender,contact,last_message: message?._id,messages: message?._id});
+            sender_chat  = await Chat.findById(chat?._id)
+            .populate(populate)
+                .select('-messages')
+
         }
 
         if(contact_chat_id) {
              contact_chat = await Chat.findByIdAndUpdate(contact_chat_id?._id,
                 {last_message: message?._id, $addToSet :{messages: message?._id}},{new: true}
-           ).populate('last_message').exec();
+           ).populate(populate)
+           .select('-messages')
         }else {
-            contact_chat = await Chat.create({user: contact,contact: sender,last_message: message?._id,messages: message?._id})
+           const chat = await Chat.create({user: contact,contact: sender,last_message: message?._id,messages: message?._id});
+            contact_chat = await Chat.findById(chat?._id)
+            .populate(populate)
+           .select('-messages')
         };
 
         return res.status(200).json({contact_chat,sender_chat})

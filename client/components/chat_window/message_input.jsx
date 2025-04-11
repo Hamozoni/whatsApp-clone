@@ -32,7 +32,7 @@ export const Message_input = ()=> {
         console.log(message)
         const data = await post_data('message',message,set_loading,set_error);
         set_text('');
-        socket?.emit('message_sent',data);
+        socket?.emit('message_sent',data?.contact_chat);
         console.log(data);
     };
 
