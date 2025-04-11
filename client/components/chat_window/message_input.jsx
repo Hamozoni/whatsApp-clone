@@ -8,6 +8,7 @@ import { User_context } from "../../contexts/user.context";
 import EmojiPicker from "emoji-picker-react";
 import { Chose_document } from "../ui/chose_document";
 import { Chat_window_context } from "@/contexts/chat_window.context";
+import { post_data } from "@/lib/post_data";
 
 export const Message_input = ()=> {
 
@@ -15,13 +16,19 @@ export const Message_input = ()=> {
     const [show_emoji,set_show_emoji] = useState(false);
     const [is_document,set_is_document] = useState(false);
     const [text,set_text] = useState('');
+    const [loading,set_loading] = useState(false);
+    const [error,set_error] = useState(null);
 
     useEffect(()=> {
         set_text('');
     },[active_chat])
 
     const handle_send = async ()=> {
-
+        set_message(prev=>  ({...prev,text}));
+        console.log(message)
+        const data = await post_data('message',message,set_loading,set_error);
+        set_text('')
+        console.log(data);
     };
 
     const handle_emoji = (emojiObject)=> {

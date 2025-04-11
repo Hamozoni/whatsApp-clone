@@ -5,20 +5,40 @@ import Message from "../models/message.model.js"
 
 export const post_message_controller = async (req,res,next) => {
     
-    const {chat_id,sender,text,media,type,status} = req.body
-
-    if(!sender || !chat_id) {
-        return res.json({message: 'sender id is reqiure',status: false});
-    }
-
+    
     try {
-        const message = await Message.create({chat_id,sender,text,media,type,status});
+        const {chat_id,sender,contact,text,media,type,status} = req.body;
 
-      const chat =  await Chat.findByIdAndUpdate(chat_id,
-             {last_message: message?._id},{new: true}
-        ).populate('last_message').exec();
+        if(!sender || !contact) {
+            return res.status(500).json({message: 'sender id is reqiure'});
+        };
 
-        return res.json({message: 'message has been sent',status: true,chat})
+        const message = await Message.create({sender,text,media,contact,type,status});
+
+        const contact_chat_id = await Chat.findOne({user: contact,contact:sender});
+        const sender_chat_id = await Chat.findOne({user: sender,contact:contact});
+
+        let sender_chat = null;
+        let contact_chat = null
+
+        if(sender_chat_id) {
+             sender_chat = await Chat.findByIdAndUpdate(sender_chat_id?._id,
+                {last_message: message?._id, $addToSet :{messages: message?._id}},{new: true}
+           ).populate('last_message').exec();
+
+        }else {
+             sender_chat = await Chat.create({user: sender,contact,last_message: message?._id,messages: message?._id})
+        }
+
+        if(contact_chat_id) {
+             contact_chat = await Chat.findByIdAndUpdate(contact_chat_id?._id,
+                {last_message: message?._id, $addToSet :{messages: message?._id}},{new: true}
+           ).populate('last_message').exec();
+        }else {
+            contact_chat = await Chat.create({user: contact,contact: sender,last_message: message?._id,messages: message?._id})
+        };
+
+        return res.status(200).json({contact_chat,sender_chat})
 
     }
     catch (error) {

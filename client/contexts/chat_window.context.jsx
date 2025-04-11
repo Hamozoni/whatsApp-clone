@@ -22,10 +22,13 @@ export const Chat_window_context_provider = ({children})=> {
 
       set_messages([]);
       set_message({
-        user: user?._id,
+        chat_id: active_chat?._id ?  active_chat?._id : null,
+        sender: user?._id,
         contact: active_chat?.contact?._id,
-        text:''
-  
+        text:'',
+        type:'TEXT',
+        status: 'SENT'
+
       });
 
       if(!active_chat?._id) return;
