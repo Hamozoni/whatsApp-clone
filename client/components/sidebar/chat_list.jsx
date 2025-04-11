@@ -63,7 +63,7 @@ const Chat_list = ()=> {
                         // chat?.last_message?.length > 0 &&
                         <Chat_card 
                             key={chat?._id} 
-                            chat_info={chat} 
+                            chat={chat} 
                         />
                     ))}
                 </div>

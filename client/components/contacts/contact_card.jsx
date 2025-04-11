@@ -1,44 +1,28 @@
 import { useContext } from "react";
 import { Avatar } from "../ui/avatar";
 import { User_context } from "../../contexts/user.context";
+import { Chat_window_context } from "@/contexts/chat_window.context";
 
 export const Contact_card = ({_id,email,profile_picture,name,set_is_contact})=> {
 
-    const {user,chats,set_active_chat} = useContext(User_context);
+    const {user,chats} = useContext(User_context);
+    const {set_active_chat} = useContext(Chat_window_context);
 
     const handle_open_chat = () => {
 
-        const exist_chat = chats?.find(e=> e?.members.some(e=> e?._id === _id));
-        
-        if(!exist_chat) {
-            const new_ative_chat = {
-                _id: null,
-                is_group: false,
-                members: [
-                    {
-                        _id: _id,
-                        name,
-                        email,
-                        profile_picture,
-                        is_online: false
-                    },
-                    {
-                        _id: user?._id,
-                        name: user?.name,
-                        email:  user?.email,
-                        profile_picture: user?.photoURL,
-                        is_online: false
-                    },
-    
-                ]
-    
-            };
-            set_active_chat(new_ative_chat);
+        const exist_chat = chats?.find(e=> e?.contact?._id === _id);
+         set_active_chat({ 
+            _id: exist_chat ? exist_chat?._id : null,
+            user:{
+                    _id: user?._id,
+                    name: user?.name,
+                    email:  user?.email,
+                    profile_picture: user?.photoURL,
+                },
 
-        }else {
-            set_active_chat(exist_chat);
-        }
-        set_is_contact(false);
+            contact: {_id,email,profile_picture,name}
+        });
+            set_is_contact(false);
 
     }
 

@@ -11,26 +11,23 @@ import { Chat_window_context } from "@/contexts/chat_window.context";
 
 export const Message_input = ()=> {
 
-    const {receiver,set_messages,set_active_chat,active_chat} = useContext(Chat_window_context);
+    const {set_messages,set_active_chat,active_chat,message,set_message} = useContext(Chat_window_context);
 
     const {user,socket} = useContext(User_context);
-    const [message,set_message] = useState('');
     const [show_emoji,set_show_emoji] = useState(false);
     const [is_document,set_is_document] = useState(false);
+    const [text,set_text] = useState('');
 
     useEffect(()=> {
-        set_message('');
+        set_message({});
     },[active_chat])
 
-
     const handle_send = async ()=> {
-
-        if(message?.length < 0) return
 
     };
 
     const handle_emoji = (emojiObject)=> {
-        set_message(message + emojiObject.emoji );
+        set_text(prev=> `${prev} ${emojiObject.emoji}`);
     }
 
     useEffect(()=> {
@@ -60,8 +57,8 @@ export const Message_input = ()=> {
                     />
                     <input
                         type="text"
-                        value={message}
-                        onChange={(e) => set_message(e.target.value)}
+                        value={text}
+                        onChange={(e) => set_text(e.target.value)}
                         onKeyPress={(e) => e.key === 'Enter' && handle_send()}
                         placeholder="Type a message"
                         className="w-full focus:outline-none text-[#f7f8fa] px-2 py-1 hide_model"
@@ -69,7 +66,7 @@ export const Message_input = ()=> {
                 </div>
                 <div className="hide_model">
                     {
-                        message?.length > 0 ? 
+                        text?.length > 0 ? 
                         <button
                                 onClick={handle_send}
                                 className="px-2 py-3 rounded-md text-white transition-colors hide_model"

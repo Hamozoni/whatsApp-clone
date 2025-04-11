@@ -13,8 +13,8 @@ const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-
 
 const Active_chat = () => {
 
-  const {user,socket} = useContext(User_context);
-  const {messages,set_messages,receiver,active_chat} = useContext(Chat_window_context);
+  const {user} = useContext(User_context);
+  const {messages,set_messages,active_chat} = useContext(Chat_window_context);
 
     
 
@@ -48,43 +48,6 @@ const Active_chat = () => {
   },[active_chat]);
 
 
-  useEffect(() => {
-
-    socket?.emit('join_room',active_chat?._id);
-
-    socket?.on('send_message',chat => {
-      if(chat?.last_message?.sender !== user?._id) {
-        set_messages(prev=> [...prev,chat?.last_message]);
-        update_message_status(socket,active_chat?._id,receiver?._id,'READ');
-        sound_ref.current = new Audio('./new_message_sound_2.mp3')
-        sound_ref.current.play();
-      }
-
-    });
-
-
-    socket?.on('message_status_changed', data => {
-      set_messages(prev=> {
-        let new_messages = [];
-        prev?.forEach( e => {
-          if(e.sender === data?.sender && e.status !== 'READ') {
-            new_messages.push({...e,status: data?.status})
-          }else {
-            new_messages.push(e)
-          }
-        });
-
-        return [...new_messages]
-      })
-    });
-
-    return ()=> {
-      socket?.off('send_message');
-      socket?.off('message_status_changed');
-    }
-    
-},[socket]);
-  
 
   if(error){
     return (
