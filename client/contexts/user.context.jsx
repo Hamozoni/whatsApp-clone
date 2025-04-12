@@ -32,23 +32,22 @@ export const  User_context_provider =  ({children})=> {
             }
 
              const data = await fetch_data(`user?user_email=${user?.email}`,set_loading,set_error);
-             console.log(data)
              if(data){
                set_user(data?.user);
                set_chats(data?.chats);
                set_contacts(data?.user?.contacts);
              };
+             const socket = await io.connect('http://localhost:4400',{
+                reconnection: true,
+                reconnectionAttempts: 5,
+                transports: ['websocket'],
+                query : {
+                    user_id: data?.user?._id
+                }
+            });
 
-            const socket = await io.connect('http://localhost:4400',{
-              reconnection: true,
-              reconnectionAttempts: 5,
-              transports: ['websocket'],
-              query : {
-                  user_id: data?.user?._id
-              }
-          });
+            set_socket(socket)
 
-          set_socket(socket)
           });
         };
     

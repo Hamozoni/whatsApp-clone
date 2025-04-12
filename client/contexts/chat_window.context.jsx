@@ -13,10 +13,10 @@ export const Chat_window_context_provider = ({children})=> {
     const [is_document,set_is_document] = useState(false);
     const [messages, set_messages] = useState([]);
     const [message,set_message] = useState({});
+    const [unread_message,set_unread_message] = useState([]);
     const [loading,set_loading] = useState(true);
     const [error,set_error] = useState(null);
     const message_sound_ref = useRef(null);
-    const chat_sound_ref = useRef(null);
 
   
 
@@ -31,8 +31,6 @@ export const Chat_window_context_provider = ({children})=> {
           status: 'SENT'
     
         });
-
-        console.log(active_chat);
 
         const fetch_messages = async ()=> {
             const data = await fetch_data(`/message?chat_id=${active_chat?._id}`,set_loading,set_error);
@@ -58,6 +56,25 @@ export const Chat_window_context_provider = ({children})=> {
                 return [data,...chats]
             });
 
+            set_unread_message( prev => {
+               const exist_chat = prev.find(e=> e._id === data?._id);
+
+               
+               if(exist_chat) {
+
+                  const new_chat = [];
+
+                  prev?.map( chat => {
+                     chat?._id === exist_chat?._id ? new_chat?.push({exist_chat,unread : [...exist_chat?.unread,data?.last_message]}) : new_chat?.push(chat)
+                  });
+
+                  return [...new_chat]
+               }
+              return [...prev,{_id: data?._id,unread : [data?.last_message]}] 
+               
+            });
+
+            console.log(unread_message)
             if(data?._id !== active_chat?._id) {
                 message_sound_ref?.current?.play();
             }
@@ -66,7 +83,7 @@ export const Chat_window_context_provider = ({children})=> {
         return ()=> {
             socket?.off('message_sent');
         }
-    },[socket])
+    },[])
     
 
 
@@ -84,6 +101,8 @@ export const Chat_window_context_provider = ({children})=> {
                     set_active_chat,
                     loading,
                     error,
+                    unread_message,
+                    set_unread_message
                 }
                 }
         >

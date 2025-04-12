@@ -22,11 +22,11 @@ export const Chose_document = () => {
 
     
     return (
-        <div className=" absolute left-2 top-0 -translate-y-[103%] bg-[#222e35] p-3 rounded-md">
+        <div className=" absolute left-2 top-0 -translate-y-[103%] bg-[#222e35] p-3 rounded-md z-20">
             <ul className="">
                 {
                     optionas?.map(({id,title, Icon,type,accept})=> (
-                        <li key={id}>
+                        <li key={id} >
                             {
                              (title === 'camera' || title === 'contact') ? 
                              <div className={className}>

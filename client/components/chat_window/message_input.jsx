@@ -9,6 +9,7 @@ import EmojiPicker from "emoji-picker-react";
 import { Chose_document } from "../ui/chose_document";
 import { Chat_window_context } from "@/contexts/chat_window.context";
 import { post_data } from "@/lib/post_data";
+import { Close_model } from "../ui/close_model";
 
 export const Message_input = ()=> {
 
@@ -51,23 +52,15 @@ export const Message_input = ()=> {
         set_text(prev=> `${prev} ${emojiObject.emoji}`);
     }
 
-    useEffect(()=> {
-        const handle_hide_emoji = (e)=> {
-            if(e.target.classList.contains('hide_model')) {
-                set_show_emoji(false)
-            }
-        }
-
-        window.addEventListener('click',handle_hide_emoji);
-
-        return ()=> window.removeEventListener('click',handle_hide_emoji)
-    },[]);
-
     return (
         <div className="p-3 bg-[#222e35] relative hide_model">
             <div className="flex items-center gap-2 hide_model">
                 {
-                    is_document && <Chose_document />
+                    is_document && 
+                  <>
+                    <Close_model set_model={set_is_document} />
+                    <Chose_document />
+                </>
                 }
                 <AiOutlinePaperClip onClick={()=> set_is_document(!is_document)} className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#00a884] rotate-90 hide_model"  />
                 
@@ -107,9 +100,14 @@ export const Message_input = ()=> {
                 </div>
 
             </div>
-            <div className=" absolute top-0 left-0 -translate-y-full">
-                {show_emoji && <EmojiPicker onEmojiClick={handle_emoji} />}
-            </div>
+            { show_emoji  &&
+            <>
+                <div className=" absolute top-0 left-0 -translate-y-full z-20">
+                    <EmojiPicker onEmojiClick={handle_emoji} />
+                </div>
+                <Close_model  set_model={set_show_emoji}/>
+            </>
+            }
         </div>
     )
 }
