@@ -9,14 +9,14 @@ import { useEffect, useRef, useState } from "react";
 export const Audio_recorder = ()=> {
 
     const [is_recording,set_is_recording] = useState(true);
-    const [audio_source,set_audio_source] = useState(null);
+    const [audio_src,set_audio_src] = useState(null);
     const recorder_ref = useRef(null);
-    const audio_chunks = useRef(null);
+    const audio_chunks = useRef([]);
     const audio_ref = useRef(null);
     const canvas_ref = useRef(null);
     const analyser_ref = useRef(null);
     const animation_ref = useRef();
-    const context_ref = useRef(null);
+    const audio_context_ref = useRef(null);
     
 
     const draw_waveform = ()=> {
@@ -40,16 +40,92 @@ export const Audio_recorder = ()=> {
         ctx.strokeStyle = 'rgb(0, 0, 0)';
         ctx.beginPath();
 
-    }
+        const slice_width = canvas.width * 1.0 / buffer_length;
+
+        let x = 0;
+
+        buffer_length.map((_,i)=> {
+
+            const v = data_array[i] / 128.0;
+            const y = v * canvas.height / 2;
+
+            i === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+
+            x += slice_width;
+
+        });
+
+        ctx.lineTo(canvas.width,canvas.height / 2);
+        ctx.stroke();
+
+        animation_ref.current = requestAnimationFrame(draw_waveform)
+
+    };
+
+
 
     const start_recording = async()=> {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({audio:true});
 
-            recorder_ref.current = new MediaRecorder(stream)
+            recorder_ref.current = new MediaRecorder(stream);
+
+            audio_context_ref = new AudioContext();
+
+            const source = audio_context_ref.current.createMediaStreamSource(stream);
+            analyser_ref.current = audio_context_ref.createAnalyser();
+
+            source.connect(analyser_ref.current);
+
+            recorder_ref.current.ondataavailabe = (e)=> {
+                audio_chunks.current.push(e.data)
+            };
+
+            recorder_ref.current.onstop = ()=> {
+                const audio_blob = new Blob(audio_chunks.current,{type: 'audio/wav'});
+
+                const audio_url = URL.createObjectURL(audio_blob);
+                set_audio_src(audio_url);
+
+                audio_chunks.current = [];
+
+            };
+
+            recorder_ref.current.start();
+
+            set_is_recording(true);
+            draw_waveform();
         }
         catch (er) {
+            console.error(er)
+        }
+    };
 
+
+    const stop_recording = () => {
+        if(recorder_ref.current) {
+            recorder_ref.current.stop();
+
+            recorder_ref.current.stream.getTracks().forEach(track=> track.stop());
+
+            set_is_recording(false);
+
+            cancelAnimationFrame(animation_ref.current);
+        }
+    };
+
+
+    const play_audio = () => {
+        if(audio_ref.current && audio_src) {
+            if(audio_context_ref.current && analyser_ref.current) {
+                const source = audio_context_ref.current.createMediaElementSource(audio_ref.current);
+                source.connect(analyser_ref.current);
+                analyser_ref.current.connect(audio_context_ref.current.destination)
+            };
+
+            audio_ref.current.play();
+
+            draw_waveform();
         }
     }
 
