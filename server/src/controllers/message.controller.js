@@ -36,7 +36,7 @@ export const post_message_controller = async (req,res,next) => {
 
         }else {
            const chat = await Chat.create({user: sender,contact,last_message: message?._id,messages: message?._id});
-            sender_chat  = await Chat.findById(chat?._id)
+            sender_chat  = await Chat.findById(chat?._id,{new: true})
             .populate(populate)
                 .select('-messages')
 
@@ -49,7 +49,7 @@ export const post_message_controller = async (req,res,next) => {
            .select('-messages')
         }else {
            const chat = await Chat.create({user: contact,contact: sender,last_message: message?._id,messages: message?._id});
-            contact_chat = await Chat.findById(chat?._id)
+            contact_chat = await Chat.findById(chat?._id,{new: true})
             .populate(populate)
            .select('-messages')
         };
