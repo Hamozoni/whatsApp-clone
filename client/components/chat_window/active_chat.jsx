@@ -1,6 +1,6 @@
 
 "use client";
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { User_context } from '../../contexts/user.context';
 import { Message_card } from './message_card';
 import { Loading_component } from '../ui/loading_component';
@@ -11,10 +11,26 @@ const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-
 
 export const Active_chat = () => {
 
-  const {user} = useContext(User_context);
-  const {messages,active_chat,loading,error} = useContext(Chat_window_context);
+  const {user,socket} = useContext(User_context);
+  const {messages,active_chat,loading,error,set_messages} = useContext(Chat_window_context);
 
 
+  const chat_sound_ref = useRef(null);
+
+  useEffect(()=> {
+    if(!active_chat._id) return
+    socket?.on('message_sent',data=> {
+      if(active_chat?._id === data?._id) {
+          set_messages(prev=> [...prev,data?.last_message]);
+          chat_sound_ref?.current?.play()
+      }else {
+      }
+    })
+
+  return ()=> {
+      socket?.off('message_sent');
+     }
+  },[socket])
 
   if(!active_chat._id) {
     return (
@@ -25,7 +41,8 @@ export const Active_chat = () => {
         </div>
       </div>
     )
-  }
+  };
+
 
   if(error){
     return (
@@ -38,6 +55,7 @@ export const Active_chat = () => {
   return (
               
       <div className={className}>
+            <audio ref={chat_sound_ref} src="./new_message_sound_2.mp3" className=" hidden"></audio>
             {
                 loading ? 
                 <div className={className}>

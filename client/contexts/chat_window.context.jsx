@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { User_context } from "./user.context";
 import { fetch_data } from "@/lib/fetch_data";
  
@@ -8,13 +8,15 @@ export const Chat_window_context = createContext(null);
 
 export const Chat_window_context_provider = ({children})=> {
 
-    const {user} = useContext(User_context);
+    const {user,socket,set_chats} = useContext(User_context);
     const [active_chat,set_active_chat] = useState(null);
     const [is_document,set_is_document] = useState(false);
     const [messages, set_messages] = useState([]);
     const [message,set_message] = useState({});
     const [loading,set_loading] = useState(true);
     const [error,set_error] = useState(null);
+    const message_sound_ref = useRef(null);
+    const chat_sound_ref = useRef(null);
 
   
 
@@ -47,6 +49,24 @@ export const Chat_window_context_provider = ({children})=> {
           }
 
     },[active_chat]);
+
+
+    useEffect(()=> {
+        socket?.on('message_sent',data=> {
+            set_chats(prev=> {
+                const chats = prev?.filter(e=> e?._id !== data?._id);
+                return [data,...chats]
+            });
+
+            if(data?._id !== active_chat?._id) {
+                message_sound_ref?.current?.play();
+            }
+        });
+
+        return ()=> {
+            socket?.off('message_sent');
+        }
+    },[socket])
     
 
 
@@ -63,10 +83,11 @@ export const Chat_window_context_provider = ({children})=> {
                     active_chat,
                     set_active_chat,
                     loading,
-                    error
+                    error,
                 }
                 }
         >
+           <audio ref={message_sound_ref} src="./new_message_sound.mp3" className=" hidden"></audio>
             {children}
         </Chat_window_context.Provider>
     )
