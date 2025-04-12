@@ -6,14 +6,13 @@ import { Message_card } from './message_card';
 import { Loading_component } from '../ui/loading_component';
 import { Chat_window_context } from '@/contexts/chat_window.context';
 import { AiOutlineWechatWork } from "react-icons/ai";
-import { fetch_data } from '@/lib/fetch_data';
 
 const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern hide_model'
 
 export const Active_chat = () => {
 
   const {user} = useContext(User_context);
-  const {messages,set_messages,active_chat,loading,error} = useContext(Chat_window_context);
+  const {messages,active_chat,loading,error} = useContext(Chat_window_context);
 
 
 
@@ -27,11 +26,6 @@ export const Active_chat = () => {
       </div>
     )
   }
-
-  useEffect(()=> {
-
-
-  },[active_chat]);
 
   if(error){
     return (

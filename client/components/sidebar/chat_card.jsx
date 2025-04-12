@@ -42,7 +42,7 @@ export const Chat_card = ({chat})=> {
         <div
             onClick={()=> chat?._id === active_chat?._id ? '' : set_active_chat(chat)}
             className={`flex items-center cursor-pointer px-3 hover:bg-[#31414b] ${
-                active_chat?.id === chat.id ? 'bg-[#222e35]' : '' }`}
+                active_chat?._id === chat._id ? 'bg-[#222e35]' : '' }`}
             >
             <div className="relative">
                 <div className="w-12 h-12 rounded-full overflow-hidden">

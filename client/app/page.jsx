@@ -12,16 +12,16 @@ export default function Home() {
   const {active_chat} = useContext(Chat_window_context);
 
   return (
-    <main>
-        <div className="flex h-screen max-h-screen w-screen hide_model">
-            <Socket />
-            <Sidebar />
-            {
-              active_chat ? 
-              <Chat_window />
-              : <No_active_chat />
-            }
-        </div>
-    </main>
+    <>
+      <Socket chat_id={active_chat?._id} />
+      <div className="flex h-screen max-h-screen w-screen hide_model">
+          <Sidebar />
+          {
+            active_chat ? 
+            <Chat_window />
+            : <No_active_chat />
+          }
+      </div>
+    </>
   );
 }

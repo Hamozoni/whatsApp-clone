@@ -12,8 +12,8 @@ import { post_data } from "@/lib/post_data";
 
 export const Message_input = ()=> {
 
-    const {set_messages,active_chat,message,set_message} = useContext(Chat_window_context);
-    const {socket} = useContext(User_context);
+    const {set_messages,active_chat,message,set_message,set_active_chat} = useContext(Chat_window_context);
+    const {socket,set_chats} = useContext(User_context);
     const [show_emoji,set_show_emoji] = useState(false);
     const [is_document,set_is_document] = useState(false);
     const [text,set_text] = useState('');
@@ -29,11 +29,22 @@ export const Message_input = ()=> {
     },[text]);
 
     const handle_send = async ()=> {
-        console.log(message)
         const data = await post_data('message',message,set_loading,set_error);
         set_text('');
         socket?.emit('message_sent',data?.contact_chat);
-        console.log(data);
+        set_chats(prev=> {
+         const chats =   prev.filter(e=> e?._id !== data?.sender_chat?._id);
+            return [data?.sender_chat,...chats]
+        });
+
+        if(active_chat?._id === data?.sender_chat?._id) {
+            set_messages(prev=> [...prev, data?.sender_chat?.last_message])
+        }else {
+            set_active_chat(data?.sender_chat);
+        }
+
+
+
     };
 
     const handle_emoji = (emojiObject)=> {

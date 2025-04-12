@@ -3,7 +3,7 @@ import { Avatar } from "../ui/avatar";
 import { User_context } from "../../contexts/user.context";
 import { Chat_window_context } from "@/contexts/chat_window.context";
 
-export const Contact_card = ({_id,email,profile_picture,name,set_is_contact})=> {
+export const Contact_card = ({_id,about,profile_picture,name,set_is_contact})=> {
 
     const {user,chats} = useContext(User_context);
     const {set_active_chat} = useContext(Chat_window_context);
@@ -12,7 +12,8 @@ export const Contact_card = ({_id,email,profile_picture,name,set_is_contact})=> 
 
         const exist_chat = chats?.find(e=> e?.contact?._id === _id);
         set_active_chat({ 
-            _id: exist_chat ? exist_chat?._id : null,
+            _id: exist_chat ? exist_chat._id : null,
+            user: user?._id,
             contact: {_id,profile_picture,name}
         });
         set_is_contact(false);
@@ -29,7 +30,7 @@ export const Contact_card = ({_id,email,profile_picture,name,set_is_contact})=> 
             <div className="flex flex-col border-b flex-1 border-b-[#222e35] py-3 hide_model">
                 <h5>{name}</h5>
                 <span className="text-xs font-light text-gray-400 hide_model">
-                    {email}
+                    active
                 </span>
             </div>
         </div>
