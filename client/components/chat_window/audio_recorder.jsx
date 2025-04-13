@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
+import { IoMic ,IoPauseCircleOutline,IoPlay,IoSend} from "react-icons/io5";
+import { MdDelete } from "react-icons/md";
 
-const Audio_recorder = () => {
+
+const Audio_recorder = ({set_is_recorder}) => {
   const [isRecording, setIsRecording] = useState(false);
   const [audioUrl, setAudioUrl] = useState(null);
   const mediaRecorder = useRef(null);
@@ -93,18 +96,19 @@ const Audio_recorder = () => {
   const playAudio = () => {
     if (audioRef.current && audioUrl) {
       // Connect audio element to analyser for visualization
-      if (audioContextRef.current && analyserRef.current) {
-        const source = audioContextRef.current.createMediaElementSource(audioRef.current);
-        source.connect(analyserRef.current);
-        analyserRef.current.connect(audioContextRef.current.destination);
+      if (audioContextRef?.current && analyserRef.current) {
+        const source = audioContextRef?.current?.createMediaElementSource(audioRef?.current);
+        source?.connect(analyserRef?.current);
+        analyserRef?.current?.connect(audioContextRef?.current?.destination);
       }
       
-      audioRef.current.play();
+      audioRef?.current?.play();
       drawWaveform();
     }
   };
 
   useEffect(() => {
+    startRecording()
     return () => {
       if (mediaRecorder.current) {
         mediaRecorder.current.stream.getTracks().forEach(track => track.stop());
@@ -117,22 +121,37 @@ const Audio_recorder = () => {
   }, []);
 
   return (
-    <div className=' absolute left-0 top-0 w-full h-full z-10 flex items-center bg-[#222e35] text-[#f7f8fa]'>
+    <div className=' absolute left-0 top-0 w-full h-full z-10 flex items-center justify-end bg-[#222e35] text-[#f7f8fa]'>
     
-      <div className=' flex items-center'>
+      <div className=' flex flex-row-reverse gap-3 items-center px-2'>
+        <button className=' bg-emerald-400 flex justify-center items-center rounded-full p-2'>
+            <IoSend size={20} />
+        </button>
         {!isRecording ? (
-          <button onClick={startRecording}>Start Recording</button>
+          <button className='text-red-600' onClick={startRecording}>
+            <IoMic size={28} />
+          </button>
         ) : (
-          <button onClick={stopRecording}>Stop Recording</button>
+          <button className='text-red-600' onClick={stopRecording}>
+            <IoPauseCircleOutline  size={30}/>
+        </button>
         )}
-          <canvas className='r rounded-2xl bg-[rgb(45,56,63)] px-3' ref={canvasRef} width={200} height={30} />
+          <canvas 
+                className='r rounded-2xl bg-[rgb(45,56,63)] px-3' 
+                ref={canvasRef} 
+                width={250} 
+                height={30} 
+            />
         
-        {audioUrl && (
+        {(audioUrl && !isRecording) && (
           <div>
             <audio ref={audioRef} src={audioUrl} />
-            <button onClick={playAudio}>Play</button>
+            <button onClick={playAudio}><IoPlay size={22}/></button>
           </div>
         )}
+        <button className='text-red-500' onClick={()=> set_is_recorder(false)}>
+            <MdDelete  size={30}/>
+        </button>
       </div>
     </div>
   );
