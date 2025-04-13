@@ -4,28 +4,30 @@ import { MdDelete } from "react-icons/md";
 
 
 const Audio_recorder = ({set_is_recorder}) => {
-  const [isRecording, setIsRecording] = useState(false);
-  const [audioUrl, setAudioUrl] = useState(null);
-  const mediaRecorder = useRef(null);
-  const audioChunks = useRef([]);
-  const canvasRef = useRef(null);
-  const audioContextRef = useRef(null);
-  const analyserRef = useRef(null);
-  const animationRef = useRef();
-  const audioRef = useRef(null);
+    // useStates
+  const [recording, set_recording] = useState(false);
+  const [audio_url, set_audio_url] = useState(null);
+  const [audio_chunks,set_audio_chunks ]= useState([]);
+//   useRefs
+  const canvas_ref = useRef(null);
+  const media_recorder_ref = useRef(null);
+  const audio_context_ref = useRef(null);
+  const analyser_ref = useRef(null);
+  const animation_ref = useRef();
+  const audio_ref = useRef(null);
 
 
-  const drawWaveform = () => {
-    const canvas = canvasRef.current;
+  const draw_waveform = () => {
+    const canvas = canvas_ref.current;
     if (!canvas) return;
   
     const ctx = canvas.getContext('2d');
-    if (!ctx || !analyserRef.current) return;
+    if (!ctx || !analyser_ref.current) return;
   
-    const analyser = analyserRef.current;
-    const bufferLength = analyser.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-    analyser.getByteTimeDomainData(dataArray);
+    const analyser = analyser_ref.current;
+    const buffer_length = analyser.frequencyBinCount;
+    const data_array = new Uint8Array(buffer_length);
+    analyser.getByteTimeDomainData(data_array);
   
     ctx.fillStyle = 'rgb(45,56,63)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -33,11 +35,11 @@ const Audio_recorder = ({set_is_recorder}) => {
     ctx.strokeStyle = 'rgb(250, 250, 250)';
     ctx.beginPath();
   
-    const sliceWidth = canvas.width * 1.0 / bufferLength;
+    const slice_width = canvas.width * 1.0 / buffer_length;
     let x = 0;
   
-    for (let i = 0; i < bufferLength; i++) {
-      const v = dataArray[i] / 128.0;
+    for (let i = 0; i < buffer_length; i++) {
+      const v = data_array[i] / 128.0;
       const y = v * canvas.height / 2;
   
       if (i === 0) {
@@ -46,77 +48,96 @@ const Audio_recorder = ({set_is_recorder}) => {
         ctx.lineTo(x, y);
       }
   
-      x += sliceWidth;
+      x += slice_width;
     }
   
     ctx.lineTo(canvas.width, canvas.height / 2);
     ctx.stroke();
-    animationRef.current = requestAnimationFrame(drawWaveform);
+    animation_ref.current = requestAnimationFrame(draw_waveform);
   };
 
-  const startRecording = async () => {
+  const get_supported_mime_type = () => {
+    const types = [
+      'audio/webm;codecs=opus',
+      'audio/mp4;codecs=mp4a',
+      'audio/mpeg',
+      'audio/ogg;codecs=opus'
+    ];
+    return types.find(type => MediaRecorder.isTypeSupported(type)) || 'audio/webm';
+  };
+
+  const start_recording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorder.current = new MediaRecorder(stream);
+
+      const options = { mimeType: get_supported_mime_type() };
+      media_recorder_ref.current = new MediaRecorder(stream,options);
       
       // Set up audio context and analyser
-      audioContextRef.current = new AudioContext();
-      const source = audioContextRef.current.createMediaStreamSource(stream);
-      analyserRef.current = audioContextRef.current.createAnalyser();
-      source.connect(analyserRef.current);
+      audio_context_ref.current = new AudioContext();
+      const source = audio_context_ref.current.createMediaStreamSource(stream);
+      analyser_ref.current = audio_context_ref.current.createAnalyser();
+      source.connect(analyser_ref.current);
       
-      mediaRecorder.current.ondataavailable = (e) => {
-        audioChunks.current.push(e.data);
+      media_recorder_ref.current.ondataavailable = (e) => {
+
+        console.log(e)
+        set_audio_chunks(prev=> [...prev,e.data]);
       };
   
-      mediaRecorder.current.onstop = () => {
-        const audioBlob = new Blob(audioChunks.current, { type: 'audio/wav' });
-        const audioUrl = URL.createObjectURL(audioBlob);
-        setAudioUrl(audioUrl);
-        audioChunks.current = [];
+      media_recorder_ref.current.onstop = () => {
+        const type = media_recorder_ref.current?.mimeType || 'audio/webm';
+        const audio_blob = new Blob(audio_chunks, { type});
+        const audio_url = URL.createObjectURL(audio_blob);
+        set_audio_url(audio_url);
+
       };
   
-      mediaRecorder.current.start();
-      setIsRecording(true);
-      drawWaveform();
+      media_recorder_ref.current.start();
+      set_recording(true);
+      draw_waveform();
     } catch (err) {
       console.error('Error accessing microphone:', err);
     }
   };
   
-  const stopRecording = () => {
-    if (mediaRecorder.current) {
-      mediaRecorder.current.stop();
-      mediaRecorder.current.stream.getTracks().forEach(track => track.stop());
-      setIsRecording(false);
-      cancelAnimationFrame(animationRef.current);
+  const stop_recording = () => {
+    if (media_recorder_ref.current) {
+        media_recorder_ref.current.stop();
+        media_recorder_ref.current.stream.getTracks().forEach(track => track.stop());
+        set_recording(false);
+      cancelAnimationFrame(animation_ref.current);
     }
   };
 
   const playAudio = () => {
-    if (audioRef.current && audioUrl) {
-      // Connect audio element to analyser for visualization
-      if (audioContextRef?.current && analyserRef.current) {
-        const source = audioContextRef?.current?.createMediaElementSource(audioRef?.current);
-        source?.connect(analyserRef?.current);
-        analyserRef?.current?.connect(audioContextRef?.current?.destination);
+    if (audio_ref.current && audio_url) {
+      // Connect audio element to analyser for visualization;
+      if (audio_context_ref?.current && analyser_ref.current) {
+        const source = audio_context_ref?.current?.createMediaElementSource(audio_ref.current);
+        source?.connect(analyser_ref?.current);
+        analyser_ref?.current?.connect(audio_context_ref?.current?.destination);
+        audio_ref?.current?.play();
+        draw_waveform();
       }
       
-      audioRef?.current?.play();
-      drawWaveform();
     }
   };
 
+  useEffect(()=> {
+    console.log(audio_url)
+  },[audio_url])
+
   useEffect(() => {
-    startRecording()
+    start_recording();
     return () => {
-      if (mediaRecorder.current) {
-        mediaRecorder.current.stream.getTracks().forEach(track => track.stop());
+      if (media_recorder_ref.current) {
+        media_recorder_ref.current.stream.getTracks().forEach(track => track.stop());
       }
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
+      if (audio_context_ref.current) {
+        audio_context_ref.current.close();
       }
-      cancelAnimationFrame(animationRef.current);
+      cancelAnimationFrame(animation_ref.current);
     };
   }, []);
 
@@ -127,25 +148,25 @@ const Audio_recorder = ({set_is_recorder}) => {
         <button className=' bg-emerald-400 flex justify-center items-center rounded-full p-2'>
             <IoSend size={20} />
         </button>
-        {!isRecording ? (
-          <button className='text-red-600' onClick={startRecording}>
+        {!recording ? (
+          <button className='text-red-600' onClick={start_recording}>
             <IoMic size={28} />
           </button>
         ) : (
-          <button className='text-red-600' onClick={stopRecording}>
+          <button className='text-red-600' onClick={stop_recording}>
             <IoPauseCircleOutline  size={30}/>
         </button>
         )}
           <canvas 
                 className='r rounded-2xl bg-[rgb(45,56,63)] px-3' 
-                ref={canvasRef} 
+                ref={canvas_ref} 
                 width={250} 
                 height={30} 
             />
         
-        {(audioUrl && !isRecording) && (
+        {(audio_url && !recording) && (
           <div>
-            <audio ref={audioRef} src={audioUrl} />
+            <audio ref={audio_ref} src={audio_url} />
             <button onClick={playAudio}><IoPlay size={22}/></button>
           </div>
         )}
