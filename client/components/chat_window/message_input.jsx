@@ -11,11 +11,11 @@ import { Chat_window_context } from "@/contexts/chat_window.context";
 import { post_data } from "@/lib/post_data";
 import { Close_model } from "../ui/close_model";
 import dynamic from 'next/dynamic';
-
-const AudioRecorder = dynamic(
-  () => import('./audio_recorder'),
-  { ssr: false }
-);
+const Audio_recorder = dynamic(
+    () => import('./audio_recorder'),
+    { ssr: false }
+  );
+  
 
 
 export const Message_input = ()=> {
@@ -111,7 +111,7 @@ export const Message_input = ()=> {
             </div>
             {
                 is_recorder && 
-                <AudioRecorder set_is_recorder={set_is_recorder} />
+                <Audio_recorder set_is_recorder={set_is_recorder} />
             }
             { show_emoji  &&
             <>

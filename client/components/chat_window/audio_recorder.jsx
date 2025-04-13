@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-const AudioRecorder = () => {
+const Audio_recorder = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [audioUrl, setAudioUrl] = useState(null);
   const mediaRecorder = useRef(null);
@@ -24,10 +24,10 @@ const AudioRecorder = () => {
     const dataArray = new Uint8Array(bufferLength);
     analyser.getByteTimeDomainData(dataArray);
   
-    ctx.fillStyle = 'rgb(255, 255, 255)';
+    ctx.fillStyle = 'rgb(45,56,63)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.lineWidth = 2;
-    ctx.strokeStyle = 'rgb(0, 0, 0)';
+    ctx.strokeStyle = 'rgb(250, 250, 250)';
     ctx.beginPath();
   
     const sliceWidth = canvas.width * 1.0 / bufferLength;
@@ -117,19 +117,19 @@ const AudioRecorder = () => {
   }, []);
 
   return (
-    <div>
-      <canvas ref={canvasRef} width={800} height={200} />
-      
-      <div>
+    <div className=' absolute left-0 top-0 w-full h-full z-10 flex items-center bg-[#222e35] text-[#f7f8fa]'>
+    
+      <div className=' flex items-center'>
         {!isRecording ? (
           <button onClick={startRecording}>Start Recording</button>
         ) : (
           <button onClick={stopRecording}>Stop Recording</button>
         )}
+          <canvas className='r rounded-2xl bg-[rgb(45,56,63)] px-3' ref={canvasRef} width={200} height={30} />
         
         {audioUrl && (
           <div>
-            <audio ref={audioRef} src={audioUrl} controls />
+            <audio ref={audioRef} src={audioUrl} />
             <button onClick={playAudio}>Play</button>
           </div>
         )}
@@ -138,4 +138,4 @@ const AudioRecorder = () => {
   );
 };
 
-export default AudioRecorder;
+export default Audio_recorder
