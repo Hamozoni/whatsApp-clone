@@ -107,75 +107,47 @@ const Audio_recorder = ({set_is_recorder}) => {
         media_recorder_ref.current.stream.getTracks().forEach(track => track.stop());
         set_recording(false);
         audio_chunks_ref.current = []
-      cancelAnimationFrame(animation_ref.current);
+      // cancelAnimationFrame(animation_ref.current);
     }
   };
+
 
   const play_audio = () => {
     if (audio_ref.current && audio_url) {
       // Connect audio element to analyser for visualization;
       if (audio_context_ref?.current && analyser_ref.current) {
-        const source = audio_context_ref?.current?.createMediaElementSource(audio_ref.current);
-        source?.connect(analyser_ref?.current);
-        analyser_ref?.current?.connect(audio_context_ref?.current?.destination);
-        audio_ref?.current?.play();
-        set_is_playback(true);
-        draw_waveform();
+
+        console.log(analyser_ref.current)
+       if(audio_context_ref.current.state === 'close') {
+         const source = audio_context_ref?.current?.createMediaElementSource(audio_ref.current);
+         source?.connect(analyser_ref?.current);
+         analyser_ref?.current?.connect(audio_context_ref?.current?.destination);
+
+         console.log(source);
+       };
+
       }
       
     }
+    audio_ref?.current?.play();
+    set_is_playback(true);
+    draw_waveform();
   };
-
-  const disconnect_audio_nodes = () => {
-    // Get references to the nodes
-    const source = audio_context_ref?.current?.createMediaElementSource(audio_ref.current);
-    const analyser = analyser_ref?.current;
-    const context = audio_context_ref?.current;
-  
-    // Disconnect in reverse order of connection
-    if (analyser && context) {
-      // Disconnect analyser from destination
-      analyser.disconnect(context.destination);
-    }
-  
-    if (source && analyser) {
-      // Disconnect source from analyser
-      source.disconnect(analyser);
-    }
-  
-    // Optional: Clean up references
-    if (source) {
-      source.disconnect(); // Disconnect all outgoing connections
-      // For MediaElementAudioSourceNodes, you should also do:
-      audio_ref.current?.pause();
-      audio_ref.current = null;
-    }
-  
-    if (context) {
-      // Close the audio context if you're done with it
-      context.close().then(() => {
-        audio_context_ref.current = null;
-      });
-    };
-
-    media_recorder_ref.current.stop();
-    media_recorder_ref.current.stream.getTracks().forEach(track => track.stop());
-
-    cancelAnimationFrame(animation_ref.current);
-  };
-
   const pause_audio = ()=> {
-
-    disconnect_audio_nodes()
-
     audio_ref?.current?.pause();
     set_is_playback(false);
-  }
+  };
 
 
   useEffect(() => {
     start_recording();
-    return () => disconnect_audio_nodes()
+    return () => {
+      media_recorder_ref.current.stop();
+      media_recorder_ref.current.stream.getTracks().forEach(track => track.stop());
+      set_recording(false);
+      audio_chunks_ref.current = []
+    cancelAnimationFrame(animation_ref.current);
+    }
   }, []);
 
   return (
@@ -203,9 +175,7 @@ const Audio_recorder = ({set_is_recorder}) => {
         <audio 
             ref={audio_ref} 
             src={audio_url} 
-            onEnded={()=> {
-                set_is_playback(false);
-            }}
+            onEnded={()=> set_is_playback(false)}
             />
         
         {(audio_url && !recording) && (
