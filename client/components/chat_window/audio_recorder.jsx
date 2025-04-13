@@ -68,7 +68,25 @@ const Audio_recorder = ({set_is_recorder}) => {
     return types.find(type => MediaRecorder.isTypeSupported(type)) || 'audio/webm';
   };
 
+  const teardown_audio_context = () => {
+    if (analyser_ref.current) {
+      analyser_ref.current.disconnect();
+      analyser_ref.current = null;
+    }
+    
+    if (audio_context_ref.current) {
+      audio_context_ref.current.close();
+      audio_context_ref.current = null;
+    }
+  };
+
   const start_recording = async () => {
+
+    teardown_audio_context();
+    if(audio_ref.current && audio_url) {
+      audio_ref.current.pause()
+      set_is_playback(false);
+    }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
@@ -105,37 +123,29 @@ const Audio_recorder = ({set_is_recorder}) => {
     if (media_recorder_ref.current) {
         media_recorder_ref.current.stop();
         media_recorder_ref.current.stream.getTracks().forEach(track => track.stop());
-        set_recording(false);
-        audio_chunks_ref.current = []
-      // cancelAnimationFrame(animation_ref.current);
+        set_recording(false); 
+        teardown_audio_context();     
+        cancelAnimationFrame(animation_ref.current);
     }
   };
 
 
   const play_audio = () => {
     if (audio_ref.current && audio_url) {
-      // Connect audio element to analyser for visualization;
-      if (audio_context_ref?.current && analyser_ref.current) {
-
-        console.log(analyser_ref.current)
-       if(audio_context_ref.current.state === 'close') {
-         const source = audio_context_ref?.current?.createMediaElementSource(audio_ref.current);
-         source?.connect(analyser_ref?.current);
-         analyser_ref?.current?.connect(audio_context_ref?.current?.destination);
-
-         console.log(source);
-       };
-
-      }
+      const  source = audio_context_ref?.current?.createMediaElementSource(audio_ref.current);
+      source?.connect(analyser_ref?.current);
+      analyser_ref?.current?.connect(audio_context_ref?.destination);
+      audio_ref?.current?.play();
+      set_is_playback(true);
+      draw_waveform();
       
     }
-    audio_ref?.current?.play();
-    set_is_playback(true);
-    draw_waveform();
   };
+
   const pause_audio = ()=> {
     audio_ref?.current?.pause();
     set_is_playback(false);
+    teardown_audio_context();
   };
 
 
@@ -145,8 +155,9 @@ const Audio_recorder = ({set_is_recorder}) => {
       media_recorder_ref.current.stop();
       media_recorder_ref.current.stream.getTracks().forEach(track => track.stop());
       set_recording(false);
-      audio_chunks_ref.current = []
-    cancelAnimationFrame(animation_ref.current);
+      audio_chunks_ref.current = [];
+      teardown_audio_context();
+      cancelAnimationFrame(animation_ref.current);
     }
   }, []);
 
@@ -175,7 +186,9 @@ const Audio_recorder = ({set_is_recorder}) => {
         <audio 
             ref={audio_ref} 
             src={audio_url} 
-            onEnded={()=> set_is_playback(false)}
+            onEnded={()=>{ 
+              set_is_playback(false)
+              teardown_audio_context();}}
             />
         
         {(audio_url && !recording) && (
