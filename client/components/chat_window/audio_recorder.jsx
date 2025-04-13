@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { IoMic ,IoPauseCircleOutline,IoPlay,IoSend} from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
+import { FaPause } from "react-icons/fa6";
 
 
 const Audio_recorder = ({set_is_recorder}) => {
     // useStates
   const [recording, set_recording] = useState(false);
   const [audio_url, set_audio_url] = useState(null);
-  const [audio_chunks,set_audio_chunks ]= useState([]);
-//   useRefs
+  const [is_palayback,set_is_playback] = useState(false)
+  //   useRefs
   const canvas_ref = useRef(null);
+  const audio_chunks_ref = useRef([]);
   const media_recorder_ref = useRef(null);
   const audio_context_ref = useRef(null);
   const analyser_ref = useRef(null);
@@ -80,16 +82,14 @@ const Audio_recorder = ({set_is_recorder}) => {
       source.connect(analyser_ref.current);
       
       media_recorder_ref.current.ondataavailable = (e) => {
-
-        console.log(e)
-        set_audio_chunks(prev=> [...prev,e.data]);
+        audio_chunks_ref.current.push(e.data);
       };
   
       media_recorder_ref.current.onstop = () => {
         const type = media_recorder_ref.current?.mimeType || 'audio/webm';
-        const audio_blob = new Blob(audio_chunks, { type});
+        const audio_blob = new Blob( audio_chunks_ref.current, { type});
         const audio_url = URL.createObjectURL(audio_blob);
-        set_audio_url(audio_url);
+        set_audio_url(audio_url)
 
       };
   
@@ -106,11 +106,12 @@ const Audio_recorder = ({set_is_recorder}) => {
         media_recorder_ref.current.stop();
         media_recorder_ref.current.stream.getTracks().forEach(track => track.stop());
         set_recording(false);
+        audio_chunks_ref.current = []
       cancelAnimationFrame(animation_ref.current);
     }
   };
 
-  const playAudio = () => {
+  const play_audio = () => {
     if (audio_ref.current && audio_url) {
       // Connect audio element to analyser for visualization;
       if (audio_context_ref?.current && analyser_ref.current) {
@@ -118,27 +119,63 @@ const Audio_recorder = ({set_is_recorder}) => {
         source?.connect(analyser_ref?.current);
         analyser_ref?.current?.connect(audio_context_ref?.current?.destination);
         audio_ref?.current?.play();
+        set_is_playback(true);
         draw_waveform();
       }
       
     }
   };
 
-  useEffect(()=> {
-    console.log(audio_url)
-  },[audio_url])
+  const disconnect_audio_nodes = () => {
+    // Get references to the nodes
+    const source = audio_context_ref?.current?.createMediaElementSource(audio_ref.current);
+    const analyser = analyser_ref?.current;
+    const context = audio_context_ref?.current;
+  
+    // Disconnect in reverse order of connection
+    if (analyser && context) {
+      // Disconnect analyser from destination
+      analyser.disconnect(context.destination);
+    }
+  
+    if (source && analyser) {
+      // Disconnect source from analyser
+      source.disconnect(analyser);
+    }
+  
+    // Optional: Clean up references
+    if (source) {
+      source.disconnect(); // Disconnect all outgoing connections
+      // For MediaElementAudioSourceNodes, you should also do:
+      audio_ref.current?.pause();
+      audio_ref.current = null;
+    }
+  
+    if (context) {
+      // Close the audio context if you're done with it
+      context.close().then(() => {
+        audio_context_ref.current = null;
+      });
+    };
+
+    media_recorder_ref.current.stop();
+    media_recorder_ref.current.stream.getTracks().forEach(track => track.stop());
+
+    cancelAnimationFrame(animation_ref.current);
+  };
+
+  const pause_audio = ()=> {
+
+    disconnect_audio_nodes()
+
+    audio_ref?.current?.pause();
+    set_is_playback(false);
+  }
+
 
   useEffect(() => {
     start_recording();
-    return () => {
-      if (media_recorder_ref.current) {
-        media_recorder_ref.current.stream.getTracks().forEach(track => track.stop());
-      }
-      if (audio_context_ref.current) {
-        audio_context_ref.current.close();
-      }
-      cancelAnimationFrame(animation_ref.current);
-    };
+    return () => disconnect_audio_nodes()
   }, []);
 
   return (
@@ -163,11 +200,26 @@ const Audio_recorder = ({set_is_recorder}) => {
                 width={250} 
                 height={30} 
             />
+        <audio 
+            ref={audio_ref} 
+            src={audio_url} 
+            onEnded={()=> {
+                set_is_playback(false);
+            }}
+            />
         
         {(audio_url && !recording) && (
           <div>
-            <audio ref={audio_ref} src={audio_url} />
-            <button onClick={playAudio}><IoPlay size={22}/></button>
+            {
+                is_palayback ?
+                <button onClick={pause_audio}>
+                    <FaPause size={22}/>
+                </button> 
+                :
+                 <button onClick={play_audio}>
+                    <IoPlay size={22}/>
+                </button>
+            }
           </div>
         )}
         <button className='text-red-500' onClick={()=> set_is_recorder(false)}>
