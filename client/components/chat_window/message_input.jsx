@@ -10,6 +10,13 @@ import { Chose_document } from "../ui/chose_document";
 import { Chat_window_context } from "@/contexts/chat_window.context";
 import { post_data } from "@/lib/post_data";
 import { Close_model } from "../ui/close_model";
+import dynamic from 'next/dynamic';
+
+const AudioRecorder = dynamic(
+  () => import('./audio_recorder'),
+  { ssr: false }
+);
+
 
 export const Message_input = ()=> {
 
@@ -18,6 +25,7 @@ export const Message_input = ()=> {
     const [show_emoji,set_show_emoji] = useState(false);
     const [is_document,set_is_document] = useState(false);
     const [text,set_text] = useState('');
+    const [is_recorder,set_is_recorder] = useState(false);
     const [loading,set_loading] = useState(false);
     const [error,set_error] = useState(null);
 
@@ -53,8 +61,8 @@ export const Message_input = ()=> {
     }
 
     return (
-        <div className="p-3 bg-[#222e35] relative hide_model">
-            <div className="flex items-center gap-2 hide_model">
+        <div className="p-3 bg-[#222e35] relative">
+            <div className="flex items-center gap-2">
                 {
                     is_document && 
                   <>
@@ -89,6 +97,7 @@ export const Message_input = ()=> {
                        </button>
                        :
                         <button
+                            onClick={()=> set_is_recorder(true)}
                             className="px-2 py-3 rounded-md text-white transition-colors hide_model"
                         >
                             <SlMicrophone className="h-6 w-6 text-[#f7f8fa] cursor-pointer" />
@@ -100,6 +109,10 @@ export const Message_input = ()=> {
                 </div>
 
             </div>
+            {
+                is_recorder && 
+                <AudioRecorder set_is_recorder={set_is_recorder} />
+            }
             { show_emoji  &&
             <>
                 <div className=" absolute top-0 left-0 -translate-y-full z-20">
