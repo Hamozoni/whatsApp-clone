@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "@wavesurfer/react": "^1.0.10",
     "autoprefixer": "^10.4.20",
     "axios": "^1.8.1",
     "emoji-picker-react": "^4.12.0",
@@ -23,7 +24,7 @@
     "react-spinners": "^0.15.0",
     "socket.io-client": "^4.8.1",
     "uuid": "^11.1.0",
-    "wavesurfer.js": "^7.9.1"
+    "wavesurfer.js": "^7.9.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

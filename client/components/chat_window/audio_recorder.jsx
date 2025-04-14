@@ -1,14 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { IoMic ,IoPauseCircleOutline,IoPlay,IoSend} from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import { FaPause } from "react-icons/fa6";
 
+import { useWavesurfer } from '@wavesurfer/react';
+import Timeline from 'wavesurfer.js/dist/plugins/timeline.esm.js';
+
+const formatTime = (seconds) => [seconds / 60, seconds % 60].map((v) => `0${Math.floor(v)}`.slice(-2)).join(':');
 
 const Audio_recorder = ({set_is_recorder}) => {
     // useStates
   const [recording, set_recording] = useState(false);
   const [audio_url, set_audio_url] = useState(null);
-  const [is_palayback,set_is_playback] = useState(false)
   //   useRefs
   const canvas_ref = useRef(null);
   const audio_chunks_ref = useRef([]);
@@ -16,8 +19,16 @@ const Audio_recorder = ({set_is_recorder}) => {
   const audio_context_ref = useRef(null);
   const analyser_ref = useRef(null);
   const animation_ref = useRef();
-  const audio_ref = useRef(null);
+  const audio_container_ref = useRef(null)
 
+  const {wavesurfer,isPlaying,currentTime} = useWavesurfer({
+    container: audio_container_ref,
+    height: 30,
+    waveColor: 'rgb(250,250,250)',
+    progressColor: 'rgb(200,100,200)',
+    url: audio_url,
+    plugings: useMemo(()=> [Timeline.create()] ,[])
+  })
 
   const draw_waveform = () => {
     const canvas = canvas_ref.current;
@@ -82,11 +93,6 @@ const Audio_recorder = ({set_is_recorder}) => {
 
   const start_recording = async () => {
 
-    teardown_audio_context();
-    if(audio_ref.current && audio_url) {
-      audio_ref.current.pause()
-      set_is_playback(false);
-    }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
@@ -124,30 +130,14 @@ const Audio_recorder = ({set_is_recorder}) => {
         media_recorder_ref.current.stop();
         media_recorder_ref.current.stream.getTracks().forEach(track => track.stop());
         set_recording(false); 
-        teardown_audio_context();     
+        audio_chunks_ref.current = []    
         cancelAnimationFrame(animation_ref.current);
     }
   };
 
-
-  const play_audio = () => {
-    if (audio_ref.current && audio_url) {
-      const  source = audio_context_ref?.current?.createMediaElementSource(audio_ref.current);
-      source?.connect(analyser_ref?.current);
-      analyser_ref?.current?.connect(audio_context_ref?.destination);
-      audio_ref?.current?.play();
-      set_is_playback(true);
-      draw_waveform();
-      
-    }
-  };
-
-  const pause_audio = ()=> {
-    audio_ref?.current?.pause();
-    set_is_playback(false);
-    teardown_audio_context();
-  };
-
+  const on_play_pause = useCallback(() => {
+    wavesurfer && wavesurfer.playPause()
+  }, [wavesurfer])
 
   useEffect(() => {
     start_recording();
@@ -173,36 +163,36 @@ const Audio_recorder = ({set_is_recorder}) => {
             <IoMic size={28} />
           </button>
         ) : (
+          <>
           <button className='text-red-600' onClick={stop_recording}>
             <IoPauseCircleOutline  size={30}/>
-        </button>
-        )}
-          <canvas 
+           </button>
+           <canvas 
                 className='r rounded-2xl bg-[rgb(45,56,63)] px-3' 
                 ref={canvas_ref} 
                 width={250} 
                 height={30} 
             />
-        <audio 
-            ref={audio_ref} 
-            src={audio_url} 
-            onEnded={()=>{ 
-              set_is_playback(false)
-              teardown_audio_context();}}
-            />
+          </>
+        )}
         
         {(audio_url && !recording) && (
-          <div>
+          <div className='flex items-center gap-2 flex-1'>
             {
-                is_palayback ?
-                <button onClick={pause_audio}>
+                isPlaying ?
+                <button onClick={on_play_pause}>
                     <FaPause size={22}/>
                 </button> 
                 :
-                 <button onClick={play_audio}>
+                 <button onClick={on_play_pause}>
                     <IoPlay size={22}/>
                 </button>
+                
             }
+
+            <div className="min-w-5 w-full" ref={audio_container_ref} >
+            </div>
+            <p>{formatTime(currentTime)}</p>
           </div>
         )}
         <button className='text-red-500' onClick={()=> set_is_recorder(false)}>
