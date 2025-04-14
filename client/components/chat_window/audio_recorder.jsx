@@ -1,14 +1,17 @@
-import {useEffect, useRef, useState } from 'react';
+import {useContext, useEffect, useRef, useState } from 'react';
 import { IoMic ,IoPauseCircleOutline,IoSend} from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 
 
 import dynamic from 'next/dynamic';
+import { Chat_window_context } from '@/contexts/chat_window.context';
 
 const Audio_player = dynamic(()=> import('../ui/audio_player'),{ssr:false});
 
 
 const Audio_recorder = ({set_is_recorder}) => {
+
+  const {set_message,message} = useContext(Chat_window_context);
     // useStates
   const [recording, set_recording] = useState(false);
   const [audio_url, set_audio_url] = useState(null);
@@ -93,6 +96,12 @@ const Audio_recorder = ({set_is_recorder}) => {
       media_recorder_ref.current.onstop = () => {
         const type = media_recorder_ref.current?.mimeType || 'audio/webm';
         const audio_blob = new Blob( audio_chunks_ref.current, { type});
+        const audio_file = new File([audio_blob], 'recording.webm', {
+          type: 'audio/webm',
+          lastModified: Date.now()
+        });
+
+        set_message( prev => ({...prev,type: 'MEDIA',media: [audio_file]}) )
         const audio_url = URL.createObjectURL(audio_blob);
         set_audio_url(audio_url)
 
@@ -127,11 +136,16 @@ const Audio_recorder = ({set_is_recorder}) => {
     }
   }, []);
 
+
+  const handle_send = ()=> {
+    console.log(message)
+  }
+
   return (
     <div className=' absolute left-0 top-0 w-full h-full z-10 flex items-center justify-end bg-[#222e35] text-[#f7f8fa]'>
     
       <div className=' flex flex-row-reverse gap-3 items-center px-2'>
-        <button className=' bg-emerald-400 flex justify-center items-center rounded-full p-2'>
+        <button onClick={handle_send} className=' bg-emerald-400 flex justify-center items-center rounded-full p-2'>
             <IoSend size={20} />
         </button>
         {!recording ? (

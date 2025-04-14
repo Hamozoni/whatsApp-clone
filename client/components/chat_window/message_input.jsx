@@ -16,8 +16,6 @@ const Audio_recorder = dynamic(
     { ssr: false }
   );
   
-
-
 export const Message_input = ()=> {
 
     const {set_messages,active_chat,message,set_message,set_active_chat} = useContext(Chat_window_context);
@@ -37,24 +35,7 @@ export const Message_input = ()=> {
         set_message(prev=>  ({...prev,text}));
     },[text]);
 
-    const handle_send = async ()=> {
-        const data = await post_data('message',message,set_loading,set_error);
-        set_text('');
-        socket?.emit('message_sent',data?.contact_chat);
-        set_chats(prev=> {
-         const chats =   prev.filter(e=> e?._id !== data?.sender_chat?._id);
-            return [data?.sender_chat,...chats]
-        });
 
-        if(active_chat?._id === data?.sender_chat?._id) {
-            set_messages(prev=> [...prev, data?.sender_chat?.last_message])
-        }else {
-            set_active_chat(data?.sender_chat);
-        }
-
-
-
-    };
 
     const handle_emoji = (emojiObject)=> {
         set_text(prev=> `${prev} ${emojiObject.emoji}`);
