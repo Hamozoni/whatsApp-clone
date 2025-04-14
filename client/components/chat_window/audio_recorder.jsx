@@ -79,18 +79,6 @@ const Audio_recorder = ({set_is_recorder}) => {
     return types.find(type => MediaRecorder.isTypeSupported(type)) || 'audio/webm';
   };
 
-  const teardown_audio_context = () => {
-    if (analyser_ref.current) {
-      analyser_ref.current.disconnect();
-      analyser_ref.current = null;
-    }
-    
-    if (audio_context_ref.current) {
-      audio_context_ref.current.close();
-      audio_context_ref.current = null;
-    }
-  };
-
   const start_recording = async () => {
 
     try {
@@ -146,7 +134,6 @@ const Audio_recorder = ({set_is_recorder}) => {
       media_recorder_ref.current.stream.getTracks().forEach(track => track.stop());
       set_recording(false);
       audio_chunks_ref.current = [];
-      teardown_audio_context();
       cancelAnimationFrame(animation_ref.current);
     }
   }, []);
@@ -163,21 +150,20 @@ const Audio_recorder = ({set_is_recorder}) => {
             <IoMic size={28} />
           </button>
         ) : (
-          <>
           <button className='text-red-600' onClick={stop_recording}>
             <IoPauseCircleOutline  size={30}/>
            </button>
-           <canvas 
-                className='r rounded-2xl bg-[rgb(45,56,63)] px-3' 
-                ref={canvas_ref} 
-                width={250} 
-                height={30} 
-            />
-          </>
         )}
+
+          <canvas 
+              className={`${recording ? 'visible' : 'hidden'} rounded-2xl bg-[rgb(45,56,63)] px-3`}
+              ref={canvas_ref} 
+              width={250} 
+              height={30} 
+            />
         
         {(audio_url && !recording) && (
-          <div className='flex items-center gap-2 flex-1'>
+          <div className='flex items-center gap-2 flex-1 rounded-2xl bg-[rgb(45,56,63)] px-3'>
             {
                 isPlaying ?
                 <button onClick={on_play_pause}>
@@ -190,9 +176,9 @@ const Audio_recorder = ({set_is_recorder}) => {
                 
             }
 
-            <div className="min-w-5 w-full" ref={audio_container_ref} >
+            <div className="min-w-[250px] " ref={audio_container_ref} >
             </div>
-            <p>{formatTime(currentTime)}</p>
+            <span>{formatTime(currentTime)}</span>
           </div>
         )}
         <button className='text-red-500' onClick={()=> set_is_recorder(false)}>
