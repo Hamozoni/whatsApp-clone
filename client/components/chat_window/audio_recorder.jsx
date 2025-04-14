@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { IoMic ,IoPauseCircleOutline,IoPlay,IoSend} from "react-icons/io5";
+import {useEffect, useRef, useState } from 'react';
+import { IoMic ,IoPauseCircleOutline,IoSend} from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
-import { FaPause } from "react-icons/fa6";
 
-import { useWavesurfer } from '@wavesurfer/react';
-import Timeline from 'wavesurfer.js/dist/plugins/timeline.esm.js';
 
-const formatTime = (seconds) => [seconds / 60, seconds % 60].map((v) => `0${Math.floor(v)}`.slice(-2)).join(':');
+import dynamic from 'next/dynamic';
+
+const Audio_player = dynamic(()=> import('../ui/audio_player'),{ssr:false});
+
 
 const Audio_recorder = ({set_is_recorder}) => {
     // useStates
@@ -19,16 +19,9 @@ const Audio_recorder = ({set_is_recorder}) => {
   const audio_context_ref = useRef(null);
   const analyser_ref = useRef(null);
   const animation_ref = useRef();
-  const audio_container_ref = useRef(null)
 
-  const {wavesurfer,isPlaying,currentTime} = useWavesurfer({
-    container: audio_container_ref,
-    height: 30,
-    waveColor: 'rgb(250,250,250)',
-    progressColor: 'rgb(200,100,200)',
-    url: audio_url,
-    plugings: useMemo(()=> [Timeline.create()] ,[])
-  })
+
+
 
   const draw_waveform = () => {
     const canvas = canvas_ref.current;
@@ -123,10 +116,6 @@ const Audio_recorder = ({set_is_recorder}) => {
     }
   };
 
-  const on_play_pause = useCallback(() => {
-    wavesurfer && wavesurfer.playPause()
-  }, [wavesurfer])
-
   useEffect(() => {
     start_recording();
     return () => {
@@ -146,11 +135,11 @@ const Audio_recorder = ({set_is_recorder}) => {
             <IoSend size={20} />
         </button>
         {!recording ? (
-          <button className='text-red-600' onClick={start_recording}>
-            <IoMic size={28} />
+          <button className='text-red-400' onClick={start_recording}>
+            <IoMic size={30} />
           </button>
         ) : (
-          <button className='text-red-600' onClick={stop_recording}>
+          <button className='text-red-400' onClick={stop_recording}>
             <IoPauseCircleOutline  size={30}/>
            </button>
         )}
@@ -163,25 +152,9 @@ const Audio_recorder = ({set_is_recorder}) => {
             />
         
         {(audio_url && !recording) && (
-          <div className='flex items-center gap-2 flex-1 rounded-2xl bg-[rgb(45,56,63)] px-3'>
-            {
-                isPlaying ?
-                <button onClick={on_play_pause}>
-                    <FaPause size={22}/>
-                </button> 
-                :
-                 <button onClick={on_play_pause}>
-                    <IoPlay size={22}/>
-                </button>
-                
-            }
-
-            <div className="min-w-[250px] " ref={audio_container_ref} >
-            </div>
-            <span>{formatTime(currentTime)}</span>
-          </div>
+          <Audio_player audio_url={audio_url}/>
         )}
-        <button className='text-red-500' onClick={()=> set_is_recorder(false)}>
+        <button className='text-red-400' onClick={()=> set_is_recorder(false)}>
             <MdDelete  size={30}/>
         </button>
       </div>
