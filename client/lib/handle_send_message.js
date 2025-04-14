@@ -1,7 +1,7 @@
 import { post_data } from "./post_data";
 
   
-  export const handle_send = async (message,set_loading,set_error,set_chats,active_chat,set_active_chat,socket)=> {
+  export const handle_send_message = async ({message,set_loading,set_error,set_chats,active_chat,set_active_chat,socket})=> {
 
     const form_data = new FormData();
 

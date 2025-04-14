@@ -8,14 +8,15 @@ import { User_context } from "../../contexts/user.context";
 import EmojiPicker from "emoji-picker-react";
 import { Chose_document } from "../ui/chose_document";
 import { Chat_window_context } from "@/contexts/chat_window.context";
-import { post_data } from "@/lib/post_data";
 import { Close_model } from "../ui/close_model";
 import dynamic from 'next/dynamic';
 const Audio_recorder = dynamic(
     () => import('./audio_recorder'),
     { ssr: false }
   );
-  
+
+import {handle_send_message} from '@/lib/handle_send_message';
+
 export const Message_input = ()=> {
 
     const {set_messages,active_chat,message,set_message,set_active_chat} = useContext(Chat_window_context);
@@ -39,6 +40,22 @@ export const Message_input = ()=> {
 
     const handle_emoji = (emojiObject)=> {
         set_text(prev=> `${prev} ${emojiObject.emoji}`);
+    };
+
+    const handle_send = () => {
+        handle_send_message({
+            message,
+            set_loading,
+            set_error,
+            set_chats,
+            active_chat,
+            set_active_chat,
+            socket
+        });
+
+        if(!error && !loading) {
+            set_text('');
+        }
     }
 
     return (
