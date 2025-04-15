@@ -29,8 +29,8 @@ export const Chat_window_context_provider = ({children})=> {
           text:'',
           type:'TEXT',
           status: 'SENT',
-          file: null
-    
+          file: null,
+          replay_to: null
         });
 
         const fetch_messages = async ()=> {
