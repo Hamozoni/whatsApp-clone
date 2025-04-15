@@ -1,21 +1,15 @@
-import multer from "multer";
-import { App_error } from "./error_middleware";
-
+import multer from 'multer';
 const storage = multer.memoryStorage();
-
-const file_filter = (req,file,cb)=> {
-    const allowed_types = ['image/jpeg', 'image/png', 'image/webp'];
-
-    if(!allowed_types.includes(file.mimeType)) {
-        return cb(new App_error('Invalid file type. Only images are allowed!', 400),fals)
-    }
-    cb(null, true);
-};
-
 const upload = multer({
-    storage,
-    limits: {fieldSize: 10 * 1024 * 1024 },
-    fileFilter: file_filter
+  storage,
+  limits: { fileSize: 50 * 1024 * 1024 }, // 50MB limit
+//   fileFilter: (req, file, cb) => {
+//     const allowedTypes = ['image/*', 'audio/*', 'video/*', 'application/pdf'];
+//     if (!allowedTypes.includes(file.mimetype)) {
+//       return cb(new Error('Invalid file type'), false);
+//     }
+//     cb(null, true);
+//   }
 });
 
 

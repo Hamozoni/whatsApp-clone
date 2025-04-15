@@ -2,15 +2,24 @@ import axios from "axios";
 
 
   
-  export const handle_send_message = async ({message,set_loading,set_error,set_chats,active_chat,set_active_chat,socket})=> {
+  export const handle_send_message = async (
+    {   
+        message,
+        set_loading,
+        set_error,
+        set_chats,
+        active_chat,
+        set_active_chat,
+        socket
+    }
+    )=> {
 
     const formData = new FormData();
 
-    console.log(message?.file);
-     formData.append('file',message?.file);
+    for(let key in message) {
+        formData.append(key,message[key]);
+    };
     
-
-
     set_loading(true);
 
     try{
@@ -18,8 +27,6 @@ import axios from "axios";
         
                 headers: {
                   'Content-Type': 'multipart/form-data'
-                  // You can add other headers if needed, e.g., Authorization
-                  // 'Authorization': 'Bearer your_token'
                 }
         });
         console.log(data);

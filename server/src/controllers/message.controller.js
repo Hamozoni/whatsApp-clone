@@ -2,6 +2,7 @@
 import Chat from "../models/chat.model.js";
 import Message from "../models/message.model.js";
 import cloudinary from "../config.js/cloudinary.js";
+import File from "../models/file.model.js";
 
 export const post_message_controller = async (req,res,next) => {
 
@@ -19,34 +20,39 @@ export const post_message_controller = async (req,res,next) => {
         }
     ];
 
-    const {chat_id,sender,contact,text,type,status,replay_to} = req.body;
-
-    const file = req.file
-
- 
+    
+    
     try {
+        const {sender,contact,text,type,status,replay_to} = req.body;
         
         if(!sender || !contact) {
             return res.status(500).json({message: 'sender id is reqiure'});
         };
 
 
-        if(type === 'MEDIA' && file) {
+        if(type === 'MEDIA' && req.file) {
             
             const cloudinary_result = await new Promise((resolve,reject)=> {
-                const resource_type = file.mimetype.split('/')[0]
+                const resource_type = req.file.mimetype.split('/')[0]
 
                 const stream = cloudinary.uploader.upload_stream({resource_type,folder: `message/${resource_type}`},
                     (error,result)=> error ? reject(error) : resolve(result)
                 );
 
-                stream.end(file.buffer);
+                stream.end(req.file.buffer);
+            });
+
+            file_result = await File.create({
+                type: resource_type,
+                url: cloudinary_result.source_url,
+                public_id: cloudinary_result.public_id,
+                size: req.file.size
             })
         }
 
 
 
-        const message = await Message.create({sender,text,media,contact,type,status});
+        const message = await Message.create({sender,text,contact,type,status,replay_to,file: file_result});
 
         const contact_chat_id = await Chat.findOne({user: contact,contact:sender});
         const sender_chat_id = await Chat.findOne({user: sender,contact:contact});
@@ -81,6 +87,7 @@ export const post_message_controller = async (req,res,next) => {
 
     }
     catch (error) {
+        console.log(error)
         next(error)
     }
     
