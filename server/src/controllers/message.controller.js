@@ -6,6 +6,7 @@ export const post_message_controller = async (req,res,next) => {
 
     let sender_chat = null;
     let contact_chat = null;
+
     const populate = [
         {
             path: 'last_message'
@@ -15,51 +16,54 @@ export const post_message_controller = async (req,res,next) => {
             select: 'name _id about profile_picture',
         }
     ];
-    
-    try {
-        const {sender,contact,text,media,type,status} = req.body;
 
-        if(!sender || !contact) {
-            return res.status(500).json({message: 'sender id is reqiure'});
-        };
 
-        const message = await Message.create({sender,text,media,contact,type,status});
+        const {chat_id,sender,contact,text,type,status,media} = req?.body;
 
-        const contact_chat_id = await Chat.findOne({user: contact,contact:sender});
-        const sender_chat_id = await Chat.findOne({user: sender,contact:contact});
+        console.log({chat_id,sender,contact,text,type,status,media} )
+    // try {
+        
+    //     if(!sender || !contact) {
+    //         return res.status(500).json({message: 'sender id is reqiure'});
+    //     };
 
-        if(sender_chat_id) {
-             sender_chat = await Chat.findByIdAndUpdate(sender_chat_id?._id,
-                {last_message: message?._id, $addToSet :{messages: message?._id}},{new: true}
-                ).populate(populate)
-                .select('-messages')
+    //     const message = await Message.create({sender,text,media,contact,type,status});
 
-        }else {
-           const chat = await Chat.create({user: sender,contact,last_message: message?._id,messages: message?._id});
-            sender_chat  = await Chat.findById(chat?._id,{new: true})
-            .populate(populate)
-                .select('-messages')
+    //     const contact_chat_id = await Chat.findOne({user: contact,contact:sender});
+    //     const sender_chat_id = await Chat.findOne({user: sender,contact:contact});
 
-        }
+    //     if(sender_chat_id) {
+    //          sender_chat = await Chat.findByIdAndUpdate(sender_chat_id?._id,
+    //             {last_message: message?._id, $addToSet :{messages: message?._id}},{new: true}
+    //             ).populate(populate)
+    //             .select('-messages')
 
-        if(contact_chat_id) {
-             contact_chat = await Chat.findByIdAndUpdate(contact_chat_id?._id,
-                {last_message: message?._id, $addToSet :{messages: message?._id}},{new: true}
-           ).populate(populate)
-           .select('-messages')
-        }else {
-           const chat = await Chat.create({user: contact,contact: sender,last_message: message?._id,messages: message?._id});
-            contact_chat = await Chat.findById(chat?._id,{new: true})
-            .populate(populate)
-           .select('-messages')
-        };
+    //     }else {
+    //        const chat = await Chat.create({user: sender,contact,last_message: message?._id,messages: message?._id});
+    //         sender_chat  = await Chat.findById(chat?._id,{new: true})
+    //         .populate(populate)
+    //             .select('-messages')
 
-        return res.status(200).json({contact_chat,sender_chat})
+    //     }
 
-    }
-    catch (error) {
-        next(error)
-    }
+    //     if(contact_chat_id) {
+    //          contact_chat = await Chat.findByIdAndUpdate(contact_chat_id?._id,
+    //             {last_message: message?._id, $addToSet :{messages: message?._id}},{new: true}
+    //        ).populate(populate)
+    //        .select('-messages')
+    //     }else {
+    //        const chat = await Chat.create({user: contact,contact: sender,last_message: message?._id,messages: message?._id});
+    //         contact_chat = await Chat.findById(chat?._id,{new: true})
+    //         .populate(populate)
+    //        .select('-messages')
+    //     };
+
+    //     return res.status(200).json({contact_chat,sender_chat})
+
+    // }
+    // catch (error) {
+    //     next(error)
+    // }
     
 } 
 
