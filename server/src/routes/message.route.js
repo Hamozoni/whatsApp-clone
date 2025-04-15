@@ -6,10 +6,13 @@ import { get_message_controller, post_message_controller, put_message_status_con
 const router = Router();
 
 const storage = multer.memoryStorage();
-const upload = multer({storage})
+const upload = multer({
+    storage,
+    limits: { fileSize: 50 * 1024 * 1024 }, // 50MB limit
+  });
 
 router.route('/')
-.post(upload.single('media'),post_message_controller)
+.post(upload.single('file'),post_message_controller)
 .get(get_message_controller)
 .put(put_message_status_controller)
 

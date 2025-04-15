@@ -5,16 +5,21 @@ import { MdDelete } from "react-icons/md";
 
 import dynamic from 'next/dynamic';
 import { Chat_window_context } from '@/contexts/chat_window.context';
+import { handle_send_message } from '@/lib/handle_send_message';
+import { User_context } from '@/contexts/user.context';
 
 const Audio_player = dynamic(()=> import('../ui/audio_player'),{ssr:false});
 
 
 const Audio_recorder = ({set_is_recorder}) => {
 
-  const {set_message,message} = useContext(Chat_window_context);
+  const {set_message,message,active_chat,set_active_chat} = useContext(Chat_window_context);
+  const {set_chats,socket} = useContext(User_context)
     // useStates
   const [recording, set_recording] = useState(false);
   const [audio_url, set_audio_url] = useState(null);
+  const [loading, set_loading] = useState(null);
+  const [error, set_error] = useState(null);
   //   useRefs
   const canvas_ref = useRef(null);
   const audio_chunks_ref = useRef([]);
@@ -101,7 +106,7 @@ const Audio_recorder = ({set_is_recorder}) => {
           lastModified: Date.now()
         });
 
-        set_message( prev => ({...prev,type: 'MEDIA',media: [audio_file]}) )
+        set_message( prev => ({...prev,type: 'MEDIA',file: audio_file}) )
         const audio_url = URL.createObjectURL(audio_blob);
         set_audio_url(audio_url)
 
@@ -138,7 +143,19 @@ const Audio_recorder = ({set_is_recorder}) => {
 
 
   const handle_send = ()=> {
-    console.log(message)
+     handle_send_message({
+        message,
+        set_loading,
+        set_error,
+        set_chats,
+        active_chat,
+        set_active_chat,
+        socket
+     });
+
+     if(!error) {
+        set_is_recorder(false);
+     }
   }
 
   return (

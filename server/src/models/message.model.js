@@ -3,14 +3,15 @@ import mongoose from "mongoose";
 const MESSAGE_SCHEMA = new mongoose.Schema({
     sender: {type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     text: { type: String },
-    media: [{ type: mongoose.Schema.Types.ObjectId,ref: 'Media' }],
-    type: {type: String,enum: ['TEXT', 'MEDIA'],default: 'TEXT'},
+    file: { type: mongoose.Schema.Types.ObjectId,ref: 'Media' },
+    call:  { type: mongoose.Schema.Types.ObjectId,ref: 'Call'},
+    type: {type: String,enum: ['TEXT', 'MEDIA','CALL'],default: 'TEXT'},
     status: { 
         type: String, 
         enum: ['SENT', 'DELIVERED', 'READ'], 
         default: 'SENT' 
       },
-
+    reply_to: {type: mongoose.Schema.Types.ObjectId, ref: 'Message' },
 },{timestamps: true});
 
 

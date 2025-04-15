@@ -29,7 +29,7 @@ export const Chat_window_context_provider = ({children})=> {
           text:'',
           type:'TEXT',
           status: 'SENT',
-          media: []
+          file: null
     
         });
 

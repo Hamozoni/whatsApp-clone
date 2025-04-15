@@ -16,11 +16,7 @@ export const post_message_controller = async (req,res,next) => {
             select: 'name _id about profile_picture',
         }
     ];
-
-
-        const {chat_id,sender,contact,text,type,status,media} = req?.body;
-
-        console.log({chat_id,sender,contact,text,type,status,media} )
+ 
     // try {
         
     //     if(!sender || !contact) {
