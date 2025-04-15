@@ -1,11 +1,13 @@
 
 import Chat from "../models/chat.model.js";
 import Message from "../models/message.model.js";
+import cloudinary from "../config.js/cloudinary.js";
 
 export const post_message_controller = async (req,res,next) => {
 
     let sender_chat = null;
     let contact_chat = null;
+    let file_result = null
 
     const populate = [
         {
@@ -16,50 +18,66 @@ export const post_message_controller = async (req,res,next) => {
             select: 'name _id about profile_picture',
         }
     ];
+
+    const {chat_id,sender,contact,text,type,status,replay_to} = req.body;
+
+    const file = req.file
+
  
-    // try {
+    try {
         
-    //     if(!sender || !contact) {
-    //         return res.status(500).json({message: 'sender id is reqiure'});
-    //     };
+        if(!sender || !contact) {
+            return res.status(500).json({message: 'sender id is reqiure'});
+        };
 
-    //     const message = await Message.create({sender,text,media,contact,type,status});
 
-    //     const contact_chat_id = await Chat.findOne({user: contact,contact:sender});
-    //     const sender_chat_id = await Chat.findOne({user: sender,contact:contact});
+        if(type === 'MEDIA' && file) {
+            
+            const cloudinary_result = await new Promise((resolve,reject)=> {
 
-    //     if(sender_chat_id) {
-    //          sender_chat = await Chat.findByIdAndUpdate(sender_chat_id?._id,
-    //             {last_message: message?._id, $addToSet :{messages: message?._id}},{new: true}
-    //             ).populate(populate)
-    //             .select('-messages')
+                const stream = cloudinary.uploader.upload_stream()
+            })
+        }
 
-    //     }else {
-    //        const chat = await Chat.create({user: sender,contact,last_message: message?._id,messages: message?._id});
-    //         sender_chat  = await Chat.findById(chat?._id,{new: true})
-    //         .populate(populate)
-    //             .select('-messages')
 
-    //     }
 
-    //     if(contact_chat_id) {
-    //          contact_chat = await Chat.findByIdAndUpdate(contact_chat_id?._id,
-    //             {last_message: message?._id, $addToSet :{messages: message?._id}},{new: true}
-    //        ).populate(populate)
-    //        .select('-messages')
-    //     }else {
-    //        const chat = await Chat.create({user: contact,contact: sender,last_message: message?._id,messages: message?._id});
-    //         contact_chat = await Chat.findById(chat?._id,{new: true})
-    //         .populate(populate)
-    //        .select('-messages')
-    //     };
+        const message = await Message.create({sender,text,media,contact,type,status});
 
-    //     return res.status(200).json({contact_chat,sender_chat})
+        const contact_chat_id = await Chat.findOne({user: contact,contact:sender});
+        const sender_chat_id = await Chat.findOne({user: sender,contact:contact});
 
-    // }
-    // catch (error) {
-    //     next(error)
-    // }
+        if(sender_chat_id) {
+             sender_chat = await Chat.findByIdAndUpdate(sender_chat_id?._id,
+                {last_message: message?._id, $addToSet :{messages: message?._id}},{new: true}
+                ).populate(populate)
+                .select('-messages')
+
+        }else {
+           const chat = await Chat.create({user: sender,contact,last_message: message?._id,messages: message?._id});
+            sender_chat  = await Chat.findById(chat?._id,{new: true})
+            .populate(populate)
+                .select('-messages')
+
+        }
+
+        if(contact_chat_id) {
+             contact_chat = await Chat.findByIdAndUpdate(contact_chat_id?._id,
+                {last_message: message?._id, $addToSet :{messages: message?._id}},{new: true}
+           ).populate(populate)
+           .select('-messages')
+        }else {
+           const chat = await Chat.create({user: contact,contact: sender,last_message: message?._id,messages: message?._id});
+            contact_chat = await Chat.findById(chat?._id,{new: true})
+            .populate(populate)
+           .select('-messages')
+        };
+
+        return res.status(200).json({contact_chat,sender_chat})
+
+    }
+    catch (error) {
+        next(error)
+    }
     
 } 
 
