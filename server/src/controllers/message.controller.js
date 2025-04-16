@@ -34,18 +34,18 @@ export const post_message_controller = async (req,res,next) => {
 
         if(type === 'MEDIA' && req.file) {
 
-            const resource_type = req.file.mimetype;
+            const resource_type = req.file.mimetype.split('/')[0]
             
-            const cloudinary_result = cloudinary.uploader.upload_stream(
-                {folder: `message/${resource_type.split('/')[0]}`},
+            const cloudinary_result = await cloudinary.uploader.upload_stream(
+                {folder: `message/${resource_type.split('/')[0]}`,resource_type: 'video'},
                 (error,result)=>{
                     if (error) {
                         console.error('Cloudinary Error:', error);
-                        return res.status(500).json({ error: 'Cloudinary upload failed' });
+                        return res.status(500).json({ message: error.message });
                       };
 
                       file_result = new File({
-                          type: resource_type.split('/')[0],
+                          type: resource_type,
                           url: result.source_url,
                           public_id: result.public_id,
                           size: req.file.size
@@ -54,9 +54,9 @@ export const post_message_controller = async (req,res,next) => {
                       file_result.save();
                 });
 
+                
                 streamifier.createReadStream(req.file.buffer).pipe(cloudinary_result)
-
-        }
+            }
 
 
 

@@ -14,11 +14,13 @@ import axios from "axios";
     }
     )=> {
 
+        console.log(message.file)
     const formData = new FormData();
 
     for(let key in message) {
         formData.append(key,message[key]);
     };
+
     
     set_loading(true);
 
