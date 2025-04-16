@@ -31,19 +31,13 @@ export const post_message_controller = async (req,res,next) => {
 
 
         if(type === 'MEDIA' && req.file) {
+
+            const resource_type = req.file.mimetype;
             
-            const cloudinary_result = await new Promise((resolve,reject)=> {
-                const resource_type = req.file.mimetype.split('/')[0]
-
-                const stream = cloudinary.uploader.upload_stream({resource_type,folder: `message/${resource_type}`},
-                    (error,result)=> error ? reject(error) : resolve(result)
-                );
-
-                stream.end(req.file.buffer);
-            });
+            const cloudinary_result = await cloudinary.uploader.upload(req.file.buffer.toString('base64'),{resource_type,folder: `message/${resource_type.split('/')[0]}`})
 
             file_result = await File.create({
-                type: resource_type,
+                type: resource_type.split('/')[0],
                 url: cloudinary_result.source_url,
                 public_id: cloudinary_result.public_id,
                 size: req.file.size
