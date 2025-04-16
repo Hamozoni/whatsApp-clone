@@ -3,6 +3,7 @@ import Chat from "../models/chat.model.js";
 import Message from "../models/message.model.js";
 import cloudinary from "../config.js/cloudinary.js";
 import File from "../models/file.model.js";
+import streamifier from "streamifier";
 
 export const post_message_controller = async (req,res,next) => {
 
@@ -12,7 +13,8 @@ export const post_message_controller = async (req,res,next) => {
 
     const populate = [
         {
-            path: 'last_message'
+            path: 'last_message',
+            select: 'file createdAt sender status text type _id'
         },
         {
             path: 'contact',
@@ -34,19 +36,31 @@ export const post_message_controller = async (req,res,next) => {
 
             const resource_type = req.file.mimetype;
             
-            const cloudinary_result = await cloudinary.uploader.upload(req.file.buffer.toString('base64'),{resource_type,folder: `message/${resource_type.split('/')[0]}`})
+            const cloudinary_result = cloudinary.uploader.upload_stream(
+                {folder: `message/${resource_type.split('/')[0]}`},
+                (error,result)=>{
+                    if (error) {
+                        console.error('Cloudinary Error:', error);
+                        return res.status(500).json({ error: 'Cloudinary upload failed' });
+                      };
 
-            file_result = await File.create({
-                type: resource_type.split('/')[0],
-                url: cloudinary_result.source_url,
-                public_id: cloudinary_result.public_id,
-                size: req.file.size
-            })
+                      file_result = new File({
+                          type: resource_type.split('/')[0],
+                          url: result.source_url,
+                          public_id: result.public_id,
+                          size: req.file.size
+                      });
+
+                      file_result.save();
+                });
+
+                streamifier.createReadStream(req.file.buffer).pipe(cloudinary_result)
+
         }
 
 
 
-        const message = await Message.create({sender,text,contact,type,status,replay_to,file: file_result});
+        const message = await Message.create({sender,text,contact,type,status,replay_to,file: file_result?._id});
 
         const contact_chat_id = await Chat.findOne({user: contact,contact:sender});
         const sender_chat_id = await Chat.findOne({user: sender,contact:contact});
