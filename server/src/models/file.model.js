@@ -7,6 +7,6 @@ const FILE_SCHEMA = new mongoose.Schema({
     size: {type : Number , require: true},
   }, { timestamps: true});
 
-  const File = mongoose.model('media',FILE_SCHEMA);
+  const File = mongoose.model('File',FILE_SCHEMA);
 
   export default File;

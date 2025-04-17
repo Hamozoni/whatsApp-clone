@@ -11,7 +11,7 @@ const MESSAGE_SCHEMA = new mongoose.Schema({
         enum: ['SENT', 'DELIVERED', 'READ'], 
         default: 'SENT' 
       },
-    reply_to: {type: mongoose.Schema.Types.ObjectId, ref: 'Message' },
+    reply_to: {type: mongoose.Schema.Types.ObjectId, ref: 'Message', require: false},
 },{timestamps: true});
 
 

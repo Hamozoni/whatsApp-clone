@@ -3,18 +3,26 @@ import Chat from "../models/chat.model.js";
 import Message from "../models/message.model.js";
 import cloudinary from "../config.js/cloudinary.js";
 import File from "../models/file.model.js";
-import streamifier from "streamifier";
 
 export const post_message_controller = async (req,res,next) => {
 
     let sender_chat = null;
     let contact_chat = null;
-    let file_result = null
+    let file_result = null;
+    let message = null;
 
     const populate = [
         {
             path: 'last_message',
-            select: 'file createdAt sender status text type _id'
+            model:'Message',
+            populate :{
+                path: 'file',
+                model: 'File'
+            },
+            populate :{
+                path: 'reply_to',
+                model: 'Message'
+            }
         },
         {
             path: 'contact',
@@ -25,7 +33,7 @@ export const post_message_controller = async (req,res,next) => {
     
     
     try {
-        const {sender,contact,text,type,status,replay_to} = req.body;
+        const {sender,contact,type} = req.body;
         
         if(!sender || !contact) {
             return res.status(500).json({message: 'sender id is reqiure'});
@@ -34,33 +42,38 @@ export const post_message_controller = async (req,res,next) => {
 
         if(type === 'MEDIA' && req.file) {
 
-            const resource_type = req.file.mimetype.split('/')[0]
-            
-            const cloudinary_result = await cloudinary.uploader.upload_stream(
-                {folder: `message/${resource_type.split('/')[0]}`,resource_type: 'video'},
-                (error,result)=>{
-                    if (error) {
-                        console.error('Cloudinary Error:', error);
-                        return res.status(500).json({ message: error.message });
-                      };
+            const resource_type = req.file.mimetype.split('/')[0];
 
-                      file_result = new File({
-                          type: resource_type,
-                          url: result.source_url,
-                          public_id: result.public_id,
-                          size: req.file.size
-                      });
+            const result = await new Promise((resolve, reject) => {
 
-                      file_result.save();
-                });
+                const uploadStream = cloudinary.uploader.upload_stream(
+                  {
+                    resource_type: 'video', // <–– This is the key!
+                    folder: `message/${resource_type}`, // Optional: Organize files in Cloudinary
+                  },
+                  (error, result) => {
+                    if (error) reject(error);
+                    else resolve(result);
+                  }
+                );
+          
+                uploadStream.end(req.file.buffer);
+              });
 
-                
-                streamifier.createReadStream(req.file.buffer).pipe(cloudinary_result)
-            }
+              file_result = new File({
+                type: resource_type.toUpperCase(),
+                url: result.url,
+                public_id: result.public_id,
+                size: req.file.size
+            });
+
+            file_result.save();
+            message = await Message.create({...req.body,file:file_result?._id});
+        }else {
+            message = await Message.create(req.body);
+        }
 
 
-
-        const message = await Message.create({sender,text,contact,type,status,replay_to,file: file_result?._id});
 
         const contact_chat_id = await Chat.findOne({user: contact,contact:sender});
         const sender_chat_id = await Chat.findOne({user: sender,contact:contact});
@@ -110,7 +123,15 @@ export const get_message_controller = async (req,res,next) => {
     }
 
     try {
-        const messages = await Chat.findById(chat_id).populate('messages')
+        const messages = await Chat.findById(chat_id).populate({path: 'messages',populate : {
+            path: 'file',
+            model: 'File'
+        },
+        populate :{
+            path: 'reply_to',
+            model: 'Message'
+        }
+    })
         return res.status(200).json({messages: messages?.messages})
     }
     catch(error) {
