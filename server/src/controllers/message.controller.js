@@ -3,7 +3,6 @@ import Chat from "../models/chat.model.js";
 import Message from "../models/message.model.js";
 import cloudinary from "../config.js/cloudinary.js";
 import File from "../models/file.model.js";
-import { populate } from "dotenv";
 
 export const post_message_controller = async (req,res,next) => {
 
@@ -15,17 +14,15 @@ export const post_message_controller = async (req,res,next) => {
     const populate = [
         {
             path: 'last_message',
-            model:'Message',
             populate :{
                 path: 'file',
-                model: 'File'
+                select: 'url _id type'
             },
             populate :{
                 path: 'reply_to',
-                model: 'Message',
                 populate: {
                     path: 'file',
-                    model: 'File'
+                    select: 'url _id type'
                }
             }
         },
@@ -128,16 +125,15 @@ export const get_message_controller = async (req,res,next) => {
     }
 
     try {
-        const messages = await Chat.findById(chat_id).populate({path: 'messages',model: 'Message',populate : {
+        const messages = await Chat.findById(chat_id).populate({path: 'messages',populate : {
             path: 'file',
-            model: 'File'
+            select: 'url _id type'
         },
         populate :{
             path: 'reply_to',
-            model: 'Message',
             populate: {
                  path: 'file',
-                 model: 'File'
+                select: 'url _id type'
             }
         }
     })
