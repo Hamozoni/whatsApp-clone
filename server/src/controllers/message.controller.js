@@ -10,6 +10,8 @@ export const post_message_controller = async (req,res,next) => {
     let contact_chat = null;
     let file_result = null;
     let message = null;
+    let type = null;
+    let resource_type = null;
 
     const populate = [
         {
@@ -35,23 +37,24 @@ export const post_message_controller = async (req,res,next) => {
     
     
     try {
-        const {sender,contact,type} = req.body;
+        const {sender,contact} = req.body;
         
         if(!sender || !contact) {
             return res.status(500).json({message: 'sender id is reqiure'});
         };
 
 
-        if(type === 'MEDIA' && req.file) {
+        if(req?.body?.type === 'MEDIA' && req.file) {
 
-            const resource_type = req.file.mimetype.split('/')[0];
+            type = req.file.mimetype.split('/')[0];
+            resource_type = type === 'image' ? 'image' : type === 'application' ? 'raw' : 'video';
 
             const result = await new Promise((resolve, reject) => {
 
                 const uploadStream = cloudinary.uploader.upload_stream(
                   {
-                    resource_type: 'video', // <–– This is the key!
-                    folder: `message/${resource_type}`, // Optional: Organize files in Cloudinary
+                    resource_type,  // <–– This is the key!
+                    folder: `message/${type}`, // Optional: Organize files in Cloudinary
                   },
                   (error, result) => {
                     if (error) reject(error);
@@ -59,14 +62,14 @@ export const post_message_controller = async (req,res,next) => {
                   }
                 );
           
-                uploadStream.end(req.file.buffer);
+                uploadStream.end(req?.file?.buffer);
               });
 
               file_result = new File({
-                type: resource_type.toUpperCase(),
-                url: result.url,
-                public_id: result.public_id,
-                size: req.file.size
+                type: type?.toUpperCase(),
+                url: result?.url,
+                public_id: result?.public_id,
+                size: req?.file?.size
             });
 
             file_result.save();
@@ -90,7 +93,7 @@ export const post_message_controller = async (req,res,next) => {
            const chat = await Chat.create({user: sender,contact,last_message: message?._id,messages: message?._id});
             sender_chat  = await Chat.findById(chat?._id,{new: true})
             .populate(populate)
-                .select('-messages')
+            .select('-messages')
 
         }
 
@@ -110,8 +113,14 @@ export const post_message_controller = async (req,res,next) => {
 
     }
     catch (error) {
-        console.log(error)
-        next(error)
+        if(file_result) {
+            cloudinary.uploader.destroy(file_result?.public_id,{resource_type});
+            await File.findByIdAndDelete(file_result?._id)
+        };
+        if(message) {
+            await Message.findByIdAndDelete(message?._id);
+        }
+        next(error);
     }
     
 } 
