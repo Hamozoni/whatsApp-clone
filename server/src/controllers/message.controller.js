@@ -14,17 +14,17 @@ export const post_message_controller = async (req,res,next) => {
     const populate = [
         {
             path: 'last_message',
-            populate :{
+            populate :[{
                 path: 'file',
                 select: 'url _id type'
             },
-            populate :{
+             {
                 path: 'reply_to',
                 populate: {
                     path: 'file',
                     select: 'url _id type'
                }
-            }
+            }]
         },
         {
             path: 'contact',
@@ -125,18 +125,25 @@ export const get_message_controller = async (req,res,next) => {
     }
 
     try {
-        const messages = await Chat.findById(chat_id).populate({path: 'messages',populate : {
-            path: 'file',
-            select: 'url _id type'
-        },
-        populate :{
-            path: 'reply_to',
-            populate: {
-                 path: 'file',
-                select: 'url _id type'
-            }
-        }
-    })
+        const messages = await Chat.findById(chat_id).populate(
+            {
+                path: 'messages',
+                populate :[
+                    {
+                        path:'reply_to',
+                        populate: {
+                            path: 'file',
+                            select: 'url _id type'
+                        }
+                    },
+                    {
+                        path: 'file',
+                        select: 'url _id type'
+                    },
+                ]
+
+           }
+        )
         return res.status(200).json({messages: messages?.messages})
     }
     catch(error) {
