@@ -14,6 +14,7 @@ export const Chat_window_context_provider = ({children})=> {
     const [is_file_preview,set_is_file_preview] = useState(false);
     const [messages, set_messages] = useState([]);
     const [message,set_message] = useState({});
+    const [text,set_text] = useState('');
     const [unread_message,set_unread_message] = useState([]);
     const [loading,set_loading] = useState(true);
     const [error,set_error] = useState(null);
@@ -23,6 +24,7 @@ export const Chat_window_context_provider = ({children})=> {
 
     useEffect(() => {
         set_messages([]);
+        set_text('')
         set_message({
           chat_id: active_chat?._id ?  active_chat?._id : null,
           sender: user?._id,
@@ -105,7 +107,9 @@ export const Chat_window_context_provider = ({children})=> {
                     unread_message,
                     set_unread_message,
                     is_file_preview,
-                    set_is_file_preview
+                    set_is_file_preview,
+                    text,
+                    set_text,
                 }
                 }
         >
