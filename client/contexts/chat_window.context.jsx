@@ -12,6 +12,7 @@ export const Chat_window_context_provider = ({children})=> {
     const [active_chat,set_active_chat] = useState(null);
     const [is_document,set_is_document] = useState(false);
     const [is_file_preview,set_is_file_preview] = useState(false);
+    const [is_recorder,set_is_recorder] = useState(false)
     const [messages, set_messages] = useState([]);
     const [message,set_message] = useState({});
     const [text,set_text] = useState('');
@@ -32,7 +33,6 @@ export const Chat_window_context_provider = ({children})=> {
           text:'',
           type:'TEXT',
           status: 'SENT',
-          file: '',
         });
 
         const fetch_messages = async ()=> {
@@ -110,6 +110,8 @@ export const Chat_window_context_provider = ({children})=> {
                     set_is_file_preview,
                     text,
                     set_text,
+                    is_recorder,
+                    set_is_recorder
                 }
                 }
         >

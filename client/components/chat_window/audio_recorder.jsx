@@ -1,25 +1,21 @@
 import {useContext, useEffect, useRef, useState } from 'react';
-import { IoMic ,IoPauseCircleOutline,IoSend} from "react-icons/io5";
+import { IoMic ,IoPauseCircleOutline} from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 
 
 import dynamic from 'next/dynamic';
 import { Chat_window_context } from '@/contexts/chat_window.context';
-import { handle_send_message } from '@/lib/handle_send_message';
-import { User_context } from '@/contexts/user.context';
+import { Send_message_btn } from './send_message_btn';
 
 const Audio_player = dynamic(()=> import('../ui/audio_player'),{ssr:false});
 
 
-const Audio_recorder = ({set_is_recorder}) => {
+const Audio_recorder = () => {
 
-  const {set_message,message,active_chat,set_active_chat} = useContext(Chat_window_context);
-  const {set_chats,socket} = useContext(User_context)
+  const {set_message,set_is_recorder,set_text} = useContext(Chat_window_context);
     // useStates
   const [recording, set_recording] = useState(false);
   const [audio_url, set_audio_url] = useState(null);
-  const [loading, set_loading] = useState(null);
-  const [error, set_error] = useState(null);
   //   useRefs
   const canvas_ref = useRef(null);
   const audio_chunks_ref = useRef([]);
@@ -132,6 +128,7 @@ const Audio_recorder = ({set_is_recorder}) => {
 
   useEffect(() => {
     start_recording();
+    set_text('')
     return () => {
       media_recorder_ref.current.stop();
       media_recorder_ref.current.stream.getTracks().forEach(track => track.stop());
@@ -141,30 +138,11 @@ const Audio_recorder = ({set_is_recorder}) => {
     }
   }, []);
 
-
-  const handle_send = ()=> {
-     handle_send_message({
-        message,
-        set_loading,
-        set_error,
-        set_chats,
-        active_chat,
-        set_active_chat,
-        socket
-     });
-
-     if(!error) {
-        set_is_recorder(false);
-     }
-  }
-
   return (
     <div className=' absolute left-0 top-0 w-full h-full z-10 flex items-center justify-end bg-[#222e35] text-[#f7f8fa]'>
     
       <div className=' flex flex-row-reverse gap-3 items-center px-2'>
-        <button onClick={handle_send} className=' bg-emerald-400 flex justify-center items-center rounded-full p-2'>
-            <IoSend size={20} />
-        </button>
+        <Send_message_btn />
         {!recording ? (
           <button className='text-red-400' onClick={start_recording}>
             <IoMic size={30} />

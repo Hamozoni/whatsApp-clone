@@ -1,7 +1,7 @@
 "use client";
 
 import { Chat_window_context } from "@/contexts/chat_window.context";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 import EmojiPicker from "emoji-picker-react";
 import { Close_model } from "../ui/close_model";
@@ -9,12 +9,16 @@ import { Close_model } from "../ui/close_model";
 export const Text_input = ()=> {
 
 
-    const {text,set_text} = useContext(Chat_window_context);
+    const {text,set_text,set_message} = useContext(Chat_window_context);
     const [show_emoji,set_show_emoji] = useState(false);
 
     const handle_emoji = (emojiObject)=> {
         set_text(prev=> `${prev} ${emojiObject.emoji}`);
     };
+
+    useEffect(()=> {
+        set_message(prev=> ({...prev,text}))
+    },[text]);
 
     return (
         <div className="flex items-center rounded-md  flex-1 relative bg-[#111b21] px-3 py-2 hide_model">

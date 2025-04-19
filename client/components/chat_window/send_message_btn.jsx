@@ -2,21 +2,25 @@
 import { Chat_window_context } from "@/contexts/chat_window.context";
 import { User_context } from "@/contexts/user.context";
 import { handle_send_message } from "@/lib/handle_send_message";
-import { useContext, useEffect } from "react";
+import { useContext, useState } from "react";
 import { LuSendHorizontal } from "react-icons/lu"
 
 
-export const Send_message_btn = ({set_loading,set_error,error
-})=> {
+export const Send_message_btn = ()=> {
+
+    const [loading,set_loading] = useState(false);
+    const [error,set_error] = useState(null);
 
 
-    const {message,set_active_chat,text,set_text,set_message} = useContext(Chat_window_context);
+    const {
+        message,
+        set_active_chat,
+        set_text,
+        active_chat,
+        set_is_recorder
+    } = useContext(Chat_window_context);
+
     const {socket,set_chats} = useContext(User_context);
-
-
-    useEffect(()=> {
-        set_message(prev=> ({...prev,text}))
-    },[text]);
 
     return (
         <button
@@ -32,6 +36,7 @@ export const Send_message_btn = ({set_loading,set_error,error
                 });
                 if(!error) {
                     set_text('');
+                    set_is_recorder(false);
                 }
 
             }}

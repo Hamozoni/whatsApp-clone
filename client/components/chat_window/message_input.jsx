@@ -17,12 +17,9 @@ import { Text_input } from "./text_input";
 
 export const Message_input = ()=> {
 
-    const {text,set_text} = useContext(Chat_window_context);
+    const {text,is_recorder,set_is_recorder} = useContext(Chat_window_context);
     const [is_document,set_is_document] = useState(false);
 
-    const [is_recorder,set_is_recorder] = useState(false);
-    const [loading,set_loading] = useState(false);
-    const [error,set_error] = useState(null);
 
 
     return (
@@ -43,14 +40,10 @@ export const Message_input = ()=> {
 
               <Text_input />
 
-                <div className="hide_model">
+                <div >
                     {
                         text?.length > 0 ? 
-                        <Send_message_btn 
-                            set_loading={set_loading} 
-                            set_error={set_error} 
-                            error={error}
-                          />
+                        <Send_message_btn />
                        :
                         <button
                             onClick={()=> set_is_recorder(true)}
@@ -67,7 +60,7 @@ export const Message_input = ()=> {
             </div>
             {
                 is_recorder && 
-                <Audio_recorder set_is_recorder={set_is_recorder} />
+                <Audio_recorder />
             }
 
         </div>
