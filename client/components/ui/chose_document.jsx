@@ -1,5 +1,6 @@
 "use client"
-import { useState } from "react";
+import { Chat_window_context } from "@/contexts/chat_window.context";
+import { useContext, useState } from "react";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { 
     MdOutlineAddPhotoAlternate, 
@@ -20,6 +21,13 @@ const className = "flex items-center gap-3 text-[#f7f8fa] rounded-md hover:bg-[#
 
 export const Chose_document = () => {
 
+    // const [file,set_file] = useState(null);
+    const {set_message} = useContext(Chat_window_context);
+
+    const handle_select_file = (e)=> {
+       set_message(prev=> ({...prev,file:e.target.files[0]}))
+    }
+
     
     return (
         <div className=" absolute left-2 top-0 -translate-y-[103%] bg-[#222e35] p-3 rounded-md z-20">
@@ -37,7 +45,7 @@ export const Chose_document = () => {
                                 <label className={className}>
                                     < Icon size={24}/>
                                     <span>{title}</span> 
-                                    <input type={type} accept={accept} hidden/>
+                                    <input onChange={handle_select_file} type={type} accept={accept} hidden/>
                                 </label>
                             }
                         </li>

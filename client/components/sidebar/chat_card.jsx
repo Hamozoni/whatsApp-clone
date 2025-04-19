@@ -24,7 +24,8 @@ export const Chat_card = ({chat})=> {
 
 
     useEffect(()=> {
-        const text_time = new Date(chat?.last_message?.createdAt).toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
+        const text_time = new Date(chat?.last_message?.createdAt || chat?.last_message?.updatedAt)
+        .toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
         set_text_time(text_time);
         update_message_status(socket,chat?._id,chat?.contact?._id,'DELIVERED');
         fetch_unread_messages(user?._id,chat?._id);

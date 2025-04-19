@@ -73,9 +73,11 @@ export const post_message_controller = async (req,res,next) => {
             });
 
             file_result.save();
-            message = await Message.create({...req.body,file:file_result?._id});
+            message = new Message({...req.body,file:file_result?._id});
+            message.save();
         }else {
-            message = await Message.create(req.body);
+            message = new Message(req.body);
+            message.save();
         }
 
 
