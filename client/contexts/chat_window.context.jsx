@@ -11,6 +11,7 @@ export const Chat_window_context_provider = ({children})=> {
     const {user,socket,set_chats} = useContext(User_context);
     const [active_chat,set_active_chat] = useState(null);
     const [is_document,set_is_document] = useState(false);
+    const [is_file_preview,set_is_file_preview] = useState(false);
     const [messages, set_messages] = useState([]);
     const [message,set_message] = useState({});
     const [unread_message,set_unread_message] = useState([]);
@@ -102,7 +103,9 @@ export const Chat_window_context_provider = ({children})=> {
                     loading,
                     error,
                     unread_message,
-                    set_unread_message
+                    set_unread_message,
+                    is_file_preview,
+                    set_is_file_preview
                 }
                 }
         >
