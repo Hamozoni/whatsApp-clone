@@ -31,7 +31,11 @@ export const get_user_controller = async (req,res,next) => {
             },
             {
                 path: 'last_message',
-                select: '_id sender status text type createdAt user'
+                select: '_id sender status text type createdAt user',
+                populate: {
+                    path: 'file',
+                    select: '_id name type size'
+                }
               },
           ])
           .select('createdAt contact last_message user _id')

@@ -3,6 +3,8 @@ import { User_context } from "../../contexts/user.context";
 import update_message_status from "@/utils/update_mesages_status.js";
 import { fetch_data } from "@/lib/fetch_data";
 import { Chat_window_context } from "@/contexts/chat_window.context";
+import { FaRegImage,FaMicrophone ,FaVideo } from "react-icons/fa6";
+import { BsFillFileEarmarkPdfFill } from "react-icons/bs";
 
 export const Chat_card = ({chat})=> {
     
@@ -49,28 +51,36 @@ export const Chat_card = ({chat})=> {
                 <div className="w-12 h-12 rounded-full overflow-hidden">
                     <img src={chat?.contact?.profile_picture} alt={chat?.contact?.name} className="w-full h-full object-cover" />
                 </div>
-                {/* {
-                    chat?.is_online && (
-                        <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-800  rounded-full border-2 border-white"></div>
-                    )
-                } */}
             </div>
             <div className="ml-4 flex-1 py-3 min-w-0 border-b-1 border-[#222e35] text-[#f7f8fa]">
                 <div className="flex justify-between items-center">
-                    <h2 className="font-semibold truncate">{chat?.contact?.name}</h2>
+                    <h2 className="font-semibold truncate">
+                        {chat?.contact?.name}
+                    </h2>
                     <span className="text-xs text-[#667781]">
                         {text_time}
                     </span>
                 </div>
                 <div className="flex justify-between items-center">
-                     <p className="text-sm text-[#667781] truncate">
+                     <div className="text-sm text-[#667781] truncate flex items-center gap-2">
                         {
                         user?._id === chat?.last_message?.sender && (
                         <span className={chat?.last_message?.status === 'READ' ? 'text-emerald-400' : ''}>
                             {chat?.last_message?.status === 'SENT' ? '✓ ' :  '✓✓ ' }</span>)
                         }
+                        {
+                            chat?.last_message.type === 'MEDIA' && (
+                                chat?.last_message?.file?.type === 'AUDIO' ?
+                                <><FaMicrophone /> Audio</>: 
+                                chat?.last_message?.file?.type === 'VIDEO' ?
+                                <><FaVideo /> Video</>:
+                                chat?.last_message?.file?.type === 'IMAGE' ?
+                               <><FaRegImage /> Photo</>  : 
+                               <><BsFillFileEarmarkPdfFill /> {chat?.last_message?.file?.name?.splice(0,28)}</> 
+                            )
+                        }
                         {chat?.last_message?.text?.length > 29 ? `${chat?.last_message?.text?.slice(0,28)}...`: chat?.last_message?.text}
-                    </p> 
+                    </div> 
                      {unread > 0 && (
                         <span className="bg-emerald-800  text-white rounded-full px-2 py-1 text-xs min-w-[20px] text-center">
                         {unread}
