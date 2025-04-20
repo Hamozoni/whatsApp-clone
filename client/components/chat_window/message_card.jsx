@@ -31,7 +31,7 @@ export const Message_card = ({user_id,message})=> {
             }
             {
                (message.type === 'MEDIA' && message?.file?.type === 'AUDIO') ? '':
-              <p className="text-sm hide_model p-2">{message?.text}</p>
+              <p className="text-sm hide_model p-2">{ message?.file?.type === 'APPLICATION' ? message?.file?.name : message?.text}</p>
             }
             <div className="flex items-center justify-end space-x-1 mt-1 hide_model">
                 <span className="text-[10px] text-gray-300 font-[100] hide_model">
