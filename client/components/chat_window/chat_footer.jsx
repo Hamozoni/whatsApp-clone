@@ -15,7 +15,7 @@ const Audio_recorder = dynamic(
 import { Send_message_btn } from "./send_message_btn";
 import { Text_input } from "./text_input";
 
-export const Message_input = ()=> {
+export const Chat_footer = ()=> {
 
     const {text,is_recorder,set_is_recorder} = useContext(Chat_window_context);
     const [is_document,set_is_document] = useState(false);
@@ -23,23 +23,13 @@ export const Message_input = ()=> {
 
 
     return (
-        <div className="p-3 bg-[#222e35] relative">
+        <footer className="p-3 bg-[#222e35] relative">
             <div className="flex items-center gap-2">
-                {
-                    is_document && 
-                  <>
-                    <Close_model set_model={set_is_document} />
-                    <Chose_document />
-                </>
-                }
                 <AiOutlinePaperClip 
-                     onClick={()=> set_is_document(!is_document)} 
-                     className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#00a884] rotate-90 hide_model"  
+                    onClick={()=> set_is_document(!is_document)} 
+                    className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#00a884] rotate-90 hide_model"  
                 />
-                
-
-              <Text_input />
-
+                <Text_input />
                 <div >
                     {
                         text?.length > 0 ? 
@@ -52,17 +42,20 @@ export const Message_input = ()=> {
                             <SlMicrophone className="h-6 w-6 text-[#f7f8fa] cursor-pointer" />
                         </button>
                     }
-
-                
-                    
                 </div>
-
             </div>
             {
                 is_recorder && 
                 <Audio_recorder />
             }
+            {
+                is_document && 
+                <>
+                    <Close_model set_model={set_is_document} />
+                    <Chose_document />
+                </>
+            }
 
-        </div>
+        </footer>
     )
 }

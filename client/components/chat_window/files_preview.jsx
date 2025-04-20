@@ -5,7 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 
 export const Files_preview  = () => {
 
-    const {message,is_file_preview} = useContext(Chat_window_context);
+    const {message,set_is_preview} = useContext(Chat_window_context);
     const canvas_ref = useRef(null);
 
     useEffect(()=> {
@@ -22,21 +22,21 @@ export const Files_preview  = () => {
             reader.readAsDataURL(message?.file);
 
             image.onload = ()=> {
-                ctx.clearRect(0,0,canvas.width.canvas.height);
+                ctx.clearRect(0,0,canvas.width,canvas.height);
                 ctx.drawImage(image,0,0,canvas.width,canvas.height);
             }
         }
     },[message])
 
     return (
-        <div className="">
+        <div className="bg-[#111b21] flex flex-col items-center justify-center h-full">
             <header>
-                <button onClick={()=>is_file_preview(false)}>
+                <button onClick={()=>set_is_preview(false)}>
                     <AiOutlineClose />
                 </button>
             </header>
             <div className="">
-                <canvas width={300} height={500} ref={canvas_ref} />
+                <canvas width={400} height={400} ref={canvas_ref} />
             </div>
 
         </div>

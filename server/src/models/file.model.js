@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const FILE_SCHEMA = new mongoose.Schema({
-    type: {type: String,enum: ['AUDIO', 'PHOTO','VIDEO','DOCUMENT'],default: 'PHOTO'},
+    type: {type: String,enum: ['AUDIO', 'IMAGE','VIDEO','APPLICATION'],default: 'IMAGE'},
     url: {type: String ,require : true},
     public_id: {type: String ,require : true},
     size: {type : Number , require: true},

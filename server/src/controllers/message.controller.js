@@ -12,6 +12,7 @@ export const post_message_controller = async (req,res,next) => {
     let message = null;
     let type = null;
     let resource_type = null;
+    let result = null;
 
     const populate = [
         {
@@ -49,7 +50,7 @@ export const post_message_controller = async (req,res,next) => {
             type = req.file.mimetype.split('/')[0];
             resource_type = type === 'image' ? 'image' : type === 'application' ? 'raw' : 'video';
 
-            const result = await new Promise((resolve, reject) => {
+            result = await new Promise((resolve, reject) => {
 
                 const uploadStream = cloudinary.uploader.upload_stream(
                   {
@@ -115,9 +116,9 @@ export const post_message_controller = async (req,res,next) => {
 
     }
     catch (error) {
-        if(file_result) {
-            cloudinary.uploader.destroy(file_result?.public_id,{resource_type});
-            await File.findByIdAndDelete(file_result?._id)
+        if(result) {
+            cloudinary.api.delete_resources(result?.public_id,{resource_type});
+            await File.findByIdAndDelete(result?._id)
         };
         if(message) {
             await Message.findByIdAndDelete(message?._id);

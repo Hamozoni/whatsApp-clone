@@ -10,8 +10,7 @@ export const Chat_window_context_provider = ({children})=> {
 
     const {user,socket,set_chats} = useContext(User_context);
     const [active_chat,set_active_chat] = useState(null);
-    const [is_document,set_is_document] = useState(false);
-    const [is_file_preview,set_is_file_preview] = useState(false);
+    const [is_preview,set_is_preview] = useState(false);
     const [is_recorder,set_is_recorder] = useState(false)
     const [messages, set_messages] = useState([]);
     const [message,set_message] = useState({});
@@ -94,8 +93,8 @@ export const Chat_window_context_provider = ({children})=> {
         <Chat_window_context.Provider
             value={
                 {
-                    is_document,
-                    set_is_document,
+                    is_preview,
+                    set_is_preview,
                     messages,
                     set_messages,
                     message,
@@ -106,8 +105,6 @@ export const Chat_window_context_provider = ({children})=> {
                     error,
                     unread_message,
                     set_unread_message,
-                    is_file_preview,
-                    set_is_file_preview,
                     text,
                     set_text,
                     is_recorder,

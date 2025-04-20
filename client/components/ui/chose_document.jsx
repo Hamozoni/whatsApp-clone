@@ -22,10 +22,11 @@ const className = "flex items-center gap-3 text-[#f7f8fa] rounded-md hover:bg-[#
 export const Chose_document = () => {
 
     // const [file,set_file] = useState(null);
-    const {set_message} = useContext(Chat_window_context);
+    const {set_message,set_is_preview} = useContext(Chat_window_context);
 
     const handle_select_file = (e)=> {
-       set_message(prev=> ({...prev,file:e.target.files[0]}))
+        set_is_preview(true);
+       set_message(prev=> ({...prev,file:e.target.files[0],type:'MEDIA'}));
     }
 
     
