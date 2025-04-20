@@ -117,7 +117,7 @@ export const post_message_controller = async (req,res,next) => {
     }
     catch (error) {
         if(result) {
-            cloudinary.api.delete_resources(result?.public_id,{resource_type});
+            cloudinary.api.delete_resources([result?.public_id],{resource_type,type: 'upload'});
             await File.findByIdAndDelete(result?._id)
         };
         if(message) {
