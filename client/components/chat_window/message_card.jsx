@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Message_media_card } from "./message_media_card";
+import dynamic from "next/dynamic";
+const Message_media_card = dynamic(()=> import('./message_media_card'),{ssr:false})
 
 export const Message_card = ({user_id,message})=> {
 
@@ -15,7 +16,7 @@ export const Message_card = ({user_id,message})=> {
             className={`flex hide_model ${is_my_message ? 'justify-end' : 'justify-start'}`}
         >
             <div
-                className={`max-w-[65%] rounded-lg p-3 relative hide_model ${
+                className={`max-w-[65%] rounded-lg p-1 relative hide_model ${
                     is_my_message
                     ? 'bg-emerald-800  ml-12'
                     : 'bg-[#222e35] mr-12'
@@ -28,7 +29,10 @@ export const Message_card = ({user_id,message})=> {
                 message.type === 'MEDIA' &&
               <Message_media_card file={message?.file}/>
             }
-            <p className="text-sm hide_model">{message?.text}</p>
+            {
+               (message.type === 'MEDIA' && message?.file?.type === 'AUDIO') ? '':
+              <p className="text-sm hide_model p-2">{message?.text}</p>
+            }
             <div className="flex items-center justify-end space-x-1 mt-1 hide_model">
                 <span className="text-[10px] text-gray-300 font-[100] hide_model">
                     {new Date(message?.createdAt).toLocaleTimeString([],{hour: '2-digit',minute: '2-digit'})}

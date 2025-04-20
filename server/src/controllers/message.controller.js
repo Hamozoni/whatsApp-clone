@@ -19,13 +19,13 @@ export const post_message_controller = async (req,res,next) => {
             path: 'last_message',
             populate :[{
                 path: 'file',
-                select: 'url _id type'
+                select: 'url _id type name size'
             },
              {
                 path: 'reply_to',
                 populate: {
                     path: 'file',
-                    select: 'url _id type'
+                    elect: 'url _id type name size'
                }
             }]
         },
@@ -65,10 +65,13 @@ export const post_message_controller = async (req,res,next) => {
           
                 uploadStream.end(req?.file?.buffer);
               });
+              console.log(result);
+              console.log(req?.file);
 
               file_result = new File({
+                name: req?.file?.originalname,
                 type: type?.toUpperCase(),
-                url: result?.url,
+                url: result?.secure_url,
                 public_id: result?.public_id,
                 size: req?.file?.size
             });
@@ -145,12 +148,12 @@ export const get_message_controller = async (req,res,next) => {
                         path:'reply_to',
                         populate: {
                             path: 'file',
-                            select: 'url _id type'
+                            elect: 'url _id type name size'
                         }
                     },
                     {
                         path: 'file',
-                        select: 'url _id type'
+                        elect: 'url _id type name size'
                     },
                 ]
 

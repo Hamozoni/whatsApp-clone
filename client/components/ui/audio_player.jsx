@@ -29,7 +29,7 @@ const Audio_player = ({audio_url})=> {
 
 
     return (
-        <div className='flex items-center gap-2 flex-1 rounded-2xl bg-[rgb(45,56,63)] px-3'>
+        <div className='flex items-center gap-2 flex-1 rounded-sm bg-[rgba(255,255,255,0.12)] px-3'>
         {
             isPlaying ?
             <button onClick={on_play_pause}>
