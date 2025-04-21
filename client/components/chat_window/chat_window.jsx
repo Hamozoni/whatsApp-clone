@@ -14,8 +14,8 @@ export const Chat_window = ()=> {
 
     return (
 
-            <div className="text-[#f7f8fa] flex-1">
-                <div className=" h-screen max-h-full flex flex-col">
+            <div className="text-[#f7f8fa] flex-1 h-screen max-h-screen">
+                <div className=" h-screen flex flex-col max-h-full">
                    <Chat_header receiver={active_chat?.contact}/>
                    {
                       is_preview ?

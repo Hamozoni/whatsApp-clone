@@ -4,7 +4,7 @@ import { Chat_window_context } from "@/contexts/chat_window.context";
 import Image from "next/image";
 import { useContext } from "react";
 import { FaPlay } from "react-icons/fa";
-import { GrNext,GrPrevious  } from "react-icons/gr";
+import { Gallery } from "./gallery";
 
 
 export const Media_gallery = ()=> {
@@ -32,24 +32,7 @@ export const Media_gallery = ()=> {
                 <div className=""></div>
                 <div className=""></div>
             </header>
-            <div className="flex items-center justify-center gap-3 w-fit mx-auto">
-                <div className="">
-                    {
-                        selected_gallery_file?.type === 'IMAGE' ?
-                        <Image src={selected_gallery_file?.url} width={450} height={550} alt={selected_gallery_file?.type} />
-                        : selected_gallery_file?.type === 'VIDEO' ?
-                        <video width={450} height={550} src={selected_gallery_file?.url} controls  />
-                        : selected_gallery_file?.type === 'APPLICATION' &&
-                        <div className="">
-                            <iframe
-                                src={`https://docs.google.com/viewer?url=${encodeURIComponent(selected_gallery_file?.url)}&embedded=true`}
-                                width="450px"
-                                height="550px"
-                            />
-                        </div>
-                    }
-                </div>
-            </div>
+            <Gallery selected_gallery_file={selected_gallery_file} />
             <footer className="border-t-[1px] border-b-cyan-950 bg-black p-2 max-full overflow-x-auto min-h-fit">
                 <div className="flex justify-center items-center min-w-fit gap-2 ">
                     {

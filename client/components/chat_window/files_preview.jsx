@@ -1,32 +1,28 @@
 "use client";
 import { Chat_window_context } from "@/contexts/chat_window.context";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { Gallery } from "./gallery";
 
 export const Files_preview  = () => {
 
     const {message,set_is_preview} = useContext(Chat_window_context);
-    const canvas_ref = useRef(null);
+    const [selected_gallery_file,set_selected_gallery_file] = useState(null);
 
     useEffect(()=> {
         if(message?.file) {
-            const canvas = canvas_ref.current;
-            const ctx = canvas.getContext('2d');
+            console.log(typeof message?.file)
 
             const reader = new FileReader();
-            const image = new Image();
             reader.onload = (e)=> {
-                image.src = e.target.result;
+
+                console.log(typeof e.target.result)
+                set_selected_gallery_file({url:e.target.result,type:message?.file?.type?.split('/')[0]?.toUpperCase()})
             };
+            reader.readAsDataURL(message?.file)
 
-            reader.readAsDataURL(message?.file);
-
-            image.onload = ()=> {
-                ctx.clearRect(0,0,canvas.width,canvas.height);
-                ctx.drawImage(image,0,0,canvas.width,canvas.height);
-            }
         }
-    },[message])
+    },[message]);
 
     return (
         <div className="bg-[#111b21] flex flex-col items-center justify-center h-full">
@@ -35,9 +31,9 @@ export const Files_preview  = () => {
                     <AiOutlineClose />
                 </button>
             </header>
-            <div className="">
-                <canvas width={400} height={400} ref={canvas_ref} />
-            </div>
+            <Gallery 
+                selected_gallery_file={selected_gallery_file} 
+                />
 
         </div>
     );
