@@ -34,7 +34,7 @@ const Message_media_card = ({file})=> {
                         </div>
                     </div>
                 :
-                    <div >
+                    <div onClick={()=> handle_select_file(file)} >
                         <iframe
                             src={`https://docs.google.com/viewer?url=${encodeURIComponent(file.url)}&embedded=true&chrome=false&toolbar=0&navpanes=0`}
                             width="100%"
