@@ -13,15 +13,15 @@ export const Gallery = ({selected_gallery_file})=> {
                     : selected_gallery_file?.type === 'VIDEO' ?
                     <video width={450} height={550} src={selected_gallery_file?.url} controls  />
                     : selected_gallery_file?.type === 'APPLICATION' &&
-                    <div className="max-h-[550px] overflow-y-auto max-w-[450px]">
+                    <div >
                         <iframe
                             src={
                                 selected_gallery_file?.url?.startsWith('https://res.cloudinary.com') ?  
                                 `https://docs.google.com/viewer?url=${encodeURIComponent( selected_gallery_file?.url )}&embedded=true` 
                                 : selected_gallery_file?.url
                             }
-                            width="450px"
-                            height="550px"
+                            width="320px"
+                            height="440px"
                            
                         />
                     </div>

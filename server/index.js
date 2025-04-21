@@ -14,7 +14,7 @@ const server = http.createServer(app)
 
 const socket_io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000","http://172.20.10.4:3000"],
     methods: ["GET", "POST"],
     allowedHeaders: ["Authorization"], // If using auth headers
     credentials: true // Only needed if using cookies/auth

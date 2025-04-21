@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react"
 
 
-export const camera_medea = ()=> {
+export const Medea_capture = ()=> {
 
 
     const [is_photo,set_is_photo] = useState(false);
