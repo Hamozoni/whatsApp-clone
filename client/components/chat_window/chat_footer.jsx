@@ -17,22 +17,25 @@ import { Text_input } from "./text_input";
 
 export const Chat_footer = ()=> {
 
-    const {text,is_recorder,set_is_recorder} = useContext(Chat_window_context);
+    const {text,is_recorder,set_is_recorder,is_preview} = useContext(Chat_window_context);
     const [is_document,set_is_document] = useState(false);
 
 
 
     return (
         <footer className="p-3 bg-[#222e35] relative">
-            <div className="flex items-center gap-2">
-                <AiOutlinePaperClip 
-                    onClick={()=> set_is_document(!is_document)} 
-                    className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#00a884] rotate-90 hide_model"  
-                />
+            <div className="flex items-center gap-2"> 
+                {
+                    !is_preview &&
+                    <AiOutlinePaperClip 
+                        onClick={()=> set_is_document(!is_document)} 
+                        className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#00a884] rotate-90 hide_model"  
+                    />
+                }
                 <Text_input />
                 <div >
                     {
-                        text?.length > 0 ? 
+                       ( text?.length > 0 || is_preview) ? 
                         <Send_message_btn />
                        :
                         <button
@@ -44,6 +47,7 @@ export const Chat_footer = ()=> {
                     }
                 </div>
             </div>
+            
             {
                 is_recorder && 
                 <Audio_recorder />
@@ -52,7 +56,7 @@ export const Chat_footer = ()=> {
                 is_document && 
                 <>
                     <Close_model set_model={set_is_document} />
-                    <Chose_document />
+                    <Chose_document set_is_document={set_is_document} />
                 </>
             }
 

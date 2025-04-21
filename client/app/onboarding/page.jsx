@@ -25,7 +25,6 @@ export default function OnboardingForm() {
       const reader = new FileReader();
       reader.onloadend = () => {
         set_avatar(reader?.result);
-        console.log(reader)
       };
       reader.readAsDataURL(file);
     }

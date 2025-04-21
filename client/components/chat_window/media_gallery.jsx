@@ -21,7 +21,8 @@ export const Media_gallery = ()=> {
         if(e.target.classList.contains('parent')){
             set_is_gallery_file(false)
         }
-    }
+    };
+    
     return (
         <div 
             onClick={handle_close_media} 

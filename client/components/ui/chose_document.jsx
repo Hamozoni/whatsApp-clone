@@ -19,7 +19,7 @@ const optionas = [
 
 const className = "flex items-center gap-3 text-[#f7f8fa] rounded-md hover:bg-[#2b3c46] min-w-[150px] capitalize p-2"
 
-export const Chose_document = () => {
+export const Chose_document = ({set_is_document}) => {
 
     // const [file,set_file] = useState(null);
     const {set_message,set_is_preview} = useContext(Chat_window_context);
@@ -27,6 +27,7 @@ export const Chose_document = () => {
     const handle_select_file = (e)=> {
         set_is_preview(true);
        set_message(prev=> ({...prev,file:e.target.files[0],type:'MEDIA'}));
+       set_is_document(false)
     }
 
     
