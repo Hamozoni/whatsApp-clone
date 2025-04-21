@@ -18,6 +18,8 @@ export const Chat_window_context_provider = ({children})=> {
     const [unread_message,set_unread_message] = useState([]);
     const [loading,set_loading] = useState(true);
     const [error,set_error] = useState(null);
+    const [selected_gallery_file,set_selected_gallery_file] = useState(null);
+    const [is_gallery_file,set_is_gallery_file] = useState(false);
     const message_sound_ref = useRef(null);
 
   
@@ -108,7 +110,11 @@ export const Chat_window_context_provider = ({children})=> {
                     text,
                     set_text,
                     is_recorder,
-                    set_is_recorder
+                    set_is_recorder,
+                    selected_gallery_file,
+                    set_selected_gallery_file,
+                    is_gallery_file,
+                    set_is_gallery_file
                 }
                 }
         >

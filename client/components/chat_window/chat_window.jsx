@@ -1,15 +1,16 @@
 "use cleint"
 import { Chat_window_context } from "@/contexts/chat_window.context";
-import { useContext } from "react"
+import { useContext} from "react"
 import{ Active_chat} from "./active_chat";
 import { Chat_header } from "./chat_header";
 import { Chat_footer } from "./chat_footer";
 import { Files_preview } from "./files_preview";
+import { Media_gallery } from "./media_gallery";
 
 
 export const Chat_window = ()=> {
 
-    const {is_preview , active_chat} = useContext(Chat_window_context);
+    const {is_preview , active_chat,is_gallery_file} = useContext(Chat_window_context);
 
     return (
 
@@ -23,6 +24,11 @@ export const Chat_window = ()=> {
                    }
                    <Chat_footer />
                 </div>
+                {
+                    is_gallery_file && (
+                        <Media_gallery  />
+                    )
+                }
             </div>
     )
 }
