@@ -11,7 +11,9 @@ export const Chat_window_context_provider = ({children})=> {
     const {user,socket,set_chats} = useContext(User_context);
     const [active_chat,set_active_chat] = useState(null);
     const [is_preview,set_is_preview] = useState(false);
-    const [is_recorder,set_is_recorder] = useState(false)
+    const [is_recorder,set_is_recorder] = useState(false);
+    const [is_camera,set_is_camera] = useState(false);
+
     const [messages, set_messages] = useState([]);
     const [message,set_message] = useState({});
     const [text,set_text] = useState('');
@@ -114,7 +116,9 @@ export const Chat_window_context_provider = ({children})=> {
                     selected_gallery_file,
                     set_selected_gallery_file,
                     is_gallery_file,
-                    set_is_gallery_file
+                    set_is_gallery_file,
+                    is_camera,
+                    set_is_camera
                 }
                 }
         >

@@ -22,7 +22,7 @@ const className = "flex items-center gap-3 text-[#f7f8fa] rounded-md hover:bg-[#
 export const Chose_document = ({set_is_document}) => {
 
     // const [file,set_file] = useState(null);
-    const {set_message,set_is_preview} = useContext(Chat_window_context);
+    const {set_message,set_is_preview,set_is_camera} = useContext(Chat_window_context);
 
     const handle_select_file = (e)=> {
         set_is_preview(true);
@@ -39,7 +39,9 @@ export const Chose_document = ({set_is_document}) => {
                         <li key={id} >
                             {
                              (title === 'camera' || title === 'contact') ? 
-                             <div className={className}>
+                             <div onClick={()=>{
+                                title === 'camera' && set_is_camera(true)
+                             }} className={className}>
                                 < Icon size={24}/>
                                 <span>{title}</span> 
                              </div>
