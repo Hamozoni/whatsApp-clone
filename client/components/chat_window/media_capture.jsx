@@ -10,9 +10,10 @@ export const Media_capture = ()=> {
 
     const [is_photo,set_is_photo] = useState(false);
     const [photo,set_photo] = useState(null);
-    const [video_src,set_video_src] = useState(null);
     const [camera_user_mode,set_camera_user_mode] = useState(true);
+    const [recorded_chunks,set_recorded_chunks] = useState(null);
     const canvas_ref = useRef()
+    const media_recorder = useRef()
 
     const video_ref = useRef(null);
 
@@ -25,8 +26,14 @@ export const Media_capture = ()=> {
                 });
 
                 if(video_ref?.current) {
-                    set_video_src(stream)
-                    video_ref.current.srcObject = stream
+                    video_ref.current.srcObject = stream;
+                    recorder = new MediaRecorder(stream);
+
+                    recorder.ondataavailable = (e) => {
+                        set_recorded_chunks(prev=> [...prev,e.data])
+                    };
+
+                    media_recorder.current = recorder
                 }
             }
             catch (error) {
@@ -36,10 +43,13 @@ export const Media_capture = ()=> {
         initialize_camera();
 
         return ()=> {
-            if(video_ref?.current?.srcObject) {
-                const tracks = video_src.getTracks();
-                tracks.forEach(track=> track.stop())
-            }
+                if(video_ref.current.srcObject){
+                    const tracks = video_ref.current.srcObject.getTracks();
+                    tracks.forEach(track=> track.stop());
+                    media_recorder.current.stop()
+
+                }
+           
         }
         
     },[]);
