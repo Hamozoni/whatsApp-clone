@@ -25,7 +25,7 @@ export const Media_capture = ()=> {
                 });
 
                 if(video_ref?.current) {
-                    stream_ref.current = stream
+                    stream_ref.current = stream;
                     video_ref.current.srcObject = stream_ref.current;
                     recorder = new MediaRecorder(stream_ref.current);
 
@@ -60,15 +60,20 @@ export const Media_capture = ()=> {
         const ctx = canvas.getContext('2d');
         const video = video_ref.current;
 
-        canvas.width = video.width;
-        canvas.height = video.height;
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
 
         ctx.drawImage(video,0,0,canvas.width,canvas.height);
 
-        const file = new File(canvas.toDataURL('image/png'));
+        canvas.toBlob((blob)=>{
+            if(!blob) return;
+            const file = new File([blob],`captured_photo_${Date.now()}.png`,{
+                type:'image/png'
+            });
 
+            set_message(prev=> ({...prev,type: 'MEDIA',file}));
+        },'image/png')
 
-        set_message(prev=> ({...prev,type: 'MEDIA',file}));
         set_is_preview(true);
         set_is_camera(false)
 
