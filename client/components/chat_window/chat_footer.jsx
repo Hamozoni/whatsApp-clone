@@ -17,7 +17,7 @@ import { Text_input } from "./text_input";
 
 export const Chat_footer = ()=> {
 
-    const {text,is_recorder,set_is_recorder,is_preview} = useContext(Chat_window_context);
+    const {text,is_recorder,set_is_recorder,is_preview,is_camera} = useContext(Chat_window_context);
     const [is_document,set_is_document] = useState(false);
 
 
@@ -35,7 +35,7 @@ export const Chat_footer = ()=> {
                 <Text_input />
                 <div >
                     {
-                       ( text?.length > 0 || is_preview) ? 
+                       ( text?.length > 0 || is_preview ) ? 
                         <Send_message_btn />
                        :
                         <button

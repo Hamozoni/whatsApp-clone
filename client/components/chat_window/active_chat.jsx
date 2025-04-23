@@ -6,14 +6,13 @@ import { Message_card } from './message_card';
 import { Loading_component } from '../ui/loading_component';
 import { Chat_window_context } from '@/contexts/chat_window.context';
 import { AiOutlineWechatWork } from "react-icons/ai";
-import { Media_capture } from './media_capture';
 
 const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern hide_model'
 
 export const Active_chat = () => {
 
   const {user,socket} = useContext(User_context);
-  const {messages,active_chat,loading,error,set_messages,is_camera} = useContext(Chat_window_context);
+  const {messages,active_chat,loading,error,set_messages} = useContext(Chat_window_context);
 
 
   const chat_sound_ref = useRef(null);
@@ -57,10 +56,6 @@ export const Active_chat = () => {
               
       <div className={className}>
             <audio ref={chat_sound_ref} src="./new_message_sound_2.mp3" className=" hidden"></audio>
-            {
-              is_camera && 
-              <Media_capture />
-            }
             {
                 loading ? 
                 <div className={className}>

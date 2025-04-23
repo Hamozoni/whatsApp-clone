@@ -11,7 +11,7 @@ export const Files_preview  = () => {
 
     useEffect(()=> {
         if(message?.file) {
-            console.log(typeof message?.file)
+            console.log(message?.file)
 
             const reader = new FileReader();
             reader.onload = (e)=> {
