@@ -128,8 +128,18 @@ const Audio_recorder = () => {
 
   useEffect(() => {
     start_recording();
-    set_text('')
+    set_text('');
     return () => {
+      set_message( prev => {
+        return {
+          chat_id: prev?.chat_id,
+          sender: prev?.sender,
+          contact: prev?.contact,
+          text:'',
+          type:'TEXT',
+          status: 'SENT',
+        }
+      } );
       media_recorder_ref.current.stop();
       media_recorder_ref.current.stream.getTracks().forEach(track => track.stop());
       set_recording(false);

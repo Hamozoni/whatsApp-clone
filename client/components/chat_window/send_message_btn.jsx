@@ -17,7 +17,9 @@ export const Send_message_btn = ()=> {
         set_active_chat,
         set_text,
         active_chat,
-        set_is_recorder
+        set_is_recorder,
+        set_message,
+        set_is_preview
     } = useContext(Chat_window_context);
 
     const {socket,set_chats} = useContext(User_context);
@@ -37,6 +39,17 @@ export const Send_message_btn = ()=> {
                 if(!error) {
                     set_text('');
                     set_is_recorder(false);
+                    set_message( prev => {
+                        return {
+                          chat_id: prev?.chat_id,
+                          sender: prev?.sender,
+                          contact: prev?.contact,
+                          text:'',
+                          type:'TEXT',
+                          status: 'SENT',
+                        }
+                      } );
+                    set_is_preview(false);
                 }
 
             }}
