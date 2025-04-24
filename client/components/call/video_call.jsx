@@ -43,7 +43,7 @@ export const Video_call = ()=> {
     return (
         <div className="">
             <video ref={local_video_ref} autoPlay muted/>
-            <video ref={remote_video_ref_video_ref} autoPlay />
+            <video ref={remote_video_ref} autoPlay />
         </div>
     )
 }
