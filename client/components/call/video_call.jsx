@@ -3,10 +3,11 @@
 import { User_context } from "@/contexts/user.context";
 import { useContext, useEffect, useRef, useState } from "react";
 
-export const Video_call = ()=> {
+export const Video_call = ({to})=> {
 
-    const {socket} = useContext(User_context);
+    const {socket,user} = useContext(User_context);
     const [pc,set_pc] = useState(null);
+    const [face_model,set_face_model] = useState('user');
     const local_video_ref = useRef(null);
     const remote_video_ref = useRef(null);
     const peers_ref = useRef({});
@@ -80,10 +81,10 @@ export const Video_call = ()=> {
 
         if(type === 'ice_candidate') {
             try {
-
+                await peer_connection.addIceCandidate(payload)
             }
             catch (err) {
-
+                console.error('Error adding ICE candidate:', err);
             };
         };
 
@@ -91,7 +92,28 @@ export const Video_call = ()=> {
     };
 
     useEffect(()=>  {
+        const init = async ()=> {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: {
+                    facingMode: face_model
+                },
+                audio: true
+            });
 
+            local_video_ref.current.srcObject = stream;
+
+            socket.emit('join_call',to);
+            socket.on('join_call', async () => {
+                await create_peer_connection(to,stream)
+
+            });
+
+            socket.on('signal',({from,type,payload})=> {
+                handle_signal(from,type,payload);
+            })
+        };
+
+        init();
     },[]);
 
     return (
