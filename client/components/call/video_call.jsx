@@ -54,8 +54,41 @@ export const Video_call = ()=> {
             iceServers: [{urls:'stun:stun.l.google.com:19302'}]
         });
 
-        
-    }
+        if(type === 'offer') {
+            await peer_connection.setRemoteDescription(payload);
+
+            const answer = await peer_connection.createAnswer();
+
+            await peer_connection.setLocalDescription(answer);
+
+            socket.emit('singal',{
+                to: from,
+                type: 'answer',
+                payload: answer
+            });
+
+            const local_stream = local_video_ref.current.srcObject;
+
+            local_stream.getTracks(track=> {
+                peer_connection.addTrack(track,local_stream);
+            });
+        };
+
+        if(type === 'answer') {
+            await peer_connection.setRemoteDescription(payload);
+        };
+
+        if(type === 'ice_candidate') {
+            try {
+
+            }
+            catch (err) {
+
+            };
+        };
+
+
+    };
 
     useEffect(()=>  {
 
