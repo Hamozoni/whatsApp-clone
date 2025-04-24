@@ -33,8 +33,29 @@ export const Video_call = ()=> {
 
         peer_connection.ontrack = (e)=> {
             remote_video_ref.current.srcObject = e.streams[0];
-        }
+        };
+
+        peers_ref.current[user_id] = peer_connection;
+
+        const offer = await peer_connection.createOffer();
+
+        await peer_connection.setLocalDescription(offer);
+
+        socket.emit('singal',{
+            to: user_id,
+            type: 'offer',
+            payload: offer,
+        });
     };
+
+
+    const handle_signal = async(from,type,payload) => {
+        const peer_connection = peers_ref.current[from] || new RTCPeerConnection({
+            iceServers: [{urls:'stun:stun.l.google.com:19302'}]
+        });
+
+        
+    }
 
     useEffect(()=>  {
 
