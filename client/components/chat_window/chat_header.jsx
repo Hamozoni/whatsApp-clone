@@ -2,10 +2,15 @@
 import { GoSearch } from "react-icons/go"
 import { HiOutlineDotsVertical } from "react-icons/hi"
 import { IoCallOutline,IoVideocamOutline  } from "react-icons/io5";
+import { Video_call } from "../call/video_call";
+import { useContext } from "react";
+import { Chat_window_context } from "@/contexts/chat_window.context";
 
 
 export const Chat_header = ({receiver})=> {
 
+
+const { is_call,set_is_call} = useContext(Chat_window_context);
     return (
         <div className="p-3 bg-[#222e35] text-[#f7f8fa] flex items-center hide_model">
             <div className="w-10 h-10 rounded-full overflow-hidden hide_model">
@@ -26,7 +31,7 @@ export const Chat_header = ({receiver})=> {
                         <IoCallOutline size={18} className='text-[#f7f8fa]'/>
                     </button>
                     <div className="w-[1px] min-w[1px] h-[20px] min-h-[20px] bg-[#ffffff] hide_model">  </div>
-                    <button className="flex justify-center items-center p-2 rounded-md hover:bg-[#00a884] cursor-pointer hide_model">
+                    <button onClick={()=> set_is_call(true)} className="flex justify-center items-center p-2 rounded-md hover:bg-[#00a884] cursor-pointer hide_model">
                         <IoVideocamOutline size={18} className='text-[#f7f8fa] hide_model'/>
                     </button>
                 </div>
@@ -35,6 +40,11 @@ export const Chat_header = ({receiver})=> {
                     <HiOutlineDotsVertical className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#bcc0c7] hide_model" />
                 </div>
             </div>
+            {
+                is_call && (
+                    <Video_call to={receiver?._id} />
+                )
+            }
         </div>
     )
 }

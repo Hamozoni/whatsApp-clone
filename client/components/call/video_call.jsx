@@ -5,7 +5,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 
 export const Video_call = ({to})=> {
 
-    const {socket,user} = useContext(User_context);
+    const {socket} = useContext(User_context);
     const [pc,set_pc] = useState(null);
     const [face_model,set_face_model] = useState('user');
     const local_video_ref = useRef(null);
@@ -114,10 +114,14 @@ export const Video_call = ({to})=> {
         };
 
         init();
+
+        return ()=> {
+            Object.values(peers_ref.current).forEach(pc=> pc.close())
+        }
     },[]);
 
     return (
-        <div className="">
+        <div className=" fixed top-0 left-0 w-screen h-screen z-30 bg-gray-900">
             <video ref={local_video_ref} autoPlay muted/>
             <video ref={remote_video_ref} autoPlay />
         </div>

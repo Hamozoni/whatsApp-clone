@@ -13,6 +13,7 @@ export const Chat_window_context_provider = ({children})=> {
     const [is_preview,set_is_preview] = useState(false);
     const [is_recorder,set_is_recorder] = useState(false);
     const [is_camera,set_is_camera] = useState(false);
+    const [is_call,set_is_call] = useState(false);
 
     const [messages, set_messages] = useState([]);
     const [message,set_message] = useState({});
@@ -89,7 +90,7 @@ export const Chat_window_context_provider = ({children})=> {
         return ()=> {
             socket?.off('message_sent');
         }
-    },[])
+    },[socket])
     
 
 
@@ -118,7 +119,9 @@ export const Chat_window_context_provider = ({children})=> {
                     is_gallery_file,
                     set_is_gallery_file,
                     is_camera,
-                    set_is_camera
+                    set_is_camera,
+                    is_call,
+                    set_is_call
                 }
                 }
         >
