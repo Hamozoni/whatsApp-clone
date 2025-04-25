@@ -51,6 +51,7 @@ export const Video_call = ({to})=> {
 
 
     const handle_signal = async(from,type,payload) => {
+
         const peer_connection = peers_ref.current[from] || new RTCPeerConnection({
             iceServers: [{urls:'stun:stun.l.google.com:19302'}]
         });
@@ -121,8 +122,8 @@ export const Video_call = ({to})=> {
     },[]);
 
     return (
-        <div className=" fixed top-0 left-0 w-screen h-screen z-30 bg-gray-900">
-            <video ref={local_video_ref} autoPlay muted/>
+        <div className="fixed top-0 left-0 w-screen h-screen z-30 bg-gray-900">
+            <video className=" relative top-0 left-0 w-screen h-screen z-40 " ref={local_video_ref} autoPlay muted/>
             <video ref={remote_video_ref} autoPlay />
         </div>
     )
