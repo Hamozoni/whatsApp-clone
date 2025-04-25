@@ -63,25 +63,6 @@ export const Chat_window_context_provider = ({children})=> {
                 return [data,...chats]
             });
 
-            // set_unread_message( prev => {
-            //    const exist_chat = prev.find(e=> e._id === data?._id);
-
-               
-            //    if(exist_chat) {
-
-            //       const new_chat = [];
-
-            //       prev?.map( chat => {
-            //          chat?._id === exist_chat?._id ? new_chat?.push({exist_chat,unread : [...exist_chat?.unread,data?.last_message]}) : new_chat?.push(chat)
-            //       });
-
-            //       return [...new_chat]
-            //    }
-            //   return [...prev,{_id: data?._id,unread : [data?.last_message]}] 
-               
-            // });
-
-            console.log(unread_message)
             if(data?._id !== active_chat?._id) {
                 message_sound_ref?.current?.play();
             }
