@@ -2,6 +2,10 @@
 
 import { User_context } from "@/contexts/user.context";
 import { useContext, useEffect, useRef, useState } from "react";
+import { MdCallEnd } from "react-icons/md";
+import { HiSpeakerWave } from "react-icons/hi2";
+import { FaMicrophoneSlash } from "react-icons/fa";
+import { FaVideo } from "react-icons/fa6";
 
 export const Video_call = ({to})=> {
 
