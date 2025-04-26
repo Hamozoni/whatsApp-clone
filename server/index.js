@@ -44,7 +44,7 @@ socket_io.on('connection',socket => {
   });
 
   socket.on('signal',({ to, type, payload })=> {
-
+    console.log({ to, type, payload })
     const to_socket_id = users_socket.get(to);
 
     socket.to(to_socket_id).emit('signal', { from: socket.id, type, payload })

@@ -76,7 +76,7 @@ export const Chat_window_context_provider = ({children})=> {
         return ()=> {
             socket?.off('message_sent');
         }
-    },[socket])
+    },[])
     
 
 
