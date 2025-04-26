@@ -68,6 +68,11 @@ export const Chat_window_context_provider = ({children})=> {
             }
         });
 
+        socket?.on('signal',(data)=> {
+            console.log(data);
+            set_is_call(true)
+        })
+
         return ()=> {
             socket?.off('message_sent');
         }

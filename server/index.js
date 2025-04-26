@@ -43,6 +43,14 @@ socket_io.on('connection',socket => {
     socket.to(socket_id).emit('message_sent',data);
   });
 
+  socket.on('signal',({ to, type, payload })=> {
+
+    const to_socket_id = users_socket.get(to);
+
+    socket.to(to_socket_id).emit('signal', { from: socket.id, type, payload })
+
+  })
+
   socket.on('message_status_changed',data=> {
 
     console.log('message_status_changed' +data )

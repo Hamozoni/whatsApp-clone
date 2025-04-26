@@ -6,10 +6,12 @@ import { MdCallEnd } from "react-icons/md";
 import { HiSpeakerWave } from "react-icons/hi2";
 import { FaMicrophoneSlash } from "react-icons/fa";
 import { FaVideo } from "react-icons/fa6";
+import { Chat_window_context } from "@/contexts/chat_window.context";
 
 export const Video_call = ({to})=> {
 
     const {socket} = useContext(User_context);
+    const {set_is_call} = useContext(Chat_window_context);
     const [pc,set_pc] = useState(null);
     const [face_model,set_face_model] = useState('user');
     const local_video_ref = useRef(null);
@@ -98,24 +100,24 @@ export const Video_call = ({to})=> {
 
     useEffect(()=>  {
         const init = async ()=> {
-            const stream = await navigator.mediaDevices.getUserMedia({
-                video: {
-                    facingMode: face_model
-                },
-                audio: true
-            });
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: face_model
+                    },
+                    audio: true
+                });
+                await create_peer_connection(to,stream);
+                socket.on('signal',({from,type,payload})=> {
+                    handle_signal(from,type,payload);
+                })
 
-            local_video_ref.current.srcObject = stream;
+            }
+            catch (error) {
+                set_is_call(false);
+                console.error(error);
+            }
 
-            socket.emit('join_call',to);
-            socket.on('join_call', async () => {
-                await create_peer_connection(to,stream)
-
-            });
-
-            socket.on('signal',({from,type,payload})=> {
-                handle_signal(from,type,payload);
-            })
         };
 
         init();
@@ -123,7 +125,7 @@ export const Video_call = ({to})=> {
         return ()=> {
             Object.values(peers_ref.current).forEach(pc=> pc.close())
         }
-    },[]);
+    },[socket]);
 
     return (
         <div className="fixed top-0 left-0 w-screen h-screen z-30 bg-gray-900">
