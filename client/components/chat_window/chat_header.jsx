@@ -4,12 +4,19 @@ import { HiOutlineDotsVertical } from "react-icons/hi"
 import { IoCallOutline,IoVideocamOutline  } from "react-icons/io5";
 import { useContext } from "react";
 import { Call_context } from "@/contexts/call.context";
+import { User_context } from "@/contexts/user.context";
 
 
 export const Chat_header = ({receiver})=> {
 
+    const {set_is_call} = useContext(Call_context);
+    const {socket} = useContext(User_context);
 
-const {set_is_call} = useContext(Call_context);
+    const start_call = ()=> {
+        socket?.emit('call',)
+        set_is_call(true);
+    }
+
     return (
         <div className="p-3 bg-[#222e35] text-[#f7f8fa] flex items-center hide_model">
             <div className="w-10 h-10 rounded-full overflow-hidden hide_model">
@@ -17,7 +24,6 @@ const {set_is_call} = useContext(Call_context);
             </div>
             <div className="ml-4 flex-1 hide_model">
                 <h2 className="font-semibold text-[#f7f8fa] hide_model">
-                {/* {chats.find(chat => chat.id === activeChat)?.name} */}
                    {receiver?.name}
                 </h2>
                 <p className="text-sm font-light text-[#f7f8fa] hide_model">
