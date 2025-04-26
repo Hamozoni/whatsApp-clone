@@ -3,13 +3,13 @@ import { GoSearch } from "react-icons/go"
 import { HiOutlineDotsVertical } from "react-icons/hi"
 import { IoCallOutline,IoVideocamOutline  } from "react-icons/io5";
 import { useContext } from "react";
-import { Chat_window_context } from "@/contexts/chat_window.context";
+import { Call_context } from "@/contexts/call.context";
 
 
 export const Chat_header = ({receiver})=> {
 
 
-const {set_is_call} = useContext(Chat_window_context);
+const {set_is_call} = useContext(Call_context);
     return (
         <div className="p-3 bg-[#222e35] text-[#f7f8fa] flex items-center hide_model">
             <div className="w-10 h-10 rounded-full overflow-hidden hide_model">
