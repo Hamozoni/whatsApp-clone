@@ -8,23 +8,8 @@ import { FaMicrophoneSlash } from "react-icons/fa";
 import { FaVideo } from "react-icons/fa6";
 import { Chat_window_context } from "@/contexts/chat_window.context";
 
-export const Video_call = ({to})=> {
+export const Outgoing_call = ()=> {
 
-    const {socket} = useContext(User_context);
-    const {set_is_call} = useContext(Chat_window_context);
-    const [pc,set_pc] = useState(null);
-    const [face_model,set_face_model] = useState('user');
-    const local_video_ref = useRef(null);
-    const remote_video_ref = useRef(null);
-    const peer_connection = useRef(null);
-
-    const create_peer = async ()=> {
-        
-    }
-
-    useEffect(()=> {
-        if(!peer_connection.current) create_peer()
-    })
 
     return (
         <div className="fixed top-0 left-0 w-screen h-screen z-30 bg-gray-900">
