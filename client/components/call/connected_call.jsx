@@ -15,7 +15,7 @@ export const Connected_call = ()=> {
     const peer_connection = useRef(null);
 
 
-    const create_peer_connection = ()=> {
+    const create_peer_connection = async()=> {
         peer_connection.current = new RTCPeerConnection({
             iceServers: [{urls: 'stun:stun.l.google.com:19302'}]
         });
@@ -31,14 +31,25 @@ export const Connected_call = ()=> {
         peer_connection.current.onicecandidate = ({candidate})=> {
             if(candidate) {
                 socket?.emit('signal',{
-                    to: callee?._id,
+                    from : user?._id ===  caller?._id ? caller : callee ,
+                    to: user?._id ===  caller?._id ? callee?._id : caller?._id,
                     type: 'ice_candidate',
                     data: candidate
                 })
             }
         };
 
-        socket.on('signal', async ({type})=> {
+        const offer  = await peer_connection.current.createOffer();
+        await peer_connection.current.setLocalDescription(offer);
+
+        socket.emit('signal',{
+            from : user?._id ===  caller?._id ? caller : callee ,
+            to: user?._id ===  caller?._id ? callee?._id : caller?._id,
+            type: 'offer',
+            data: offer
+        })
+
+        socket.on('signal', async ({from,type,to,data})=> {
             if(!peer_connection.current) return;
 
             try {
@@ -48,8 +59,17 @@ export const Connected_call = ()=> {
                     await peer_connection.current.setLocalDescription(answer);
 
                     socket.emit('signal',{
-                        
+                        to: from?._id,
+                        from: to === callee?._id ? callee : caller,
+                        type: 'answer',
+                        data: answer
                     })
+                } else if (type === 'answer') {
+                    await peer_connection.current.setRemoteDescription(data)
+                } else if (type === 'ice_candidate') {
+                    await peer_connection.current.addIceCandidate(
+                        new RTCIceCandidate(data)
+                    )
                 }
             }
             catch (error) {
@@ -68,6 +88,7 @@ export const Connected_call = ()=> {
 
 
             local_video_ref.current.srcObject = stream;
+            await create_peer_connection()
 
             return stream;
         }
@@ -76,11 +97,13 @@ export const Connected_call = ()=> {
         }
     }
     useEffect(()=>{
-
-        const init  = async ()=> {
-
+        get_media()
+        return ()=> {
+            const stream = get_media();
+            stream.getTracks().forEach(track=> {
+                track.stop();
+            })
         }
-
     },[]);
 
     return (
