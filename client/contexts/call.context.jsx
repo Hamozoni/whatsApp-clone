@@ -31,13 +31,13 @@ export const Call_context_provider = ({children})=> {
         });
 
         socket?.on('call_connected',()=> {
+
+            console.log('set_call_status')
             set_call_status('connected');
         })
-
         return ()=> {
             socket?.off('coming_call')
             socket?.off('call_end');
-            socket?.off('call_connected');
         }
     },[socket]);
 

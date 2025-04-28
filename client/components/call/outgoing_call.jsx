@@ -23,8 +23,9 @@ export const Outgoing_call = ()=> {
         const init = async ()=> {
             try {
 
+
                 const stream = await navigator.mediaDevices.getUserMedia({
-                    video: true,
+                   video: { facingMode: "user" },
                     audio: true
                 });
 
@@ -36,18 +37,13 @@ export const Outgoing_call = ()=> {
 
             }
             catch (error) {
-                // set_call_status('idle')
+                console.error(error)
+                set_call_status('idle');
             }
         };
         init();
-
-        return ()=> {
-            if(local_video_ref.current) {
-                local_video_ref.current.srcObject.getTracks().forEach(track=> track.stop())
-            }
-
-        }
     },[]);
+
 
     const end_call = ()=> {
         socket.emit('call_end',{to:callee?._id})

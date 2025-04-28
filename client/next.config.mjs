@@ -1,6 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: false,
+    async rewrites() {
+        return [
+          {
+            source: '/api/:path*',
+            destination: 'https://localhost:4400/api/:path*'
+          }
+        ]
+      },
+      // For local HTTPS dev server
+      devIndicators: {
+        autoPrerender: false,
+      },
     async headers () {
         return [
             {
@@ -11,6 +23,7 @@ const nextConfig = {
                         value: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
                     }
                 ],
+
             }
         ]
     },

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev -H 172.20.10.4 --experimental-https --experimental-https-key ../server/ssl/key.pem --experimental-https-cert ../server/ssl/cert.pem",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -31,6 +31,7 @@
     "@tailwindcss/postcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.2.0",
+    "next-https": "^1.1.16",
     "tailwindcss": "^4"
   }
 }

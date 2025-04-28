@@ -2,7 +2,6 @@
 
 import { Call_context } from "@/contexts/call.context";
 import { User_context } from "@/contexts/user.context";
-import Image from "next/image";
 import { useContext, useEffect, useRef } from "react";
 import { MdCallEnd } from "react-icons/md";
 
@@ -81,41 +80,23 @@ export const Connected_call = ()=> {
     };
 
     const get_media = async()=> {
-        try {
+
             const stream = await navigator.mediaDevices.getUserMedia({
-                video: true,
+                video: { facingMode: "user" },
                 audio: true
             });
 
 
             local_video_ref.current.srcObject = stream;
-            await create_peer_connection()
-
-            return stream;
-        }
-        catch (error) {
-            console.error(error)
-        }
+            create_peer_connection()
     }
     useEffect(()=>{
         get_media()
-        return ()=> {
-            const stream = get_media();
-            stream.getTracks().forEach(track=> {
-                track.stop();
-            })
-        }
-    },[]);
+    },[socket]);
 
     return (
         <div className=" relative flex flex-col items-center justify-center h-full min-h-full">
             <div className="flex flex-col items-center justify-center text-gray-50">
-                <Image 
-                    src={ callee?._id === user?._id ? caller?.profile_picture : callee?.profile_picture} 
-                    width={30} 
-                    height={30} 
-                    alt='caller' 
-                    className=" rounded-full" />
                 <h5>{callee?._id === user?._id ? caller?.name : callee?.name}</h5>
                 <p>05</p>
             </div>

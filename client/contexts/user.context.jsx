@@ -37,7 +37,7 @@ export const  User_context_provider =  ({children})=> {
                set_chats(data?.chats);
                set_contacts(data?.user?.contacts);
              };
-             const socket = await io.connect('http://localhost:4400',{
+             const socket = await io.connect('https://172.20.10.4:4400',{
                 reconnection: true,
                 reconnectionAttempts: 5,
                 transports: ['websocket'],

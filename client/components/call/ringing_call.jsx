@@ -11,34 +11,34 @@ export const Ringing_call = ()=> {
     const {caller,set_call_status} = useContext(Call_context);
     const {socket} = useContext(User_context);
 
-    const local_video_ref = useRef(null);
+    // const local_video_ref = useRef(null);
 
 
 
-    useEffect(()=> {
-        const init = async ()=> {
-            try {
+    // useEffect(()=> {
+    //     const init = async ()=> {
+    //         try {
 
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: true,
-                    audio: true
-                });
+    //             const stream = await navigator.mediaDevices.getUserMedia({
+    //                 video: true,
+    //                 audio: true
+    //             });
 
-                local_video_ref.current.srcObject = stream;
-            }
-            catch (error) {
-                // set_call_status('idle')
-            }
-        };
-        init();
+    //             local_video_ref.current.srcObject = stream;
+    //         }
+    //         catch (error) {
+    //             // set_call_status('idle')
+    //         }
+    //     };
+    //     init();
 
-        return ()=> {
-            if(local_video_ref.current) {
-                local_video_ref.current.srcObject.getTracks().forEach(track=> track.stop())
-            }
+    //     return ()=> {
+    //         if(local_video_ref.current) {
+    //             local_video_ref.current.srcObject.getTracks().forEach(track=> track.stop())
+    //         }
 
-        }
-    },[]);
+    //     }
+    // },[]);
 
     const end_call = ()=> {
         socket.emit('call_end',{to:caller?._id})
@@ -57,7 +57,7 @@ export const Ringing_call = ()=> {
                 <h5>{caller?.name}</h5>
                 <p>coming call...</p>
             </div>
-            <video className="w-[450px] h-[400px] rounded-md" ref={local_video_ref} autoPlay muted/>
+            {/* <video className="w-[450px] h-[400px] rounded-md" ref={local_video_ref} autoPlay muted/> */}
             <div className="flex items-center justify-center gap-5">
                 <button onClick={end_call} className="p-3 rounded-full text-red-500 bg-blue-50">
                     <MdCallEnd size={28} />
