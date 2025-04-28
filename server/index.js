@@ -43,6 +43,23 @@ socket_io.on('connection',socket => {
     socket.to(socket_id).emit('message_sent',data);
   });
 
+  socket.on('call',({from,to,offer})=> {
+
+    const callee = users_socket.get(to);
+    socket.to(callee).emit('coming_call',{from});
+  });
+
+  socket.on('call_end',({to})=> {
+    const callee = users_socket.get(to);
+    socket.to(callee).emit('call_end');
+  });
+
+  socket.on('call_connected',({to})=> {
+    const callee = users_socket.get(to);
+    socket.to(callee).emit('call_connected');
+  });
+
+  
 
   socket.on('disconnect',()=> {
     users_socket.delete(user_id);

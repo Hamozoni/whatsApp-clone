@@ -16,39 +16,6 @@ export const Outgoing_call = ()=> {
     const {socket} = useContext(User_context);
 
     const local_video_ref = useRef(null);
-    const peer_connection = useRef(null);
-
-
-    const create_peer_connection = (stream) => {
-
-        const pc = new RTCPeerConnection({
-            iceServers: [{urls: 'stun:stun.l.google.com:19302'}]
-        });
-
-        stream.getTracks()?.forEach(track=> pc.addTrack(track,stream));
-
-        pc.onicecandidate = ({candidate})=> {
-            socket?.emit('ice_candidate',{
-                from: caller,
-                to: callee?._id,
-                candidate
-            })
-        };
-
-        pc.createOffer()
-        .the((offer)=> {
-            pc.setLocalDescription(offer)
-        })
-        .the(()=> {
-            socket?.emit('call',{
-                from: caller,
-                to: callee?._id,
-                offer: pc.localDescription
-            })
-        });
-
-        peer_connection.current = pc
-    };
 
 
 
@@ -62,7 +29,10 @@ export const Outgoing_call = ()=> {
                 });
 
                 local_video_ref.current.srcObject = stream;
-                create_peer_connection(stream);
+                socket.emit('call',{
+                    from: caller,
+                    to: callee?._id,
+                });
 
             }
             catch (error) {
@@ -72,10 +42,6 @@ export const Outgoing_call = ()=> {
         init();
 
         return ()=> {
-            if(peer_connection.current){
-                peer_connection.current.close();
-            }
-
             if(local_video_ref.current) {
                 local_video_ref.current.srcObject.getTracks().forEach(track=> track.stop())
             }
@@ -84,6 +50,7 @@ export const Outgoing_call = ()=> {
     },[]);
 
     const end_call = ()=> {
+        socket.emit('call_end',{to:callee?._id})
         set_call_status('idle')
     }
 
@@ -100,6 +67,7 @@ export const Outgoing_call = ()=> {
                     <MdCallEnd size={28} />
                 </button>
             </div>
+            <audio src="./outgoing-call.mp3" hidden autoPlay loop />
         </div>
     )
 }
