@@ -36,7 +36,8 @@ export const Call_context_provider = ({children})=> {
 
         return ()=> {
             socket?.off('coming_call')
-            socket?.off('call_end')
+            socket?.off('call_end');
+            socket?.off('call_connected');
         }
     },[socket]);
 

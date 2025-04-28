@@ -2,6 +2,7 @@
 
 import { Call_context } from "@/contexts/call.context";
 import { User_context } from "@/contexts/user.context";
+import Image from "next/image";
 import { useContext, useEffect, useRef } from "react";
 import { MdCallEnd } from "react-icons/md";
 
