@@ -1,14 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: false,
-    async rewrites() {
-        return [
-          {
-            source: '/api/:path*',
-            destination: 'https://localhost:4400/api/:path*'
-          }
-        ]
-      },
+    // async rewrites() {
+    //     return [
+    //       {
+    //         source: '/api/:path*',
+    //         destination: 'https://172.20.10.4:4400/api/:path*'
+    //       }
+    //     ]
+    //   },
       // For local HTTPS dev server
       devIndicators: {
         autoPrerender: false,
