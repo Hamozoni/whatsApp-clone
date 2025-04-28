@@ -25,6 +25,7 @@ export const Connected_call = ()=> {
         });
 
         peer_connection.current.ontrack = (e)=> {
+            console.log(e.streams[0])
             remote_video_ref.current.srcObject = e.streams[0]
         };
 
@@ -91,7 +92,7 @@ export const Connected_call = ()=> {
             create_peer_connection()
     }
     useEffect(()=>{
-        get_media()
+        get_media();
     },[socket]);
 
     return (
