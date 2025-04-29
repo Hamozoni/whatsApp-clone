@@ -11,29 +11,37 @@ const h = 'absolute top-2 left-2 z-30 max-w-[100px]  min-h-[150px] md:min-h-[250
 
 export const Connected_call = ()=> {
 
-    const {callee,caller,camera_facing_mode,set_camera_facing_mode,set_call_status} = useContext(Call_context);
+    const {
+        callee,
+        caller,
+        camera_facing_mode,
+        set_camera_facing_mode,
+        set_call_status,
+        local_video,
+        remote_video,
+        peer_connection,
+        get_user_media
+    } = useContext(Call_context);
+
     const {user,socket} = useContext(User_context);
 
+    const [is_full_screen,set_is_full_screen] = useState(false);
     const local_video_ref = useRef(null);
     const remote_video_ref = useRef(null);
-    const peer_connection = useRef(null);
-
-    const [is_full_screen,set_is_full_screen] = useState(false);
 
 
-    const create_peer_connection = async (stream)=> {
+    const create_peer_connection = async (local_video)=> {
 
-        peer_connection.current =  peer_connection.current || new RTCPeerConnection({
+        peer_connection.current =  new RTCPeerConnection({
             iceServers: [{urls: 'stun:stun.l.google.com:19302'}]
         });
 
-        stream.getTracks().forEach(track=> {
+        local_video.current.srcObject.getTracks().forEach(track=> {
             peer_connection.current.addTrack(track,stream)
         });
 
         peer_connection.current.ontrack = (e)=> {
-            console.log(e.streams[0])
-            remote_video_ref.current.srcObject = e.streams[0]
+            remote_video.current.srcObject = e.streams[0]
         };
 
 
@@ -76,9 +84,8 @@ export const Connected_call = ()=> {
                 } else if (type === 'answer') {
                     await peer_connection.current.setRemoteDescription(data)
                 } else if (type === 'ice_candidate') {
-                    await peer_connection.current.addIceCandidate(
-                        new RTCIceCandidate(data)
-                    )
+                    await peer_connection.current.addIceCandidate(new RTCIceCandidate(data))
+                    
                 }
             }
             catch (error) {
@@ -88,55 +95,21 @@ export const Connected_call = ()=> {
         })
     };
 
-    const get_user_media = async()=> {
-
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: camera_facing_mode  ? 'environment' : "user"  ,aspectRatio: 3/4 },
-                audio: true
-            });
-            local_video_ref.current.srcObject = stream;
-            return stream;
-        }
-        catch (error) {
-            console.error(error)
-        }
-            
-    };
-
-    const start_call =  () => {
-        get_user_media()
-        .then( async (stream)=>{
-           create_peer_connection(stream);
-        })
-    };
-
-    
-    const clean_up = ()=>{
-
-        local_video_ref.current?.srcObject.getTracks().forEach(track=> track.stop())
-    
-        if(peer_connection.current) {
-            peer_connection?.current?.close();
-            peer_connection.current = null
-        };
-        set_call_status('idle');
-    };
-
     useEffect(()=>{
-        start_call();
-        return ()=> clean_up();
+        create_peer_connection(local_video);
+            local_video_ref.current.srcObject = local_video.current.srcObject
+            remote_video_ref.current?.srcObject = remote_video.current.srcObject;
     },[]);
 
     useEffect(()=> {
         socket?.on('call_end',()=> {
-            clean_up()
         });
     },[socket])
 
-    const switch_camera = ()=> {
-         get_user_media()
-        .then(async(stream)=> {
+    const switch_camera = async()=> {
+
+            const stream = await get_user_media();
+
             const new_stream = stream.getVideoTracks()[0];
 
             const sender = peer_connection.current.getSenders().find(s=> s.track.kind === 'video');
@@ -145,8 +118,9 @@ export const Connected_call = ()=> {
                 await sender.replaceTrack(new_stream)
             };
 
-        
-        })
+            local_video.current.srcObject = stream;
+            local_video_ref.current.srcObject = stream
+
     }
 
     const handle_camera_mode = async ()=> {
@@ -159,7 +133,6 @@ export const Connected_call = ()=> {
 
     const call_end = ()=> {
         socket?.emit('call_end',{ to: user?._id ===  caller?._id ? callee?._id : caller?._id,});
-        clean_up()
     }
 
     return (
@@ -168,8 +141,17 @@ export const Connected_call = ()=> {
                 <h5>{callee?._id === user?._id ? caller?.name : callee?.name}</h5>
                 <p>05</p>
             </div>
-            <video onClick={()=> set_is_full_screen(true)} className={is_full_screen ? f : h} ref={local_video_ref} autoPlay muted/>
-            <video onClick={()=> set_is_full_screen(false)} className={is_full_screen ? h : f} ref={remote_video_ref} autoPlay />
+                <video 
+                    onClick={()=> set_is_full_screen(true)} 
+                    className={is_full_screen ? f : h} 
+                    autoPlay muted
+                    ref={local_video_ref}
+                    />
+                <video 
+                    onClick={()=> set_is_full_screen(false)} 
+                    className={is_full_screen ? h : f} 
+                    ref={remote_video_ref}
+                    autoPlay />
             <div className="absolute w-fit bottom-3 left-1/2 -translate-x-1/2 z-40 flex items-center justify-center gap-3 bg-[#ffffff07] p-2 rounded-xl">
                 <button onClick={handle_camera_mode} className="p-3 rounded-full text-blue-50 bg-[#0000001f]">
                     <RiCameraSwitchLine size={28}  />

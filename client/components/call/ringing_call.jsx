@@ -8,15 +8,23 @@ import { MdCallEnd } from "react-icons/md";
 
 export const Ringing_call = ()=> {
 
-    const {caller,set_call_status} = useContext(Call_context);
+    const {caller,set_call_status,camera_facing_mode,local_video} = useContext(Call_context);
     const {socket} = useContext(User_context);
+
+    const local_video_ref = useRef(null)
 
 
     useEffect(()=> {
         socket?.on('call_end',()=> {
             set_call_status('idle');
         });
-    },[socket])
+    },[socket]);
+
+    useEffect(()=> {
+        if(local_video_ref.current && local_video.current) {
+            local_video_ref.current.srcObject = local_video.current
+        }
+    },[local_video]);
 
     const end_call = ()=> {
         socket.emit('call_end',{to:caller?._id})
@@ -26,7 +34,7 @@ export const Ringing_call = ()=> {
     const answer_call = ()=> {
         socket.emit('call_connected',{to:caller?._id})
         set_call_status('connected');
-    }
+    };
 
     return (
         <div className="flex flex-col items-center justify-center h-full min-h-full">
@@ -35,7 +43,12 @@ export const Ringing_call = ()=> {
                 <h5>{caller?.name}</h5>
                 <p>coming call...</p>
             </div>
-            <div className="h-full"></div>
+
+            <video 
+                className="w-auto h-screen object-cover rounded-md" 
+                ref={local_video_ref} 
+                autoPlay muted
+                />
             <div className="flex items-center justify-center gap-5">
                 <button onClick={end_call} className="p-3 rounded-full text-red-500 bg-blue-50">
                     <MdCallEnd size={28} />
