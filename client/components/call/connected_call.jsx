@@ -114,20 +114,8 @@ export const Connected_call = ()=> {
     useEffect(()=>{
         start_call();
 
-        socket?.on('camera_mode',async()=>{
-            await get_user_media()
-            .then(async (stream)=>{
-                stream.getTracks().forEach(track=> {
-                    peer_connection.current.addTrack(track,stream)
-                });
-
-                peer_connection.current.ontrack = (e)=> {
-                    console.log(e.streams[0])
-                    remote_video_ref.current.srcObject = e.streams[0]
-                };
-
-
-            });
+        socket?.on('camera_mode',()=>{
+            start_call()
         });
 
     },[socket,camera_facing_mode]);
