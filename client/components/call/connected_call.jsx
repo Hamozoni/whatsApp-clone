@@ -21,7 +21,7 @@ export const Connected_call = ()=> {
     const [is_full_screen,set_is_full_screen] = useState(false);
 
 
-    const create_peer_connection = async ()=> {
+    const create_peer_connection = async (stream)=> {
 
         peer_connection.current =  peer_connection.current || new RTCPeerConnection({
             iceServers: [{urls: 'stun:stun.l.google.com:19302'}]
