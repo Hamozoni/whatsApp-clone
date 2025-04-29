@@ -30,7 +30,7 @@ export const Connected_call = ()=> {
 
     const create_peer_connection = async (stream)=> {
 
-        peer_connection.current =  new RTCPeerConnection({
+        peer_connection.current =  peer_connection.current || new RTCPeerConnection({
             iceServers: [{urls: 'stun:stun.l.google.com:19302'}]
         });
 
@@ -39,9 +39,21 @@ export const Connected_call = ()=> {
         });
 
         peer_connection.current.ontrack = (e)=> {
-            remote_video_ref.current.srcObject = e.streams[0]
+            if(remote_video_ref.current){
+                remote_video_ref.current.srcObject = e.streams[0]
+            }
         };
 
+
+        const offer  = await peer_connection.current.createOffer();
+        await peer_connection.current.setLocalDescription(offer);
+
+        socket.emit('signal',{
+            from : user?._id ===  caller?._id ? caller : callee ,
+            to: user?._id ===  caller?._id ? callee?._id : caller?._id,
+            type: 'offer',
+            data: offer
+        });
 
         peer_connection.current.onicecandidate = ({candidate})=> {
             if(candidate) {
@@ -53,41 +65,40 @@ export const Connected_call = ()=> {
                 })
             }
         };
-
-        const offer  = await peer_connection.current.createOffer();
-        await peer_connection.current.setLocalDescription(offer);
-
-        socket.emit('signal',{
-            from : user?._id ===  caller?._id ? caller : callee ,
-            to: user?._id ===  caller?._id ? callee?._id : caller?._id,
-            type: 'offer',
-            data: offer
-        });
     };
 
 
     const call_end = ()=> {
         socket?.emit('call_end',{ to: user?._id ===  caller?._id ? callee?._id : caller?._id,});
-        local_video_ref.current.srcObject.getTracks().forEach(track=> track.stop());
+        if(local_video_ref.current) {
+            local_video_ref.current.srcObject?.getTracks().forEach(track=> track.stop());
+        };
+        if (peer_connection.current) {
+            
+            peer_connection.current.close();
+            peer_connection.current = null
+        }
         set_call_status('idle')
     };
 
     useEffect(()=>{
 
         const start_call = async ()=> {
-            const stream = await get_user_media()
-            create_peer_connection(stream);
+            const stream = await get_user_media();
+            if(local_video_ref.current){
+                local_video_ref.current.srcObject = stream
+               await create_peer_connection(stream);
+
+            }
         };
 
         start_call();
-        return ()=> call_end();
+        // return ()=> call_end();
     },[]);
 
     useEffect(()=> {
 
-        socket?.on('call_end',()=> {
-            call_end()
-        });
+        // socket?.on('call_end',call_end);
 
         socket?.on('signal', async ({from,type,to,data})=> {
             if(!peer_connection.current) return;
@@ -105,9 +116,16 @@ export const Connected_call = ()=> {
                         data: answer
                     })
                 } else if (type === 'answer') {
-                    await peer_connection.current.setRemoteDescription(data)
+                    if(!peer_connection.current.currentRemoteDescription){
+                        await peer_connection.current.setRemoteDescription(data);
+                    }
+
                 } else if (type === 'ice_candidate') {
-                    await peer_connection.current.addIceCandidate(new RTCIceCandidate(data))
+
+                    const candidate= new RTCIceCandidate(data);
+                    if(peer_connection.current.currentRemoteDescription){
+                        await peer_connection.current.addIceCandidate(candidate)
+                    }
                     
                 }
             }
@@ -122,7 +140,7 @@ export const Connected_call = ()=> {
             socket?.off('signal');
 
         }
-    },[socket])
+    },[])
 
     const switch_camera = async()=> {
 
@@ -135,7 +153,10 @@ export const Connected_call = ()=> {
             if(sender) {
                 await sender.replaceTrack(new_stream)
             };
-            local_video_ref.current.srcObject = stream
+
+            if(local_video_ref.current){
+                local_video_ref.current.srcObject = stream
+            }
 
     }
 

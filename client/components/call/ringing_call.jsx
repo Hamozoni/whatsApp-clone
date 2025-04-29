@@ -16,22 +16,21 @@ export const Ringing_call = ()=> {
 
     useEffect(()=> {
         socket?.on('call_end',()=> {
-            local_video_ref.current.srcObject.getTracks().forEach(track=> track.stop())
+            local_video_ref?.current?.srcObject?.getTracks().forEach(track=> track.stop())
             set_call_status('idle');
         });
 
-        return ()=> socket?.off('call_end')
-    },[socket]);
+    },[]);
 
     useEffect(()=> {
 
         const start_call = async ()=> {
-            local_video_ref.current.srcObject = await get_user_media()
+            if(local_video_ref.current){
+                local_video_ref.current.srcObject = await get_user_media()
+            }
         };
 
         start_call()
-
-        return ()=> end_call()
     },[]);
 
     const end_call = ()=> {

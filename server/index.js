@@ -1,22 +1,40 @@
 
 import dotenv from "dotenv";
-import http from 'http';
+import https from 'https';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 import app from "./src/app.js";
 import { Server } from "socket.io";
 import connect_db from "./src/config.js/db.js";
 
 
+
 dotenv.config();
 connect_db();
 
-const server = http.createServer(app)
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Read SSL files
+
+// HTTPS Configuration
+const credentials = {
+  key: fs.readFileSync(path.join(__dirname, 'ssl', 'key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, 'ssl', 'cert.pem'))
+};
 
 
-const socket_io = new Server(server, {
+const server = https.createServer(credentials,app);
+
+const socket_io = new Server(server,{
   cors: {
-    origin: ["http://localhost:3000","http://172.20.10.4:3000"],
+    origin: '*',
     methods: ["GET", "POST"],
-    allowedHeaders: ["Authorization"], // If using auth headers
+    // allowedHeaders: ["Authorization"],
+    extraHeaders: {
+      "Access-Control-Allow-Origin": "*"
+    }, // If using auth headers
     credentials: true // Only needed if using cookies/auth
   }
 });
@@ -43,11 +61,22 @@ socket_io.on('connection',socket => {
     socket.to(socket_id).emit('message_sent',data);
   });
 
-  socket.on('call',({from,to,offer})=> {
+  socket.on('call',({from,to})=> {
 
     const callee = users_socket.get(to);
     socket.to(callee).emit('coming_call',{from});
   });
+
+  socket.on('signal',({from,to,data,type})=> {
+
+    const callee = users_socket.get(to);
+    socket.to(callee).emit('signal',{from,to,data,type});
+  });
+
+  socket.on('camera_mode',({to})=>  {
+    const callee = users_socket.get(to);
+    socket.to(callee).emit('camera_mode');
+  })
 
   socket.on('call_end',({to})=> {
     const callee = users_socket.get(to);
@@ -56,6 +85,7 @@ socket_io.on('connection',socket => {
 
   socket.on('call_connected',({to})=> {
     const callee = users_socket.get(to);
+    console.log(to)
     socket.to(callee).emit('call_connected');
   });
 
@@ -63,12 +93,11 @@ socket_io.on('connection',socket => {
 
   socket.on('disconnect',()=> {
     users_socket.delete(user_id);
-    console.log(users_socket);
   })
 
 });
   
   
-server.listen(process.env.PORT,()=> {
+server.listen(process.env.PORT,'0.0.0.0',()=> {
     console.log(`server is listening to port ${process.env.PORT}`);
 });

@@ -11,41 +11,17 @@ export const Call = ()=> {
 
     const {
         call_status,
-        local_video,
-        peer_connection,
         set_call_status,
-        get_user_media
     } = useContext(Call_context);
 
     const {socket} = useContext(User_context);
 
-    const clean_up = ()=>{
-        if(local_video.current) {
-            local_video.current.srcObject.getTracks()?.forEach(track=> track.stop());
-        }
-    
-        if(peer_connection.current) {
-            peer_connection?.current?.close();
-            peer_connection.current = null
-        };
-        set_call_status('idle');
-    };
-
-    const start_call = async()=> {
-        const stream = await get_user_media()
-            local_video.current.srcObject = stream
-    }
 
     useEffect(()=> {
-        start_call()
-        socket?.on('call_end',()=> {
-            clean_up()
-        });
         socket?.on('call_connected',()=> {
             set_call_status('connected');
         });
 
-        return ()=> clean_up()
     },[socket]);
 
     return (

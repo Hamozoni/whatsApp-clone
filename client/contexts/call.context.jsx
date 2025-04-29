@@ -20,11 +20,14 @@ export const Call_context_provider = ({children})=> {
 
     const get_user_media = async ()=> {
         const stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: camera_facing_mode  ? 'environment' : "user"  ,aspectRatio: 9/16 },
+            video: { facingMode: camera_facing_mode  ? 'environment' : "user", aspectRatio: 9/16 },
             audio: true
         });
        return stream
     };
+    useEffect(()=> {
+        console.log(call_status)
+    },[call_status])
 
 
     useEffect(()=> {

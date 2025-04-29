@@ -13,31 +13,37 @@ export const Outgoing_call = ()=> {
 
     const {
         callee,
-        caller,
         set_call_status,
-        get_user_media
+        get_user_media,
     } = useContext(Call_context);
 
     
-    const {socket} = useContext(User_context);
+    const {socket,user} = useContext(User_context);
     const local_video_ref = useRef(null);
 
 
     const end_call = ()=> {
         socket.emit('call_end',{to:callee?._id});
-        local_video_ref.current.srcObject.getTracks().forEach(track=> track.stop())
+        if(local_video_ref.current) {
+            local_video_ref.current.srcObject.getTracks().forEach(track=> track.stop());
+        }
         set_call_status('idle')
     };
 
     useEffect(()=> {
            const start_call = async () => {
-               local_video_ref.current.srcObject = await get_user_media()
-            
+                if(local_video_ref.current) {
+                    local_video_ref.current.srcObject = await get_user_media();
+                    socket?.emit('call',{from: {_id: user?._id, name: user?.name, profile_picture: user?.profile_picture} ,to:callee?._id})
+                }
            }
             
 
            start_call();
-           return ()=> end_call()
+    },[]);
+
+    useEffect(()=>{
+        socket?.on('call_end',end_call);
     },[]);
 
     return (
