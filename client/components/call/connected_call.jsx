@@ -113,21 +113,27 @@ export const Connected_call = ()=> {
     }
     useEffect(()=>{
         start_call();
+    },[]);
 
-        socket?.on('camera_mode',()=>{
-            start_call()
-        });
+    const switch_camera = async()=> {
+      await  get_user_media()
+        .then(async(stream)=> {
+            const new_stream = stream.getVideoTracks()[0];
 
-    },[socket,camera_facing_mode]);
+            const sender = peer_connection.current.getSenders().find(s=> s.track.kind === 'video');
+
+            if(sender) {
+                await sender.replaceTrack(new_stream)
+            }
+        })
+    }
 
     const handle_camera_mode = async ()=> {
         const devices = await navigator.mediaDevices.enumerateDevices();
         const video_devices = devices.filter(d=> d.kind === 'videoinput')?.length;
         if(video_devices < 2) return;
         set_camera_facing_mode(!camera_facing_mode);
-        socket?.emit('camera_mode',{
-            to: user?._id ===  caller?._id ? callee?._id : caller?._id,
-        });
+        switch_camera()
     }
 
     return (
