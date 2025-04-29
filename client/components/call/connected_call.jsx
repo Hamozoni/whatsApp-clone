@@ -11,7 +11,7 @@ const h = 'absolute top-2 left-2 z-30 max-w-[100px]  min-h-[150px] md:min-h-[250
 
 export const Connected_call = ()=> {
 
-    const {callee,caller,camera_facing_mode,set_camera_facing_mode} = useContext(Call_context);
+    const {callee,caller,camera_facing_mode,set_camera_facing_mode,set_call_status} = useContext(Call_context);
     const {user,socket} = useContext(User_context);
 
     const local_video_ref = useRef(null);
@@ -95,8 +95,6 @@ export const Connected_call = ()=> {
                 video: { facingMode: camera_facing_mode  ? 'environment' : "user"  ,aspectRatio: 3/4 },
                 audio: true
             });
-
-            local_video_ref.current.srcObject = stream;
             return stream;
         }
         catch (error) {
@@ -105,18 +103,29 @@ export const Connected_call = ()=> {
             
     };
 
-    const start_call = async () => {
-       await get_user_media()
+    const start_call = () => {
+        get_user_media()
         .then( async (stream)=>{
-          await create_peer_connection(stream);
+            
+           local_video_ref.current.srcObject = stream;
+           create_peer_connection(stream);
         })
     }
     useEffect(()=>{
         start_call();
+        return ()=> {
+            get_user_media()
+            .then((stream)=> {
+                stream.getTracks().forEach(track=> track.stop())
+            })
+            if(peer_connection.current) {
+                peer_connection.current.close()
+            }
+        }
     },[]);
 
-    const switch_camera = async()=> {
-      await  get_user_media()
+    const switch_camera = ()=> {
+         get_user_media()
         .then(async(stream)=> {
             const new_stream = stream.getVideoTracks()[0];
 
@@ -124,7 +133,10 @@ export const Connected_call = ()=> {
 
             if(sender) {
                 await sender.replaceTrack(new_stream)
-            }
+            };
+
+            
+            local_video_ref.current.srcObject = new_stream;
         })
     }
 
@@ -134,6 +146,11 @@ export const Connected_call = ()=> {
         if(video_devices < 2) return;
         set_camera_facing_mode(!camera_facing_mode);
         switch_camera()
+    };
+
+    const call_end = ()=> {
+        socket?.emit('call_end',{ to: user?._id ===  caller?._id ? callee?._id : caller?._id,});
+        set_call_status('idle')
     }
 
     return (
@@ -144,11 +161,11 @@ export const Connected_call = ()=> {
             </div>
             <video onClick={()=> set_is_full_screen(true)} className={is_full_screen ? f : h} ref={local_video_ref} autoPlay muted/>
             <video onClick={()=> set_is_full_screen(false)} className={is_full_screen ? h : f} ref={remote_video_ref} autoPlay />
-            <div className="absolute w-fit bottom-3 left-1/2 -translate-x-1/2 z-30 flex items-center justify-center gap-3 bg-[#ffffff07] p-2 rounded-xl">
+            <div className="absolute w-fit bottom-3 left-1/2 -translate-x-1/2 z-40 flex items-center justify-center gap-3 bg-[#ffffff07] p-2 rounded-xl">
                 <button onClick={handle_camera_mode} className="p-3 rounded-full text-blue-50 bg-[#0000001f]">
                     <RiCameraSwitchLine size={28}  />
                 </button>
-                <button className="p-3 rounded-full text-red-500 bg-blue-50 ">
+                <button onClick={call_end} className="p-3 rounded-full text-red-500 bg-blue-50 ">
                     <MdCallEnd size={28} />
                 </button>
             </div>
