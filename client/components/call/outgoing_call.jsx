@@ -17,13 +17,14 @@ export const Outgoing_call = ()=> {
 
     const local_video_ref = useRef(null);
 
-
+    const clean_up = ()=>{
+        local_video_ref.current?.srcObject.getTracks().forEach(track=> track.stop());
+        set_call_status('idle')
+    };
 
     useEffect(()=> {
         const init = async ()=> {
             try {
-
-
                 const stream = await navigator.mediaDevices.getUserMedia({
                    video: { facingMode: camera_facing_mode  ? "user" : 'environment' ,aspectRatio: 3/4 },
                     audio: true
@@ -42,12 +43,21 @@ export const Outgoing_call = ()=> {
             }
         };
         init();
+
+        return ()=> clean_up()
     },[]);
+
+    useEffect(()=> {
+        socket?.on('call_end',()=> {
+            clean_up()
+        });
+    },[socket])
+
 
 
     const end_call = ()=> {
-        socket.emit('call_end',{to:callee?._id})
-        set_call_status('idle')
+        socket.emit('call_end',{to:callee?._id});
+        clean_up()
     }
 
     return (

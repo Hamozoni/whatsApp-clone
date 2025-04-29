@@ -95,6 +95,7 @@ export const Connected_call = ()=> {
                 video: { facingMode: camera_facing_mode  ? 'environment' : "user"  ,aspectRatio: 3/4 },
                 audio: true
             });
+            local_video_ref.current.srcObject = stream;
             return stream;
         }
         catch (error) {
@@ -103,26 +104,35 @@ export const Connected_call = ()=> {
             
     };
 
-    const start_call = () => {
+    const start_call =  () => {
         get_user_media()
         .then( async (stream)=>{
-            
-           local_video_ref.current.srcObject = stream;
            create_peer_connection(stream);
         })
-    }
+    };
+
+    
+    const clean_up = ()=>{
+
+        local_video_ref.current?.srcObject.getTracks().forEach(track=> track.stop())
+    
+        if(peer_connection.current) {
+            peer_connection?.current?.close();
+            peer_connection.current = null
+        };
+        set_call_status('idle');
+    };
+
     useEffect(()=>{
         start_call();
-        return ()=> {
-            get_user_media()
-            .then((stream)=> {
-                stream.getTracks().forEach(track=> track.stop())
-            })
-            if(peer_connection.current) {
-                peer_connection.current.close()
-            }
-        }
+        return ()=> clean_up();
     },[]);
+
+    useEffect(()=> {
+        socket?.on('call_end',()=> {
+            clean_up()
+        });
+    },[socket])
 
     const switch_camera = ()=> {
          get_user_media()
@@ -135,8 +145,7 @@ export const Connected_call = ()=> {
                 await sender.replaceTrack(new_stream)
             };
 
-            
-            local_video_ref.current.srcObject = new_stream;
+        
         })
     }
 
@@ -146,11 +155,11 @@ export const Connected_call = ()=> {
         if(video_devices < 2) return;
         set_camera_facing_mode(!camera_facing_mode);
         switch_camera()
-    };
+    }
 
     const call_end = ()=> {
         socket?.emit('call_end',{ to: user?._id ===  caller?._id ? callee?._id : caller?._id,});
-        set_call_status('idle')
+        clean_up()
     }
 
     return (

@@ -23,15 +23,10 @@ export const Call_context_provider = ({children})=> {
             set_call_status('ringing')
         });
 
-        socket?.on('call_end',()=> {
-            set_call_status('idle');
-        });
-
         socket?.on('call_connected',()=> {
-
-            console.log('set_call_status')
             set_call_status('connected');
-        })
+        });
+        
         return ()=> {
             socket?.off('coming_call')
             socket?.off('call_end');
