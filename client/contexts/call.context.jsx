@@ -17,9 +17,6 @@ export const Call_context_provider = ({children})=> {
     const [caller,set_caller] = useState(null);
     const [camera_facing_mode,set_camera_facing_mode] = useState(false);
 
-    const local_video = useRef(null);
-    const remote_video = useRef(null);
-    const peer_connection = useRef(null);
 
     const get_user_media = async ()=> {
         const stream = await navigator.mediaDevices.getUserMedia({
@@ -49,9 +46,6 @@ export const Call_context_provider = ({children})=> {
                 set_call_status,
                 camera_facing_mode,
                 set_camera_facing_mode,
-                local_video,
-                remote_video,
-                peer_connection,
                 get_user_media
 
             }} 

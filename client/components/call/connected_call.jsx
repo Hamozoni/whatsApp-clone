@@ -17,9 +17,6 @@ export const Connected_call = ()=> {
         camera_facing_mode,
         set_camera_facing_mode,
         set_call_status,
-        local_video,
-        remote_video,
-        peer_connection,
         get_user_media
     } = useContext(Call_context);
 
@@ -28,20 +25,21 @@ export const Connected_call = ()=> {
     const [is_full_screen,set_is_full_screen] = useState(false);
     const local_video_ref = useRef(null);
     const remote_video_ref = useRef(null);
+    const peer_connection = useRef(null);
 
 
-    const create_peer_connection = async (local_video)=> {
+    const create_peer_connection = async (stream)=> {
 
         peer_connection.current =  new RTCPeerConnection({
             iceServers: [{urls: 'stun:stun.l.google.com:19302'}]
         });
 
-        local_video.current.srcObject.getTracks().forEach(track=> {
+        stream.getTracks().forEach(track=> {
             peer_connection.current.addTrack(track,stream)
         });
 
         peer_connection.current.ontrack = (e)=> {
-            remote_video.current.srcObject = e.streams[0]
+            remote_video_ref.current.srcObject = e.streams[0]
         };
 
 
@@ -64,9 +62,34 @@ export const Connected_call = ()=> {
             to: user?._id ===  caller?._id ? callee?._id : caller?._id,
             type: 'offer',
             data: offer
-        })
+        });
+    };
 
-        socket.on('signal', async ({from,type,to,data})=> {
+
+    const call_end = ()=> {
+        socket?.emit('call_end',{ to: user?._id ===  caller?._id ? callee?._id : caller?._id,});
+        local_video_ref.current.srcObject.getTracks().forEach(track=> track.stop());
+        set_call_status('idle')
+    };
+
+    useEffect(()=>{
+
+        const start_call = async ()=> {
+            const stream = await get_user_media()
+            create_peer_connection(stream);
+        };
+
+        start_call();
+        return ()=> call_end();
+    },[]);
+
+    useEffect(()=> {
+
+        socket?.on('call_end',()=> {
+            call_end()
+        });
+
+        socket?.on('signal', async ({from,type,to,data})=> {
             if(!peer_connection.current) return;
 
             try {
@@ -92,18 +115,13 @@ export const Connected_call = ()=> {
                 console.error(error);
             }
 
-        })
-    };
-
-    useEffect(()=>{
-        create_peer_connection(local_video);
-            local_video_ref.current.srcObject = local_video.current.srcObject
-            remote_video_ref.current?.srcObject = remote_video.current.srcObject;
-    },[]);
-
-    useEffect(()=> {
-        socket?.on('call_end',()=> {
         });
+
+        return ()=> {
+            socket?.off('call_end');
+            socket?.off('signal');
+
+        }
     },[socket])
 
     const switch_camera = async()=> {
@@ -117,8 +135,6 @@ export const Connected_call = ()=> {
             if(sender) {
                 await sender.replaceTrack(new_stream)
             };
-
-            local_video.current.srcObject = stream;
             local_video_ref.current.srcObject = stream
 
     }
@@ -129,10 +145,6 @@ export const Connected_call = ()=> {
         if(video_devices < 2) return;
         set_camera_facing_mode(!camera_facing_mode);
         switch_camera()
-    }
-
-    const call_end = ()=> {
-        socket?.emit('call_end',{ to: user?._id ===  caller?._id ? callee?._id : caller?._id,});
     }
 
     return (

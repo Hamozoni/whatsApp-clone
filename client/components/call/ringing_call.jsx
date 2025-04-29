@@ -8,7 +8,7 @@ import { MdCallEnd } from "react-icons/md";
 
 export const Ringing_call = ()=> {
 
-    const {caller,set_call_status,camera_facing_mode,local_video} = useContext(Call_context);
+    const {caller,set_call_status,get_user_media} = useContext(Call_context);
     const {socket} = useContext(User_context);
 
     const local_video_ref = useRef(null)
@@ -16,15 +16,23 @@ export const Ringing_call = ()=> {
 
     useEffect(()=> {
         socket?.on('call_end',()=> {
+            local_video_ref.current.srcObject.getTracks().forEach(track=> track.stop())
             set_call_status('idle');
         });
+
+        return ()=> socket?.off('call_end')
     },[socket]);
 
     useEffect(()=> {
-        if(local_video_ref.current && local_video.current) {
-            local_video_ref.current.srcObject = local_video.current
-        }
-    },[local_video]);
+
+        const start_call = async ()=> {
+            local_video_ref.current.srcObject = await get_user_media()
+        };
+
+        start_call()
+
+        return ()=> end_call()
+    },[]);
 
     const end_call = ()=> {
         socket.emit('call_end',{to:caller?._id})

@@ -15,7 +15,7 @@ export const Outgoing_call = ()=> {
         callee,
         caller,
         set_call_status,
-        local_video
+        get_user_media
     } = useContext(Call_context);
 
     
@@ -25,12 +25,20 @@ export const Outgoing_call = ()=> {
 
     const end_call = ()=> {
         socket.emit('call_end',{to:callee?._id});
+        local_video_ref.current.srcObject.getTracks().forEach(track=> track.stop())
+        set_call_status('idle')
     };
 
     useEffect(()=> {
-            local_video_ref.current?.srcObject = local_video.current.srcObject
-    
-    },[local_video]);
+           const start_call = async () => {
+               local_video_ref.current.srcObject = await get_user_media()
+            
+           }
+            
+
+           start_call();
+           return ()=> end_call()
+    },[]);
 
     return (
         <div className="flex flex-col items-center justify-center h-full min-h-full">
