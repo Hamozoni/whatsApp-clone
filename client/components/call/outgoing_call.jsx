@@ -12,10 +12,10 @@ import Image from "next/image";
 
 export const Outgoing_call = ()=> {
 
-    const {callee,caller,set_call_status} = useContext(Call_context);
+    const {callee,caller,set_call_status,camera_facing_mode} = useContext(Call_context);
     const {socket} = useContext(User_context);
 
-    // const local_video_ref = useRef(null);
+    const local_video_ref = useRef(null);
 
 
 
@@ -24,12 +24,12 @@ export const Outgoing_call = ()=> {
             try {
 
 
-                // const stream = await navigator.mediaDevices.getUserMedia({
-                //    video: { facingMode: "user" },
-                //     audio: true
-                // });
+                const stream = await navigator.mediaDevices.getUserMedia({
+                   video: { facingMode: camera_facing_mode  ? "user" : 'environment' ,aspectRatio: 3/4 },
+                    audio: true
+                });
 
-                // local_video_ref.current.srcObject = stream;
+                local_video_ref.current.srcObject = stream;
                 socket.emit('call',{
                     from: caller,
                     to: callee?._id,
@@ -57,7 +57,7 @@ export const Outgoing_call = ()=> {
                 <h5>{callee?.name}</h5>
                 <p>calling...</p>
             </div>
-            {/* <video className="w-[450px] h-[400px] rounded-md" ref={local_video_ref} autoPlay muted/> */}
+            <video className="w-auto h-screen object-cover rounded-md" ref={local_video_ref} autoPlay muted/>
             <div className="">
                 <button onClick={end_call} className="p-3 rounded-full text-red-500 bg-blue-50">
                     <MdCallEnd size={28} />

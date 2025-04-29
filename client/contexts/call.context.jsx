@@ -15,10 +15,7 @@ export const Call_context_provider = ({children})=> {
     const [call_status,set_call_status] = useState('idle');
     const [callee,set_callee] = useState(null);
     const [caller,set_caller] = useState(null);
-    const [peer_connection,set_peer_connection] = useState(null);
-
-    const local_video_ref = useRef(null);
-    const remote_video_ref = useRef(null);
+    const [camera_facing_mode,set_camera_facing_mode] = useState(false)
 
     useEffect(()=> {
         socket?.on('coming_call',({from})=> {
@@ -51,10 +48,8 @@ export const Call_context_provider = ({children})=> {
                 set_caller,
                 call_status,
                 set_call_status,
-                local_video_ref,
-                remote_video_ref,
-                peer_connection,
-                set_peer_connection
+                camera_facing_mode,
+                set_camera_facing_mode
             }} 
            >
             {children}
