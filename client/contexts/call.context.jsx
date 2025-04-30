@@ -23,7 +23,7 @@ export const Call_context_provider = ({children})=> {
             video: { facingMode: camera_facing_mode  ? 'environment' : "user", aspectRatio: 3/4 },
             audio: true
         });
-       return stream
+       return stream;
     };
     useEffect(()=> {
         console.log(call_status)

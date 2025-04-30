@@ -23,6 +23,7 @@ export const Connected_call = ()=> {
     const {user,socket} = useContext(User_context);
 
     const [is_full_screen,set_is_full_screen] = useState(false);
+    const [local_video,set_local_video] = useState(null);
     const local_video_ref = useRef(null);
     const remote_video_ref = useRef(null);
     const peer_connection = useRef(null);
@@ -31,7 +32,7 @@ export const Connected_call = ()=> {
     const create_peer_connection = async (stream)=> {
 
         peer_connection.current = new RTCPeerConnection({
-            iceServers: [{urls: 'stun:stun.2.google.com:19302'}]
+            iceServers: [{urls: 'stun:stun.l.google.com:19302'}]
         });
 
         stream.getTracks().forEach(track=> {
@@ -59,7 +60,7 @@ export const Connected_call = ()=> {
 
 
 
-        peer_connection.current.onicecandidate = ({candidate})=> {
+        peer_connection.current.onicecandidate = async({candidate})=> {
             if(candidate) {
                 socket?.emit('signal',{
                     from : user?._id ===  caller?._id ? caller : callee ,
@@ -102,11 +103,8 @@ export const Connected_call = ()=> {
 
     const call_end = async()=> {
         socket?.emit('call_end',{ to: user?._id ===  caller?._id ? callee?._id : caller?._id,});
-        if(local_video_ref.current) {
-            local_video_ref.current.srcObject?.getTracks().forEach(track=> track.stop());
-        }else {
-            const stream = await get_user_media();
-            stream.getTracks().forEach(track=> track.stop());
+        if(local_video){
+            local_video.getTracks().forEach(track=> track.stop());
         }
         if (peer_connection.current) {
             
@@ -119,25 +117,25 @@ export const Connected_call = ()=> {
 
     useEffect(()=> {
 
-        const start_call = async ()=> {
-            const stream = await get_user_media();
-            if(local_video_ref.current){
-                local_video_ref.current.srcObject = stream
-                create_peer_connection(local_video_ref.current.srcObject);
-            }
+        const start_call =  ()=> {
+               get_user_media()
+               .then((stream)=> {
+                   set_local_video(stream);
+                   local_video_ref.current.srcObject = stream
+                   create_peer_connection(local_video_ref.current.srcObject);
+               })
         };
 
         start_call();
 
-        socket?.on('call_end',()=> {
-            call_end()
-        });
-
         return ()=> {
-            socket?.off('call_end');
-            socket?.off('signal');
-            call_end();
-
+            if(local_video) {
+                local_video.getTracks().forEach(track=> track.stop());
+            }
+            if(peer_connection.current){
+                peer_connection.current.close();
+                peer_connection.current = null
+            }
         }
     },[])
 

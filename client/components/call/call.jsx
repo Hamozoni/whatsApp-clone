@@ -21,8 +21,15 @@ export const Call = ()=> {
         socket?.on('call_connected',()=> {
             set_call_status('connected');
         });
+        socket?.on('call_end',()=>{
+            set_call_status('idle');
+        });
 
-    },[socket]);
+        return ()=> {
+            socket.off('call_connected');
+            socket.off('call_end');
+        }
+    },[]);
 
     return (
         <div className="fixed top-0 left-0 w-[100dvw] h-[100dvh] z-30 bg-gray-900">

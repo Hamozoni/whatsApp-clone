@@ -1,7 +1,7 @@
 "use client";
 
 import { User_context } from "@/contexts/user.context";
-import { useContext, useEffect, useRef} from "react";
+import { useContext, useEffect, useRef, useState} from "react";
 import { MdCallEnd } from "react-icons/md";
 import { HiSpeakerWave } from "react-icons/hi2";
 import { FaMicrophoneSlash } from "react-icons/fa";
@@ -19,44 +19,36 @@ export const Outgoing_call = ()=> {
 
     
     const {socket,user} = useContext(User_context);
-    const local_video_ref = useRef(null);
+    // const local_video_ref = useRef(null);
+    // const [local_video,set_local_video] = useState(null);
 
 
     const end_call = async()=> {
         socket.emit('call_end',{to:callee?._id});
-        if(local_video_ref.current) {
-            local_video_ref.current.srcObject.getTracks().forEach(track=> track.stop());
-        }else {
-            const stream = await get_user_media();
-            stream.getTracks().forEach(track=> track.stop());
-        }
+        // if(local_video){
+        //     local_video.getTracks().forEach(track=> track.stop());
+        // }
         set_call_status('idle');
     };
 
     useEffect(()=> {
            const start_call = async () => {
-                if(local_video_ref.current) {
-                    local_video_ref.current.srcObject = await get_user_media();
-                    socket?.emit('call',{from: {_id: user?._id, name: user?.name, profile_picture: user?.profile_picture} ,to:callee?._id})
-                }
+                // if(local_video_ref.current) {
+                //     get_user_media()
+                //     .then(stream=> {
+                //         set_local_video(stream);
+                //         local_video_ref.current.srcObject = stream
+                        socket?.emit('call',{from: {_id: user?._id, name: user?.name, profile_picture: user?.profile_picture} ,to:callee?._id})
+                //     })
+                // }
            };
-
-           socket?.on('call_end',()=>{
-              end_call();
-           });
-            
-
            start_call();
 
-           return async()=> {
-            socket?.off('call_end');
-            if(local_video_ref.current) {
-                local_video_ref.current.srcObject.getTracks().forEach(track=> track.stop());
-            }else {
-                const stream = await get_user_media();
-                stream.getTracks().forEach(track=> track.stop());
-            }
-          }
+        //    return()=> {
+        //     if(local_video){
+        //         local_video.getTracks().forEach(track=> track.stop());
+        //     }
+        //   }
     },[]);
 
     return (
@@ -66,7 +58,8 @@ export const Outgoing_call = ()=> {
                 <h5>{callee?.name}</h5>
                 <p>calling...</p>
             </div>
-               <video className="w-auto h-screen object-cover rounded-md" ref={local_video_ref} autoPlay muted/>
+              <div className=""></div>
+               {/* <video className="w-auto h-screen object-cover rounded-md" ref={local_video_ref} autoPlay muted/> */}
             <div className="">
                 <button 
                     onClick={end_call} 
