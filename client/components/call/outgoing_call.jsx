@@ -22,11 +22,14 @@ export const Outgoing_call = ()=> {
     const local_video_ref = useRef(null);
 
 
-    const end_call = ()=> {
+    const end_call = async()=> {
         socket.emit('call_end',{to:callee?._id});
         if(local_video_ref.current) {
             local_video_ref.current.srcObject.getTracks().forEach(track=> track.stop());
-        };
+        }else {
+            const stream = await get_user_media();
+            stream.getTracks().forEach(track=> track.stop());
+        }
         set_call_status('idle');
     };
 
@@ -45,11 +48,14 @@ export const Outgoing_call = ()=> {
 
            start_call();
 
-           return ()=> {
+           return async()=> {
             socket?.off('call_end');
             if(local_video_ref.current) {
                 local_video_ref.current.srcObject.getTracks().forEach(track=> track.stop());
-            };
+            }else {
+                const stream = await get_user_media();
+                stream.getTracks().forEach(track=> track.stop());
+            }
           }
     },[]);
 

@@ -30,8 +30,8 @@ export const Connected_call = ()=> {
 
     const create_peer_connection = async (stream)=> {
 
-        peer_connection.current =  peer_connection.current || new RTCPeerConnection({
-            iceServers: [{urls: 'stun:stun.l.google.com:19302'}]
+        peer_connection.current = new RTCPeerConnection({
+            iceServers: [{urls: 'stun:stun.2.google.com:19302'}]
         });
 
         stream.getTracks().forEach(track=> {
@@ -48,12 +48,16 @@ export const Connected_call = ()=> {
         const offer  = await peer_connection.current.createOffer();
         await peer_connection.current.setLocalDescription(offer);
 
+        if(!offer) return
+
         socket.emit('signal',{
             from : user?._id ===  caller?._id ? caller : callee ,
             to: user?._id ===  caller?._id ? callee?._id : caller?._id,
             type: 'offer',
             data: offer
         });
+
+
 
         peer_connection.current.onicecandidate = ({candidate})=> {
             if(candidate) {
@@ -65,14 +69,45 @@ export const Connected_call = ()=> {
                 })
             }
         };
+
+        socket?.on('signal', async ({from,type,to,data})=> {
+            if(!peer_connection.current || !data) return;
+
+            try {
+                if(type === 'offer') {
+                    await peer_connection.current.setRemoteDescription(data);
+                    const answer = await peer_connection.current.createAnswer();
+                    await peer_connection.current.setLocalDescription(answer);
+
+                    socket.emit('signal',{
+                        to: from?._id,
+                        from: to === callee?._id ? callee : caller,
+                        type: 'answer',
+                        data: answer
+                    })
+                } else if (type === 'answer') {
+                        await peer_connection.current.setRemoteDescription(data);
+
+                } else if (type === 'ice_candidate') {
+                        await peer_connection.current.addIceCandidate(new RTCIceCandidate(data))
+                }
+            }
+            catch (error) {
+                console.error(error);
+            }
+
+        });
     };
 
 
-    const call_end = ()=> {
+    const call_end = async()=> {
         socket?.emit('call_end',{ to: user?._id ===  caller?._id ? callee?._id : caller?._id,});
         if(local_video_ref.current) {
             local_video_ref.current.srcObject?.getTracks().forEach(track=> track.stop());
-        };
+        }else {
+            const stream = await get_user_media();
+            stream.getTracks().forEach(track=> track.stop());
+        }
         if (peer_connection.current) {
             
             peer_connection.current.close();
@@ -88,48 +123,14 @@ export const Connected_call = ()=> {
             const stream = await get_user_media();
             if(local_video_ref.current){
                 local_video_ref.current.srcObject = stream
-               await create_peer_connection(stream);
-
+                create_peer_connection(local_video_ref.current.srcObject);
             }
         };
 
         start_call();
 
-        socket?.on('call_end',call_end);
-
-        socket?.on('signal', async ({from,type,to,data})=> {
-            if(!peer_connection.current) return;
-
-            try {
-                if(type === 'offer') {
-                    await peer_connection.current.setRemoteDescription(data);
-                    const answer = await peer_connection.current.createAnswer();
-                    await peer_connection.current.setLocalDescription(answer);
-
-                    socket.emit('signal',{
-                        to: from?._id,
-                        from: to === callee?._id ? callee : caller,
-                        type: 'answer',
-                        data: answer
-                    })
-                } else if (type === 'answer') {
-                    if(!peer_connection.current.currentRemoteDescription){
-                        await peer_connection.current.setRemoteDescription(data);
-                    }
-
-                } else if (type === 'ice_candidate') {
-
-                    const candidate= new RTCIceCandidate(data);
-                    if(peer_connection.current.currentRemoteDescription){
-                        await peer_connection.current.addIceCandidate(candidate)
-                    }
-                    
-                }
-            }
-            catch (error) {
-                console.error(error);
-            }
-
+        socket?.on('call_end',()=> {
+            call_end()
         });
 
         return ()=> {
