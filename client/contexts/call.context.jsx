@@ -18,13 +18,6 @@ export const Call_context_provider = ({children})=> {
     const [camera_facing_mode,set_camera_facing_mode] = useState(false);
 
 
-    const get_user_media = async ()=> {
-        const stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: camera_facing_mode  ? 'environment' : "user", aspectRatio: 3/4 },
-            audio: true
-        });
-       return stream;
-    };
     useEffect(()=> {
         console.log(call_status)
     },[call_status])
@@ -49,7 +42,6 @@ export const Call_context_provider = ({children})=> {
                 set_call_status,
                 camera_facing_mode,
                 set_camera_facing_mode,
-                get_user_media
 
             }} 
            >

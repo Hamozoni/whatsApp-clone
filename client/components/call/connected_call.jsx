@@ -2,7 +2,7 @@
 
 import { Call_context } from "@/contexts/call.context";
 import { User_context } from "@/contexts/user.context";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { MdCallEnd } from "react-icons/md";
 import { RiCameraSwitchLine } from "react-icons/ri";
 
@@ -20,142 +20,11 @@ export const Connected_call = ()=> {
         get_user_media
     } = useContext(Call_context);
 
-    const {user,socket} = useContext(User_context);
+    const {user} = useContext(User_context);
 
     const [is_full_screen,set_is_full_screen] = useState(false);
-    const [local_video,set_local_video] = useState(null);
     const local_video_ref = useRef(null);
     const remote_video_ref = useRef(null);
-    const peer_connection = useRef(null);
-
-
-    const create_peer_connection = async (stream)=> {
-
-        peer_connection.current = new RTCPeerConnection({
-            iceServers: [{urls: 'stun:stun.l.google.com:19302'}]
-        });
-
-        stream.getTracks().forEach(track=> {
-            peer_connection.current.addTrack(track,stream)
-        });
-
-        peer_connection.current.ontrack = (e)=> {
-            if(remote_video_ref.current){
-                remote_video_ref.current.srcObject = e.streams[0]
-            }
-        };
-
-
-        const offer  = await peer_connection.current.createOffer();
-        await peer_connection.current.setLocalDescription(offer);
-
-        if(!offer) return
-
-        socket.emit('signal',{
-            from : user?._id ===  caller?._id ? caller : callee ,
-            to: user?._id ===  caller?._id ? callee?._id : caller?._id,
-            type: 'offer',
-            data: offer
-        });
-
-
-
-        peer_connection.current.onicecandidate = async({candidate})=> {
-            if(candidate) {
-                socket?.emit('signal',{
-                    from : user?._id ===  caller?._id ? caller : callee ,
-                    to: user?._id ===  caller?._id ? callee?._id : caller?._id,
-                    type: 'ice_candidate',
-                    data: candidate
-                })
-            }
-        };
-
-        socket?.on('signal', async ({from,type,to,data})=> {
-            if(!peer_connection.current || !data) return;
-
-            try {
-                if(type === 'offer') {
-                    await peer_connection.current.setRemoteDescription(data);
-                    const answer = await peer_connection.current.createAnswer();
-                    await peer_connection.current.setLocalDescription(answer);
-
-                    socket.emit('signal',{
-                        to: from?._id,
-                        from: to === callee?._id ? callee : caller,
-                        type: 'answer',
-                        data: answer
-                    })
-                } else if (type === 'answer') {
-                        await peer_connection.current.setRemoteDescription(data);
-
-                } else if (type === 'ice_candidate') {
-                        await peer_connection.current.addIceCandidate(new RTCIceCandidate(data))
-                }
-            }
-            catch (error) {
-                console.error(error);
-            }
-
-        });
-    };
-
-
-    const call_end = async()=> {
-        socket?.emit('call_end',{ to: user?._id ===  caller?._id ? callee?._id : caller?._id,});
-        if(local_video){
-            local_video.getTracks().forEach(track=> track.stop());
-        }
-        if (peer_connection.current) {
-            
-            peer_connection.current.close();
-            peer_connection.current = null
-        }
-        set_call_status('idle')
-    };
-
-
-    useEffect(()=> {
-
-        const start_call =  ()=> {
-               get_user_media()
-               .then((stream)=> {
-                   set_local_video(stream);
-                   local_video_ref.current.srcObject = stream
-                   create_peer_connection(local_video_ref.current.srcObject);
-               })
-        };
-
-        start_call();
-
-        return ()=> {
-            if(local_video) {
-                local_video.getTracks().forEach(track=> track.stop());
-            }
-            if(peer_connection.current){
-                peer_connection.current.close();
-                peer_connection.current = null
-            }
-        }
-    },[])
-
-    const switch_camera = async()=> {
-
-            const stream = await get_user_media();
-
-            const new_stream = stream.getVideoTracks()[0];
-
-            const sender = peer_connection.current.getSenders().find(s=> s.track.kind === 'video');
-
-            if(sender) {
-                await sender.replaceTrack(new_stream)
-            };
-
-            if(local_video_ref.current){
-                local_video_ref.current.srcObject = stream
-            }
-
-    }
 
     const handle_camera_mode = async ()=> {
         const devices = await navigator.mediaDevices.enumerateDevices();

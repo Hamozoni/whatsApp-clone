@@ -12,23 +12,135 @@ export const Call = ()=> {
     const {
         call_status,
         set_call_status,
+        callee,
+        caller,
+        camera_facing_mode
     } = useContext(Call_context);
 
-    const {socket} = useContext(User_context);
+    const {socket,user} = useContext(User_context);
 
+    const [local_video,set_local_video] = useState(null);
+    const [remote_video,set_remote_video] = useState(null);
+
+    const peer_connection = useRef(null);
+
+
+    const start_call = async ()=> {
+
+        try {
+
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: camera_facing_mode  ? 'environment' : "user", aspectRatio: 3/4 },
+                audio: true
+            });
+
+            set_local_video(stream);
+
+            const pc = new RTCPeerConnection({
+                iceServers: [{urls: 'stun:stun.l.google.com:19302'}],
+                iceCandidatePoolSize: 10
+            });
+
+            peer_connection.current = pc;
+
+            stream.getTracks().forEach(track=> {
+                pc.addTrack(track,stream);
+            });
+
+            pc.ontrack = (e)=> {
+                set_remote_video(e.streams[0])
+            };
+
+            pc.onicecandidate = ({candidate})=> {
+                if(candidate) {
+                    socket?.emit('ice_candidate',{
+                        to: callee?._id,
+                        data: candidate
+                    });
+                }
+            };
+
+            const offer = await pc.createOffer();
+            await pc.setLocalDescription(offer);
+
+            socket?.emit('offer',{
+                to: callee?._id,
+                data : offer
+            });
+        }
+        catch (error) {
+            console.error(error)
+        }
+
+    };
+
+    const answer_call = async ()=> {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: camera_facing_mode  ? 'environment' : "user", aspectRatio: 3/4 },
+            audio: true
+        });
+
+        set_local_video(stream);
+
+        const pc = peer_connection.current
+
+        stream.getTracks().forEach(track=> {
+            if(pc) {
+                pc.addTrack(track,stream);
+            };
+        });
+
+        const answer = await pc.createAnswer();
+
+        pc.setLocalDescription(answer);
+
+        socket?.emit('answer',{to: caller?._id,data:answer});
+        set_call_status('connected');
+    };
+
+    const call_end = ()=> {
+
+    }
 
     useEffect(()=> {
-        socket?.on('call_connected',()=> {
-            set_call_status('connected');
-        });
-        socket?.on('call_end',()=>{
-            set_call_status('idle');
+        if(user?._id === caller?._id) {
+            start_call();
+        };
+        socket?.on('offer',async ({data})=> {
+            const pc = new RTCPeerConnection({
+                iceServers: [{urls: 'stun:stun.l.google.com:19302'}],
+                iceCandidatePoolSize: 10
+            });
+
+            peer_connection.current = pc;
+
+            pc.ontrack = (e)=> {
+                set_remote_video(e.streams[0])
+            };
+
+            pc.onicecandidate = ({candidate})=> {
+                if(candidate) {
+                    socket?.emit('ice_candidate',{to: caller?._id,data:candidate});
+                }
+            };
+
+           await pc.setRemoteDescription(data)
         });
 
-        return ()=> {
-            socket.off('call_connected');
-            socket.off('call_end');
-        }
+        socket?.on('answer',({data})=> {
+            peer_connection.current.setRemoteDescription(data);
+            set_call_status('connected')
+        });
+
+        socket?.on('ice_candidate', async ({data})=> {
+            try {
+                await peer_connection.current.addIceCandidate(data)
+            }
+            catch (error) {
+                console.error(error)
+            }
+        })
+
     },[]);
 
     return (
@@ -44,3 +156,4 @@ export const Call = ()=> {
         </div>
     );
 };
+
