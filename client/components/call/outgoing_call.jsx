@@ -26,8 +26,8 @@ export const Outgoing_call = ()=> {
         socket.emit('call_end',{to:callee?._id});
         if(local_video_ref.current) {
             local_video_ref.current.srcObject.getTracks().forEach(track=> track.stop());
-        }
-        set_call_status('idle')
+        };
+        set_call_status('idle');
     };
 
     useEffect(()=> {
@@ -36,14 +36,21 @@ export const Outgoing_call = ()=> {
                     local_video_ref.current.srcObject = await get_user_media();
                     socket?.emit('call',{from: {_id: user?._id, name: user?.name, profile_picture: user?.profile_picture} ,to:callee?._id})
                 }
-           }
+           };
+
+           socket?.on('call_end',()=>{
+              end_call();
+           });
             
 
            start_call();
-    },[]);
 
-    useEffect(()=>{
-        socket?.on('call_end',end_call);
+           return ()=> {
+            socket?.off('call_end');
+            if(local_video_ref.current) {
+                local_video_ref.current.srcObject.getTracks().forEach(track=> track.stop());
+            };
+          }
     },[]);
 
     return (
@@ -55,7 +62,10 @@ export const Outgoing_call = ()=> {
             </div>
                <video className="w-auto h-screen object-cover rounded-md" ref={local_video_ref} autoPlay muted/>
             <div className="">
-                <button onClick={end_call} className="p-3 rounded-full text-red-500 bg-blue-50">
+                <button 
+                    onClick={end_call} 
+                    className="p-3 rounded-full text-red-500 bg-blue-50"
+                    >
                     <MdCallEnd size={28} />
                 </button>
             </div>

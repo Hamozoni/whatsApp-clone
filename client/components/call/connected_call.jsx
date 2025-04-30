@@ -81,7 +81,8 @@ export const Connected_call = ()=> {
         set_call_status('idle')
     };
 
-    useEffect(()=>{
+
+    useEffect(()=> {
 
         const start_call = async ()=> {
             const stream = await get_user_media();
@@ -93,12 +94,8 @@ export const Connected_call = ()=> {
         };
 
         start_call();
-        // return ()=> call_end();
-    },[]);
 
-    useEffect(()=> {
-
-        // socket?.on('call_end',call_end);
+        socket?.on('call_end',call_end);
 
         socket?.on('signal', async ({from,type,to,data})=> {
             if(!peer_connection.current) return;
@@ -138,6 +135,7 @@ export const Connected_call = ()=> {
         return ()=> {
             socket?.off('call_end');
             socket?.off('signal');
+            call_end();
 
         }
     },[])

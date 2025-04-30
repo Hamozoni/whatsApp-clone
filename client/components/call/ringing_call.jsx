@@ -11,27 +11,27 @@ export const Ringing_call = ()=> {
     const {caller,set_call_status,get_user_media} = useContext(Call_context);
     const {socket} = useContext(User_context);
 
-    const local_video_ref = useRef(null)
+    // const local_video_ref = useRef(null)
 
 
     useEffect(()=> {
         socket?.on('call_end',()=> {
-            local_video_ref?.current?.srcObject?.getTracks().forEach(track=> track.stop())
+            // local_video_ref?.current?.srcObject?.getTracks().forEach(track=> track.stop())
             set_call_status('idle');
         });
 
     },[]);
 
-    useEffect(()=> {
+    // useEffect(()=> {
 
-        const start_call = async ()=> {
-            if(local_video_ref.current){
-                local_video_ref.current.srcObject = await get_user_media()
-            }
-        };
+    //     const start_call = async ()=> {
+    //         if(local_video_ref.current){
+    //             local_video_ref.current.srcObject = await get_user_media()
+    //         }
+    //     };
 
-        start_call()
-    },[]);
+    //     start_call()
+    // },[]);
 
     const end_call = ()=> {
         socket.emit('call_end',{to:caller?._id})
@@ -50,12 +50,13 @@ export const Ringing_call = ()=> {
                 <h5>{caller?.name}</h5>
                 <p>coming call...</p>
             </div>
+            <div className="w-auto h-screen"></div>
 
-            <video 
+            {/* <video 
                 className="w-auto h-screen object-cover rounded-md" 
                 ref={local_video_ref} 
                 autoPlay muted
-                />
+                /> */}
             <div className="flex items-center justify-center gap-5">
                 <button onClick={end_call} className="p-3 rounded-full text-red-500 bg-blue-50">
                     <MdCallEnd size={28} />
