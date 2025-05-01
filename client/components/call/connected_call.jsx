@@ -9,7 +9,7 @@ import { HiSpeakerWave } from "react-icons/hi2";
 import { FaMicrophoneSlash } from "react-icons/fa";
 import { FaVideo } from "react-icons/fa6";
 
-const f = 'absolute top-0 left-1/2 w-fit min-[450px] max-w-screen -translate-x-1/2 h-screen z-20';
+const f = 'w-full h-full';
 const h = 'absolute top-2 left-2 z-30 max-w-[100px] rounded-md  min-h-[150px] md:min-h-[250px] md:max-w-[200px]'
 
 export const Connected_call = ({
@@ -45,32 +45,36 @@ export const Connected_call = ({
 
 
     return (
-        <div className=" relative flex flex-col items-center justify-center h-full min-h-full">
+        <div className="relative h-screen min-h-screen">
             <div className="flex flex-col items-center justify-center text-gray-50 absolute top-3 left-1/2 -translate-x-1/2 z-40">
                 <h5>{callee?._id === user?._id ? caller?.name : callee?.name}</h5>
                 <p>05</p>
             </div>
-            <div className={is_local_video_full_screen ? f : h} >
-                <div className="relative w-full h-full">
-                    <video 
-                        onClick={()=> set_is_local_video_full_screen(true)} 
-                        className='h-full w-full min-w-full min-h-full object-cover'
-                        autoPlay muted
-                        ref={local_video_ref}
-                        />
-                    <button onClick={on_toggle_camera_mode} className=" absolute top-1 right-1 p-1 rounded-full text-blue-50 bg-[#0000001f] z-40">
-                        <RiCameraSwitchLine size={18}  />
-                    </button>
+            <div className="relative w-fit mx-auto h-full min-h-screen">
+                <div className={is_local_video_full_screen ? f : h} >
+                    <div className="relative w-full h-full">
+                        <video 
+                            onClick={()=> set_is_local_video_full_screen(true)} 
+                            className='h-full w-full min-w-full min-h-full object-cover'
+                            autoPlay muted
+                            ref={local_video_ref}
+                            />
+                        <button 
+                            onClick={on_toggle_camera_mode} 
+                            className={`${is_local_video_full_screen ? 'top-3 right-3 p-3 ' : 'top-1 right-1 p-1 '} absolute rounded-full text-blue-50 bg-[#0000001f]`}>
+                            <RiCameraSwitchLine size={is_local_video_full_screen ? 28 : 18}  />
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div className={is_local_video_full_screen ? h : f}>
-                <video 
-                    onClick={()=> set_is_local_video_full_screen(false)} 
-                    className='h-full w-full min-w-full min-h-full object-cover' 
-                    ref={remote_video_ref}
-                    autoPlay 
-                    />
+                <div className={is_local_video_full_screen ? h : f}>
+                    <video 
+                        onClick={()=> set_is_local_video_full_screen(false)} 
+                        className='h-full w-full min-w-full min-h-full object-cover' 
+                        ref={remote_video_ref}
+                        autoPlay 
+                        />
 
+                </div>
             </div>
             <div className="absolute w-fit bottom-3 left-1/2 -translate-x-1/2 z-40 flex items-center justify-center gap-3 bg-[#ffffff07] p-2 rounded-xl">
                 <button onClick={on_end_call} className="p-3 rounded-full text-red-500 bg-blue-50 ">
