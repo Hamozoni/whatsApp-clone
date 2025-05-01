@@ -19,15 +19,12 @@ export const Call_context_provider = ({children})=> {
 
 
     useEffect(()=> {
-        console.log(call_status)
-    },[call_status])
-
-
-    useEffect(()=> {
-        socket?.on('coming_call',({from})=> {
+        socket?.on('call',({from})=> {
             set_caller(from);
             set_call_status('ringing')
         });
+
+        return ()=> socket?.off('call');
     },[]);
 
 

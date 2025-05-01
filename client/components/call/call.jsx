@@ -1,7 +1,7 @@
 "use client";
 
 import { Call_context } from "@/contexts/call.context";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { Outgoing_call } from "./outgoing_call";
 import { Ringing_call } from "./ringing_call";
 import { Connected_call } from "./connected_call";
@@ -101,7 +101,7 @@ export const Call = ()=> {
         set_call_status('connected');
     };
 
-    const call_end = ()=> {
+    const close_peer_conecction = ()=> {
         if(peer_connection.current){
             peer_connection.current.close();
             peer_connection.current = null
@@ -113,6 +113,11 @@ export const Call = ()=> {
         set_local_video(null);
         set_remote_video(null);
         set_call_status('idle');
+    }
+
+    const call_end = ()=> {
+        socket?.emit('call_end',{to:user?._id === caller?._id ? callee?._id : caller?._id})
+        close_peer_conecction()
     };
 
     const toggle_mute = ()=> {
@@ -186,7 +191,9 @@ export const Call = ()=> {
             }
         });
 
-        socket?.on('call_end',call_end);
+        socket?.on('call_end',()=>{
+            close_peer_conecction();
+        });
 
         return ()=> {
             socket?.off('offer');

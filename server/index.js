@@ -62,32 +62,30 @@ socket_io.on('connection',socket => {
   });
 
   socket.on('call',({from,to})=> {
-
     const callee = users_socket.get(to);
-    socket.to(callee).emit('coming_call',{from});
+    socket.to(callee).emit('call',{from});
   });
 
-  socket.on('signal',({from,to,data,type})=> {
-
+  socket.on('offer',({to,data})=> {
     const callee = users_socket.get(to);
-    socket.to(callee).emit('signal',{from,to,data,type});
+    socket.to(callee).emit('offer',{data});
   });
 
-  socket.on('camera_mode',({to})=>  {
+  socket.on('answer',({to,data})=> {
     const callee = users_socket.get(to);
-    socket.to(callee).emit('camera_mode');
-  })
+    socket.to(callee).emit('answer',{data});
+  });
+
+  socket.on('ice_candidate',({to,data})=> {
+    const callee = users_socket.get(to);
+    socket.to(callee).emit('ice_candidate',{data});
+  });
 
   socket.on('call_end',({to})=> {
     const callee = users_socket.get(to);
     socket.to(callee).emit('call_end');
   });
 
-  socket.on('call_connected',({to})=> {
-    const callee = users_socket.get(to);
-    console.log(to)
-    socket.to(callee).emit('call_connected');
-  });
 
   
 

@@ -2,15 +2,15 @@
 import { GoSearch } from "react-icons/go"
 import { HiOutlineDotsVertical } from "react-icons/hi"
 import { IoCallOutline,IoVideocamOutline  } from "react-icons/io5";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Call_context } from "@/contexts/call.context";
 import { User_context } from "@/contexts/user.context";
 
 
 export const Chat_header = ({receiver})=> {
 
-    const {set_call_status,set_callee,set_caller} = useContext(Call_context);
-    const {user} = useContext(User_context)
+    const {set_call_status,set_callee,set_caller,caller} = useContext(Call_context);
+    const {user,socket} = useContext(User_context)
 
     const start_call = ()=> {
         set_call_status('call');
@@ -19,8 +19,14 @@ export const Chat_header = ({receiver})=> {
                 _id: user?._id,
                 name: user?.name,
                 profile_picture: user?.profile_picture
-            })
-    }
+            });
+        socket?.emit('call',{
+            to: receiver?._id,
+            from: caller
+        });
+
+    };
+
 
     return (
         <div className="p-3 bg-[#222e35] text-[#f7f8fa] flex items-center hide_model">
