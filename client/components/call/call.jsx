@@ -205,7 +205,6 @@ export const Call = ()=> {
                    local_video={local_video}
                    on_end_call={call_end}
                    on_toggle_mute={toggle_mute}
-                   on_toggle_camera_mode={toggle_camera_mode}
                 /> :
                 call_status === 'ringing'  ? 
                 <Ringing_call

@@ -1,25 +1,17 @@
 "use client";
 
 import { Call_context } from "@/contexts/call.context";
-import { User_context } from "@/contexts/user.context";
 import Image from "next/image";
-import { useContext, useEffect, useRef } from "react";
+import { useContext} from "react";
 import { MdCallEnd } from "react-icons/md";
 
-export const Ringing_call = ()=> {
+export const Ringing_call = ({
+    on_answer_call,
+    on_end_call,
+})=> {
 
-    const {caller,set_call_status} = useContext(Call_context);
-    const {socket} = useContext(User_context);
+    const {caller} = useContext(Call_context);
 
-    const end_call = ()=> {
-        socket.emit('call_end',{to:caller?._id})
-        set_call_status('idle');
-    };
-
-    const answer_call = ()=> {
-        socket.emit('call_connected',{to:caller?._id})
-        set_call_status('connected');
-    };
 
     return (
         <div className="flex flex-col items-center justify-center h-full min-h-full">
@@ -29,17 +21,11 @@ export const Ringing_call = ()=> {
                 <p>coming call...</p>
             </div>
             <div className="w-auto h-screen"></div>
-
-            {/* <video 
-                className="w-auto h-screen object-cover rounded-md" 
-                ref={local_video_ref} 
-                autoPlay muted
-                /> */}
             <div className="flex items-center justify-center gap-5">
-                <button onClick={end_call} className="p-3 rounded-full text-red-500 bg-blue-50">
+                <button onClick={on_end_call} className="p-3 rounded-full text-red-500 bg-blue-50">
                     <MdCallEnd size={28} />
                 </button>
-                <button onClick={answer_call} className="p-3 rounded-full text-white bg-emerald-400">
+                <button onClick={on_answer_call} className="p-3 rounded-full text-white bg-emerald-400">
                     <MdCallEnd size={28} />
                 </button>
             </div>
