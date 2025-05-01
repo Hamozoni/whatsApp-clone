@@ -8,6 +8,7 @@ export const Outgoing_call = ({
     local_video,
     on_end_call,
     on_toggle_mute,
+    is_muted
   })=> {
 
     const {callee} = useContext(Call_context);

@@ -15,8 +15,6 @@ export const Call_context_provider = ({children})=> {
     const [call_status,set_call_status] = useState('idle');
     const [callee,set_callee] = useState(null);
     const [caller,set_caller] = useState(null);
-    const [camera_facing_mode,set_camera_facing_mode] = useState(false);
-
 
     useEffect(()=> {
         socket?.on('call',({from})=> {
@@ -37,9 +35,6 @@ export const Call_context_provider = ({children})=> {
                 set_caller,
                 call_status,
                 set_call_status,
-                camera_facing_mode,
-                set_camera_facing_mode,
-
             }} 
            >
             {children}

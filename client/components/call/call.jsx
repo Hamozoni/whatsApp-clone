@@ -14,20 +14,20 @@ export const Call = ()=> {
         set_call_status,
         callee,
         caller,
-        camera_facing_mode,
-        set_camera_facing_mode
     } = useContext(Call_context);
 
     const {socket,user} = useContext(User_context);
 
     const [local_video,set_local_video] = useState(null);
     const [remote_video,set_remote_video] = useState(null);
+    const [is_muted,set_is_muted] = useState(false);
+    const [camera_facing_mode,set_camera_facing_mode] = useState(false);
 
     const peer_connection = useRef(null);
 
     const get_user_media = async ()=> {
         const stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: camera_facing_mode  ? 'environment' : "user", aspectRatio: 3/4 },
+            video: { facingMode: camera_facing_mode  ? 'environment' : "user"},
             audio: true
         });
 
@@ -102,13 +102,13 @@ export const Call = ()=> {
     };
 
     const close_peer_conecction = ()=> {
+        if(local_video){
+            local_video.getTracks().forEach(track=> track.stop());
+        };
         if(peer_connection.current){
             peer_connection.current.close();
             peer_connection.current = null
         }
-        if(local_video){
-            local_video.getTracks().forEach(track=> track.stop());
-        };
 
         set_local_video(null);
         set_remote_video(null);
@@ -122,7 +122,9 @@ export const Call = ()=> {
 
     const toggle_mute = ()=> {
         const audio_track = local_video.getAudioTracks()[0];
-        audio_track.enabled = !audio_track.enabled
+        audio_track.enabled = !audio_track.enabled;
+
+        set_is_muted(!audio_track.enabled);
     };
 
     const switch_camera = async()=> {
@@ -213,6 +215,7 @@ export const Call = ()=> {
                    local_video={local_video}
                    on_end_call={call_end}
                    on_toggle_mute={toggle_mute}
+                   is_muted={is_muted}
                 /> :
                 call_status === 'ringing'  ? 
                 <Ringing_call
@@ -225,6 +228,7 @@ export const Call = ()=> {
                    remote_video={remote_video}
                    on_end_call={call_end}
                    on_toggle_mute={toggle_mute}
+                   is_muted={is_muted}
                    on_toggle_camera_mode={toggle_camera_mode}
                  />
             }
