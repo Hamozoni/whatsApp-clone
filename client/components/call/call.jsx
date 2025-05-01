@@ -14,7 +14,8 @@ export const Call = ()=> {
         set_call_status,
         callee,
         caller,
-        camera_facing_mode
+        camera_facing_mode,
+        set_camera_facing_mode
     } = useContext(Call_context);
 
     const {socket,user} = useContext(User_context);
@@ -24,15 +25,21 @@ export const Call = ()=> {
 
     const peer_connection = useRef(null);
 
+    const get_user_media = async ()=> {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: camera_facing_mode  ? 'environment' : "user", aspectRatio: 3/4 },
+            audio: true
+        });
+
+        return stream;
+    }
+
 
     const start_call = async ()=> {
 
         try {
 
-            const stream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: camera_facing_mode  ? 'environment' : "user", aspectRatio: 3/4 },
-                audio: true
-            });
+           const stream = await get_user_media()
 
             set_local_video(stream);
 
@@ -75,14 +82,10 @@ export const Call = ()=> {
     };
 
     const answer_call = async ()=> {
-        const stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: camera_facing_mode  ? 'environment' : "user", aspectRatio: 3/4 },
-            audio: true
-        });
-
+        const stream = await get_user_media()
         set_local_video(stream);
 
-        const pc = peer_connection.current
+        const pc = peer_connection.current;
 
         stream.getTracks().forEach(track=> {
             if(pc) {
@@ -99,7 +102,48 @@ export const Call = ()=> {
     };
 
     const call_end = ()=> {
+        if(peer_connection.current){
+            peer_connection.current.close();
+            peer_connection.current = null
+        }
+        if(local_video){
+            local_video.getTracks().forEach(track=> track.stop());
+        };
 
+        set_local_video(null);
+        set_remote_video(null);
+        set_call_status('idle');
+    };
+
+    const toggle_mute = ()=> {
+        const audio_track = local_video.getAudioTracks()[0];
+        audio_track.enabled = !audio_track.enabled
+    };
+
+    const switch_camera = async()=> {
+
+        const stream = await get_user_media();
+
+        const new_stream = stream.getVideoTracks()[0];
+
+        const sender = peer_connection.current.getSenders().find(s=> s.track.kind === 'video');
+
+        if(sender) {
+            await sender.replaceTrack(new_stream)
+        };
+
+        if(local_video){
+            set_local_video(stream);
+        }
+
+}
+
+    const toggle_camera_mode = async() => {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const video_devices = devices.filter(d=> d.kind === 'videoinput')?.length;
+        if(video_devices < 2) return;
+        set_camera_facing_mode(!camera_facing_mode);
+        switch_camera()
     }
 
     useEffect(()=> {
@@ -107,6 +151,7 @@ export const Call = ()=> {
             start_call();
         };
         socket?.on('offer',async ({data})=> {
+
             const pc = new RTCPeerConnection({
                 iceServers: [{urls: 'stun:stun.l.google.com:19302'}],
                 iceCandidatePoolSize: 10
@@ -139,7 +184,16 @@ export const Call = ()=> {
             catch (error) {
                 console.error(error)
             }
-        })
+        });
+
+        socket?.on('call_end',call_end);
+
+        return ()=> {
+            socket?.off('offer');
+            socket?.off('answer');
+            socket?.off('ice_candidate');
+            socket?.off('call_end');
+        }
 
     },[]);
 
@@ -147,13 +201,26 @@ export const Call = ()=> {
         <div className="fixed top-0 left-0 w-[100dvw] h-[100dvh] z-30 bg-gray-900">
             {
                 call_status === 'call' ? 
-                <Outgoing_call /> :
+                <Outgoing_call 
+                   local_video={local_video}
+                   on_end_call={call_end}
+                   on_toggle_mute={toggle_mute}
+                   on_toggle_camera_mode={toggle_camera_mode}
+                /> :
                 call_status === 'ringing'  ? 
-                <Ringing_call /> :
+                <Ringing_call
+                   on_answer_call={answer_call}
+                   on_end_call={call_end}
+                 /> :
                 call_status === 'connected'  && 
-                <Connected_call />
+                <Connected_call
+                   local_video={local_video}
+                   remote_video={remote_video}
+                   on_end_call={call_end}
+                   on_toggle_mute={toggle_mute}
+                   on_toggle_camera_mode={toggle_camera_mode}
+                 />
             }
         </div>
     );
 };
-

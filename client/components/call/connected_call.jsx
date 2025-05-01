@@ -2,7 +2,7 @@
 
 import { Call_context } from "@/contexts/call.context";
 import { User_context } from "@/contexts/user.context";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { MdCallEnd } from "react-icons/md";
 import { RiCameraSwitchLine } from "react-icons/ri";
 
@@ -14,25 +14,16 @@ export const Connected_call = ()=> {
     const {
         callee,
         caller,
-        camera_facing_mode,
-        set_camera_facing_mode,
         set_call_status,
-        get_user_media
     } = useContext(Call_context);
 
-    const {user} = useContext(User_context);
+    const {user,socket} = useContext(User_context);
 
     const [is_full_screen,set_is_full_screen] = useState(false);
     const local_video_ref = useRef(null);
     const remote_video_ref = useRef(null);
 
-    const handle_camera_mode = async ()=> {
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const video_devices = devices.filter(d=> d.kind === 'videoinput')?.length;
-        if(video_devices < 2) return;
-        set_camera_facing_mode(!camera_facing_mode);
-        switch_camera()
-    }
+
 
     return (
         <div className=" relative flex flex-col items-center justify-center h-full min-h-full">
