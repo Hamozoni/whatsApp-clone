@@ -24,6 +24,7 @@ export const Connected_call = ({
     const {
         callee,
         caller,
+        call_type
     } = useContext(Call_context);
 
     const {user} = useContext(User_context);
@@ -59,11 +60,14 @@ export const Connected_call = ({
                             autoPlay muted
                             ref={local_video_ref}
                             />
-                        <button 
-                            onClick={on_toggle_camera_mode} 
-                            className={`${is_local_video_full_screen ? 'top-3 right-3 p-3 ' : 'top-1 right-1 p-1 '} absolute rounded-full text-blue-50 bg-[#0000001f]`}>
-                            <RiCameraSwitchLine size={is_local_video_full_screen ? 28 : 18}  />
-                        </button>
+                        {
+                            call_type === 'video' && 
+                            <button 
+                                onClick={on_toggle_camera_mode} 
+                                className={`${is_local_video_full_screen ? 'top-3 right-3 p-3 ' : 'top-1 right-1 p-1 '} absolute rounded-full text-blue-50 bg-[#0000001f]`}>
+                                <RiCameraSwitchLine size={is_local_video_full_screen ? 28 : 18}  />
+                            </button>
+                        }
                     </div>
                 </div>
                 <div className={is_local_video_full_screen ? h : f}>
@@ -76,7 +80,7 @@ export const Connected_call = ({
 
                 </div>
             </div>
-            <div className="absolute w-fit bottom-3 left-1/2 -translate-x-1/2 z-40 flex items-center justify-center gap-3 bg-[#ffffff07] p-2 rounded-xl">
+            <div className="absolute w-fit bottom-3 left-1/2 -translate-x-1/2 z-40 flex items-center justify-center gap-3 bg-[#ffffff2a] p-2 rounded-xl">
                 <button onClick={on_end_call} className="p-3 rounded-full text-red-500 bg-blue-50 ">
                     <MdCallEnd size={28} />
                 </button>

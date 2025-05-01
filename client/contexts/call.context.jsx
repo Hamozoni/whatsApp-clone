@@ -13,12 +13,14 @@ export const Call_context_provider = ({children})=> {
     const {socket} = useContext(User_context);
 
     const [call_status,set_call_status] = useState('idle');
+    const [call_type,set_call_type] = useState('video');
     const [callee,set_callee] = useState(null);
     const [caller,set_caller] = useState(null);
 
     useEffect(()=> {
-        socket?.on('call',({from})=> {
+        socket?.on('call',({from,type})=> {
             set_caller(from);
+            set_call_type(type);
             set_call_status('ringing')
         });
 
@@ -35,6 +37,8 @@ export const Call_context_provider = ({children})=> {
                 set_caller,
                 call_status,
                 set_call_status,
+                call_type,
+                set_call_type
             }} 
            >
             {children}

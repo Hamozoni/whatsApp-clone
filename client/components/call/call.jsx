@@ -14,6 +14,7 @@ export const Call = ()=> {
         set_call_status,
         callee,
         caller,
+        call_type,
     } = useContext(Call_context);
 
     const {socket,user} = useContext(User_context);
@@ -27,7 +28,7 @@ export const Call = ()=> {
 
     const get_user_media = async ()=> {
         const stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: camera_facing_mode  ? 'environment' : "user"},
+            video: call_type === 'video' ? { facingMode: camera_facing_mode  ? 'environment' : "user"} : false,
             audio: true
         });
 
