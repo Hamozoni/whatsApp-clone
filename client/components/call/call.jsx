@@ -1,7 +1,7 @@
 "use client";
 
 import { Call_context } from "@/contexts/call.context";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Outgoing_call } from "./outgoing_call";
 import { Ringing_call } from "./ringing_call";
 import { Connected_call } from "./connected_call";
@@ -200,6 +200,7 @@ export const Call = ()=> {
             socket?.off('answer');
             socket?.off('ice_candidate');
             socket?.off('call_end');
+            close_peer_conecction();
         }
 
     },[]);

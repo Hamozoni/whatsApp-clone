@@ -15,14 +15,15 @@ export const Chat_header = ({receiver})=> {
     const start_call = ()=> {
         set_call_status('call');
         set_callee(receiver);
-        set_caller({
-                _id: user?._id,
-                name: user?.name,
-                profile_picture: user?.profile_picture
-            });
+        const user_info = {
+            _id: user?._id,
+            name: user?.name,
+            profile_picture: user?.profile_picture
+        }
+        set_caller(user_info);
         socket?.emit('call',{
             to: receiver?._id,
-            from: caller
+            from: user_info
         });
 
     };
