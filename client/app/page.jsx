@@ -19,14 +19,14 @@ export default function Home() {
 
   return (
     
-      <div className="md:flex h-dvh max-h-dvh w-screen hide_model">
+      <div className="md:flex h-dvh max-h-dvh w-dvw max-w-dvw">
         <Navbar />
         <div className="w-full bg-[#111b21] text-[#f7f8fa] md:max-h-[calc(100dvh - 68px)]">
           {
             active_navbar === 'chats' ? 
             <div className="flex relative">
                <Chats />
-               <div className={`${active_chat ? 'flex absolute z-20 left-0 top-0 w-full h-full md:static md:left-auto md:top-auto' : 'hidden md:flex'} flex-2`}>
+               <div className={`${active_chat ? 'flex absolute z-20 left-0 top-0 w-full h-full max-w-full md:static md:left-auto md:top-auto' : 'hidden md:flex'} max-w-dvw flex-2`}>
                     {
                       active_chat ? 
                       <Chat_window /> :
