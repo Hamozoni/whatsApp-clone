@@ -15,9 +15,9 @@ export const Chats = ()=> {
     const [is_contacts,set_is_contact] = useState(false);
 
     return (
-        <div className=" relative">
+        <div className=" relative flex-1 border-x border-[#213036] max-h-dvh h-dvh">
             {is_contacts && <Contacts set_is_contact={set_is_contact}  />}
-            <header className="p-3">
+            <header className="p-3 mb-2">
                 <div className="flex items-center justify-between mb-3">
                     <h3 className="text-xl font-bold">Chats</h3>
                     <div className="flex items-center">
@@ -31,7 +31,7 @@ export const Chats = ()=> {
                 </div>
                 <Search_form value={search_value} set_value={set_search_value} handle_search={()=> ''} />
             </header>
-            <div className="overflow-y-auto max-h[calc(100vh-110px)] h-[calc(100vh-110px)]">
+            <div className="overflow-y-auto">
                 <div className="">
                     {chats?.map(chat => (
                         // chat?.last_message?.length > 0 &&
