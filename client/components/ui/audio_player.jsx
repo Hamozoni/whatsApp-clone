@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { FaPause } from "react-icons/fa6";
 import {IoPlay} from "react-icons/io5";
@@ -13,6 +13,7 @@ import {time_formater } from "@/utils/time_formater";
 const Audio_player = ({audio_url})=> {
 
     const audio_container_ref = useRef(null);
+    const [duration,set_duraction]= useState(0)
 
     const {wavesurfer,isPlaying,currentTime} = useWavesurfer({
         container: audio_container_ref,
@@ -26,6 +27,19 @@ const Audio_player = ({audio_url})=> {
     const on_play_pause = useCallback(() => {
         wavesurfer && wavesurfer.playPause()
     }, [wavesurfer]);
+
+
+    useEffect(()=> {
+        if(!wavesurfer)return;
+
+        const on_ready = ()=> {
+            const dur = wavesurfer.getDuration()
+            set_duraction(dur)
+        };
+
+        wavesurfer.on('ready',on_ready);
+        return ()=> wavesurfer.un('ready',on_ready)
+    },[wavesurfer]);
 
 
     return (
@@ -42,6 +56,7 @@ const Audio_player = ({audio_url})=> {
             
         }
 
+         <span className="text-xs">{time_formater(duration)}</span>
         <div className="min-w-[200px] " ref={audio_container_ref} >
         </div>
         <span className="text-xs">{time_formater(currentTime)}</span>

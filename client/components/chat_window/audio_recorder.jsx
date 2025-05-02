@@ -28,9 +28,6 @@ const Audio_recorder = () => {
 
   const interval_ref = useRef(null);
 
-
-
-
   const draw_waveform = () => {
     const canvas = canvas_ref.current;
     if (!canvas) return;
@@ -173,7 +170,6 @@ const Audio_recorder = () => {
         )}
 
         <div className={`${recording ? 'flex items-center gap-2' : 'hidden'} rounded-md bg-[rgb(45,56,63)] px-3`}>
-          
           <canvas 
               ref={canvas_ref} 
               width={250} 

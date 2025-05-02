@@ -33,7 +33,7 @@ export const Connected_call = ({
     const [is_local_video_full_screen,set_is_local_video_full_screen] = useState(false);
     const local_video_ref = useRef(null);
     const remote_video_ref = useRef(null);
-    const [call_timer,set_call_timer] = useState((60 * 60 )* 2);
+    const [call_timer,set_call_timer] = useState(0);
     const interval_ref = useRef(null)
 
     useEffect(()=>{
