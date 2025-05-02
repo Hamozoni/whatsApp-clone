@@ -2,43 +2,17 @@
 import { RiChatNewLine } from "react-icons/ri";
 import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 import { Chat_card } from "./chat_card";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Search_form } from "../ui/search_form";
 import { Contacts } from "../contacts/contacts";
 import { User_context } from "../../contexts/user.context";
 
 
-const Chat_list = ()=> {
+export const Chats = ()=> {
 
     const {chats} = useContext(User_context);
     const [search_value,set_search_value] = useState('');
     const [is_contacts,set_is_contact] = useState(false);
-
-    // useEffect(()=> {
-
-    //     socket?.emit('join_room',active_chat?._id)
-
-    //     socket?.on('message_sent',chat => {
-
-    //         const exsist_chat = chats?.find(e=> e?._id === chat?._id);
-    //         if(exsist_chat) return;
-
-    //         set_chats(prev=> [chat,...prev]);
-
-    //     });
-
-    //     socket?.on('chat_created', data => {
-            
-    //         const exsist_chat = chats?.find(e=> e?._id === data?._id);
-    //         if(exsist_chat) return;
-    //         set_chats(prev=> [data,...prev]);
-    //     })
-
-    //     return ()=> {
-    //         socket?.off('message_sent');
-    //         socket?.off('chat_created');
-    //     };
-    // },[socket,active_chat])
 
     return (
         <div className=" relative">
@@ -71,5 +45,3 @@ const Chat_list = ()=> {
         </div>
     )
 };
-
-export default Chat_list;

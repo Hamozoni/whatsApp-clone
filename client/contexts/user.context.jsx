@@ -17,7 +17,8 @@ export const  User_context_provider =  ({children})=> {
     const [error,set_error] = useState(false);
     const [contacts,set_contacts] = useState([]);
     const [chats,set_chats] = useState([]);
-    const [socket,set_socket] = useState(null)
+    const [socket,set_socket] = useState(null);
+    const [active_navbar,set_active_navbar] = useState('chats');
 
     const router = useRouter();
 
@@ -72,7 +73,9 @@ export const  User_context_provider =  ({children})=> {
                 set_contacts,
                 loading,
                 chats,
-                set_chats
+                set_chats,
+                active_navbar,
+                set_active_navbar
               }
             }>
             {children}
