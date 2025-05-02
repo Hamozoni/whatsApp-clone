@@ -6,9 +6,9 @@ import {IoPlay} from "react-icons/io5";
 
 import { useWavesurfer } from '@wavesurfer/react';
 import Timeline from 'wavesurfer.js/dist/plugins/timeline.esm.js';
+import {time_formater } from "@/utils/time_formater";
 
 
-const formatTime = (seconds) => [seconds / 60, seconds % 60].map((v) => `0${Math.floor(v)}`.slice(-2)).join(':');
 
 const Audio_player = ({audio_url})=> {
 
@@ -44,7 +44,7 @@ const Audio_player = ({audio_url})=> {
 
         <div className="min-w-[200px] " ref={audio_container_ref} >
         </div>
-        <span className="text-xs">{formatTime(currentTime)}</span>
+        <span className="text-xs">{time_formater(currentTime)}</span>
       </div>
     )
 };

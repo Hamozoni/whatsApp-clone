@@ -8,6 +8,7 @@ import { RiCameraSwitchLine } from "react-icons/ri";
 import { HiSpeakerWave } from "react-icons/hi2";
 import { FaMicrophoneSlash } from "react-icons/fa";
 import { FaVideo } from "react-icons/fa6";
+import { time_formater } from "@/utils/time_formater";
 
 const f = 'w-full h-full';
 const h = 'absolute top-2 left-2 z-30 max-w-[100px] rounded-md  min-h-[150px] md:min-h-[250px] md:max-w-[200px]'
@@ -32,7 +33,7 @@ export const Connected_call = ({
     const [is_local_video_full_screen,set_is_local_video_full_screen] = useState(false);
     const local_video_ref = useRef(null);
     const remote_video_ref = useRef(null);
-    const [call_timer,set_call_timer] = useState(0);
+    const [call_timer,set_call_timer] = useState((60 * 60 )* 2);
     const interval_ref = useRef(null)
 
     useEffect(()=>{
@@ -52,13 +53,11 @@ export const Connected_call = ({
         return ()=> clearInterval(interval_ref.current);
     },[]);
 
-
-
     return (
         <div className="relative h-screen min-h-screen">
             <div className="flex flex-col items-center justify-center text-gray-50 absolute top-3 left-1/2 -translate-x-1/2 z-40">
                 <h5>{callee?._id === user?._id ? caller?.name : callee?.name}</h5>
-                <p>{call_timer}</p>
+                <p>{time_formater(call_timer)}</p>
             </div>
             <div className="relative w-fit mx-auto h-full min-h-screen">
                 <div className={is_local_video_full_screen ? f : h} >

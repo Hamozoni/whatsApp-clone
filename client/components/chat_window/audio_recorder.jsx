@@ -6,6 +6,7 @@ import { MdDelete } from "react-icons/md";
 import dynamic from 'next/dynamic';
 import { Chat_window_context } from '@/contexts/chat_window.context';
 import { Send_message_btn } from './send_message_btn';
+import { time_formater } from '@/utils/time_formater';
 
 const Audio_player = dynamic(()=> import('../ui/audio_player'),{ssr:false});
 
@@ -23,6 +24,9 @@ const Audio_recorder = () => {
   const audio_context_ref = useRef(null);
   const analyser_ref = useRef(null);
   const animation_ref = useRef();
+  const [recorded_time,set_recorded_time] = useState(0)
+
+  const interval_ref = useRef(null);
 
 
 
@@ -102,13 +106,18 @@ const Audio_recorder = () => {
           lastModified: Date.now()
         });
 
-        set_message( prev => ({...prev,type: 'MEDIA',file: audio_file}) )
+        set_message( prev => ({...prev,type: 'MEDIA',file: audio_file}) );
+        clearInterval(interval_ref.current);
+        set_recorded_time(0);
         const audio_url = URL.createObjectURL(audio_blob);
         set_audio_url(audio_url)
 
       };
   
       media_recorder_ref.current.start();
+      interval_ref.current = setInterval(()=>{
+        set_recorded_time(prev=> prev + 1);
+      },1000);
       set_recording(true);
       draw_waveform();
     } catch (err) {
@@ -163,12 +172,16 @@ const Audio_recorder = () => {
            </button>
         )}
 
+        <div className={`${recording ? 'flex items-center gap-2' : 'hidden'} rounded-md bg-[rgb(45,56,63)] px-3`}>
+          
           <canvas 
-              className={`${recording ? 'visible' : 'hidden'} rounded-2xl bg-[rgb(45,56,63)] px-3`}
               ref={canvas_ref} 
               width={250} 
               height={30} 
             />
+          <p className='text-xs'>{time_formater(recorded_time)}</p>
+        </div>
+
         
         {(audio_url && !recording) && (
           <Audio_player audio_url={audio_url}/>
