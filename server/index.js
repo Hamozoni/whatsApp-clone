@@ -70,6 +70,10 @@ socket_io.on('connection',socket => {
     const callee = users_socket.get(to);
     socket.to(callee).emit('offer',{data});
   });
+  socket.on('call_received',({to})=> {
+    const callee = users_socket.get(to);
+    socket.to(callee).emit('call_received');
+  });
 
   socket.on('answer',({to,data})=> {
     const callee = users_socket.get(to);

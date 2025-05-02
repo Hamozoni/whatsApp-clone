@@ -4,6 +4,7 @@ import { MdCallEnd } from "react-icons/md";
 import { Call_context } from "@/contexts/call.context";
 import { FaMicrophoneSlash, FaVideo } from "react-icons/fa";
 import { HiSpeakerWave } from "react-icons/hi2";
+import { User_context } from "@/contexts/user.context";
 
 export const Outgoing_call = ({
     local_video,
@@ -13,6 +14,8 @@ export const Outgoing_call = ({
   })=> {
 
     const {callee} = useContext(Call_context);
+    const {socket} = useContext(User_context);
+    const [is_call_received,set_is_call_received] = useState(false)
     const local_video_ref = useRef(null)
 
     useEffect(()=> {
@@ -21,12 +24,20 @@ export const Outgoing_call = ({
         }
     },[local_video]);
 
+    useEffect(()=> {
+        socket?.on('call_received',()=>{
+            set_is_call_received(true)
+        });
+
+        return ()=> socket?.off('call_received')
+    },[]);
+
 
     return (
         <div className=" relative flex flex-col items-center justify-center h-full min-h-full">
             <div className="flex flex-col items-center justify-center text-gray-50 absolute top-3 left-1/2 -translate-x-1/2 z-40">
                 <h5>{callee?.name}</h5>
-                <p>calling...</p>
+                <p>{is_call_received ? 'ringing...': 'calling...'}</p>
             </div>
             <video 
                 className="w-auto h-screen object-cover" 

@@ -10,7 +10,7 @@ export const Ringing_call = ({
     on_end_call,
 })=> {
 
-    const {caller} = useContext(Call_context);
+    const {caller,call_type} = useContext(Call_context);
 
 
     return (
@@ -18,7 +18,7 @@ export const Ringing_call = ({
             <div className="flex flex-col items-center justify-center text-gray-50">
                 <Image src={caller?.profile_picture} width={60} height={60} alt={caller?.name} className=" rounded-full" />
                 <h5>{caller?.name}</h5>
-                <p>coming call...</p>
+                <p>{call_type} call</p>
             </div>
             <div className="w-auto h-screen"></div>
             <div className="flex items-center justify-center gap-5">

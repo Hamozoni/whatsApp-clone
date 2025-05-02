@@ -32,7 +32,8 @@ export const Connected_call = ({
     const [is_local_video_full_screen,set_is_local_video_full_screen] = useState(false);
     const local_video_ref = useRef(null);
     const remote_video_ref = useRef(null);
-
+    const [call_timer,set_call_timer] = useState(0);
+    const interval_ref = useRef(null)
 
     useEffect(()=>{
         if(local_video && local_video_ref.current) {
@@ -43,13 +44,21 @@ export const Connected_call = ({
         }
     },[local_video,remote_video]);
 
+    useEffect(()=> {
+        interval_ref.current = setInterval(() => {
+            set_call_timer(prev => prev + 1);
+        }, 1000);
+
+        return ()=> clearInterval(interval_ref.current);
+    },[]);
+
 
 
     return (
         <div className="relative h-screen min-h-screen">
             <div className="flex flex-col items-center justify-center text-gray-50 absolute top-3 left-1/2 -translate-x-1/2 z-40">
                 <h5>{callee?._id === user?._id ? caller?.name : callee?.name}</h5>
-                <p>05</p>
+                <p>{call_timer}</p>
             </div>
             <div className="relative w-fit mx-auto h-full min-h-screen">
                 <div className={is_local_video_full_screen ? f : h} >

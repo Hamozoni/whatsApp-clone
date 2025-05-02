@@ -177,7 +177,8 @@ export const Call = ()=> {
                 }
             };
 
-           await pc.setRemoteDescription(data)
+            await pc.setRemoteDescription(data)
+            socket?.emit('call_received',{to: caller?._id});
         });
 
         socket?.on('answer',({data})=> {
