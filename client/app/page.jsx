@@ -15,21 +15,24 @@ export default function Home() {
 
   return (
     
-      <div className="flex h-screen max-h-screen w-screen hide_model">
+      <div className="md:flex h-dvh max-h-dvh w-screen hide_model">
         <Navbar />
-        {
-          active_navbar === 'chats' ? 
-          <Chats /> : 
-          active_navbar === 'calls' ? 
-          <Calls /> : 
-          active_navbar === 'status' ? 
-          <Status /> :
-          active_navbar === 'groups' ?
-          <Group /> : 
-          active_navbar === 'settings' ?
-          <Setting /> :
-          <Profile />
-        }
+        <div className="w-full bg-[#111b21] text-[#f7f8fa] md:max-h-[calc(100dvh - 68px)]">
+          {
+            active_navbar === 'chats' ? 
+            <Chats /> : 
+            active_navbar === 'calls' ? 
+            <Calls /> : 
+            active_navbar === 'status' ? 
+            <Status /> :
+            active_navbar === 'groups' ?
+            <Group /> : 
+            active_navbar === 'settings' ?
+            <Setting /> :
+            <Profile />
+          }
+
+        </div>
       </div>
   );
 }
