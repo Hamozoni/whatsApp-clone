@@ -24,11 +24,6 @@ export const Chat_header = ({receiver})=> {
             profile_picture: user?.profile_picture
         }
         set_caller(user_info);
-        socket?.emit('call',{
-            to: receiver?._id,
-            from: user_info,
-            type,
-        });
         set_call_type(type);
     };
 

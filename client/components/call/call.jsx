@@ -26,21 +26,45 @@ export const Call = ()=> {
 
     const peer_connection = useRef(null);
 
-    const get_user_media = async ()=> {
-        const stream = await navigator.mediaDevices.getUserMedia({
-            video: call_type === 'video' ? { facingMode: camera_facing_mode  ? 'environment' : "user"} : false,
-            audio: true
-        });
+    const call_end = ()=> {
+        socket?.emit('call_end',{to:user?._id === caller?._id ? callee?._id : caller?._id})
+        close_peer_conecction();
+    };
 
-        return stream;
-    }
+    const get_user_media = async ()=> {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: call_type === 'video' ? { facingMode: camera_facing_mode  ? 'environment' : "user"} : false,
+                audio: true
+            });
+    
+            return stream;
+
+        }
+        catch (error) {
+            console.log(error)
+            call_end();
+        }
+    };
+
 
 
     const start_call = async ()=> {
 
         try {
 
-           const stream = await get_user_media()
+           const stream = await get_user_media();
+
+           if(!stream) {
+            call_end();
+            return
+           };
+
+           socket?.emit('call',{
+            to: callee?._id,
+            from: caller,
+            type,
+        });
 
             set_local_video(stream);
 
@@ -77,17 +101,22 @@ export const Call = ()=> {
             });
         }
         catch (error) {
-            console.error(error)
+            console.error(error);
+            call_end();
+            
         }
 
     };
 
     const answer_call = async ()=> {
-        const stream = await get_user_media()
+        const stream = await get_user_media();
+
+        if(!stream) {
+            call_end();
+            return;
+        };
         set_local_video(stream);
-
         const pc = peer_connection.current;
-
         stream.getTracks().forEach(track=> {
             if(pc) {
                 pc.addTrack(track,stream);
@@ -115,12 +144,6 @@ export const Call = ()=> {
         set_remote_video(null);
         set_call_status('idle');
     }
-
-    const call_end = ()=> {
-        socket?.emit('call_end',{to:user?._id === caller?._id ? callee?._id : caller?._id})
-        close_peer_conecction()
-    };
-
     const toggle_mute = ()=> {
         const audio_track = local_video.getAudioTracks()[0];
         audio_track.enabled = !audio_track.enabled;
