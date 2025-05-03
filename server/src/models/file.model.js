@@ -6,6 +6,7 @@ const FILE_SCHEMA = new mongoose.Schema({
     url: {type: String ,require : true},
     public_id: {type: String ,require : true},
     size: {type : Number , require: true},
+    duration: {type: Number}
   }, { timestamps: true});
 
   const File = mongoose.model('File',FILE_SCHEMA);

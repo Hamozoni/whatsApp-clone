@@ -56,10 +56,10 @@ const Audio_player = ({audio_url})=> {
             
         }
 
-         <span className="text-xs">{time_formater(duration)}</span>
+         <span className="text-xs">{time_formater(currentTime)}</span>
         <div className="min-w-[200px] " ref={audio_container_ref} >
         </div>
-        <span className="text-xs">{time_formater(currentTime)}</span>
+        <span className="text-xs">{time_formater(duration)}</span>
       </div>
     )
 };

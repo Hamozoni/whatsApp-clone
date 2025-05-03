@@ -15,6 +15,6 @@ export const fetch_data = async (end_point,set_loading,set_error) => {
         console.log(error?.message);
     }
     finally {
-        set_loading(false)
+        set_loading(false);
     }
 };

@@ -6,6 +6,7 @@ import { Outgoing_call } from "./outgoing_call";
 import { Ringing_call } from "./ringing_call";
 import { Connected_call } from "./connected_call";
 import { User_context } from "@/contexts/user.context";
+import { post_data } from "@/lib/post_data";
 
 export const Call = ()=> {
 
@@ -47,8 +48,6 @@ export const Call = ()=> {
         }
     };
 
-
-
     const start_call = async ()=> {
 
         try {
@@ -60,11 +59,13 @@ export const Call = ()=> {
             return
            };
 
-           socket?.emit('call',{
-            to: callee?._id,
-            from: caller,
-            type,
-        });
+             const data = await post_data('/call')
+
+            socket?.emit('call',{
+                to: callee?._id,
+                from: caller,
+                type: call_type
+            });
 
             set_local_video(stream);
 
