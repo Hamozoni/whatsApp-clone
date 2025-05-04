@@ -45,19 +45,10 @@ export const Call = ()=> {
     };
 
     const get_user_media = async ()=> {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({
+            return  await navigator.mediaDevices.getUserMedia({
                 video: call_type === 'video' ? { facingMode: camera_facing_mode  ? 'environment' : "user"} : false,
                 audio: true
             });
-    
-            return stream;
-
-        }
-        catch (error) {
-            console.log(error)
-            call_end();
-        }
     };
 
     const start_call = async ()=> {
@@ -65,7 +56,6 @@ export const Call = ()=> {
         try {
 
            const stream = await get_user_media();
-
            if(!stream) {
             call_end();
             return
@@ -95,8 +85,6 @@ export const Call = ()=> {
                     })
                 }
             });
-
-
 
             socket?.emit('call',{
                 to: callee?._id,
