@@ -7,6 +7,7 @@ import { Ringing_call } from "./ringing_call";
 import { Connected_call } from "./connected_call";
 import { User_context } from "@/contexts/user.context";
 import { post_data } from "@/lib/post_data";
+import { handle_send_message } from "@/lib/handle_send_message";
 
 export const Call = ()=> {
 
@@ -59,7 +60,9 @@ export const Call = ()=> {
             return
            };
 
-             const data = await post_data('/call')
+             const {data} = await post_data('call',{callee,caller,type: call_type,call_status});
+
+            await handle_send_message()
 
             socket?.emit('call',{
                 to: callee?._id,

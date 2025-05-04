@@ -14,7 +14,6 @@ import axios from "axios";
     }
     )=> {
 
-        console.log(message.file)
     const formData = new FormData();
 
     for(let key in message) {
@@ -31,7 +30,6 @@ import axios from "axios";
                   'Content-Type': 'multipart/form-data'
                 }
         });
-        console.log(data);
         
         socket?.emit('message_sent',data?.contact_chat);
 
@@ -48,7 +46,6 @@ import axios from "axios";
     }
     catch (error){
         set_error(error?.message);
-        console.log(error?.message);
     }
     finally {
         set_loading(false)
