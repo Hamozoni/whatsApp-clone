@@ -8,6 +8,7 @@ import { Connected_call } from "./connected_call";
 import { User_context } from "@/contexts/user.context";
 import { post_data } from "@/lib/post_data";
 import { handle_send_message } from "@/lib/handle_send_message";
+import { Chat_window } from "../chat_window/chat_window";
 
 export const Call = ()=> {
 
@@ -21,10 +22,20 @@ export const Call = ()=> {
 
     const {socket,user} = useContext(User_context);
 
+    const {
+        set_message,
+        message,
+        set_chats,
+        active_chat,
+        set_active_chat
+    } = useContext(Chat_window);
+
     const [local_video,set_local_video] = useState(null);
     const [remote_video,set_remote_video] = useState(null);
     const [is_muted,set_is_muted] = useState(false);
     const [camera_facing_mode,set_camera_facing_mode] = useState(false);
+    const [error,set_error] = useState(null);
+    const [loading,set_loading] = useState(false);
 
     const peer_connection = useRef(null);
 
@@ -60,9 +71,32 @@ export const Call = ()=> {
             return
            };
 
-             const {data} = await post_data('call',{callee,caller,type: call_type,call_status});
+            post_data('call',{
+                callee,
+                caller,
+                type: call_type,
+                call_status
+            },
+            set_loading,
+            set_error)
+            .then(async(data)=> {
+                set_message( prev => ({...prev,call: data?._id}))
+                if(data) {
+                  handle_send_message(
+                        message,
+                        set_loading,
+                        set_error,
+                        set_chats,
+                        active_chat,
+                        set_active_chat,
+                        socket
+                    ).then((data)=> {
+                        console.log(data)
+                    })
+                }
+            });
 
-            await handle_send_message()
+
 
             socket?.emit('call',{
                 to: callee?._id,
