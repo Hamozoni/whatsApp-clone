@@ -13,7 +13,7 @@ export const User_context = createContext();
 export const  User_context_provider =  ({children})=> {
   
     const [user,set_user] = useState(null);
-    const [loading,set_loading] = useState(false);
+    const [loading,set_loading] = useState(true);
     const [error,set_error] = useState(false);
     const [contacts,set_contacts] = useState([]);
     const [chats,set_chats] = useState([]);
@@ -24,32 +24,44 @@ export const  User_context_provider =  ({children})=> {
 
     useEffect(() => {
         const initializeAuth = async () => {
+          set_loading(true);
+          set_error(null);
 
-          await setPersistence(firebase_auth, browserLocalPersistence);
-          firebase_auth.onAuthStateChanged(async user => {
-            if(!user) {
-              router.push('/signin')
-              return;
-            }
-
-             const data = await fetch_data(`user?user_email=${user?.email}`,set_loading,set_error);
-             if(data){
-               set_user(data?.user);
-               set_chats(data?.chats);
-               set_contacts(data?.user?.contacts);
-             };
-             const socket = await io.connect('https://172.20.10.4:4400',{
-                reconnection: true,
-                reconnectionAttempts: 5,
-                transports: ['websocket'],
-                query : {
-                    user_id: data?.user?._id
-                }
+          try{
+            await setPersistence(firebase_auth, browserLocalPersistence);
+  
+            firebase_auth.onAuthStateChanged(async user => {
+              if(!user) {
+                router.push('/signin')
+                return;
+              }
+  
+               const data = await fetch_data(`user?user_email=${user?.email}`);
+                 set_user(data?.user);
+                 set_chats(data?.chats);
+                 set_contacts(data?.user?.contacts);
+  
+               const socket = await io.connect(process.env.NEXT_PUBLIC_SOCKET_URL,{
+                  reconnection: true,
+                  reconnectionAttempts: 5,
+                  transports: ['websocket'],
+                  query : {
+                      user_id: data?.user?._id
+                  }
+              });
+  
+              set_socket(socket);
+  
             });
 
-            set_socket(socket)
+          }
+          catch (error){
+            set_error(error.message);
+          }
+          finally {
+            set_loading(false)
+          }
 
-          });
         };
     
         initializeAuth();

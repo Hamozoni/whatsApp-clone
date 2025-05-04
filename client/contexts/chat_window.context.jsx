@@ -40,11 +40,17 @@ export const Chat_window_context_provider = ({children})=> {
         });
 
         const fetch_messages = async ()=> {
-            const data = await fetch_data(`/message?chat_id=${active_chat?._id}`,set_loading,set_error);
-            console.log(data)
-            if(data){
-              set_messages(data?.messages);
-      
+            set_loading(true);
+            set_error(null);
+            try{
+                const data = await fetch_data(`/message?chat_id=${active_chat?._id}`);
+                set_messages(data?.messages);
+            }
+            catch (error){
+                set_error(error.message)
+            }
+            finally {
+                set_loading(false);
             }
           };
       
