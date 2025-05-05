@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 
 import { Sigin_sith_prvider } from "@/components/auth/signin_with_prodider";
@@ -6,15 +5,15 @@ import { Input } from "@/components/ui/input";
 import { Submit_btn } from "@/components/ui/submit_btn";
 import {signInWithEmailAndPassword} from 'firebase/auth'
 import { firebase_auth } from "@/lib/firebase_config";
-import { useRouter } from "next/navigation";
+import {useNavigate } from "react-router-dom";
 
-export default function SignIn() {
+export default function Signin() {
   const [email, set_email] = useState("");
   const [password, set_password] = useState("");
   const [is_loading, set_is_loading] = useState(false);
   const [error, set_error] = useState("");
 
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const handle_submit = async(e)=> {
     e.preventDefault();
@@ -23,7 +22,7 @@ export default function SignIn() {
       await signInWithEmailAndPassword(firebase_auth,email,password)
       .then(_=> {
         set_is_loading(false);
-        router.push('/');
+        navigate('/');
       })
     }
     catch (error) {

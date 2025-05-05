@@ -1,14 +1,14 @@
-"use client";
+
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Sigin_sith_prvider } from "@/components/auth/signin_with_prodider";
 import { Input } from "@/components/ui/input";
 import { Submit_btn } from "@/components/ui/submit_btn";
 import {createUserWithEmailAndPassword,updateProfile } from 'firebase/auth'
 import { firebase_auth } from "@/lib/firebase_config";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-export default function SignUp() {
+export default function Signup() {
 
   const [name, set_name] = useState("");
   const [email, set_email] = useState("");
@@ -16,7 +16,7 @@ export default function SignUp() {
   const [confirm_password, set_confirm_password] = useState("");
   const [error, set_error] = useState("");
   const [loading, set_loading] = useState(false);
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const validateForm = () => {
     if (!name || !email || !password || !confirm_password) {
@@ -59,9 +59,7 @@ export default function SignUp() {
 
           const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user`,user_data);
 
-          console.log(data);
-
-            router.push('/onboarding')
+          navigate('/onboarding')
 
         })
         .catch((error)=> {

@@ -1,4 +1,3 @@
-"use client"
 import { firebase_auth } from "@/lib/firebase_config";
 import { createContext, useEffect, useState } from "react";
 import { setPersistence, browserLocalPersistence } from 'firebase/auth';

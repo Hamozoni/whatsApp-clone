@@ -1,5 +1,5 @@
 "use client"
-import Link from "next/link";
+import Link from "react-router-dom";
 import {GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
@@ -95,7 +95,7 @@ export function Sigin_sith_prvider ({link_to}) {
             <p className="text-sm text-[#f7f8fa]">
               { link_to === 'signup' ? 'do not': ''} have an account?{" "}
               <Link
-                href={`/${link_to}`}
+                to={`/${link_to}`}
                 className="font-medium text-indigo-400 hover:text-indigo-300"
               >
                 {link_to === 'signin' ?  'Sign in here' : 'Sign up here'}

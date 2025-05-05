@@ -7,7 +7,7 @@ import { Phone_input } from "@/components/ui/phone_input";
 import { ImFilePicture } from "react-icons/im";
 import { Submit_btn } from "@/components/ui/submit_btn";
 
-export default function OnboardingForm() {
+export default function Onboarding() {
 
 
     const { user } = useContext(User_context);
