@@ -1,6 +1,4 @@
-"use client";
-
-import { Chat_window_context } from "@/contexts/chat_window.context";
+import { Chat_window_context } from "../../contexts/chat_window.context";
 import { useContext, useEffect, useState } from "react";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 import EmojiPicker from "emoji-picker-react";

@@ -1,10 +1,9 @@
-"use client";
 import { useContext, useEffect, useRef, useState} from "react";
 import { MdCallEnd } from "react-icons/md";
-import { Call_context } from "@/contexts/call.context";
+import { Call_context } from "../../contexts/call.context";
 import { FaMicrophoneSlash, FaVideo } from "react-icons/fa";
 import { HiSpeakerWave } from "react-icons/hi2";
-import { User_context } from "@/contexts/user.context";
+import { User_context } from "../../contexts/user.context";
 
 export const Outgoing_call = ({
     local_video,

@@ -1,7 +1,6 @@
-"use client"
-import { Chat_window_context } from "@/contexts/chat_window.context";
-import { User_context } from "@/contexts/user.context";
-import { handle_send_message } from "@/lib/handle_send_message";
+import { Chat_window_context } from "../../contexts/chat_window.context";
+import { User_context } from "../../contexts/user.context";
+import { handle_send_message } from "../../lib/handle_send_message";
 import { useContext, useState } from "react";
 import { LuSendHorizontal } from "react-icons/lu"
 

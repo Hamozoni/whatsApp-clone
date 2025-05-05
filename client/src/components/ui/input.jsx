@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { FaRegEye,FaEyeSlash } from "react-icons/fa";
 

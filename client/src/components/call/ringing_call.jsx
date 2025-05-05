@@ -1,7 +1,5 @@
-"use client";
 
-import { Call_context } from "@/contexts/call.context";
-import Image from "next/image";
+import { Call_context } from "../../contexts/call.context";
 import { useContext} from "react";
 import { MdCallEnd } from "react-icons/md";
 
@@ -16,7 +14,7 @@ export const Ringing_call = ({
     return (
         <div className="flex flex-col items-center justify-center h-full min-h-full py-3">
             <div className="flex flex-col items-center justify-center text-gray-50">
-                <Image src={caller?.profile_picture} width={60} height={60} alt={caller?.name} className=" rounded-full" />
+                <img src={caller?.profile_picture} width={60} height={60} alt={caller?.name} className=" rounded-full" />
                 <h5>{caller?.name}</h5>
                 <p>{call_type} call</p>
             </div>

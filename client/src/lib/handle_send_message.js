@@ -18,7 +18,7 @@ import axios from "axios";
         formData.append(key,message[key]);
     };
 
-    const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/message`,formData,{
+    const {data} = await axios.post(`${mport.meta.env.VITE_API_URL}/message`,formData,{
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

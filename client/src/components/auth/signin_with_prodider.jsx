@@ -1,10 +1,8 @@
-"use client"
-import Link from "react-router-dom";
+import {Link, useNavigate } from "react-router-dom";
 import {GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import { firebase_auth } from "@/lib/firebase_config";
-import {  useRouter } from "next/navigation";
+import { firebase_auth } from "../../lib/firebase_config";
 import { useState } from "react";
 import axios from "axios";
 
@@ -12,7 +10,7 @@ import axios from "axios";
 export function Sigin_sith_prvider ({link_to}) {
 
     const [isLoading,setIsLoading] = useState(false);
-    const router = useRouter();
+    const navigate = useNavigate();
     const handle_sigin = async (provider)=> {
 
       setIsLoading(true);
@@ -36,11 +34,11 @@ export function Sigin_sith_prvider ({link_to}) {
           const {is_new } = data;
 
           if(is_new) {
-            router.push('/onboarding');
+            navigate('/onboarding');
 
           }else {
             setIsLoading(false);
-            router.push('/');
+            navigate('/');
           }
 
          })

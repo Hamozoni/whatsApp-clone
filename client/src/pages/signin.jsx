@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-import { Sigin_sith_prvider } from "@/components/auth/signin_with_prodider";
-import { Input } from "@/components/ui/input";
-import { Submit_btn } from "@/components/ui/submit_btn";
+import { Sigin_sith_prvider } from "../components/auth/signin_with_prodider";
+import { Input } from "../components/ui/input";
+import { Submit_btn } from "../components/ui/submit_btn";
 import {signInWithEmailAndPassword} from 'firebase/auth'
-import { firebase_auth } from "@/lib/firebase_config";
+import { firebase_auth } from "../lib/firebase_config";
 import {useNavigate } from "react-router-dom";
 
 export default function Signin() {

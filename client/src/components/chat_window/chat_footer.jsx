@@ -1,16 +1,11 @@
-"user client"
 import { AiOutlinePaperClip } from "react-icons/ai"
 import { SlMicrophone } from "react-icons/sl"
 import { useContext, useState } from "react";
 import { Chose_document } from "../ui/chose_document";
-import { Chat_window_context } from "@/contexts/chat_window.context";
+import { Chat_window_context } from "../../contexts/chat_window.context";
 import { Close_model } from "../ui/close_model";
-import dynamic from 'next/dynamic';
 
-const Audio_recorder = dynamic(
-    () => import('./audio_recorder'),
-    { ssr: false }
-  );
+import Audio_recorder from './audio_recorder'
 
 import { Send_message_btn } from "./send_message_btn";
 import { Text_input } from "./text_input";

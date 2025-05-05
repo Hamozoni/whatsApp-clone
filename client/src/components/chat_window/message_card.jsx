@@ -1,7 +1,5 @@
-"use client";
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
-const Message_media_card = dynamic(()=> import('./message_media_card'),{ssr:false})
+import Message_media_card from './message_media_card'
 
 export const Message_card = ({user_id,message})=> {
 

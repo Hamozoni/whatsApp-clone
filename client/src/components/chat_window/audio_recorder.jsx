@@ -2,13 +2,11 @@ import {useContext, useEffect, useRef, useState } from 'react';
 import { IoMic ,IoPauseCircleOutline} from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 
-
-import dynamic from 'next/dynamic';
-import { Chat_window_context } from '@/contexts/chat_window.context';
+import { Chat_window_context } from '../../contexts/chat_window.context';
 import { Send_message_btn } from './send_message_btn';
-import { time_formater } from '@/utils/time_formater';
+import { time_formater } from '../../utils/time_formater';
 
-const Audio_player = dynamic(()=> import('../ui/audio_player'),{ssr:false});
+import Audio_player from '../ui/audio_player'
 
 
 const Audio_recorder = () => {

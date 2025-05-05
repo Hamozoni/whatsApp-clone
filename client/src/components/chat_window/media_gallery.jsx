@@ -1,7 +1,4 @@
-"use client";
-
-import { Chat_window_context } from "@/contexts/chat_window.context";
-import Image from "next/image";
+import { Chat_window_context } from "../../contexts/chat_window.context";
 import { useContext } from "react";
 import { FaPlay } from "react-icons/fa";
 import { Gallery } from "./gallery";
@@ -43,7 +40,7 @@ export const Media_gallery = ()=> {
                                     className={`rounded-xl overflow-hidden border-4 border-cyan-950 h-[70px] w-[70px] flex justify-center items-center ${selected_gallery_file?._id === message?.file?._id && 'scale-75 border-cyan-400'}`}>
                                     {
                                         message?.file?.type === 'IMAGE' ?
-                                        <Image onClick={()=> set_selected_gallery_file(message?.file)} src={message?.file?.url} width={70} height={70} alt={message?.file?.type} /> :
+                                        <img onClick={()=> set_selected_gallery_file(message?.file)} src={message?.file?.url} width={70} height={70} alt={message?.file?.type} /> :
                                         message?.file?.type === 'VIDEO' ?
                                         <div className=" relative">
                                             <video width={70} height={70} src={message?.file?.url}  />

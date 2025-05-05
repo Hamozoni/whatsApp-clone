@@ -1,4 +1,4 @@
-import {firebase_auth} from '@/lib/firebase_config'
+import {firebase_auth} from '../../lib/firebase_config'
 import { signOut } from 'firebase/auth';
 export const Setting = ()=> {
     return (

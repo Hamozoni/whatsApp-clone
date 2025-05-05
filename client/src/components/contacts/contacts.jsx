@@ -1,5 +1,3 @@
-"use client";
-
 import { Search_form } from "../ui/search_form";
 import { GrGroup,GrUserAdd } from "react-icons/gr";
 import { Contact_header } from "./contact_header";

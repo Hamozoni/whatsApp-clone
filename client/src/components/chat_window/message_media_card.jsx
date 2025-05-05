@@ -1,9 +1,7 @@
-"use client"
-import Image from "next/image";
 import Audio_player from "../ui/audio_player";
 import { FaPlay } from "react-icons/fa6";
 import { useContext } from "react";
-import { Chat_window_context } from "@/contexts/chat_window.context";
+import { Chat_window_context } from "../../contexts/chat_window.context";
 
 const Message_media_card = ({file})=> {
 
@@ -21,7 +19,7 @@ const Message_media_card = ({file})=> {
                    <Audio_player audio_url={file?.url} />
                    :
                 file?.type === 'IMAGE' ?
-                    <Image onClick={()=> handle_select_file(file)} width={200} height={200} src={file?.url} alt='audio message' /> :
+                    <img onClick={()=> handle_select_file(file)} width={200} height={200} src={file?.url} alt='audio message' /> :
                 file?.type === 'VIDEO' ? 
                     <div className=" relative">
                         <video width={250} height={200} src={file?.url}  />

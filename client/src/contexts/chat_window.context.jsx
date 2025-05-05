@@ -1,7 +1,7 @@
-"use client";
+
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { User_context } from "./user.context";
-import { fetch_data } from "@/lib/fetch_data";
+import { fetch_data } from "../lib/fetch_data";
  
 
 export const Chat_window_context = createContext(null);

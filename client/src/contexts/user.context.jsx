@@ -1,10 +1,10 @@
-import { firebase_auth } from "@/lib/firebase_config";
+import { firebase_auth } from "../lib/firebase_config";
 import { createContext, useEffect, useState } from "react";
 import { setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { Loading_component } from "../components/ui/loading_component";
-import { useRouter } from "next/navigation";
-import { fetch_data } from "@/lib/fetch_data";
+import { fetch_data } from "../lib/fetch_data";
 import { io } from "socket.io-client";
+// import { useNavigate } from "react-router-dom";
 
 export const User_context = createContext();
 
@@ -19,7 +19,7 @@ export const  User_context_provider =  ({children})=> {
     const [socket,set_socket] = useState(null);
     const [active_navbar,set_active_navbar] = useState('chats');
 
-    const router = useRouter();
+    // const navigate = useNavigate();
 
     useEffect(() => {
         const initializeAuth = async () => {
@@ -31,7 +31,7 @@ export const  User_context_provider =  ({children})=> {
   
             firebase_auth.onAuthStateChanged(async user => {
               if(!user) {
-                router.push('/signin')
+                // navigate('/signin')
                 return;
               }
   
@@ -40,7 +40,7 @@ export const  User_context_provider =  ({children})=> {
                  set_chats(data?.chats);
                  set_contacts(data?.user?.contacts);
   
-               const socket = await io.connect(process.env.NEXT_PUBLIC_SOCKET_URL,{
+               const socket = await io.connect(mport.meta.env.VITE_SOCKET_URL,{
                   reconnection: true,
                   reconnectionAttempts: 5,
                   transports: ['websocket'],

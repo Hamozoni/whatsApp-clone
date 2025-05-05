@@ -1,5 +1,4 @@
-"use client"
-import { Chat_window_context } from "@/contexts/chat_window.context";
+import { Chat_window_context } from "../../contexts/chat_window.context";
 import { useContext, useEffect, useRef, useState } from "react";
 import { BsFillCameraFill } from "react-icons/bs";
 

@@ -1,5 +1,4 @@
-"use client";
-import { Chat_window_context } from "@/contexts/chat_window.context";
+import { Chat_window_context } from "../../contexts/chat_window.context";
 import { useContext, useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { Gallery } from "./gallery";

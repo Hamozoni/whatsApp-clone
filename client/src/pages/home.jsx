@@ -1,16 +1,15 @@
-import { Calls } from '@/components';
-import { Chats } from '@/components/chat/chats';
-import { Chat_window } from '@/components/chat_window/chat_window';
-import { No_active_chat } from '@/components/chat_window/No_active_chat';
-import { Group } from '@/components/group/group';
-import { Navbar } from '@/components/navbar/navbar';
-import { Profile } from '@/components/profile/profile';
-import { Setting } from '@/components/setting/setting';
-import { Status } from '@/components/status/status';
-import { Chat_window_context } from '@/contexts/chat_window.context';
-import { User_context } from '@/contexts/user.context';
+import { Chats } from '../components/chat/chats';
+import {Calls} from '../components/call/calls'
+import { Chat_window } from '../components/chat_window/chat_window';
+import { No_active_chat } from '../components/chat_window/No_active_chat';
+import { Group } from '../components/group/group';
+import { Navbar } from '../components/navbar/navbar';
+import { Profile } from '../components/profile/profile';
+import { Setting } from '../components/setting/setting';
+import { Status } from '../components/status/status';
+import { Chat_window_context } from '../contexts/chat_window.context';
+import { User_context } from '../contexts/user.context';
 import { useContext } from 'react';
-import { User_context_provider } from '@/contexts/user.context';
 
 export default function Home() {
 
@@ -19,7 +18,6 @@ export default function Home() {
 
   return (
 
-    <User_context_provider>
       <div className="md:flex h-dvh max-h-dvh w-dvw max-w-dvw">
         <Navbar />
         <div className="w-full bg-[#111b21] text-[#f7f8fa] md:max-h-[calc(100dvh - 68px)]">
@@ -49,6 +47,5 @@ export default function Home() {
 
         </div>
       </div>
-    </User_context_provider>
   );
 }

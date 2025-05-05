@@ -1,11 +1,11 @@
 "use client";
-import { User_context } from "@/contexts/user.context";
+import { User_context } from "../contexts/user.context";
 import { useContext } from "react";
 import { useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Phone_input } from "@/components/ui/phone_input";
+import { Input } from '../components/ui/input';
+import { Phone_input } from "../components/ui/phone_input";
 import { ImFilePicture } from "react-icons/im";
-import { Submit_btn } from "@/components/ui/submit_btn";
+import { Submit_btn } from "../components/ui/submit_btn";
 
 export default function Onboarding() {
 

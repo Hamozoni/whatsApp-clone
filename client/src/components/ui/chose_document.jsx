@@ -1,6 +1,5 @@
-"use client"
-import { Chat_window_context } from "@/contexts/chat_window.context";
-import { useContext, useState } from "react";
+import { Chat_window_context } from "../../contexts/chat_window.context";
+import { useContext } from "react";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { 
     MdOutlineAddPhotoAlternate, 

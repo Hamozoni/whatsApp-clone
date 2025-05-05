@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Avatar } from "../ui/avatar";
 import { User_context } from "../../contexts/user.context";
-import { Chat_window_context } from "@/contexts/chat_window.context";
+import { Chat_window_context } from "../../contexts/chat_window.context";
 
 export const Contact_card = ({_id,about,profile_picture,name,set_is_contact})=> {
 

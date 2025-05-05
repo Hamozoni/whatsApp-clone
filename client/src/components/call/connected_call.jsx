@@ -1,14 +1,12 @@
-"use client";
-
-import { Call_context } from "@/contexts/call.context";
-import { User_context } from "@/contexts/user.context";
+import { Call_context } from "../../contexts/call.context";
+import { User_context } from "../../contexts/user.context";
 import { useContext, useEffect, useRef, useState } from "react";
 import { MdCallEnd } from "react-icons/md";
 import { RiCameraSwitchLine } from "react-icons/ri";
 import { HiSpeakerWave } from "react-icons/hi2";
 import { FaMicrophoneSlash } from "react-icons/fa";
 import { FaVideo } from "react-icons/fa6";
-import { time_formater } from "@/utils/time_formater";
+import { time_formater } from "../../utils/time_formater";
 
 const f = 'w-full h-full';
 const h = 'absolute top-2 left-2 z-30 max-w-[100px] rounded-md  min-h-[150px] md:min-h-[250px] md:max-w-[200px]'

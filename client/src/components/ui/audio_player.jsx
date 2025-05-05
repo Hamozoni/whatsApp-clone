@@ -1,4 +1,3 @@
-"use client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { FaPause } from "react-icons/fa6";
@@ -6,7 +5,7 @@ import {IoPlay} from "react-icons/io5";
 
 import { useWavesurfer } from '@wavesurfer/react';
 import Timeline from 'wavesurfer.js/dist/plugins/timeline.esm.js';
-import {time_formater } from "@/utils/time_formater";
+import {time_formater } from "../../utils/time_formater";
 
 
 

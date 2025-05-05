@@ -1,6 +1,3 @@
-import Image from "next/image"
-
-
 export const Gallery = ({selected_gallery_file})=> {
 
     console.log(typeof selected_gallery_file?.url)
@@ -9,7 +6,7 @@ export const Gallery = ({selected_gallery_file})=> {
             <div className="">
                 {
                     selected_gallery_file?.type === 'IMAGE' ?
-                    <Image src={selected_gallery_file?.url} width={450} height={550} alt={selected_gallery_file?.type} />
+                    <img src={selected_gallery_file?.url} width={450} height={550} alt={selected_gallery_file?.type} />
                     : selected_gallery_file?.type === 'VIDEO' ?
                     <video width={450} height={550} src={selected_gallery_file?.url} controls  />
                     : selected_gallery_file?.type === 'APPLICATION' &&

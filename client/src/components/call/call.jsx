@@ -1,14 +1,12 @@
-"use client";
-
-import { Call_context } from "@/contexts/call.context";
+import { Call_context } from "../../contexts/call.context";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Outgoing_call } from "./outgoing_call";
 import { Ringing_call } from "./ringing_call";
 import { Connected_call } from "./connected_call";
-import { User_context } from "@/contexts/user.context";
-import { post_data } from "@/lib/post_data";
-import { handle_send_message } from "@/lib/handle_send_message";
-import { Chat_window_context } from "@/contexts/chat_window.context";
+import { User_context } from "../../contexts/user.context";
+import { post_data } from "../../lib/post_data";
+import { handle_send_message } from "../../lib/handle_send_message";
+import { Chat_window_context } from "../../contexts/chat_window.context";
 
 export const Call = ()=> {
 

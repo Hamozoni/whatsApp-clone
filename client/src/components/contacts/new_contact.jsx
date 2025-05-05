@@ -1,4 +1,3 @@
-"use client"
 import { useContext, useState } from "react"
 import { Contact_header } from "./contact_header"
 import { Input } from "../ui/input"

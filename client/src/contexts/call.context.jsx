@@ -1,7 +1,5 @@
-"use client";
-
-import { Call } from "@/components/call/call";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { Call } from "../components/call/call";
+import { createContext, useContext, useEffect, useState } from "react";
 import { User_context } from "./user.context";
 
 
