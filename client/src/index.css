@@ -1,7 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-body {
+@import "tailwindcss";
+/* body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,13 +8,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
   }
   
-  
-  
-  /* * {
-    max-width: 100%;
-  } */
-  
-  /* globals.css */
+
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -33,4 +25,4 @@ body {
   
   ::-webkit-scrollbar-thumb:hover {
     background: #0e1d1c;
-  }
+  } */
