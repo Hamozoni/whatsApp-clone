@@ -35,7 +35,7 @@ export const Chat_header = ({receiver})=> {
                 <MdArrowBackIos onClick={()=> set_active_chat(null)} className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#bcc0c7] hide_model" />
             </div>
             <div className="w-10 h-10 rounded-full overflow-hidden hide_model">
-                <img src={receiver?.profile_picture} alt="Profile" className="w-full h-full object-cover" />
+                <img src={receiver?.profile_picture} alt="Profile" className="w-10 h-10 object-cover" />
             </div>
             <div className="ml-4 flex-1 hide_model">
                 <h2 className="font-semibold text-[#f7f8fa] hide_model">

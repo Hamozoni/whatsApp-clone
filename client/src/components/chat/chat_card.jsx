@@ -49,7 +49,7 @@ export const Chat_card = ({chat})=> {
             >
             <div className="relative">
                 <div className="w-12 h-12 rounded-full overflow-hidden">
-                    <img src={chat?.contact?.profile_picture} alt={chat?.contact?.name} className="w-full h-full object-cover" />
+                    <img src={chat?.contact?.profile_picture} alt={chat?.contact?.name} className="w-12 h-12 rounded-full object-cover" />
                 </div>
             </div>
             <div className="ml-4 flex-1 py-3 min-w-0 border-b-1 border-[#222e35] text-[#f7f8fa]">
