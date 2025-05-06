@@ -18,14 +18,12 @@ export const Call = ()=> {
         call_type,
     } = useContext(Call_context);
 
-    const {socket,user} = useContext(User_context);
+    const {socket,user,set_chats} = useContext(User_context);
 
     const {
-        set_message,
-        message,
-        set_chats,
         active_chat,
-        set_active_chat
+        set_active_chat,
+        set_messages
     } = useContext(Chat_window_context);
 
     const [local_video,set_local_video] = useState(null);
@@ -53,31 +51,28 @@ export const Call = ()=> {
     const start_call = async ()=> {
 
         try {
-
            const stream = await get_user_media();
-
-            const call_data = await post_data('call',{
+            const {call} = await post_data('call',{
                 callee,
                 caller,
                 type: call_type,
-                call_status
             });
+            set_call_id(call?._id);
+            const message = {sender: user?._id,contact: callee?._id,call: call?._id,type: 'CALL'};
 
-            set_call_id(call_data?._id)
-
-            await handle_send_message(
-                {...message,call: call_data?._id},
+           await handle_send_message({message,
                 set_chats,
                 active_chat,
                 set_active_chat,
-                socket
+                set_messages,
+                socket}
             );
 
             socket?.emit('call',{
                 to: callee?._id,
                 from: caller,
                 type: call_type,
-                call_id: call_data?._id
+                call_id: call?._id
             });
 
             set_local_video(stream);
@@ -116,6 +111,8 @@ export const Call = ()=> {
         }
         catch (error) {
 
+            console.log(error)
+            set_error(error.message)
             
         }
         finally {
@@ -257,6 +254,7 @@ export const Call = ()=> {
                    on_end_call={call_end}
                    on_toggle_mute={toggle_mute}
                    is_muted={is_muted}
+                   call_end= {call_end}
                 /> :
                 call_status === 'ringing'  ? 
                 <Ringing_call

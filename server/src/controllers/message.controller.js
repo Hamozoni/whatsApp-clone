@@ -39,6 +39,8 @@ export const post_message_controller = async (req,res,next) => {
     
     try {
         const {sender,contact} = req.body;
+
+        console.log(req.body)
         
         if(!sender || !contact) {
             return res.status(500).json({message: 'sender id is reqiure'});

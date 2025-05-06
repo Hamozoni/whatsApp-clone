@@ -18,7 +18,8 @@ export const Send_message_btn = ()=> {
         active_chat,
         set_is_recorder,
         set_message,
-        set_is_preview
+        set_is_preview,
+        set_messages
     } = useContext(Chat_window_context);
 
     const {socket,set_chats} = useContext(User_context);
@@ -28,11 +29,10 @@ export const Send_message_btn = ()=> {
             onClick={()=>{
                 handle_send_message({
                     message,
-                    set_loading,
-                    set_error,
                     set_chats,
                     active_chat,
                     set_active_chat,
+                    set_messages,
                     socket
                 });
                 if(!error) {

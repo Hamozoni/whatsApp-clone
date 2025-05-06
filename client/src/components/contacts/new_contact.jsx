@@ -6,6 +6,7 @@ import { Submit_btn } from "../ui/submit_btn";
 import axios from "axios";
 import { User_context } from "../../contexts/user.context";
 import { Contact_card } from "./contact_card";
+import { fetch_data } from "../../lib/fetch_data";
 
 export const New_contact = ({set_is_new_contact})=> {
 
@@ -28,7 +29,7 @@ export const New_contact = ({set_is_new_contact})=> {
         }
         try {
 
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/contact?user_email=${user?.email}&contact_email=${email}`);
+            const data = await fetch_data(`contact?user_email=${user?.email}&contact_email=${email}`);
             if(!data?.status) {
                 set_error(data?.message)
             }else {

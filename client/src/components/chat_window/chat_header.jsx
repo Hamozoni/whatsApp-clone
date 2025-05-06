@@ -47,11 +47,11 @@ export const Chat_header = ({receiver})=> {
             </div>
             <div className="flex gap-5 items-center hide_model">
                 <div className="flex items-center bg-[#394b55] rounded-md hide_model">
-                    <button onClick={()=> start_call('audio')}  className="flex justify-center items-center p-2 rounded-md hover:bg-[#00a884] cursor-pointer hide_model ">
+                    <button onClick={()=> start_call('AUDIO')}  className="flex justify-center items-center p-2 rounded-md hover:bg-[#00a884] cursor-pointer hide_model ">
                         <IoCallOutline size={18} className='text-[#f7f8fa]'/>
                     </button>
                     <div className="w-[1px] min-w[1px] h-[20px] min-h-[20px] bg-[#ffffff] hide_model">  </div>
-                    <button onClick={()=> start_call('video')} className="flex justify-center items-center p-2 rounded-md hover:bg-[#00a884] cursor-pointer hide_model">
+                    <button onClick={()=> start_call('VIDEO')} className="flex justify-center items-center p-2 rounded-md hover:bg-[#00a884] cursor-pointer hide_model">
                         <IoVideocamOutline size={18} className='text-[#f7f8fa] hide_model'/>
                     </button>
                 </div>

@@ -9,9 +9,11 @@ export const Outgoing_call = ({
     local_video,
     on_end_call,
     on_toggle_mute,
-    is_muted
+    is_muted,
+    call_end
   })=> {
 
+    const interval_ref = useRef(null);
     const {callee} = useContext(Call_context);
     const {socket} = useContext(User_context);
     const [is_call_received,set_is_call_received] = useState(false)
@@ -28,7 +30,14 @@ export const Outgoing_call = ({
             set_is_call_received(true)
         });
 
-        return ()=> socket?.off('call_received')
+        interval_ref.current = setInterval(()=> {
+            call_end()
+        },[3000])
+
+        return ()=> {
+            socket?.off('call_received');
+            clearInterval(interval_ref.current)
+        }
     },[]);
 
 

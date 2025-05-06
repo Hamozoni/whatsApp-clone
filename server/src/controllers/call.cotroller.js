@@ -8,10 +8,10 @@ export const post_call = async (req,res,next)=> {
         if(!callee || !caller) {
             return res.status(401).json({message: 'callee and caller are requred'})
         }
-        const call = await Call.create({callee,caller,type,call_status,duration},{new: true});
-        call.save();
+        const call = await Call.create({callee,caller,type,call_status,duration});
 
         await User.updateMany({_id: {$in: [callee,caller]}},{$push:{calls: call._id}});
+
         return res.status(200).json({call});
 
     }

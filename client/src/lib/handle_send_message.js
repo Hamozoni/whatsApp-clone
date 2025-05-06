@@ -1,17 +1,15 @@
 import axios from "axios";
-
-
   
-  export const handle_send_message = async (
+export const handle_send_message = async (
     {   
         message,
         set_chats,
         active_chat,
         set_active_chat,
+        set_messages,
         socket
     }
     )=> {
-
     const formData = new FormData();
 
     for(let key in message) {
