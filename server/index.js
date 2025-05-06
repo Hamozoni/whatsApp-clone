@@ -1,9 +1,6 @@
 
 import dotenv from "dotenv";
-import https from 'https';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import http from 'http';
 
 import app from "./src/app.js";
 import { Server } from "socket.io";
@@ -14,22 +11,13 @@ import connect_db from "./src/config.js/db.js";
 dotenv.config();
 connect_db();
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-// Read SSL files
-
-// HTTPS Configuration
-const credentials = {
-  key: fs.readFileSync(path.join(__dirname, 'ssl', 'key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, 'ssl', 'cert.pem'))
-};
 
 
-const server = https.createServer(credentials,app);
+const server = http.createServer(app);
 
 const socket_io = new Server(server,{
   cors: {
-    origin: '*',
+    origin: 'http://localhost:5173',
     methods: ["GET", "POST"],
     // allowedHeaders: ["Authorization"],
     extraHeaders: {
@@ -100,6 +88,6 @@ socket_io.on('connection',socket => {
 });
   
   
-server.listen(process.env.PORT,'0.0.0.0',()=> {
+server.listen(process.env.PORT,()=> {
     console.log(`server is listening to port ${process.env.PORT}`);
 });

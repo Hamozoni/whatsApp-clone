@@ -10,6 +10,7 @@ import { Status } from '../components/status/status';
 import { Chat_window_context } from '../contexts/chat_window.context';
 import { User_context } from '../contexts/user.context';
 import { useContext } from 'react';
+import '../tailwind.css'
 
 export default function Home() {
 
