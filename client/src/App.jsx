@@ -3,7 +3,6 @@ import Onboarding from './pages/onboarding';
 import Home from './pages/home';
 import Signin from './pages/signin';
 import Signup from './pages/signup';
-import './tailwind.css'
 function App() {
 
   return (

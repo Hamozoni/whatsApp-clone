@@ -33,14 +33,14 @@ export const  User_context_provider =  ({children})=> {
               if(!user) {
                 // navigate('/signin')
                 return;
-              }
-  
+              };
+
                const data = await fetch_data(`user?user_email=${user?.email}`);
                  set_user(data?.user);
                  set_chats(data?.chats);
                  set_contacts(data?.user?.contacts);
   
-               const socket = await io.connect(mport.meta.env.VITE_SOCKET_URL,{
+               const socket = await io.connect(import.meta.env.VITE_SOCKET_URL,{
                   reconnection: true,
                   reconnectionAttempts: 5,
                   transports: ['websocket'],
@@ -55,6 +55,7 @@ export const  User_context_provider =  ({children})=> {
 
           }
           catch (error){
+            console.log(error)
             set_error(error.message);
           }
           finally {
