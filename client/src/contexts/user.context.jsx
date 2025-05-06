@@ -30,11 +30,7 @@ export const  User_context_provider =  ({children})=> {
             await setPersistence(firebase_auth, browserLocalPersistence);
   
             firebase_auth.onAuthStateChanged(async user => {
-              if(!user) {
-                // navigate('/signin')
-                return;
-              };
-
+              if(!user) return
                const data = await fetch_data(`user?user_email=${user?.email}`);
                  set_user(data?.user);
                  set_chats(data?.chats);
@@ -80,6 +76,7 @@ export const  User_context_provider =  ({children})=> {
             value={
               {
                 user,
+                set_user,
                 socket,
                 contacts,
                 set_contacts,

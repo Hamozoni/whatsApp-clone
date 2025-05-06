@@ -9,12 +9,22 @@ import { Setting } from '../components/setting/setting';
 import { Status } from '../components/status/status';
 import { Chat_window_context } from '../contexts/chat_window.context';
 import { User_context } from '../contexts/user.context';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
 
-  const {active_navbar} = useContext(User_context);
+  const {user,active_navbar} = useContext(User_context);
   const {active_chat} = useContext(Chat_window_context);
+
+  const navigate = useNavigate();
+
+  useEffect(()=> {
+    if(!user){
+      navigate('signin');
+      return;
+    }
+  },[user])
 
   return (
 

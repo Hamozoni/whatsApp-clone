@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Sigin_sith_prvider } from "../components/auth/signin_with_prodider";
 import { Input } from "../components/ui/input";
 import { Submit_btn } from "../components/ui/submit_btn";
@@ -7,9 +7,10 @@ import {createUserWithEmailAndPassword,updateProfile } from 'firebase/auth'
 import { firebase_auth } from "../lib/firebase_config";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { User_context } from "../contexts/user.context";
 
 export default function Signup() {
-
+  const {user} = useContext(User_context)
   const [name, set_name] = useState("");
   const [email, set_email] = useState("");
   const [password, set_password] = useState("");
@@ -57,7 +58,7 @@ export default function Signup() {
             emailVerified,
           }
 
-          const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user`,user_data);
+         await axios.post(`${import.meta.VITE_API_URL}/user`,user_data);
 
           navigate('/onboarding')
 
@@ -73,6 +74,12 @@ export default function Signup() {
         set_loading(false);
       }
   };
+
+      useEffect(()=> {
+        if(user){
+          navigate('/');
+        }
+      },[user])
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#111b21] text-[#f7f8fa]">

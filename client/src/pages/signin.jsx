@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { Sigin_sith_prvider } from "../components/auth/signin_with_prodider";
 import { Input } from "../components/ui/input";
@@ -6,12 +6,15 @@ import { Submit_btn } from "../components/ui/submit_btn";
 import {signInWithEmailAndPassword} from 'firebase/auth'
 import { firebase_auth } from "../lib/firebase_config";
 import {useNavigate } from "react-router-dom";
+import { User_context } from "../contexts/user.context";
 
 export default function Signin() {
   const [email, set_email] = useState("");
   const [password, set_password] = useState("");
   const [is_loading, set_is_loading] = useState(false);
   const [error, set_error] = useState("");
+
+  const {user} = useContext(User_context)
 
   const navigate = useNavigate();
 
@@ -29,7 +32,13 @@ export default function Signin() {
       set_error(error?.message);
       set_is_loading(false);
     }
-  }
+  };
+
+    useEffect(()=> {
+      if(user){
+        navigate('/');
+      }
+    },[user])
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#111b21] text-[#f7f8fa] p-3">
