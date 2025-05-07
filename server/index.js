@@ -49,9 +49,10 @@ socket_io.on('connection',socket => {
     socket.to(socket_id).emit('message_sent',data);
   });
 
-  socket.on('call',({from,to,type})=> {
+  socket.on('call',({from,to,type,call_id})=> {
     const callee = users_socket.get(to);
-    socket.to(callee).emit('call',{from,type});
+    console.log({from,to,type,call_id})
+    socket.to(callee).emit('call',{from,type,call_id}); 
   });
 
   socket.on('offer',({to,data})=> {

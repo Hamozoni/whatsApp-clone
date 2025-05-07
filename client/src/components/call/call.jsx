@@ -16,6 +16,8 @@ export const Call = ()=> {
         callee,
         caller,
         call_type,
+        call_id,
+        set_call_id
     } = useContext(Call_context);
 
     const {socket,user,set_chats} = useContext(User_context);
@@ -32,7 +34,6 @@ export const Call = ()=> {
     const [camera_facing_mode,set_camera_facing_mode] = useState(false);
     const [error,set_error] = useState(null);
     const [loading,set_loading] = useState(false);
-    const [call_id,set_call_id] = useState(null)
 
     const peer_connection = useRef(null);
 

@@ -32,7 +32,7 @@ export const Outgoing_call = ({
 
         interval_ref.current = setInterval(()=> {
             call_end()
-        },[3000])
+        },[30000])
 
         return ()=> {
             socket?.off('call_received');
