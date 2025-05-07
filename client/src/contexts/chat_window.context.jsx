@@ -45,6 +45,7 @@ export const Chat_window_context_provider = ({children})=> {
             try{
                 const data = await fetch_data(`/message?chat_id=${active_chat?._id}`);
                 set_messages(data?.messages);
+                console.log(data?.messages)
             }
             catch (error){
                 set_error(error.message)

@@ -21,6 +21,9 @@ export const post_message_controller = async (req,res,next) => {
                 path: 'file',
                 select: 'url _id type name size'
             },
+            {
+                path: 'call',
+            },
              {
                 path: 'reply_to',
                 populate: {
@@ -156,6 +159,9 @@ export const get_message_controller = async (req,res,next) => {
                     {
                         path: 'file',
                         elect: 'url _id type name size'
+                    },
+                    {
+                        path: 'call',
                     },
                 ]
 

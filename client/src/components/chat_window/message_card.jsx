@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Message_media_card from './message_media_card'
+import { Call_card } from "../chat/call_card";
 
 export const Message_card = ({user_id,message})=> {
 
@@ -24,18 +25,22 @@ export const Message_card = ({user_id,message})=> {
                 }}
             >
             {
-                message.type === 'MEDIA' &&
+                message.type === 'MEDIA' ?
               <Message_media_card file={message?.file}/>
+              : message.type === 'CALL' && 
+               <div className="p-2 ">
+                   <Call_card message={message} />
+                </div>
             }
             {
-               (message.type === 'MEDIA' && message?.file?.type === 'AUDIO') ? '':
+               (message.type === 'MEDIA' || message?.file?.type === 'AUDIO' || message.type === 'CALL') ? '':
               <p className="text-sm hide_model p-2">{ message?.file?.type === 'APPLICATION' ? message?.file?.name : message?.text}</p>
             }
             <div className="flex items-center justify-end space-x-1 mt-1 hide_model">
                 <span className="text-[10px] text-gray-300 font-[100] hide_model">
                     {new Date(message?.createdAt).toLocaleTimeString([],{hour: '2-digit',minute: '2-digit'})}
                 </span>
-                {is_my_message && (
+                {(is_my_message && message.type !== 'CALL') &&(
                 <span className={`${message?.status === 'READ' ? 'text-emerald-300' :''} text-[10px] hide_model`}>
                     {message?.status === 'SENT' ? '✓' : '✓✓'}
                 </span>
