@@ -15,8 +15,6 @@ export const Chat_card = ({chat})=> {
     const [loading,set_loading] = useState(false);
     const [error,set_error] = useState(null);
 
-
-
     useEffect(()=> {
         const text_time = new Date(chat?.last_message?.createdAt || chat?.last_message?.updatedAt)
         .toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
@@ -31,7 +29,6 @@ export const Chat_card = ({chat})=> {
 
 
     return (
-        chat?.last_message &&
         <div
             onClick={handle_active_chat}
             className={`flex items-center cursor-pointer px-3 hover:bg-[#31414b] ${
@@ -73,10 +70,10 @@ export const Chat_card = ({chat})=> {
                                 <><FaVideo /> Video</>:
                                 chat?.last_message?.file?.type === 'IMAGE' ?
                                <><FaRegImage /> Photo</>  : 
-                               <> <BsFillFileEarmarkPdfFill /> {chat?.last_message?.file?.name?.splice(0,28)}</> 
+                               <> <BsFillFileEarmarkPdfFill /> {chat.last_message.file.name.slice(0,28)}  </> 
                             ) : 
                             chat?.last_message.type === 'CALL' &&
-                            <Call_card message={chat?.last_message} />
+                            <Call_card call={chat?.last_message?.call} />
                         }
                         { 
                             chat?.last_message?.text?.length > 29 ? 

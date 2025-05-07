@@ -34,7 +34,7 @@ export const Chats = ()=> {
             <div className="overflow-y-auto">
                 <div className="">
                     {chats?.map(chat => (
-                        // chat?.last_message?.length > 0 &&
+                        chat.last_message &&
                         <Chat_card 
                             key={chat?._id} 
                             chat={chat} 

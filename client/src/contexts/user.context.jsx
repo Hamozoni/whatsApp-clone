@@ -16,6 +16,7 @@ export const  User_context_provider =  ({children})=> {
     const [error,set_error] = useState(false);
     const [contacts,set_contacts] = useState([]);
     const [chats,set_chats] = useState([]);
+    const [calls,set_calls] = useState([]);
     const [socket,set_socket] = useState(null);
     const [active_navbar,set_active_navbar] = useState('chats');
 
@@ -30,9 +31,11 @@ export const  User_context_provider =  ({children})=> {
             await setPersistence(firebase_auth, browserLocalPersistence);
   
             firebase_auth.onAuthStateChanged(async user => {
-              if(!user) return
                const data = await fetch_data(`user?user_email=${user?.email}`);
+
+               console.log(data)
                  set_user(data?.user);
+                 set_calls(data?.user?.calls)
                  set_chats(data?.chats);
                  set_contacts(data?.user?.contacts);
   
@@ -55,7 +58,7 @@ export const  User_context_provider =  ({children})=> {
             set_error(error.message);
           }
           finally {
-            set_loading(false)
+            set_loading(false);
           }
 
         };
@@ -69,27 +72,31 @@ export const  User_context_provider =  ({children})=> {
       return (
         <Loading_component />
       )
+    }else {
+      return (
+          <User_context.Provider 
+              value={
+                {
+                  user,
+                  set_user,
+                  socket,
+                  contacts,
+                  set_contacts,
+                  loading,
+                  chats,
+                  set_chats,
+                  active_navbar,
+                  set_active_navbar,
+                  calls,
+                  set_calls
+                }
+              }>
+              {children}
+          </User_context.Provider>
+      )
+
     }
 
-    return (
-        <User_context.Provider 
-            value={
-              {
-                user,
-                set_user,
-                socket,
-                contacts,
-                set_contacts,
-                loading,
-                chats,
-                set_chats,
-                active_navbar,
-                set_active_navbar
-              }
-            }>
-            {children}
-        </User_context.Provider>
-    )
 };
 
 

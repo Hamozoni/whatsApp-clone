@@ -16,6 +16,9 @@ export const get_user_controller = async (req,res,next) => {
               path: 'contacts',
               select: 'name _id about profile_picture',
             },
+            {
+                path: 'calls',
+              },
           ])
           .select('name _id about profile_picture')
 

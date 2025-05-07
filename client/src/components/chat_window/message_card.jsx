@@ -29,7 +29,7 @@ export const Message_card = ({user_id,message})=> {
               <Message_media_card file={message?.file}/>
               : message.type === 'CALL' && 
                <div className="p-2 ">
-                   <Call_card message={message} />
+                   <Call_card call={message?.call} />
                 </div>
             }
             {
