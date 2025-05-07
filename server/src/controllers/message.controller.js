@@ -3,6 +3,7 @@ import Chat from "../models/chat.model.js";
 import Message from "../models/message.model.js";
 import cloudinary from "../config.js/cloudinary.js";
 import File from "../models/file.model.js";
+import { populate } from "dotenv";
 
 export const post_message_controller = async (req,res,next) => {
 
@@ -14,6 +15,18 @@ export const post_message_controller = async (req,res,next) => {
     let resource_type = null;
     let result = null;
 
+    const call_populate = [
+        {
+            path: 'callee',
+            select: 'name _id about profile_picture',
+
+        },
+        {
+            path: 'caller',
+            select: 'name _id about profile_picture',
+        },
+    ]
+
     const populate = [
         {
             path: 'last_message',
@@ -23,6 +36,7 @@ export const post_message_controller = async (req,res,next) => {
             },
             {
                 path: 'call',
+                populate : call_populate
             },
              {
                 path: 'reply_to',

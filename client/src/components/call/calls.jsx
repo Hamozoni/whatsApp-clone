@@ -5,7 +5,7 @@ import { User_context } from "../../contexts/user.context";
 import { Call_card } from "../chat/call_card";
 export const Calls =  ()=> {
 
-    const {calls} = useContext(User_context);
+    const {calls,user} = useContext(User_context);
 
     const [search_value,set_search_value] = useState('');
 
@@ -28,12 +28,17 @@ export const Calls =  ()=> {
                     handle_search={handle_search}
                     />
             </header>
-            <div className="">
+            <div className="p-3">
                 <h6>Recent</h6>
                 <div className="">
                     {
                         calls?.map((call)=> (
-                            <div className="">
+                            <div key={call?._id} className="flex">
+                                <img 
+                                    className="w-11 h-11 rounded-full"
+                                    src={call?.caller?._id === user?._id ?  call?.callee?.profile_picture
+                                         : call?.caller?.rofile_picture} 
+                                    alt='avatar' />
                                 <Call_card call={call} />
                             </div>
                         ))

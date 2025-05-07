@@ -5,6 +5,18 @@ export const get_user_controller = async (req,res,next) => {
 
     const {user_email} = req.query;
 
+    const call_populate = [
+            {
+                path: 'callee',
+                select: 'name _id about profile_picture',
+
+            },
+            {
+                path: 'caller',
+                select: 'name _id about profile_picture',
+            },
+        ]
+
     if(!user_email) {
         return res.status(404).json({message: 'user email is reqiured'});
      };
@@ -18,7 +30,8 @@ export const get_user_controller = async (req,res,next) => {
             },
             {
                 path: 'calls',
-              },
+                populate : call_populate
+            },
           ])
           .select('name _id about profile_picture')
 
@@ -42,6 +55,7 @@ export const get_user_controller = async (req,res,next) => {
                     },
                     {
                         path: 'call',
+                        populate : call_populate
                     }
                 ],
                 

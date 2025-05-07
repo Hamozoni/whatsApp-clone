@@ -11,7 +11,7 @@ export const Call_card = ({call})=> {
     const [is_missed_call,set_is_missed_call] = useState(false);
 
     useEffect(()=> {
-        set_is_missed_call(call?.call_status === 'MISSED' && user?._id === call?.callee)
+        set_is_missed_call(call?.call_status === 'MISSED' && user?._id === call?.callee?._id)
     },[]);
 
     return (
