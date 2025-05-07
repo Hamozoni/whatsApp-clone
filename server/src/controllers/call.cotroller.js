@@ -24,6 +24,8 @@ export const update_call =  async (req,res,next)=> {
     try {
         const {call_id,call_status,duration} = req.body;
 
+        console.log({call_id,call_status,duration})
+
         if(!call_id || !call_status) {
             return res.status(401).json({message:'call id and call status aer required'})
         };
