@@ -16,14 +16,6 @@ export const Chat_card = ({chat})=> {
     const [error,set_error] = useState(null);
 
 
-    const fetch_unread_messages = async (user_id,chat_id) => {
-        const data = await fetch_data(`chat?user_id=${user_id}&chat_id=${chat_id}`,set_loading,set_error);
-
-        if(data) {
-            set_unread(data?.unread_messages)
-        }
-    };
-
 
     useEffect(()=> {
         const text_time = new Date(chat?.last_message?.createdAt || chat?.last_message?.updatedAt)
@@ -39,17 +31,26 @@ export const Chat_card = ({chat})=> {
         }
     },[active_chat]);
 
+    const handle_active_chat = ()=> {
+       if( chat._id === active_chat._id) return
+        set_active_chat(chat)
+    }
+
 
     return (
         chat?.last_message &&
         <div
-            onClick={()=> chat?._id === active_chat?._id ? '' : set_active_chat(chat)}
+            onClick={handle_active_chat}
             className={`flex items-center cursor-pointer px-3 hover:bg-[#31414b] ${
                 active_chat?._id === chat._id ? 'bg-[#222e35]' : '' }`}
             >
             <div className="relative">
                 <div className="w-12 h-12 rounded-full overflow-hidden">
-                    <img src={chat?.contact?.profile_picture} alt={chat?.contact?.name} className="w-12 h-12 rounded-full object-cover" />
+                    <img 
+                        src={chat?.contact?.profile_picture}
+                        alt={chat?.contact?.name} 
+                        className="w-12 h-12 rounded-full object-cover"
+                     />
                 </div>
             </div>
             <div className="ml-4 flex-1 py-3 min-w-0 border-b-1 border-[#222e35] text-[#f7f8fa]">
@@ -64,22 +65,40 @@ export const Chat_card = ({chat})=> {
                 <div className="flex justify-between items-center">
                      <div className="text-sm text-[#667781] truncate flex items-center gap-2">
                         {
-                        user?._id === chat?.last_message?.sender && (
-                        <span className={chat?.last_message?.status === 'READ' ? 'text-emerald-400' : ''}>
-                            {chat?.last_message?.status === 'SENT' ? '✓ ' :  '✓✓ ' }</span>)
+                          (user?._id === chat?.last_message?.sender || chat?.last_message.type !== 'CALL') && 
+                            (
+                                <span className={chat?.last_message?.status === 'READ' ? 'text-emerald-400' : ''}>
+                                    {chat?.last_message?.status === 'SENT' ? '✓ ' :  '✓✓ ' }
+                                </span>
+                            )
                         }
                         {
-                            chat?.last_message.type === 'MEDIA' && (
+                            chat?.last_message.type === 'MEDIA' ? (
                                 chat?.last_message?.file?.type === 'AUDIO' ?
                                 <><FaMicrophone /> Audio</>: 
                                 chat?.last_message?.file?.type === 'VIDEO' ?
                                 <><FaVideo /> Video</>:
                                 chat?.last_message?.file?.type === 'IMAGE' ?
                                <><FaRegImage /> Photo</>  : 
-                               <><BsFillFileEarmarkPdfFill /> {chat?.last_message?.file?.name?.splice(0,28)}</> 
+                               <> <BsFillFileEarmarkPdfFill /> {chat?.last_message?.file?.name?.splice(0,28)}</> 
+                            ) : chat?.last_message.type === 'CALL' && (
+                                <div className="flex items-center gap-1">
+                                    {
+                                        chat?.last_message.call?.type === 'AUDIO' ? 
+                                        <>
+                                          
+                                        </>
+                                        : 
+                                        <></>
+                                    }
+                                </div>
                             )
                         }
-                        {chat?.last_message?.text?.length > 29 ? `${chat?.last_message?.text?.slice(0,28)}...`: chat?.last_message?.text}
+                        { 
+                            chat?.last_message?.text?.length > 29 ? 
+                            `${chat?.last_message?.text?.slice(0,28)}...`
+                            : chat?.last_message?.text
+                        }
                     </div> 
                      {unread > 0 && (
                         <span className="bg-emerald-800  text-white rounded-full px-2 py-1 text-xs min-w-[20px] text-center">
