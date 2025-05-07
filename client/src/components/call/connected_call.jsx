@@ -87,7 +87,7 @@ export const Connected_call = ({
                 </div>
             </div>
             <div className="absolute w-fit bottom-3 left-1/2 -translate-x-1/2 z-40 flex items-center justify-center gap-3 bg-[#ffffff2a] p-2 rounded-xl">
-                <button onClick={on_end_call} className="p-3 rounded-full text-red-500 bg-blue-50 ">
+                <button onClick={() => on_end_call('ACCEPTED',call_timer)} className="p-3 rounded-full text-red-500 bg-blue-50 ">
                     <MdCallEnd size={28} />
                 </button>
                 <button onClick={on_toggle_mute} className={`${is_muted ? 'text-red-500 bg-[#ffffff46]' : 'text-blue-50 bg-[#0000001f]'} p-3 rounded-full `}>

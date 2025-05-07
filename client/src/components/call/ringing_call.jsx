@@ -23,7 +23,7 @@ export const Ringing_call = ({
                 <button onClick={on_answer_call} className="p-3 rounded-full text-white bg-emerald-400">
                     <MdCallEnd size={28} />
                 </button>
-                <button onClick={on_end_call} className="p-3 rounded-full text-red-500 bg-blue-50">
+                <button onClick={()=> on_end_call('REJECTED')} className="p-3 rounded-full text-red-500 bg-blue-50">
                     <MdCallEnd size={28} />
                 </button>
             </div>

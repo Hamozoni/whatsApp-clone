@@ -19,3 +19,20 @@ export const post_call = async (req,res,next)=> {
         next(error)
     }
 };
+
+export const update_call =  async (req,res,next)=> {
+    try {
+        const {call_id,call_status,duration} = req.body;
+
+        if(!call_id || !call_status) {
+            return res.status(401).json({message:'call id and call status aer required'})
+        };
+
+        const call = await Call.findByIdAndUpdate(call_id,{call_status,duration});
+
+        return res.status(200).json({call});
+    }
+    catch (error) {
+        next(error)
+    }
+}

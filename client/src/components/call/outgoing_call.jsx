@@ -63,7 +63,7 @@ export const Outgoing_call = ({
                 <button onClick={on_toggle_mute} className={`${is_muted ? 'text-red-500 bg-[#ffffff46]' : 'text-blue-50 bg-[#0000001f]'} p-3 rounded-full `}>
                     <FaVideo size={28} />
                 </button>
-                <button onClick={on_end_call} className="p-3 rounded-full text-red-500 bg-blue-50 ">
+                <button onClick={()=>on_end_call('MISSED')} className="p-3 rounded-full text-red-500 bg-blue-50 ">
                     <MdCallEnd size={28} />
                 </button>
             </div>

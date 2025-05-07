@@ -7,6 +7,7 @@ import { User_context } from "../../contexts/user.context";
 import { post_data } from "../../lib/post_data";
 import { handle_send_message } from "../../lib/handle_send_message";
 import { Chat_window_context } from "../../contexts/chat_window.context";
+import { update_data } from "../../lib/update_data";
 
 export const Call = ()=> {
 
@@ -37,8 +38,9 @@ export const Call = ()=> {
 
     const peer_connection = useRef(null);
 
-    const call_end = ()=> {
+    const call_end = async(call_status,duration = 0)=> {
         socket?.emit('call_end',{to:user?._id === caller?._id ? callee?._id : caller?._id})
+        await update_data('call',{call_status,call_id,duration});
         close_peer_conecction();
     };
 
