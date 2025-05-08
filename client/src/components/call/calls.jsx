@@ -33,13 +33,17 @@ export const Calls =  ()=> {
                 <div className="">
                     {
                         calls?.map((call)=> (
-                            <div key={call?._id} className="flex">
+                            <div key={call?._id} className="flex gap-2 my-1 cursor-pointer rounded-md p-2 hover:bg-black">
                                 <img 
                                     className="w-11 h-11 rounded-full"
                                     src={call?.caller?._id === user?._id ?  call?.callee?.profile_picture
                                          : call?.caller?.rofile_picture} 
                                     alt='avatar' />
-                                <Call_card call={call} />
+                                <div className="">
+                                    <h6>{call?.caller?._id === user?._id ?  call?.callee?.name
+                                         : call?.caller?.name}</h6>
+                                    <Call_card call={call} />
+                                </div>
                             </div>
                         ))
                     }
