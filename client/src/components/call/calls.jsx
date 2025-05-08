@@ -1,6 +1,6 @@
 import { MdAddIcCall } from "react-icons/md";
 import { Search_form } from "../ui/search_form";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { User_context } from "../../contexts/user.context";
 import { Call_card } from "../chat/call_card";
 import { IoVideocam,IoKeypad } from "react-icons/io5";
@@ -63,7 +63,7 @@ export const Calls =  ()=> {
                     </div>
                 </div>
             </div>
-            <div className="flex-2 flex items-center justify-center">
+            <div className="flex-2 hidden md:flex items-center justify-center">
                 <div className="flex items-center justify-center gap-5">
                     <button className="p-4 rounded-xl border border-cyan-950">
                         <IoVideocam size={40}/>
