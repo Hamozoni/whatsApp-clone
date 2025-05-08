@@ -14,7 +14,7 @@ export const Calls =  ()=> {
     }
 
     return (
-        <div className="">
+        <div className="h-dvh">
             <header className="p-3">
                 <div className="flex items-center justify-between mb-3">
                     <h4 className="text-xl">Calls</h4>
@@ -33,15 +33,14 @@ export const Calls =  ()=> {
                 <div className="">
                     {
                         calls?.map((call)=> (
-                            <div key={call?._id} className="flex gap-2 my-1 cursor-pointer rounded-md p-2 hover:bg-black">
+                            <div key={call?._id} className="flex gap-2 my-1 cursor-pointer rounded-md p-2 hover:bg-[#48505e]">
                                 <img 
                                     className="w-11 h-11 rounded-full"
                                     src={call?.caller?._id === user?._id ?  call?.callee?.profile_picture
                                          : call?.caller?.rofile_picture} 
                                     alt='avatar' />
                                 <div className="">
-                                    <h6>{call?.caller?._id === user?._id ?  call?.callee?.name
-                                         : call?.caller?.name}</h6>
+                                    <h6>{call?.caller?._id === user?._id ?  call?.callee?.name : call?.caller?.name}</h6>
                                     <Call_card call={call} />
                                 </div>
                             </div>
