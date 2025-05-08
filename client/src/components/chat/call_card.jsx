@@ -21,10 +21,10 @@ export const Call_card = ({call})=> {
             <>
               {
                 user?._id === call?.caller ? 
-                   <> <SlCallOut size={12} /> <span>outgoing audio call</span>  </>
+                   <> <SlCallOut size={12} /> <span className="text-[#667781]">outgoing audio call</span>  </>
                     :
                    <> <SlCallIn size={12} className={is_missed_call && 'text-red-400'} />  
-                      <span>{is_missed_call ? 'missed audio call' : 'incoming audio call'} </span>
+                      <span className="text-[#667781]">{is_missed_call ? 'missed audio call' : 'incoming audio call'} </span>
                    </>
                 } 
             </>
@@ -32,11 +32,11 @@ export const Call_card = ({call})=> {
             <>
               { 
                 user?._id === call?.caller ? 
-                   <> <RiVideoUploadLine size={20} /> <span>outgoing video call</span>   </>
+                   <> <RiVideoUploadLine size={20} /> <span className="text-[#667781]">outgoing video call</span>   </>
                     : 
                     <>
                         <RiVideoDownloadLine size={20} className={is_missed_call && 'text-red-400'} /> 
-                         <span>{is_missed_call ? 'missed video call' : 'incoming video call'} </span>
+                         <span className="text-[#667781]">{is_missed_call ? 'missed video call' : 'incoming video call'} </span>
                     </>
               } 
             </>
