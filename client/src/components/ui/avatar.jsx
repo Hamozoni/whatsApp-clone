@@ -4,9 +4,8 @@ export const Avatar = ({size = 'sm',user_photo})=> {
     <div className="cursor-pointer">
         <img 
             src={user_photo || '/placeholder_avatar.jpg'} 
-            width={size === 'lg' ? 55 : 40} height={size === 'lg' ? 55 : 40} 
             alt="user photo" 
-            className="rounded-full"
+            className={`${size === 'lg' ? 'w-[80px] h-[80px]' : 'w-[40px] h-[40px]'} rounded-full`}
          />
     </div>
     )
