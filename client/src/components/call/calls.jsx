@@ -5,6 +5,7 @@ import { User_context } from "../../contexts/user.context";
 import { Call_card } from "../chat/call_card";
 import { IoVideocam,IoKeypad } from "react-icons/io5";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
+import { Avatar } from "../ui/avatar";
 
 export const Calls =  ()=> {
 
@@ -43,11 +44,7 @@ export const Calls =  ()=> {
                         {
                             calls?.map((call)=> (
                                 <div key={call?._id} className="flex gap-2 my-1 cursor-pointer rounded-md p-2 hover:bg-[#48505e] w-full">
-                                    <img 
-                                        className="w-11 h-11 rounded-full"
-                                        src={call?.caller?._id === user?._id ?  call?.callee?.profile_picture
-                                            : call?.caller?.rofile_picture} 
-                                        alt='avatar' />
+                                    <Avatar size="lg" user_photo={call?.profile_picture}/>
                                     <div className=" flex-1">
                                         <div className="flex items-center justify-between">
                                            <h6>{call?.caller?._id === user?._id ?  call?.callee?.name : call?.caller?.name}</h6>
