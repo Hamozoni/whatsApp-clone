@@ -4,11 +4,12 @@ import { SiGradleplaypublisher } from "react-icons/si";
 import { useState } from "react";
 
 const bg_colors = ['#f44336','#e91e63','#9c27b0','#673ab7','#3f51b5','#2196f3','#009688','#4caf50','#8bc34a','#cddc39','#ffeb3b','#795548','#607d8b']
-
+const font = ['sans','serif']
 export const Text_status = ({set_status_type})=> {
 
     const [bg_color,set_bg_color] = useState('#f44336');
     const [is_color,set_is_color] = useState(false);
+
 
     const Color_picker = ()=> {
         return (
@@ -52,7 +53,7 @@ export const Text_status = ({set_status_type})=> {
                 </div>
             </header>
             <div className="p-3 flex items-center justify-center">
-                <p className="text-6xl text-[#999]">Type a Status</p>
+                <p className="text-6xl text-[#999] font-serif">Type a status</p>
             </div>
             <footer className="bg-[#0000003a] h-20 flex items-center justify-between px-3">
                 <button className="flex items-center gap-1 bg-[#00000065] py-2 px-6 rounded-3xl">
