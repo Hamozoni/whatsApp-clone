@@ -3,21 +3,22 @@ import { User_context } from "../../contexts/user.context";
 import { GrFormAdd } from "react-icons/gr";
 import { Update_status_model } from "./update_status_model";
 import { Close_model } from "../ui/close_model";
+import { Text_status } from "./text_status";
 
 
 export const Status = ()=> {
 
     const {user} = useContext(User_context);
     const [is_update,set_is_update] = useState(false);
-
-
-
-
-
-
+    const [status_type,set_status_type] = useState(null);
+    const [file,set_file] = useState(null);
 
     return (
         <div className="flex h-dvh">
+             {
+                status_type === 'text' &&
+                <Text_status set_status_type={set_status_type} />
+             }
             <div className=" p-3 flex-1 border-r border-cyan-950">
                 <header className="relative h-fit">
                     <div className="flex items-center justify-between">
@@ -46,7 +47,7 @@ export const Status = ()=> {
                         is_update && 
                         <>
                             <Close_model set_model={set_is_update} />
-                            <Update_status_model />
+                            <Update_status_model set_file={set_file} set_status_type={set_status_type}/>
 
                         </>
                     
