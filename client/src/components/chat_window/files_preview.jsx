@@ -1,27 +1,11 @@
 import { Chat_window_context } from "../../contexts/chat_window.context";
-import { useContext, useEffect, useState } from "react";
+import { useContext} from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { Gallery } from "./gallery";
+import { Files_gallery } from "../ui/files_gallery";
 
 export const Files_preview  = () => {
 
     const {message,set_is_preview,set_message} = useContext(Chat_window_context);
-    const [selected_gallery_file,set_selected_gallery_file] = useState(null);
-
-    useEffect(()=> {
-        if(message?.file) {
-            console.log(message?.file)
-
-            const reader = new FileReader();
-            reader.onload = (e)=> {
-
-                console.log(typeof e.target.result)
-                set_selected_gallery_file({url:e.target.result,type:message?.file?.type?.split('/')[0]?.toUpperCase()})
-            };
-            reader.readAsDataURL(message?.file)
-
-        }
-    },[message]);
 
     const cansel_file = ()=> {
         set_message( prev => {
@@ -44,8 +28,8 @@ export const Files_preview  = () => {
                     <AiOutlineClose />
                 </button>
             </header>
-            <Gallery 
-                selected_gallery_file={selected_gallery_file} 
+            <Files_gallery 
+                file_data={message?.file} 
                 />
 
         </div>

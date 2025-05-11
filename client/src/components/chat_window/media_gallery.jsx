@@ -1,7 +1,7 @@
 import { Chat_window_context } from "../../contexts/chat_window.context";
 import { useContext } from "react";
 import { FaPlay } from "react-icons/fa";
-import { Gallery } from "./gallery";
+import { Gallery } from "../ui/files_gallery";
 
 
 export const Media_gallery = ()=> {
