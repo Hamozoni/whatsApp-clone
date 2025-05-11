@@ -1,7 +1,6 @@
 import { Chat_window_context } from "../../contexts/chat_window.context";
 import { useContext } from "react";
-import { FaPlay } from "react-icons/fa";
-import { Gallery } from "../ui/files_gallery";
+import { Files_gallery } from "../ui/files_gallery";
 
 
 export const Media_gallery = ()=> {
@@ -29,40 +28,21 @@ export const Media_gallery = ()=> {
                 <div className=""></div>
                 <div className=""></div>
             </header>
-            <Gallery selected_gallery_file={selected_gallery_file} />
+            <Files_gallery file_data={selected_gallery_file} />
             <footer className="border-t-[1px] border-b-cyan-950 bg-black p-2 max-full overflow-x-auto min-h-fit">
                 <div className="flex justify-center items-center min-w-fit gap-2 ">
                     {
                         messages?.map((message)=> (
                            ( message?.type === 'MEDIA' && message?.file?.type !== 'AUDIO' ) && (
                                 <div 
+                                   
                                     key={message?._id} 
-                                    className={`rounded-xl overflow-hidden border-4 border-cyan-950 h-[70px] w-[70px] flex justify-center items-center ${selected_gallery_file?._id === message?.file?._id && 'scale-75 border-cyan-400'}`}>
-                                    {
-                                        message?.file?.type === 'IMAGE' ?
-                                        <img onClick={()=> set_selected_gallery_file(message?.file)} src={message?.file?.url} width={70} height={70} alt={message?.file?.type} /> :
-                                        message?.file?.type === 'VIDEO' ?
-                                        <div className=" relative">
-                                            <video width={70} height={70} src={message?.file?.url}  />
-                                            <div className=" absolute top-0 left-0 w-full h-full z-10 bg-[#ffffff4f] flex justify-center items-center">
-                                                <button onClick={()=> set_selected_gallery_file(message?.file)} className="flex items-center justify-center rounded-full bg-[#00000049] w-[50px] h-[50px]">
-                                                    <FaPlay size={28} />
-                                                </button>
-                                            </div>
-                                        </div>
-                                        :  message?.file?.type === 'APPLICATION' &&
-                                        <div onClick={()=> set_selected_gallery_file(message?.file)} className=" cursor-pointer" >
-                                                <iframe
-                                                    src={`https://docs.google.com/viewer?url=${encodeURIComponent(message?.file?.url)}&embedded=true&chrome=false&toolbar=0&navpanes=0`}
-                                                    width="70px"
-                                                    height="70px"
-                                                    style={{
-                                                        border: "none",
-                                                        pointerEvents: "none", // Disable interaction with the iframe
-                                                        }}
-                                                />
-                                        </div>
-                                    }
+                                    className={`relative rounded-xl cursor-pointer overflow-hidden border-4 border-cyan-950 h-[70px] w-[70px] flex justify-center items-center ${selected_gallery_file?._id === message?.file?._id && 'scale-75 border-cyan-400'}`}
+                                    >
+                                     <Files_gallery file_data={message?.file} is_blob={false} />
+                                     <button 
+                                      onClick={()=> set_selected_gallery_file(message?.file)}
+                                     className=" absolute left-0 top-0 w-full h-full z-30"></button>
                                 </div>
                             )
                         ))

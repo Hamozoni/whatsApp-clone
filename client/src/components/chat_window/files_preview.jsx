@@ -30,6 +30,7 @@ export const Files_preview  = () => {
             </header>
             <Files_gallery 
                 file_data={message?.file} 
+                is_blob={true}
                 />
 
         </div>

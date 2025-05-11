@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Message_media_card from './message_media_card'
+import { Media_message_card } from './media_message_card'
 import { Call_card } from "../chat/call_card";
 
 export const Message_card = ({user_id,message})=> {
@@ -26,7 +26,7 @@ export const Message_card = ({user_id,message})=> {
             >
             {
                 message.type === 'MEDIA' ?
-              <Message_media_card file={message?.file}/>
+              <Media_message_card file={message?.file}/>
               : message.type === 'CALL' && 
                <div className="p-2 ">
                    <Call_card call={message?.call} />

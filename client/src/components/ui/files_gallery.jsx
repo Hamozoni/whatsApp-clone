@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 
-export const Files_gallery = ({file_data})=> {
+export const Files_gallery = ({file_data,is_blob = false})=> {
 
     const [file,set_file] = useState(null)
 
         useEffect(()=> {
-            if(file_data) {
+            if(file_data && is_blob) {
                 const reader = new FileReader();
                 reader.onload = (e)=> {
                     set_file({url:e.target.result,type:file_data?.type?.split('/')[0]?.toUpperCase()})
                 };
                 reader.readAsDataURL(file_data)
+            }else {
+                set_file({url:file_data?.url,type:file_data?.type})
             }
         },[file_data]);
 
