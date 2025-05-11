@@ -4,11 +4,18 @@ import { SiGradleplaypublisher } from "react-icons/si";
 import { useState } from "react";
 
 const bg_colors = ['#f44336','#e91e63','#9c27b0','#673ab7','#3f51b5','#2196f3','#009688','#4caf50','#8bc34a','#cddc39','#ffeb3b','#795548','#607d8b']
-const font = ['sans','serif']
+const font_families = [
+    "Arial, sans-serif",           
+    "'Dancing Script', cursive",   
+    "'Courier New', monospace",     
+    "'Roboto', sans-serif",       
+    "'Pacifico', cursive" 
+  ];
 export const Text_status = ({set_status_type})=> {
 
     const [bg_color,set_bg_color] = useState('#f44336');
     const [is_color,set_is_color] = useState(false);
+    const [font_index,set_font_index] = useState(0);
 
 
     const Color_picker = ()=> {
@@ -25,6 +32,14 @@ export const Text_status = ({set_status_type})=> {
                } 
             </div>
         )
+    };
+
+    const handle_font = ()=> {
+        if(font_families.length < font_index) {
+            set_font_index(prev=> prev + 1)
+        }else {
+            set_font_index(0)
+        }
     }
 
 
@@ -38,7 +53,7 @@ export const Text_status = ({set_status_type})=> {
                     <button className=" hover:bg-[#00000046] rounded-full p-2">
                         <BsEmojiSmile size={26}  />
                     </button>
-                    <button className=" hover:bg-[#00000046] rounded-full w-10 h-10 text-3xl">
+                    <button onClick={ handle_font} className=" hover:bg-[#00000046] rounded-full w-10 h-10 text-3xl">
                         T
                     </button>
                     <div className=" relative">
@@ -53,7 +68,7 @@ export const Text_status = ({set_status_type})=> {
                 </div>
             </header>
             <div className="p-3 flex items-center justify-center">
-                <p style={{fontStyle:font[0]}} className={`text-6xl text-[#999]`}>Type a status</p>
+                <p style={{fontFamily:font_families[font_index]}} className={`text-6xl text-[#999]`}>Type a status</p>
             </div>
             <footer className="bg-[#0000003a] h-20 flex items-center justify-between px-3">
                 <button className="flex items-center gap-1 bg-[#00000065] py-2 px-6 rounded-3xl">
