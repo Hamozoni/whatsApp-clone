@@ -34,11 +34,14 @@ export const Text_status = ({set_status_type})=> {
                     <IoCloseSharp size={26} />
                 </button>
                 <div className="flex items-center gap-3">
-                    <button>
+                    <button className=" hover:bg-[#00000046] rounded-full p-2">
                         <BsEmojiSmile size={26}  />
                     </button>
+                    <button className=" hover:bg-[#00000046] rounded-full w-10 h-10 text-3xl">
+                        T
+                    </button>
                     <div className=" relative">
-                        <button onClick={()=>set_is_color(!is_color)}>
+                        <button className=" hover:bg-[#00000046] rounded-full p-2" onClick={()=>set_is_color(!is_color)}>
                             <IoColorPaletteSharp size={26}  />
                         </button>
                         {
@@ -48,6 +51,9 @@ export const Text_status = ({set_status_type})=> {
                     </div>
                 </div>
             </header>
+            <div className="p-3 flex items-center justify-center">
+                <p className="text-6xl text-[#999]">Type a Status</p>
+            </div>
             <footer className="bg-[#0000003a] h-20 flex items-center justify-between px-3">
                 <button className="flex items-center gap-1 bg-[#00000065] py-2 px-6 rounded-3xl">
                     <SiGradleplaypublisher size={20} /> <span> Status (Status)</span>
