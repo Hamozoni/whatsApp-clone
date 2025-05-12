@@ -16,6 +16,7 @@ export const  User_context_provider =  ({children})=> {
     const [error,set_error] = useState(false);
     const [contacts,set_contacts] = useState([]);
     const [chats,set_chats] = useState([]);
+    const [status,set_status] =  useState([]);
     const [calls,set_calls] = useState([]);
     const [socket,set_socket] = useState(null);
     const [active_navbar,set_active_navbar] = useState('chats');
@@ -32,8 +33,9 @@ export const  User_context_provider =  ({children})=> {
   
             firebase_auth.onAuthStateChanged(async user => {
                const data = await fetch_data(`user?user_email=${user?.email}`);
+               const {statuses} = await fetch_data(`status?user_id=${data?.user?._id}`);
 
-               console.log(data)
+                 set_status(statuses)
                  set_user(data?.user);
                  set_calls(data?.user?.calls)
                  set_chats(data?.chats);
@@ -88,7 +90,9 @@ export const  User_context_provider =  ({children})=> {
                   active_navbar,
                   set_active_navbar,
                   calls,
-                  set_calls
+                  set_calls,
+                  status,
+                  set_status
                 }
               }>
               {children}

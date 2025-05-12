@@ -40,6 +40,7 @@ export const Text_status = ({set_status_type})=> {
                {
                 bg_colors?.map((color)=> (
                     <button 
+                        key={color}
                         style={{backgroundColor: color}}  
                         onClick={()=> set_bg_color(color)} 
                         className={`w-8 h-8 min-w-8 rounded-full border-white ${color === bg_color ? 'border-4' : 'border'}`}>
