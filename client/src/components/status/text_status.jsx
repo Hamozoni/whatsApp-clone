@@ -5,6 +5,8 @@ import { useContext, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 import { Close_model } from "../ui/close_model";
 import {User_context} from '../../contexts/user.context'
+import { post_data } from "../../lib/post_data";
+import { BeatLoader } from "react-spinners";
 
 const bg_colors = ['#f44336','#e91e63','#9c27b0','#673ab7','#3f51b5','#2196f3','#009688','#4caf50','#8bc34a','#cddc39','#ffeb3b','#795548','#607d8b']
 const font_families = [
@@ -71,10 +73,18 @@ export const Text_status = ({set_status_type})=> {
             user: user?._id,
             text,
             text_bg_color: bg_color,
+            font_family: font,
+            type: 'TEXT'
         }
 
         try {
+          const data =  await post_data('status',form_data);
 
+          console.log(data)
+
+          if(data) {
+            set_status_type(null);
+          }
         }
         catch (error) {
             set_error(error.message)
@@ -149,10 +159,16 @@ export const Text_status = ({set_status_type})=> {
                 <button className="flex items-center gap-1 bg-[#00000065] py-2 px-6 rounded-3xl">
                     <SiGradleplaypublisher size={20} /> <span> Status (Status)</span>
                 </button>
-                <button className="bg-[#14752181] rounded-full p-4">
+                <button onClick={handle_submit_status} className="bg-[#14752181] rounded-full p-4">
                     <IoSend size={22} />
                 </button>
             </footer>
+            {
+                is_loading && 
+                <div className="fixed top-0 left-0 w-dvw h-dvh bg-[#000] flex items-center justify-center z-50">
+                    <BeatLoader />
+                </div>
+            }
         </div>
     )
 }

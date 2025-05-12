@@ -5,6 +5,7 @@ import user_route from './user.route.js';
 import notification_route from './notification.route.js'
 import chat_route from "./chat.route.js";
 import call_route from "./call.route.js";
+import status_route from './status.route.js'
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.use('/notification',notification_route);
 router.use('/contact',contact_route);
 router.use('/chat',chat_route);
 router.use('/call',call_route);
+router.use('/status',status_route);
 
 export default router;
