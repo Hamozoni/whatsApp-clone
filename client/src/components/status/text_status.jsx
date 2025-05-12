@@ -1,9 +1,10 @@
 import { IoCloseSharp,IoColorPaletteSharp,IoSend } from "react-icons/io5";
 import { BsEmojiSmile } from "react-icons/bs";
 import { SiGradleplaypublisher } from "react-icons/si";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 import { Close_model } from "../ui/close_model";
+import {User_context} from '../../contexts/user.context'
 
 const bg_colors = ['#f44336','#e91e63','#9c27b0','#673ab7','#3f51b5','#2196f3','#009688','#4caf50','#8bc34a','#cddc39','#ffeb3b','#795548','#607d8b']
 const font_families = [
@@ -19,11 +20,16 @@ let font_index = 0;
 
 export const Text_status = ({set_status_type})=> {
 
+    const {user} = useContext(User_context)
+
     const [bg_color,set_bg_color] = useState('#f44336');
     const [is_color,set_is_color] = useState(false);
     const [font,set_font] = useState(font_families[font_index]);
     const [text,set_text] = useState('');
-    const [show_emoji,set_show_emoji] = useState(false)
+    const [show_emoji,set_show_emoji] = useState(false);
+
+    const [error,set_error] = useState(null);
+    const [is_loading,set_is_loading] = useState(false);
 
 
     const Color_picker = ()=> {
@@ -55,6 +61,28 @@ export const Text_status = ({set_status_type})=> {
             set_font(font_families[0])
             font_index = 0
         }
+    };
+
+    const handle_submit_status = async ()=> {
+        set_error(null)
+        set_is_loading(true);
+
+        const form_data = {
+            user: user?._id,
+            text,
+            text_bg_color: bg_color,
+        }
+
+        try {
+
+        }
+        catch (error) {
+            set_error(error.message)
+        }
+        finally {
+            set_is_loading(false)
+        }
+
     }
 
 
@@ -124,7 +152,6 @@ export const Text_status = ({set_status_type})=> {
                 <button className="bg-[#14752181] rounded-full p-4">
                     <IoSend size={22} />
                 </button>
-
             </footer>
         </div>
     )

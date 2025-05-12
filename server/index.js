@@ -1,10 +1,13 @@
 
 import dotenv from "dotenv";
 import http from 'http';
+import cron from 'node-cron'
 
 import app from "./src/app.js";
 import { Server } from "socket.io";
 import connect_db from "./src/config.js/db.js";
+import Status from "./src/models/status.model.js";
+import cloudinary from "./src/config.js/cloudinary.js";
 
 
 
@@ -79,7 +82,27 @@ socket_io.on('connection',socket => {
     socket.to(callee).emit('call_end');
   });
 
+  // deleting expired statuses and related files from cloudinary
 
+cron.schedule('*/30 * * * *', async ()=> {
+
+  const expire_time = new Date(Date.now() - 24 * 60 * 60 * 1000 );
+  const expired_statuses  = await Status.find({createdAt: {$lt: expire_time}}).populate('file')
+
+  for(const status of expired_statuses) {
+    try {
+      if(status.type === 'MEDIA' && status.file) {
+          await cloudinary.uploader.destroy(status.file.public_id)
+      };
+
+       await status.deleteOne();
+    }
+    catch {
+
+    }
+  }
+
+})
   
 
   socket.on('disconnect',()=> {
@@ -87,6 +110,8 @@ socket_io.on('connection',socket => {
   })
 
 });
+
+
   
   
 server.listen(process.env.PORT,()=> {
