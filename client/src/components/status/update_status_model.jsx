@@ -17,7 +17,7 @@ export const Update_status_model = ({set_file,set_status_type})=> {
     }
 
     return (
-        <div className="w-[200px] absolute -bottom-full left-3 z-20 bg-[#132730] rounded-xl p-2">
+        <div className="w-[200px] absolute -bottom-full left-3 z-40 bg-[#132730] rounded-xl p-2">
             <button className="w-full">
                 <label htmlFor="status_photo" className="w-full flex items-center gap-3 rounded-xl p-2 hover:bg-[#252c30] cursor-pointer">
                     <TbLibraryPhoto /> <span>Photos</span>

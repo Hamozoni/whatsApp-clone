@@ -2,6 +2,8 @@ import { IoCloseSharp,IoColorPaletteSharp,IoSend } from "react-icons/io5";
 import { BsEmojiSmile } from "react-icons/bs";
 import { SiGradleplaypublisher } from "react-icons/si";
 import { useState } from "react";
+import EmojiPicker from "emoji-picker-react";
+import { Close_model } from "../ui/close_model";
 
 const bg_colors = ['#f44336','#e91e63','#9c27b0','#673ab7','#3f51b5','#2196f3','#009688','#4caf50','#8bc34a','#cddc39','#ffeb3b','#795548','#607d8b']
 const font_families = [
@@ -20,11 +22,13 @@ export const Text_status = ({set_status_type})=> {
     const [bg_color,set_bg_color] = useState('#f44336');
     const [is_color,set_is_color] = useState(false);
     const [font,set_font] = useState(font_families[font_index]);
+    const [text,set_text] = useState('');
+    const [show_emoji,set_show_emoji] = useState(false)
 
 
     const Color_picker = ()=> {
         return (
-            <div className=" absolute right-0 top-full z-40 max-h-[350px] overflow-y-auto">
+            <div className=" absolute flex items-center gap-2 right-0 top-full z-40 max-h-[350px] overflow-x-auto">
                {
                 bg_colors?.map((color)=> (
                     <button 
@@ -38,6 +42,11 @@ export const Text_status = ({set_status_type})=> {
         )
     };
 
+    const handle_emoji = (emojiObject)=> {
+        set_text(prev=> `${prev} ${emojiObject.emoji}`);
+    };
+
+
     const handle_font = ()=> {
         if(font_index < font_families.length) {
             set_font(font_families[font_index + 1])
@@ -50,15 +59,26 @@ export const Text_status = ({set_status_type})=> {
 
 
     return (
-        <div style={{backgroundColor: bg_color}} className={`fixed z-40 left-0 top-0 w-dvw h-dvh flex flex-col justify-between`}>
+        <div style={{backgroundColor: bg_color}} className={`fixed z-50 left-0 top-0 w-dvw h-dvh flex flex-col justify-between`}>
             <header className="flex items-center justify-between p-3">
                 <button onClick={()=> set_status_type(null)} className="">
                     <IoCloseSharp size={26} />
                 </button>
                 <div className="flex items-center gap-3">
-                    <button className=" hover:bg-[#00000046] rounded-full p-2">
-                        <BsEmojiSmile size={26}  />
-                    </button>
+                    <div className=" relative">
+                        <button onClick={()=> set_show_emoji(!show_emoji)} className=" hover:bg-[#00000046] rounded-full p-2">
+                            <BsEmojiSmile size={26}  />
+                        </button>
+                        { show_emoji  &&
+                        <>
+                            <div className=" absolute top-3 right-3  z-50">
+                                <EmojiPicker onEmojiClick={handle_emoji} />
+                            </div>
+                            <Close_model  set_model={set_show_emoji}/>
+                        </>
+                        }
+
+                    </div>
                     <button onClick={ handle_font} style={{fontFamily:font}} className=" hover:bg-[#00000046] rounded-full w-10 h-10 text-3xl">
                         T
                     </button>
@@ -73,8 +93,15 @@ export const Text_status = ({set_status_type})=> {
                     </div>
                 </div>
             </header>
-            <div className="p-3 flex items-center justify-center">
-                <p style={{fontFamily:font}} className={`text-6xl text-white`}>Type a status</p>
+            <div className="p-3 flex items-center justify-center relative">
+                 <textarea 
+                    value={text} 
+                    onChange={(e)=> set_text(e.target.value)}  
+                    style={{fontFamily:font}} 
+                    className={`p-3 text-6xl text-white outline-0 absolute top-0 left-0  w-fit h-fit`}
+                    />
+                <p style={{fontFamily:font}} className={`text-6xl text-white`}>{text?.length === 0 ? 'Type a status' : ''}</p>
+                
             </div>
             <footer className="bg-[#0000003a] h-20 flex items-center justify-between px-3">
                 <button className="flex items-center gap-1 bg-[#00000065] py-2 px-6 rounded-3xl">
