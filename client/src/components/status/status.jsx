@@ -8,7 +8,7 @@ import { Text_status } from "./text_status";
 
 export const Status = ()=> {
 
-    const {user} = useContext(User_context);
+    const {user,status} = useContext(User_context);
     const [is_update,set_is_update] = useState(false);
     const [status_type,set_status_type] = useState(null);
     const [file,set_file] = useState(null);
@@ -54,6 +54,19 @@ export const Status = ()=> {
                     }
 
                 </header>
+                <div className="">
+                    <div className="">
+                        {
+                            status?.map((st)=> (
+
+                                <div key={st[0]?._id} className="">
+
+                                </div>
+
+                            ))
+                        }
+                    </div>
+                </div>
             </div>
             <div className="hidden md:flex flex-2"></div>
         </div>
