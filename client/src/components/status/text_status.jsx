@@ -28,13 +28,13 @@ export const Text_status = ({set_status_type})=> {
 
     const Color_picker = ()=> {
         return (
-            <div className=" absolute flex items-center gap-2 right-0 top-full z-40 max-h-[350px] overflow-x-auto">
+            <div className=" absolute flex items-center gap-2 right-0 top-full z-50 max-w-screen overflow-x-auto px-3">
                {
                 bg_colors?.map((color)=> (
                     <button 
                         style={{backgroundColor: color}}  
                         onClick={()=> set_bg_color(color)} 
-                        className={`w-8 h-8 rounded-full border-white ${color === bg_color ? 'border-4' : 'border'}`}>
+                        className={`w-8 h-8 min-w-8 rounded-full border-white ${color === bg_color ? 'border-4' : 'border'}`}>
                     </button>
                 ))
                } 
@@ -66,12 +66,15 @@ export const Text_status = ({set_status_type})=> {
                 </button>
                 <div className="flex items-center gap-3">
                     <div className=" relative">
-                        <button onClick={()=> set_show_emoji(!show_emoji)} className=" hover:bg-[#00000046] rounded-full p-2">
+                        <button 
+                            onClick={()=> set_show_emoji(!show_emoji)} 
+                            className=" hover:bg-[#00000046] rounded-full p-2"
+                            >
                             <BsEmojiSmile size={26}  />
                         </button>
                         { show_emoji  &&
                         <>
-                            <div className=" absolute top-3 right-3  z-50">
+                            <div className=" fixed top-10 right-3  z-50">
                                 <EmojiPicker onEmojiClick={handle_emoji} />
                             </div>
                             <Close_model  set_model={set_show_emoji}/>
@@ -79,16 +82,26 @@ export const Text_status = ({set_status_type})=> {
                         }
 
                     </div>
-                    <button onClick={ handle_font} style={{fontFamily:font}} className=" hover:bg-[#00000046] rounded-full w-10 h-10 text-3xl">
+                    <button 
+                        onClick={ handle_font} 
+                        style={{fontFamily:font}} 
+                        className=" hover:bg-[#00000046] rounded-full w-10 h-10 text-3xl"
+                        >
                         T
                     </button>
                     <div className=" relative">
-                        <button className=" hover:bg-[#00000046] rounded-full p-2" onClick={()=>set_is_color(!is_color)}>
+                        <button 
+                            className=" hover:bg-[#00000046] rounded-full p-2" 
+                            onClick={()=>set_is_color(!is_color)}
+                            >
                             <IoColorPaletteSharp size={26}  />
                         </button>
                         {
                             is_color && 
-                            <Color_picker />
+                            <>
+                               <Color_picker />
+                               <Close_model  set_model={set_is_color}/>
+                            </>
                         }
                     </div>
                 </div>
@@ -97,10 +110,11 @@ export const Text_status = ({set_status_type})=> {
                  <textarea 
                     value={text} 
                     onChange={(e)=> set_text(e.target.value)}  
-                    style={{fontFamily:font}} 
-                    className={`p-3 text-6xl text-white outline-0 absolute top-0 left-0  w-fit h-fit`}
+                    style={{fontFamily:font}}
+                     
+                    className={`p-3 text-2xl md:text-6xl text-white outline-0 resize-none  ${text?.length === 0 && 'absolute top-0 left-0'} w-full`}
                     />
-                <p style={{fontFamily:font}} className={`text-6xl text-white`}>{text?.length === 0 ? 'Type a status' : ''}</p>
+                <p style={{fontFamily:font}} className={`text-2xl md:text-6xl text-white`}>{text?.length === 0 ? 'Type a status' : ''}</p>
                 
             </div>
             <footer className="bg-[#0000003a] h-20 flex items-center justify-between px-3">

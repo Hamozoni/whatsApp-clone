@@ -55,7 +55,7 @@ export const Status = ()=> {
 
                 </header>
             </div>
-            <div className="flex-2"></div>
+            <div className="hidden md:flex flex-2"></div>
         </div>
     )
 }
