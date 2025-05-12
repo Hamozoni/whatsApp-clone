@@ -35,9 +35,7 @@ export const  User_context_provider =  ({children})=> {
                const data = await fetch_data(`user?user_email=${user?.email}`);
                const {statuses} = await fetch_data(`status?user_id=${data?.user?._id}`);
                   const st = Object.values(Object.groupBy(statuses,status=> status.user._id));
-
-                  console.log(st)
-                 set_status(status.length ? st : [])
+                 set_status(st)
                  set_user(data?.user);
                  set_calls(data?.user?.calls)
                  set_chats(data?.chats);

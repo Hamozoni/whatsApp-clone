@@ -4,6 +4,8 @@ import { GrFormAdd } from "react-icons/gr";
 import { Update_status_model } from "./update_status_model";
 import { Close_model } from "../ui/close_model";
 import { Text_status } from "./text_status";
+import { Status_card } from "./status_card";
+import { Avatar } from "../ui/avatar";
 
 
 export const Status = ()=> {
@@ -12,6 +14,8 @@ export const Status = ()=> {
     const [is_update,set_is_update] = useState(false);
     const [status_type,set_status_type] = useState(null);
     const [file,set_file] = useState(null);
+
+    console.log(status)
 
     return (
         <div className="flex h-dvh">
@@ -27,16 +31,15 @@ export const Status = ()=> {
                             <GrFormAdd size={20}/>
                         </button>
                     </div>
-                    <div onClick={()=> set_is_update(!is_update)} className="flex gap-2 cursor-pointer">
+                    <div 
+                        onClick={()=> set_is_update(!is_update)} 
+                        className="flex gap-2 cursor-pointer"
+                        >
                         <div className="relative">
-                            <img 
-                                src={user?.profile_picture} 
-                                alt="avatar" 
-                                className="w-11 h-11 rounded-full"
-                                />
-                                <button className=" absolute right-0 bottom-0 rounded-full border border-cyan-950 bg-emerald-500">
-                                    <GrFormAdd />
-                                </button>
+                            <Avatar size="lg" user_photo={user?.profile_picture} />
+                            <button className=" absolute right-0 bottom-0 rounded-full border border-cyan-950 bg-emerald-500">
+                                <GrFormAdd />
+                            </button>
                         </div>
                         <div className="">
                             <h5 className="m-0">My status</h5>
@@ -55,14 +58,10 @@ export const Status = ()=> {
 
                 </header>
                 <div className="">
-                    <div className="">
+                    <div className="py-3">
                         {
                             status?.map((st)=> (
-
-                                <div key={st[0]?._id} className="">
-
-                                </div>
-
+                                <Status_card key={st[0]?._id} status={st} />
                             ))
                         }
                     </div>
