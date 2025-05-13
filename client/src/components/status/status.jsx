@@ -61,7 +61,7 @@ export const Status = ()=> {
                     <div className="py-3">
                         {
                             status?.map((st)=> (
-                                <Status_card key={st[0]?._id} status={st} />
+                                <Status_card length={st.length} key={st[0]?._id} status={st} />
                             ))
                         }
                     </div>

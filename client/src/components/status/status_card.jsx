@@ -1,20 +1,20 @@
-import { time_formater } from "../../utils/time_formater"
+import { Status_avatar_ring } from "./status_avatar_ring"
 
-export const Status_card = ({status})=> {
+export const Status_card = ({status,length})=> {
     return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 cursor-pointer hover:bg-cyan-950 p-2 rounded-md">
                 {
-                    status[1].type === 'TEXT' && 
-                    <div 
-                        style={{fontFamily:status[1].font_family,backgroundColor: status[1].text_bg_color}} 
-                        className="flex items-center justify-center w-[50px] h-[50px] rounded-full text-[8px] overflow-hiden"
-                        >
-                        {status[1].text}
-                    </div>
+                    status[length - 1].type === 'TEXT' && 
+ 
+
+                    <Status_avatar_ring 
+                        status={status}  
+                        status_count={length} 
+                        />
                 }
                 <div className="">
-                    <h6>{status[1].user.name}</h6>
-                    <p>{new Date(status[1].createdAt).toLocaleTimeString([],{hour: '2-digit',minute: '2-digit'}) }</p>
+                    <h6>{status[length - 1].user.name}</h6>
+                    <p className="text-xs text-gray-400"> Today at {new Date(status[length - 1].createdAt).toLocaleTimeString([],{hour: '2-digit',minute: '2-digit'}) }</p>
                 </div>
         </div>
     )
