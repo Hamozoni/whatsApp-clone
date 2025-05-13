@@ -57,7 +57,7 @@ export const Status_avatar_ring = ({status,status_count,size = 60,ring_width = 4
 
             {
                 status[status_count - 1].type === 'TEXT' ? 
-                    <div 
+                <div 
                         style={{
                             fontFamily:status[status_count - 1].font_family,
                             backgroundColor: status[status_count - 1].text_bg_color,
@@ -66,14 +66,20 @@ export const Status_avatar_ring = ({status,status_count,size = 60,ring_width = 4
                         className={`flex items-center justify-center absolute z-30 rounded-full text-[3px] overflow-hiden`}
                         >
                         {status[status_count - 1].text}
-                    </div>
-                :  status[status_count - 1].file.type === 'IMAGE' &&
+                </div>
+                :  status[status_count - 1].file.type === 'IMAGE' ?
                 <img
                     src={status[status_count - 1].file.url} 
                     style={style} 
-                    className="object-cover"
+                    className="object-cover rounded-full"
                     alt="status avatar"
                     />
+                :
+                status[status_count - 1].file.type === 'VIDEO' &&
+                <video
+                    src={status[status_count - 1].file.url} 
+                    className="object-cover rounded-full"
+                    style={style} />
             }
 
         </div>
