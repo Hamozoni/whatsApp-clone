@@ -327,3 +327,89 @@ export const Status_preview = ({ status, set_is_status }) => {
     </div>
   );
 };
+
+// import {
+//   IoChevronBackSharp,
+//   IoPlay,
+//   IoChevronForwardSharp,
+//   IoPauseOutline,
+// } from "react-icons/io5";
+// import {
+//   PiSpeakerSimpleHighFill,
+//   PiSpeakerSimpleSlashFill,
+// } from "react-icons/pi";
+// import { BsEmojiSmile } from "react-icons/bs";
+// import { HiDotsVertical } from "react-icons/hi";
+// import { MdSend } from "react-icons/md";
+
+// import { Avatar } from "../ui/avatar";
+// import { useStatusTimer } from "./hooks/useStatusTimer";
+// import { StatusHeader } from "./components/StatusHeader";
+// import { StatusProgress } from "./components/StatusProgress";
+// import { StatusControls } from "./components/StatusControls";
+// import { StatusReplyInput } from "./components/StatusReplyInput";
+// import { StatusContent } from "./components/StatusContent";
+
+// export const StatusPreview = ({ status, setIsStatus }) => {
+//   const {
+//     playingIndex,
+//     timer,
+//     isPlaying,
+//     isMute,
+//     currentStatus,
+//     gotoNextStatus,
+//     gotoPrevStatus,
+//     togglePlay,
+//     toggleMute,
+//   } = useStatusTimer(status, setIsStatus);
+
+//   const bgColor =
+//     currentStatus?.type === "TEXT" ? currentStatus?.text_bg_color : "#000";
+
+//   return (
+//     <div
+//       style={{ backgroundColor: bgColor }}
+//       className="fixed z-30 left-0 top-0 w-dvw h-dvh p-4 flex items-center justify-center"
+//     >
+//       <StatusContent status={currentStatus} />
+
+//       <div className="fixed left-0 top-0 w-screen max-w-dvw p-4">
+//         <div className="w-[780px] max-w-full mx-auto">
+//           <StatusProgress
+//             status={status}
+//             timer={timer}
+//             playingIndex={playingIndex}
+//           />
+//           <div className="flex items-center justify-between">
+//             <StatusHeader
+//               user={status[0]?.user}
+//               createdAt={currentStatus?.createdAt}
+//               onClose={() => setIsStatus(false)}
+//             />
+//             <StatusControls
+//               isPlaying={isPlaying}
+//               isMute={isMute}
+//               hasAudio={currentStatus?.type !== "TEXT"}
+//               onPlayToggle={togglePlay}
+//               onMuteToggle={toggleMute}
+//             />
+//           </div>
+//         </div>
+//       </div>
+
+//       <button onClick={gotoPrevStatus} className={btnClass(true)}>
+//         <IoChevronBackSharp size={28} />
+//       </button>
+//       <button onClick={gotoNextStatus} className={btnClass(false)}>
+//         <IoChevronForwardSharp size={28} />
+//       </button>
+
+//       <StatusReplyInput />
+//     </div>
+//   );
+// };
+
+// const btnClass = (isPrev) =>
+//   `fixed ${
+//     isPrev ? "left-1 md:left-4" : "right-1 md:right-4"
+//   } text-[#eee6e67c] border-2 border-[#00000010] top-1/2 -translate-y-1/2 bg-[#00000023] rounded-full p-1 md:p-2 z-[100]`;
