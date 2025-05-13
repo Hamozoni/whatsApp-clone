@@ -10,12 +10,12 @@ export const Status_preview = ({status,set_is_status})=> {
 
     return (
         <div className="fixed z-30 left-0 top-0 w-dvw h-dvh p-4 bg-[#23393f]">
-            <div className="flex items-start justify-between fixed z-40 left-0 top-0 w-screen p-4">
+            <div className="flex items-start justify-between fixed z-40 left-0 top-0 w-screen max-w-full p-4">
                 <button onClick={()=> set_is_status(false)}>
                     <IoChevronBackSharp />
                 </button>
-                <div className="">
-                    <div className="flex items-center gap-2">
+                <div className="w-[480px] max-w-full">
+                    <div className="flex items-center gap-2 mb-3">
                         {
                             status.map((st)=> (
                                 <div key={st?._id} className="h-2 w-full flex-1 bg-amber-700 rounded-md"></div>
