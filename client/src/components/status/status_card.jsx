@@ -4,7 +4,8 @@ import { Status_preview } from "./status_preview"
 
 export const Status_card = ({status,length})=> {
 
-    const [is_status,set_is_status] = useState(false)
+    const [is_status,set_is_status] = useState(false);
+    
     return (
         <div 
             onClick={()=> set_is_status(true)} 
