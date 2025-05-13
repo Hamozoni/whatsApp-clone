@@ -66,20 +66,8 @@ export const Status_preview = ({status,set_is_status})=> {
 
     },[playing_index]);
 
-    const Prev_next_btn = ({is_prev,handle_click})=> {
-        return (
-            <button 
-                onClick={handle_click} 
-                className={`fixed ${is_prev ? 'left-1 md:left-4' : 'right-1 md:right-4'}  text-[#eee6e67c] border-2 border-[#00000010]  top-1/2 -translate-y-1/2 bg-[#00000023] rounded-full p-1 md:p-2 z-[100]`}
-                >
-                    {
-                        is_prev ? 
-                        <IoChevronBackSharp size={28} />
-                        :
-                        <IoChevronForwardSharp size={28} />
-                    }
-            </button>
-        )
+    const btn_class = (is_prev)=> {
+        return `fixed ${is_prev ? 'left-1 md:left-4' : 'right-1 md:right-4'}  text-[#eee6e67c] border-2 border-[#00000010]  top-1/2 -translate-y-1/2 bg-[#00000023] rounded-full p-1 md:p-2 z-[100]`
     }
 
     return (
@@ -148,14 +136,12 @@ export const Status_preview = ({status,set_is_status})=> {
                     </div>
                 </div>
             </div>
-            <Prev_next_btn 
-                is_prev={true} 
-                handle_click={handle_prev_status} 
-                />
-            <Prev_next_btn 
-                is_prev={false} 
-                handle_click={handle_next_status} 
-                />
+            <button onClick={handle_prev_status} className={btn_class(true)}>
+                <IoChevronBackSharp size={28}/> 
+            </button>
+            <button onClick={handle_next_status} className={btn_class(false)}>
+                <IoChevronForwardSharp size={28}/> 
+            </button>
             <div className="fixed z-40 left-0 bottom-0 w-screen p-4 flex items-center gap-3">
                 <button>
                     <BsEmojiSmile size={28}  />
