@@ -41,7 +41,7 @@ export const get_status = async (req,res,next)=> {
         const user = await User.findById(user_id);
 
         if(user.contacts) {
-            const statuses = await Status.find({user: {$in : user.contacts}}).populate({path: 'user' ,select: 'name _id profile_picture'})
+            const statuses = await Status.find({user: {$in : user.contacts}}).populate([{path: 'user' ,select: 'name _id profile_picture'},{path: 'file',select: '_id url type'}])
             return res.status(200).json({statuses})
 
         }

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const STATUS_SCHEMA = new mongoose.Schema({
     user: {type: String, ref: 'User'},
     text: {type: String,require : false},
-    file: [{type: mongoose.Schema.Types.ObjectId, ref: 'File'}],
+    file: {type: mongoose.Schema.Types.ObjectId, ref: 'File'},
     type: {type: String,enum: ['TEXT','MEDIA'],default: 'TEXT'},
     text_bg_color: {type: String,require : false},
     font_family: {type: String,require : false},

@@ -58,10 +58,16 @@ export const Status = ()=> {
 
                 </header>
                 <div className="">
-                    <div className="py-3">
+                     <h6 className="my-4">
+                        Recent
+                     </h6>
+                    <div className="">
                         {
                             status?.map((st)=> (
-                                <Status_card length={st.length} key={st[0]?._id} status={st} />
+                                <Status_card l
+                                    length={st.length} 
+                                    key={st[0]?._id} 
+                                    status={st} />
                             ))
                         }
                     </div>

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { User_context } from "../../contexts/user.context";
 
 
-export const Status_avatar_ring = ({status,status_count,size = 60,ring_width = 4})=> {
+export const Status_avatar_ring = ({status,status_count,size = 56,ring_width = 3})=> {
 
     const {user} = useContext(User_context)
     const radius = (size - ring_width) / 2;
@@ -56,7 +56,7 @@ export const Status_avatar_ring = ({status,status_count,size = 60,ring_width = 4
             </svg>
 
             {
-                status[status_count - 1].type === 'TEXT' ? 
+                status[status_count - 1]?.type === 'TEXT' ? 
                 <div 
                         style={{
                             fontFamily:status[status_count - 1].font_family,
@@ -67,7 +67,7 @@ export const Status_avatar_ring = ({status,status_count,size = 60,ring_width = 4
                         >
                         {status[status_count - 1].text}
                 </div>
-                :  status[status_count - 1].file.type === 'IMAGE' ?
+                :  status[status_count - 1]?.file?.type === 'IMAGE' ?
                 <img
                     src={status[status_count - 1].file.url} 
                     style={style} 
@@ -75,7 +75,7 @@ export const Status_avatar_ring = ({status,status_count,size = 60,ring_width = 4
                     alt="status avatar"
                     />
                 :
-                status[status_count - 1].file.type === 'VIDEO' &&
+                status[status_count - 1]?.file?.type === 'VIDEO' &&
                 <video
                     src={status[status_count - 1].file.url} 
                     className="object-cover rounded-full"
