@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { PostStatusFooter } from "./postStatusFooter";
 import { IoCrop,IoColorFilterOutline,IoChevronBackOutline } from "react-icons/io5";
 import { MdOutlineDone } from "react-icons/md";
@@ -53,12 +53,33 @@ export const PostImageStatus = ({setStatusType,file})=> {
 
     const handleSubmitStatus = ()=> {
         setStatusType(null)
-    }
+    };
+
+    const handleTextOnImage = useCallback(()=> {
+
+       if(textOnImage.length && image) {
+           const canvas = canvasRef.current;
+           const ctx = canvas.getContext('2d');
+
+           ctx.clearRect(0,0,canvas.width,canvas.height);
+
+           ctx.drawImage(image,0,0);
+
+           ctx.font = '40px Arial';
+           ctx.fillStyle = 'white';
+           ctx.fillText(textOnImage,50,50);
+
+       }
+
+    },[textOnImage])
+
+
+
     return (
         <div className="fixed z-50 inset-0 w-dvw h-dvh max-h-dvh flex flex-col justify-between bg-gray-950">
              {/* Header */}
              <header className="bg-[#00000046]">
-                 <div className="container mx-auto flex items-center justify-between gap-3 p-4">
+                 <div className="container mx-auto max-w-[650px] flex items-center justify-between gap-3 p-4">
                     {/* Back button */}
                     <RoundedBtn 
                             Icon={IoChevronBackOutline} 
@@ -84,7 +105,11 @@ export const PostImageStatus = ({setStatusType,file})=> {
                             />
                         <RoundedBtn 
                             Icon={RiText} 
-                            onClick={()=> setActiveModifier(prev=> prev === 'text' ? null : 'text')} 
+                            onClick={()=> {
+                                setTextOnImage('')
+                                setActiveModifier(prev=> prev === 'text' ? null : 'text');
+                                handleTextOnImage()
+                            }} 
                             isActive={activeModifier === 'text'}
                             />
                     </div>
@@ -109,14 +134,18 @@ export const PostImageStatus = ({setStatusType,file})=> {
                         className="w-[600px] max-w-full max-h-full"
                         />
                     {/* Text on image input */}
-                    <div className=" absolute left-1/2 top-1/2 -translate-1/2">
-                        <input 
-                            type="text" 
-                            className="outline-0 px-4 py-2 border-2 text-black border-[#00000010] flex-1 bg-white rounded-full"
-                            value={textOnImage} 
-                            onChange={e=> setTextOnImage(e.target.value)}
-                             />
-                    </div>
+                    {
+                        activeModifier === 'text'&&
+                        <div className=" absolute left-1/2 top-1/2 -translate-1/2">
+                            <input 
+                                type="text" 
+                                className="outline-0 px-4 py-2 border-2 text-black border-[#00000010] flex-1 bg-white rounded-full"
+                                value={textOnImage} 
+                                onChange={e=> setTextOnImage(e.target.value)}
+                                />
+                        </div>
+
+                    }
 
                 </div>
             </div>

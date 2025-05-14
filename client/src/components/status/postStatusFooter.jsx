@@ -5,7 +5,7 @@ import { SiGradleplaypublisher } from "react-icons/si"
 export const PostStatusFooter = ({onClick}) => {
     return (
         <footer className="bg-[#0000003a]">
-            <div className="flex items-center justify-between p-3 container mx-auto">
+            <div className="flex items-center max-w-[650px] justify-between p-3 container mx-auto">
                 <button className="flex items-center gap-1 bg-[#00000065] py-2 px-6 rounded-3xl">
                     <SiGradleplaypublisher size={20} /> <span>Status (Status)</span>
                 </button>
