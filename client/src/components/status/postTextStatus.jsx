@@ -1,175 +1,160 @@
-import { IoCloseSharp,IoColorPaletteSharp,IoSend } from "react-icons/io5";
+import { useContext, useState } from "react";
+import { IoCloseSharp, IoColorPaletteSharp, IoSend } from "react-icons/io5";
 import { BsEmojiSmile } from "react-icons/bs";
 import { SiGradleplaypublisher } from "react-icons/si";
-import { useContext, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
-import { Close_model } from "../ui/close_model";
-import {User_context} from '../../contexts/user.context'
-import { post_data } from "../../lib/post_data";
 import { BeatLoader } from "react-spinners";
 
-const bg_colors = ['#f44336','#e91e63','#9c27b0','#673ab7','#3f51b5','#2196f3','#009688','#4caf50','#8bc34a','#cddc39','#ffeb3b','#795548','#607d8b']
-const font_families = [
-    "Arial, sans-serif",           
-    "'Dancing Script', cursive",   
-    "'Courier New', monospace",     
-    "'Roboto', sans-serif",       
-    "'Pacifico', cursive" 
-  ];
+import { Close_model } from "../ui/close_model";
+import { User_context } from "../../contexts/user.context";
+import { post_data } from "../../lib/post_data";
+import { PostStatusFooter } from "./postStatusFooter";
 
-let font_index = 0;
+const bgColors = ['#f44336','#e91e63','#9c27b0','#673ab7','#3f51b5','#2196f3','#009688','#4caf50','#8bc34a','#cddc39','#ffeb3b','#795548','#607d8b'];
+const fontFamilies = [
+  "Arial, sans-serif",
+  "'Dancing Script', cursive",
+  "'Courier New', monospace",
+  "'Roboto', sans-serif",
+  "'Pacifico', cursive"
+];
 
+const ColorPicker = ({ selectedColor, onSelect }) => (
+  <div className="absolute flex items-center gap-2 right-0 top-full z-50 max-w-screen overflow-x-auto px-3">
+    {bgColors.map(color => (
+      <button
+        key={color}
+        style={{ backgroundColor: color }}
+        onClick={() => onSelect(color)}
+        className={`w-8 h-8 min-w-8 rounded-full border-white ${color === selectedColor ? 'border-4' : 'border'}`}
+      />
+    ))}
+  </div>
+);
 
-export const PostTextStatus = ({set_status_type})=> {
+export const PostTextStatus = ({ setStatusType }) => {
+  const { user } = useContext(User_context);
 
-    const {user} = useContext(User_context)
+  const [bgColor, setBgColor] = useState(bgColors[0]);
+  const [fontIndex, setFontIndex] = useState(0);
+  const [text, setText] = useState('');
+  const [showEmoji, setShowEmoji] = useState(false);
+  const [showColorPicker, setShowColorPicker] = useState(false);
 
-    const [bg_color,set_bg_color] = useState('#f44336');
-    const [is_color,set_is_color] = useState(false);
-    const [font,set_font] = useState(font_families[font_index]);
-    const [text,set_text] = useState('');
-    const [show_emoji,set_show_emoji] = useState(false);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-    const [error,set_error] = useState(null);
-    const [is_loading,set_is_loading] = useState(false);
+  const currentFont = fontFamilies[fontIndex];
 
+  const handleEmojiClick = emoji => {
+    setText(prev => `${prev} ${emoji.emoji}`);
+  };
 
-    const Color_picker = ()=> {
-        return (
-            <div className=" absolute flex items-center gap-2 right-0 top-full z-50 max-w-screen overflow-x-auto px-3">
-               {
-                bg_colors?.map((color)=> (
-                    <button 
-                        key={color}
-                        style={{backgroundColor: color}}  
-                        onClick={()=> set_bg_color(color)} 
-                        className={`w-8 h-8 min-w-8 rounded-full border-white ${color === bg_color ? 'border-4' : 'border'}`}>
-                    </button>
-                ))
-               } 
-            </div>
-        )
+  const handleFont = () => {
+    setFontIndex((prevIndex) => (prevIndex + 1) % fontFamilies.length);
+  };
+
+  const handleSubmitStatus = async () => {
+    setError(null);
+    setIsLoading(true);
+
+    const formData = {
+      user: user?._id,
+      text,
+      text_bg_color: bgColor,
+      font_family: currentFont,
+      type: 'TEXT'
     };
 
-    const handle_emoji = (emojiObject)=> {
-        set_text(prev=> `${prev} ${emojiObject.emoji}`);
-    };
-
-
-    const handle_font = ()=> {
-        if(font_index < font_families.length) {
-            set_font(font_families[font_index + 1])
-            font_index += 1;
-        }else {
-            set_font(font_families[0])
-            font_index = 0
-        }
-    };
-
-    const handle_submit_status = async ()=> {
-        set_error(null)
-        set_is_loading(true);
-
-        const form_data = {
-            user: user?._id,
-            text,
-            text_bg_color: bg_color,
-            font_family: font,
-            type: 'TEXT'
-        }
-
-        try {
-          const data =  await post_data('status',form_data);
-
-          console.log(data)
-
-          if(data) {
-            set_status_type(null);
-          }
-        }
-        catch (error) {
-            set_error(error.message)
-        }
-        finally {
-            set_is_loading(false)
-        }
-
+    try {
+      const data = await post_data('status', formData);
+      if (data) setStatusType(null);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-
-    return (
-        <div style={{backgroundColor: bg_color}} className={`fixed z-50 left-0 top-0 w-dvw h-dvh flex flex-col justify-between`}>
-            <header className="flex items-center justify-between p-3">
-                <button onClick={()=> set_status_type(null)} className="">
-                    <IoCloseSharp size={26} />
-                </button>
-                <div className="flex items-center gap-3">
-                    <div className=" relative">
-                        <button 
-                            onClick={()=> set_show_emoji(!show_emoji)} 
-                            className=" hover:bg-[#00000046] rounded-full p-2"
-                            >
-                            <BsEmojiSmile size={26}  />
-                        </button>
-                        { show_emoji  &&
-                        <>
-                            <div className=" fixed top-10 right-3  z-50">
-                                <EmojiPicker onEmojiClick={handle_emoji} />
-                            </div>
-                            <Close_model  set_model={set_show_emoji}/>
-                        </>
-                        }
-
-                    </div>
-                    <button 
-                        onClick={ handle_font} 
-                        style={{fontFamily:font}} 
-                        className=" hover:bg-[#00000046] rounded-full w-10 h-10 text-3xl"
-                        >
-                        T
-                    </button>
-                    <div className=" relative">
-                        <button 
-                            className=" hover:bg-[#00000046] rounded-full p-2" 
-                            onClick={()=>set_is_color(!is_color)}
-                            >
-                            <IoColorPaletteSharp size={26}  />
-                        </button>
-                        {
-                            is_color && 
-                            <>
-                               <Color_picker />
-                               <Close_model  set_model={set_is_color}/>
-                            </>
-                        }
-                    </div>
+  return (
+    <div 
+        style={{ backgroundColor: bgColor }} 
+        className="fixed z-50 inset-0 flex flex-col justify-between"
+        >
+      {/* Header */}
+      <header className="flex items-center justify-between p-3">
+        <button onClick={() => setStatusType(null)}>
+          <IoCloseSharp size={26} />
+        </button>
+        <div className="flex items-center gap-3">
+          {/* Emoji Picker */}
+          <div className="relative">
+            <button 
+                onClick={() => setShowEmoji(!showEmoji)} 
+                className="hover:bg-[#00000046] rounded-full p-2"
+                >
+              <BsEmojiSmile size={26} />
+            </button>
+            {showEmoji && (
+              <>
+                <div className="fixed top-10 right-3 z-50">
+                  <EmojiPicker onEmojiClick={handleEmojiClick} />
                 </div>
-            </header>
-            <div className="p-3 flex items-center justify-center relative">
-                 <textarea 
-                    value={text} 
-                    onChange={(e)=> set_text(e.target.value)}  
-                    style={{fontFamily:font}}
-                     
-                    className={`p-3 text-2xl md:text-6xl text-white outline-0 resize-none  ${text?.length === 0 && 'absolute top-0 left-0'} w-full`}
-                    />
-                <p style={{fontFamily:font}} className={`text-2xl md:text-6xl text-white`}>{text?.length === 0 ? 'Type a status' : ''}</p>
-                
-            </div>
-            <footer className="bg-[#0000003a] h-20 flex items-center justify-between px-3">
-                <button className="flex items-center gap-1 bg-[#00000065] py-2 px-6 rounded-3xl">
-                    <SiGradleplaypublisher size={20} /> <span> Status (Status)</span>
-                </button>
-                <button onClick={handle_submit_status} className="bg-[#14752181] rounded-full p-4">
-                    <IoSend size={22} />
-                </button>
-            </footer>
-            {
-                is_loading && 
-                <div className="fixed top-0 left-0 w-dvw h-dvh bg-[#000] flex items-center justify-center z-50">
-                    <BeatLoader />
-                </div>
-            }
+                <Close_model set_model={setShowEmoji} />
+              </>
+            )}
+          </div>
+
+          {/* Font Picker */}
+          <button 
+                onClick={handleFont} 
+                style={{ fontFamily: currentFont }} 
+                className="hover:bg-[#00000046] rounded-full w-10 h-10 text-3xl"
+                >
+            T
+          </button>
+
+          {/* Color Picker */}
+          <div className="relative">
+            <button 
+                onClick={() => setShowColorPicker(!showColorPicker)} 
+                className="hover:bg-[#00000046] rounded-full p-2"
+                >
+              <IoColorPaletteSharp size={26} />
+            </button>
+            {showColorPicker && (
+              <>
+                <ColorPicker selectedColor={bgColor} onSelect={setBgColor} />
+                <Close_model set_model={setShowColorPicker} />
+              </>
+            )}
+          </div>
         </div>
-    )
-}
+      </header>
+
+      {/* Text Area */}
+      <div className="p-3 flex items-center justify-center relative">
+        <textarea
+          value={text}
+          onChange={e => setText(e.target.value)}
+          style={{ fontFamily: currentFont }}
+          className={`p-3 text-2xl md:text-6xl text-white outline-0 resize-none w-full`}
+        />
+        {!text && (
+          <p style={{ fontFamily: currentFont }} className="absolute top-3 text-2xl md:text-6xl text-white">
+            Type a status
+          </p>
+        )}
+      </div>
+
+      {/* Footer */}
+      <PostStatusFooter onClick={handleSubmitStatus} />
+      {/* Loader */}
+      {isLoading && (
+        <div className="fixed inset-0 bg-[#00000060] flex items-center justify-center z-50">
+          <BeatLoader />
+        </div>
+      )}
+    </div>
+  );
+};

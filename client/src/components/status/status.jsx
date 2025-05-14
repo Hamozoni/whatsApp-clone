@@ -6,6 +6,7 @@ import { Close_model } from "../ui/close_model";
 import { PostTextStatus } from "./postTextStatus";
 import { StatusCard } from "./statusCard";
 import { Avatar } from "../ui/avatar";
+import { PostMediaStatus } from "./postMediaStatus";
 
 
 export const Status = ()=> {
@@ -17,11 +18,13 @@ export const Status = ()=> {
 
     return (
         <div className="flex h-dvh">
-             {
-                statusType === 'text' &&
-                <PostTextStatus set_status_type={setStatusType} />
-             }
             <div className=" p-3 flex-1 border-r border-cyan-950">
+                 {
+                    statusType === 'text' ?
+                    <PostTextStatus setStatusType={setStatusType} />
+                    : (statusType === 'image' || statusType === 'video')&&
+                     <PostMediaStatus setStatusType={setStatusType} file={file} statusType={statusType}  />
+                }
                 <header className="relative h-fit">
                     <div className="flex items-center justify-between">
                         <h4 className="text-xl font-bold mb-3">Status</h4>
