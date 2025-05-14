@@ -6,7 +6,7 @@ import { Close_model } from "../ui/close_model";
 import { PostTextStatus } from "./postTextStatus";
 import { StatusCard } from "./statusCard";
 import { Avatar } from "../ui/avatar";
-import { PostMediaStatus } from "./postMediaStatus";
+import {PostImageStatus } from "./postImageStatus";
 
 
 export const Status = ()=> {
@@ -22,8 +22,8 @@ export const Status = ()=> {
                  {
                     statusType === 'text' ?
                     <PostTextStatus setStatusType={setStatusType} />
-                    : (statusType === 'image' || statusType === 'video')&&
-                     <PostMediaStatus setStatusType={setStatusType} file={file} statusType={statusType}  />
+                    : statusType === 'image'&&
+                     <PostImageStatus setStatusType={setStatusType} file={file} />
                 }
                 <header className="relative h-fit">
                     <div className="flex items-center justify-between">

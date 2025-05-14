@@ -5,17 +5,21 @@ import { Chose_document } from "../ui/chose_document";
 import { Chat_window_context } from "../../contexts/chat_window.context";
 import { Close_model } from "../ui/close_model";
 
+import {useEffect} from 'react'
 import Audio_recorder from './audio_recorder'
 
 import { Send_message_btn } from "./send_message_btn";
-import { Text_input } from "./text_input";
+import { TextEmojiInput } from "../ui/textEmojiInput";
 
 export const Chat_footer = ()=> {
 
-    const {text,is_recorder,set_is_recorder,is_preview,is_camera} = useContext(Chat_window_context);
+    const {text,set_text,is_recorder,set_is_recorder,is_preview,set_message} = useContext(Chat_window_context);
     const [is_document,set_is_document] = useState(false);
 
 
+    useEffect(()=> {
+        set_message(prev=> ({...prev,text}))
+    },[text]);
 
     return (
         <footer className="p-3 bg-[#222e35] relative">
@@ -27,7 +31,7 @@ export const Chat_footer = ()=> {
                         className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#00a884] rotate-90 hide_model"  
                     />
                 }
-                <Text_input />
+                <TextEmojiInput placeholder='Type a message' text={text} setText={set_text} />
                 <div >
                     {
                        ( text?.length > 0 || is_preview ) ? 

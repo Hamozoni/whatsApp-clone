@@ -1,14 +1,12 @@
 import { useContext, useState } from "react";
 import { IoCloseSharp, IoColorPaletteSharp, IoSend } from "react-icons/io5";
-import { BsEmojiSmile } from "react-icons/bs";
-import { SiGradleplaypublisher } from "react-icons/si";
-import EmojiPicker from "emoji-picker-react";
 import { BeatLoader } from "react-spinners";
 
 import { Close_model } from "../ui/close_model";
 import { User_context } from "../../contexts/user.context";
 import { post_data } from "../../lib/post_data";
 import { PostStatusFooter } from "./postStatusFooter";
+import { EmojiBtn } from "../ui/emojiBtn";
 
 const bgColors = ['#f44336','#e91e63','#9c27b0','#673ab7','#3f51b5','#2196f3','#009688','#4caf50','#8bc34a','#cddc39','#ffeb3b','#795548','#607d8b'];
 const fontFamilies = [
@@ -38,17 +36,12 @@ export const PostTextStatus = ({ setStatusType }) => {
   const [bgColor, setBgColor] = useState(bgColors[0]);
   const [fontIndex, setFontIndex] = useState(0);
   const [text, setText] = useState('');
-  const [showEmoji, setShowEmoji] = useState(false);
   const [showColorPicker, setShowColorPicker] = useState(false);
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const currentFont = fontFamilies[fontIndex];
-
-  const handleEmojiClick = emoji => {
-    setText(prev => `${prev} ${emoji.emoji}`);
-  };
 
   const handleFont = () => {
     setFontIndex((prevIndex) => (prevIndex + 1) % fontFamilies.length);
@@ -82,53 +75,40 @@ export const PostTextStatus = ({ setStatusType }) => {
         className="fixed z-50 inset-0 flex flex-col justify-between"
         >
       {/* Header */}
-      <header className="flex items-center justify-between p-3">
-        <button onClick={() => setStatusType(null)}>
-          <IoCloseSharp size={26} />
-        </button>
-        <div className="flex items-center gap-3">
-          {/* Emoji Picker */}
-          <div className="relative">
-            <button 
-                onClick={() => setShowEmoji(!showEmoji)} 
-                className="hover:bg-[#00000046] rounded-full p-2"
-                >
-              <BsEmojiSmile size={26} />
-            </button>
-            {showEmoji && (
-              <>
-                <div className="fixed top-10 right-3 z-50">
-                  <EmojiPicker onEmojiClick={handleEmojiClick} />
-                </div>
-                <Close_model set_model={setShowEmoji} />
-              </>
-            )}
-          </div>
-
-          {/* Font Picker */}
-          <button 
-                onClick={handleFont} 
-                style={{ fontFamily: currentFont }} 
-                className="hover:bg-[#00000046] rounded-full w-10 h-10 text-3xl"
-                >
-            T
+      <header >
+        <div className="container mx-auto flex items-center justify-between p-3">
+          <button onClick={() => setStatusType(null)}>
+            <IoCloseSharp size={26} />
           </button>
-
-          {/* Color Picker */}
-          <div className="relative">
+          <div className="flex items-center gap-3">
+            {/* Emoji Picker */}
+            <EmojiBtn setText={setText} />
+                {/* Font Picker */}
             <button 
-                onClick={() => setShowColorPicker(!showColorPicker)} 
-                className="hover:bg-[#00000046] rounded-full p-2"
-                >
-              <IoColorPaletteSharp size={26} />
+                  onClick={handleFont} 
+                  style={{ fontFamily: currentFont }} 
+                  className="hover:bg-[#00000046] rounded-full w-10 h-10 text-3xl"
+                  >
+              T
             </button>
-            {showColorPicker && (
-              <>
-                <ColorPicker selectedColor={bgColor} onSelect={setBgColor} />
-                <Close_model set_model={setShowColorPicker} />
-              </>
-            )}
+
+            {/* Color Picker */}
+            <div className="relative">
+              <button 
+                  onClick={() => setShowColorPicker(!showColorPicker)} 
+                  className="hover:bg-[#00000046] rounded-full p-2"
+                  >
+                <IoColorPaletteSharp size={26} />
+              </button>
+              {showColorPicker && (
+                <>
+                  <ColorPicker selectedColor={bgColor} onSelect={setBgColor} />
+                  <Close_model set_model={setShowColorPicker} />
+                </>
+              )}
+            </div>
           </div>
+
         </div>
       </header>
 

@@ -14,9 +14,11 @@ import { MdSend } from "react-icons/md";
 
 import { Avatar } from "../ui/avatar";
 import { useEffect, useRef, useState } from "react";
+import { TextEmojiInput } from "../ui/textEmojiInput";
 
 export const StatusPreview = ({ status, setIsStatus }) => {
 
+  const [text,setText] = useState('')
   const [playingIndex, setPlayingIndex] = useState(0);
   const [timer, setTimer] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -66,20 +68,12 @@ export const StatusPreview = ({ status, setIsStatus }) => {
             ? currentStatus.text_bg_color
             : "#000",
       }}
-      className="fixed z-30 left-0 top-0 w-dvw h-dvh p-4 flex items-center justify-center"
+      className="fixed z-30 left-0 p-4 top-0 w-dvw h-dvh flex flex-col justify-between"
     >
-      {currentStatus?.type === "TEXT" && (
-        <p
-          className="text-xl md:text-4xl text-white"
-          style={{ fontFamily: currentStatus?.font_family }}
-        >
-          {currentStatus?.text}
-        </p>
-      )}
 
       {/* Header */}
-      <div className="flex items-start justify-between fixed left-0 top-0 w-screen max-w-dvw p-4">
-        <div className="w-[780px] max-w-full mx-auto">
+      <header className="">
+        <div className=" container max-w-[650px] mx-auto">
           {/* Progress Bars */}
           <div className="flex items-center gap-1 mb-3">
             {status.map((st, i) => (
@@ -146,7 +140,17 @@ export const StatusPreview = ({ status, setIsStatus }) => {
             </div>
           </div>
         </div>
-      </div>
+      </header>
+
+      {/* Status text */}
+      {currentStatus?.type === "TEXT" && (
+        <p
+          className="text-xl md:text-4xl text-white text-center"
+          style={{ fontFamily: currentStatus?.font_family }}
+        >
+          {currentStatus?.text}
+        </p>
+      )}
 
       {/* Navigation Buttons */}
       <button onClick={() => resetTimerAndAdvance(false)} className={btnClass(true)}>
@@ -157,19 +161,15 @@ export const StatusPreview = ({ status, setIsStatus }) => {
       </button>
 
       {/* Reply Input */}
-      <div className="fixed z-40 left-1/2 bottom-0 w-screen p-4 flex items-center gap-3 max-w-[780px] -translate-x-1/2">
-        <button>
-          <BsEmojiSmile size={28} />
-        </button>
-        <input
-          type="text"
-          className="outline-0 px-4 py-2 border-2 border-[#00000010] flex-1 bg-[#0000002f] rounded-full"
-          placeholder="Type a reply..."
-        />
-        <button>
-          <MdSend size={28} />
-        </button>
-      </div>
+      <footer>
+        <div className="container max-w-[650px] mx-auto flex items-center gap-3">
+          <TextEmojiInput text={text}  setText={setText} placeholder='Type a reply...'/>
+          <button>
+            <MdSend size={28} />
+          </button>
+
+        </div>
+      </footer>
     </div>
   );
 };
