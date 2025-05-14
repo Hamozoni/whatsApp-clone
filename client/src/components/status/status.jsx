@@ -1,38 +1,36 @@
 import { useContext, useState } from "react"
 import { User_context } from "../../contexts/user.context";
 import { GrFormAdd } from "react-icons/gr";
-import { Update_status_model } from "./update_status_model";
+import { StatusMenuModel } from "./statusMenuModel";
 import { Close_model } from "../ui/close_model";
-import { Text_status } from "./text_status";
-import { Status_card } from "./status_card";
+import { PostTextStatus } from "./postTextStatus";
+import { StatusCard } from "./statusCard";
 import { Avatar } from "../ui/avatar";
 
 
 export const Status = ()=> {
 
     const {user,status} = useContext(User_context);
-    const [is_update,set_is_update] = useState(false);
-    const [status_type,set_status_type] = useState(null);
-    const [file,set_file] = useState(null);
-
-    console.log(status)
+    const [isUpdate,setIsUpdate] = useState(false);
+    const [statusType,setStatusType] = useState(null);
+    const [file,setFile] = useState(null);
 
     return (
         <div className="flex h-dvh">
              {
-                status_type === 'text' &&
-                <Text_status set_status_type={set_status_type} />
+                statusType === 'text' &&
+                <PostTextStatus set_status_type={setStatusType} />
              }
             <div className=" p-3 flex-1 border-r border-cyan-950">
                 <header className="relative h-fit">
                     <div className="flex items-center justify-between">
                         <h4 className="text-xl font-bold mb-3">Status</h4>
-                        <button onClick={()=> set_is_update(!is_update)} className="rounded-full border border-white">
+                        <button onClick={()=> setIsUpdate(!isUpdate)} className="rounded-full border border-white">
                             <GrFormAdd size={20}/>
                         </button>
                     </div>
                     <div 
-                        onClick={()=> set_is_update(!is_update)} 
+                        onClick={()=> setIsUpdate(!isUpdate)} 
                         className="flex gap-2 cursor-pointer"
                         >
                         <div className="relative">
@@ -47,10 +45,10 @@ export const Status = ()=> {
                         </div>
                     </div>
                     {
-                        is_update && 
+                        isUpdate && 
                         <>
-                            <Close_model set_model={set_is_update} />
-                            <Update_status_model set_file={set_file} set_status_type={set_status_type}/>
+                            <Close_model set_model={setIsUpdate} />
+                            <StatusMenuModel setFile={setFile} setStatusType={setStatusType}/>
 
                         </>
                     
@@ -64,7 +62,7 @@ export const Status = ()=> {
                     <div className="">
                         {
                             status?.map((st)=> (
-                                <Status_card l
+                                <StatusCard
                                     length={st.length} 
                                     key={st[0]?._id} 
                                     status={st} />

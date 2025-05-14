@@ -1,18 +1,18 @@
 import { useState } from "react"
-import { Status_avatar_ring } from "./status_avatar_ring"
-import { Status_preview } from "./status_preview"
+import { StatusAvatarRing } from "./statusAvatarRing"
+import { StatusPreview } from "./statusPreview"
 
-export const Status_card = ({status,length})=> {
+export const StatusCard = ({status,length})=> {
 
-    const [is_status,set_is_status] = useState(false);
-    
+    const [isStatus,setIsStatus] = useState(false);
+
     return (
         <div 
-            onClick={()=> set_is_status(true)} 
+            onClick={()=> setIsStatus(true)} 
             className="flex items-center gap-2 cursor-pointer hover:bg-cyan-950 p-2 rounded-md">
-                <Status_avatar_ring 
+                <StatusAvatarRing 
                     status={status}  
-                    status_count={length} 
+                    statusCount={length} 
                     />
                 
                 <div className="">
@@ -20,8 +20,8 @@ export const Status_card = ({status,length})=> {
                     <p className="text-xs text-gray-400"> Today at {new Date(status[length - 1]?.createdAt).toLocaleTimeString([],{hour: '2-digit',minute: '2-digit'}) }</p>
                 </div>
                 {
-                    is_status && 
-                    <Status_preview set_is_status={set_is_status} status={status} />
+                    isStatus && 
+                    <StatusPreview setIsStatus={setIsStatus} status={status} />
                 }
         </div>
     )

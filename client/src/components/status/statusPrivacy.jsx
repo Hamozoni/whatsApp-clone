@@ -1,6 +1,6 @@
 import { IoCloseSharp } from "react-icons/io5"
 
-export const Status_privacy = ()=> {
+export const StatusPrivacy = ()=> {
     return (
         <div className="">
             <div className="">

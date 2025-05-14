@@ -20,7 +20,7 @@ const font_families = [
 let font_index = 0;
 
 
-export const Text_status = ({set_status_type})=> {
+export const PostTextStatus = ({set_status_type})=> {
 
     const {user} = useContext(User_context)
 
