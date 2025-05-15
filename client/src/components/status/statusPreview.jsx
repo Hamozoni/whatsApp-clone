@@ -8,7 +8,6 @@ import {
   PiSpeakerSimpleHighFill,
   PiSpeakerSimpleSlashFill,
 } from "react-icons/pi";
-import { BsEmojiSmile } from "react-icons/bs";
 import { HiDotsVertical } from "react-icons/hi";
 import { MdSend } from "react-icons/md";
 
@@ -56,7 +55,7 @@ export const StatusPreview = ({ status, setIsStatus }) => {
   const btnClass = (isPrev) =>
     `fixed ${
       isPrev ? "left-1 md:left-4" : "right-1 md:right-4"
-    } text-[#eee6e67c] border-2 border-[#00000010] top-1/2 -translate-y-1/2 bg-[#00000023] rounded-full p-1 md:p-2 z-[100]`;
+    } text-[#eee6e67c] border-2 border-[#00000010] top-1/2 w-[200px] h-dvh opacity-0 sm:opacity-100  sm:w-fit sm:h-fit -translate-y-1/2 bg-[#00000023] rounded-full p-1 md:p-2 -z-10`;
 
   const currentStatus = status[playingIndex];
 
@@ -78,6 +77,7 @@ export const StatusPreview = ({ status, setIsStatus }) => {
           <div className="flex items-center gap-1 mb-3 ">
             {status.map((st, i) => (
               <div
+                onClick={()=> setPlayingIndex(i)}
                 key={st?._id}
                 className="h-2 w-full flex-1 bg-[#eee6e67c] rounded-md"
               >
@@ -145,14 +145,22 @@ export const StatusPreview = ({ status, setIsStatus }) => {
       {/* Status text */}
       {currentStatus?.type === "TEXT" ? (
         <p
-          className="text-xl md:text-4xl text-white text-center p-4"
+          className="text-xl md:text-4xl text-white text-center p-4 -z-20"
           style={{ fontFamily: currentStatus?.font_family }}
         >
           {currentStatus?.text}
         </p>
       ) : currentStatus?.type === "MEDIA" && (
         <div className="flex items-center justify-center fixed -z-10 left-0 top-0 h-dvh  w-dvw max-h-dvh">
-          <img src={currentStatus.file.url} alt="status image" className=""/>
+              <img src={currentStatus.file.url} alt="status image" />
+              {
+                currentStatus.text.length && (
+                <p className=" fixed left-0 w-full bottom-[68px] text-xl md:text-2xl text-white px-2 bg-[#2e2a2a52] text-center"> 
+                    {currentStatus.text}
+                </p>
+
+                )
+              }
         </div>
       )
     }

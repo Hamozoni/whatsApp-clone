@@ -121,7 +121,9 @@ export const PostTextStatus = ({ setStatusType }) => {
           className={`p-3 text-2xl md:text-6xl text-white outline-0 resize-none w-full`}
         />
         {!text && (
-          <p style={{ fontFamily: currentFont }} className="absolute top-3 text-2xl md:text-6xl text-white">
+          <p 
+            style={{ fontFamily: currentFont }} 
+            className="absolute top-3 -z-10 text-2xl md:text-6xl text-white">
             Type a status
           </p>
         )}
