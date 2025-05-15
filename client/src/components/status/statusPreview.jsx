@@ -68,14 +68,14 @@ export const StatusPreview = ({ status, setIsStatus }) => {
             ? currentStatus.text_bg_color
             : "#000",
       }}
-      className="fixed z-30 left-0 p-4 top-0 w-dvw h-dvh flex flex-col justify-between"
+      className="fixed z-30 left-0 top-0 w-dvw h-dvh flex flex-col justify-between"
     >
 
       {/* Header */}
-      <header className="">
+      <header className="bg-[#413f3f5e] p-3">
         <div className=" container max-w-[650px] mx-auto">
           {/* Progress Bars */}
-          <div className="flex items-center gap-1 mb-3">
+          <div className="flex items-center gap-1 mb-3 ">
             {status.map((st, i) => (
               <div
                 key={st?._id}
@@ -143,14 +143,19 @@ export const StatusPreview = ({ status, setIsStatus }) => {
       </header>
 
       {/* Status text */}
-      {currentStatus?.type === "TEXT" && (
+      {currentStatus?.type === "TEXT" ? (
         <p
-          className="text-xl md:text-4xl text-white text-center"
+          className="text-xl md:text-4xl text-white text-center p-4"
           style={{ fontFamily: currentStatus?.font_family }}
         >
           {currentStatus?.text}
         </p>
-      )}
+      ) : currentStatus?.type === "MEDIA" && (
+        <div className="flex items-center justify-center fixed -z-10 left-0 top-0 h-dvh  w-dvw max-h-dvh">
+          <img src={currentStatus.file.url} alt="status image" className=""/>
+        </div>
+      )
+    }
 
       {/* Navigation Buttons */}
       <button onClick={() => resetTimerAndAdvance(false)} className={btnClass(true)}>
@@ -161,7 +166,7 @@ export const StatusPreview = ({ status, setIsStatus }) => {
       </button>
 
       {/* Reply Input */}
-      <footer>
+      <footer className="bg-[#413f3f5e] p-3">
         <div className="container max-w-[650px] mx-auto flex items-center gap-3">
           <TextEmojiInput text={text}  setText={setText} placeholder='Type a reply...'/>
           <button>

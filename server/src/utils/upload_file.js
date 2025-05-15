@@ -29,7 +29,7 @@ export const upload_file = async(file,folder)=> {
                 type: type?.toUpperCase(),
                 url: result?.secure_url,
                 public_id: result?.public_id,
-                size: req?.file?.size
+                size: file?.size
             });
 
         return file_result;

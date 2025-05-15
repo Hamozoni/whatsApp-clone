@@ -131,7 +131,7 @@ export const PostTextStatus = ({ setStatusType }) => {
       <PostStatusFooter onClick={handleSubmitStatus} />
       {/* Loader */}
       {isLoading && (
-        <div className="fixed inset-0 bg-[#00000060] flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-[#00000060] flex items-center justify-center z-[80]">
           <BeatLoader />
         </div>
       )}

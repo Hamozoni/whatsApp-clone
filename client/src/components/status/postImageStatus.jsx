@@ -1,16 +1,21 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {useContext, useEffect, useRef, useState } from "react";
 import { PostStatusFooter } from "./postStatusFooter";
 import { IoCrop,IoColorFilterOutline,IoChevronBackOutline } from "react-icons/io5";
 import { MdOutlineDone } from "react-icons/md";
 import { FaPencilAlt } from "react-icons/fa";
 import { RiText } from "react-icons/ri";
 import { RoundedBtn } from "../ui/roudedBtn";
+import { post_data } from "../../lib/post_data";
+import { User_context } from "../../contexts/user.context";
+import { BeatLoader } from "react-spinners";
 
 
 export const PostImageStatus = ({setStatusType,file})=> {
 
+    const {user} = useContext(User_context);
     const canvasRef = useRef();
-
+    const [isLoading,setIsLoading] = useState(false);
+    const [isError,setIsError] = useState(null);
     const [textOnImage,setTextOnImage] = useState('');
     const [text,setText] = useState('')
     const [activeModifier,setActiveModifier] = useState(null);
@@ -52,9 +57,30 @@ export const PostImageStatus = ({setStatusType,file})=> {
 
     },[]);
 
-    const handleSubmitStatus = ()=> {
-        setStatusType(null)
-    };
+const handleSubmitStatus = async()=> {
+    setIsLoading(true);
+    setIsError(null)
+    try {
+
+        const formData = new FormData();
+
+        formData.append('file',file);
+        formData.append('text',text);
+        formData.append('user',user._id);
+        formData.append('type','MEDIA');
+
+     const st = await post_data('status',formData);
+
+     console.log(st);
+     setStatusType(null);
+    }
+    catch (error) {
+        setIsError(error.message)
+    }
+    finally{
+        setIsLoading(false);
+    }
+};
 
  const handelTextOnImage = (e)=> {
 
@@ -72,7 +98,7 @@ export const PostImageStatus = ({setStatusType,file})=> {
 
        }
 
-    }
+    };
 
 
 
@@ -156,6 +182,13 @@ export const PostImageStatus = ({setStatusType,file})=> {
                 onClick={handleSubmitStatus}
                 placeholder='Add a caption'
                  />
+
+                {/* Loader */}
+                {isLoading && (
+                <div className="fixed inset-0 bg-[#00000060] flex items-center justify-center z-[80]">
+                    <BeatLoader />
+                </div>
+                )}
             
         </div>
     )
