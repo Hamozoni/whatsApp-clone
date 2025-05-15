@@ -7,6 +7,7 @@ import { PostTextStatus } from "./postTextStatus";
 import { StatusCard } from "./statusCard";
 import { Avatar } from "../ui/avatar";
 import {PostImageStatus } from "./postImageStatus";
+import { PostVideoStatus } from "./postVideoStatus";
 
 
 export const Status = ()=> {
@@ -22,8 +23,10 @@ export const Status = ()=> {
                  {
                     statusType === 'text' ?
                     <PostTextStatus setStatusType={setStatusType} />
-                    : statusType === 'image'&&
+                    : statusType === 'image' ? 
                      <PostImageStatus setStatusType={setStatusType} file={file} />
+                    : statusType === 'video' && 
+                    <PostVideoStatus  setStatusType={setStatusType} file={file}/>
                 }
                 <header className="relative h-fit">
                     <div className="flex items-center justify-between">

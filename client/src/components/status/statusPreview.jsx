@@ -155,7 +155,7 @@ export const StatusPreview = ({ status, setIsStatus }) => {
               <img src={currentStatus.file.url} alt="status image" />
               {
                 currentStatus.text.length && (
-                <p className=" fixed left-0 w-full bottom-[68px] text-xl md:text-2xl text-white px-2 bg-[#2e2a2a52] text-center"> 
+                <p className=" fixed left-0 w-full bottom-[68px] text-sm sm:text-xl md:text-2xl text-white px-2 bg-[#2e2a2a52] text-center"> 
                     {currentStatus.text}
                 </p>
 
