@@ -1,5 +1,4 @@
 import Audio_player from "../ui/audio_player";
-import { FaPlay } from "react-icons/fa6";
 import { useContext } from "react";
 import { Chat_window_context } from "../../contexts/chat_window.context";
 import { Files_gallery } from "../ui/files_gallery";

@@ -7,6 +7,7 @@ import { User_context } from "../../contexts/user.context";
 import { post_data } from "../../lib/post_data";
 import { PostStatusFooter } from "./postStatusFooter";
 import { EmojiBtn } from "../ui/emojiBtn";
+import { TransparantLoader } from "../ui/transparantLoader";
 
 const bgColors = ['#f44336','#e91e63','#9c27b0','#673ab7','#3f51b5','#2196f3','#009688','#4caf50','#8bc34a','#cddc39','#ffeb3b','#795548','#607d8b'];
 const fontFamilies = [
@@ -133,9 +134,7 @@ export const PostTextStatus = ({ setStatusType }) => {
       <PostStatusFooter onClick={handleSubmitStatus} />
       {/* Loader */}
       {isLoading && (
-        <div className="fixed inset-0 bg-[#00000060] flex items-center justify-center z-[80]">
-          <BeatLoader />
-        </div>
+        <TransparantLoader />
       )}
     </div>
   );

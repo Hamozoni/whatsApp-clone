@@ -21,9 +21,9 @@ export const Files_gallery = ({file_data,is_blob = false})=> {
             <div className="">
                 {
                     file?.type === 'IMAGE' ?
-                    <img src={file?.url} width={450} height={550} alt={file?.type} />
+                    <img src={file?.url}  alt={file?.type} />
                     : file?.type === 'VIDEO' ?
-                    <video width={450} height={550} src={file?.url} controls  />
+                    <video  src={file?.url} controls  />
                     : file?.type === 'APPLICATION' &&
                     <div >
                         <iframe

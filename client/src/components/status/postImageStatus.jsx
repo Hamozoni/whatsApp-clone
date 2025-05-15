@@ -7,14 +7,14 @@ import { RiText } from "react-icons/ri";
 import { RoundedBtn } from "../ui/roudedBtn";
 import { post_data } from "../../lib/post_data";
 import { User_context } from "../../contexts/user.context";
-import { BeatLoader } from "react-spinners";
+import { TransparantLoader } from "../ui/transparantLoader";
 
 
 export const PostImageStatus = ({setStatusType,file})=> {
 
     const {user} = useContext(User_context);
     const canvasRef = useRef();
-    const [isLoading,setIsLoading] = useState(false);
+    const [isLoading,setIsLoading] = useState(true);
     const [isError,setIsError] = useState(null);
     const [textOnImage,setTextOnImage] = useState('');
     const [text,setText] = useState('')
@@ -42,8 +42,8 @@ export const PostImageStatus = ({setStatusType,file})=> {
 
                         ctx.clearRect(0,0,canvas.width,canvas.height );
                         ctx.drawImage(img,0,0)
-
-                        setImage(img)
+                        setIsLoading(false)
+                        setImage(img);
 
                     }
 
@@ -185,9 +185,7 @@ const handleSubmitStatus = async()=> {
 
                 {/* Loader */}
                 {isLoading && (
-                <div className="fixed inset-0 bg-[#00000060] flex items-center justify-center z-[80]">
-                    <BeatLoader />
-                </div>
+                    <TransparantLoader />
                 )}
             
         </div>
