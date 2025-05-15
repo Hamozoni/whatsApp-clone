@@ -76,7 +76,7 @@ export const PostTextStatus = ({ setStatusType }) => {
         >
       {/* Header */}
       <header >
-        <div className="container max-w-[650px] mx-auto flex items-center justify-between p-3">
+        <div className="container max-w-[970px] mx-auto flex items-center justify-between p-3">
           <button onClick={() => setStatusType(null)}>
             <IoCloseSharp size={26} />
           </button>
