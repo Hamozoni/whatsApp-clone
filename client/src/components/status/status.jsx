@@ -7,7 +7,7 @@ import { PostTextStatus } from "./postTextStatus";
 import { StatusCard } from "./statusCard";
 import { Avatar } from "../ui/avatar";
 import {PostImageStatus } from "./postImageStatus";
-import { PostVideoStatus } from "./postVideoStatus";
+import{ VideoTrimmer }from "./postVideoStatus";
 
 
 export const Status = ()=> {
@@ -26,7 +26,8 @@ export const Status = ()=> {
                     : statusType === 'image' ? 
                      <PostImageStatus setStatusType={setStatusType} file={file} />
                     : statusType === 'video' && 
-                    <PostVideoStatus  setStatusType={setStatusType} file={file}/>
+                    <VideoTrimmer videoFile={file} />
+                    // <PostVideoStatus  setStatusType={setStatusType} file={file}/>
                 }
                 <header className="relative h-fit">
                     <div className="flex items-center justify-between">
@@ -80,4 +81,56 @@ export const Status = ()=> {
             <div className="hidden md:flex flex-2"></div>
         </div>
     )
-}
+};
+
+
+
+// import { useState } from "react";
+// import { PostStatusFooter } from "./postStatusFooter";
+// import { IoChevronBackOutline } from "react-icons/io5";
+// import { RoundedBtn } from "../ui/roundedBtn";
+// import { TransparantLoader } from "../ui/transparantLoader";
+// import { VideoPlayer } from "../ui/videoPlayer";
+
+// export const PostVideoStatus = ({setStatusType,file})=> {
+
+//     const [isLoading,setIsLoading] = useState(false);
+//     const [videoUrl,setVideoUrl] = useState(URL.createObjectURL(file))
+//     const [error,setError] = useState(null);
+//     const [text,setText] = useState('');
+
+
+//     const handleSubmitStatus = ()=> {
+
+//     };
+
+
+
+//     return (
+//         <div className="fixed z-50 inset-0 w-dvw h-dvh max-h-dvh flex flex-col justify-between bg-gray-900">
+//             {/* Back button */}
+//             <div className="m-3 w-fit bg-[#29232367] rounded-full">
+//                 <RoundedBtn onClick={()=> setStatusType(null)} Icon={IoChevronBackOutline} />
+//             </div>
+//             <div className="fixed top-0 -z-10 left-0 w-dvw h-dvh max-h-dvh max-w-dvw flex items-center justify-center flex-1">
+//                 {/* Video player*/}
+//                 <VideoPlayer src={videoUrl} />
+//             </div>
+
+//             {/* footer */}
+//             <PostStatusFooter 
+//                 onClick={handleSubmitStatus} 
+//                 isInput={true} 
+//                 text={text} 
+//                 setText={setText}
+//                 placeholder='Add a caption' 
+//                 />
+
+//                 {/* Loader */}
+//                 {isLoading && (
+//                     <TransparantLoader />
+//                 )}
+
+//         </div>
+//     )
+// }
