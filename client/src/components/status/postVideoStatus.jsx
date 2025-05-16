@@ -1,78 +1,90 @@
-import React, { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-export const VideoTrimmer = () => {
+const MAX_TRIM = 30;
+
+export const VideoTrimmer = ({ videoFile }) => {
   const videoRef = useRef(null);
-  const [videoURL, setVideoURL] = useState('');
+  const canvasRef = useRef(document.createElement('canvas'));
+  const thumbnailsContainerRef = useRef(null);
+
   const [duration, setDuration] = useState(0);
   const [startTime, setStartTime] = useState(0);
-  const [endTime, setEndTime] = useState(30);
+  const [endTime, setEndTime] = useState(MAX_TRIM);
   const [thumbnails, setThumbnails] = useState([]);
 
-  const MAX_TRIM = 30; // max selectable seconds
-  const THUMB_COUNT = 15;
-
-  const handleUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setVideoURL(url);
-      setStartTime(0);
-      setEndTime(30);
-      setThumbnails([]);
-    }
-  };
-
-  const onLoadedMetadata = () => {
-    const video = videoRef.current;
-    if (video) {
-      setDuration(video.duration);
-      const maxEnd = Math.min(video.duration, MAX_TRIM);
-      setEndTime(maxEnd);
-      generateThumbnails(video, maxEnd);
-    }
-  };
-
-  const generateThumbnails = async (video, maxEnd) => {
-    const thumbs = [];
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    canvas.width = 160;
-    canvas.height = 90;
-
-    for (let i = 0; i < THUMB_COUNT; i++) {
-      const time = (maxEnd / THUMB_COUNT) * i;
-      await new Promise((resolve) => {
-        video.currentTime = time;
-        video.onseeked = () => {
-          context.drawImage(video, 0, 0, canvas.width, canvas.height);
-          thumbs.push(canvas.toDataURL('image/jpeg'));
-          resolve();
-        };
-      });
-    }
-
-    setThumbnails(thumbs);
-  };
-
-  // Trim enforcement & playback limitation
+  // Load video metadata
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    if (video) {
+      video.onloadedmetadata = () => {
+        const d = video.duration;
+        setDuration(d);
+        setEndTime(Math.min(d, MAX_TRIM));
+        extractThumbnails(video, d);
+      };
+    }
+  }, [videoFile]);
 
-    const onTimeUpdate = () => {
+  // Loop trimmed section only
+  useEffect(() => {
+    const video = videoRef.current;
+    const handleTimeUpdate = () => {
       if (video.currentTime >= endTime) {
-        video.pause();
+        video.currentTime = startTime;
+        video.play();
       }
     };
+    video.addEventListener('timeupdate', handleTimeUpdate);
+    return () => video.removeEventListener('timeupdate', handleTimeUpdate);
+  }, [startTime, endTime]);
 
-    video.addEventListener('timeupdate', onTimeUpdate);
-    return () => video.removeEventListener('timeupdate', onTimeUpdate);
-  }, [endTime]);
+  // Extract thumbnails
+  const extractThumbnails = async (video, dur) => {
+    const frameCount = 30;
+    const interval = dur / frameCount;
+    const thumbList = [];
 
+    for (let i = 0; i < frameCount; i++) {
+      const time = i * interval;
+      await seekToTime(video, time);
+      canvasRef.current.width = video.videoWidth;
+      canvasRef.current.height = video.videoHeight;
+      const ctx = canvasRef.current.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvasRef.current.width, canvasRef.current.height);
+      const dataUrl = canvasRef.current.toDataURL();
+      thumbList.push(dataUrl);
+    }
+
+    setThumbnails(thumbList);
+  };
+
+  const seekToTime = (video, time) =>
+    new Promise((resolve) => {
+      const handler = () => {
+        resolve();
+        video.removeEventListener('seeked', handler);
+      };
+      video.addEventListener('seeked', handler);
+      video.currentTime = time;
+    });
+
+  // Scroll to thumbnail when range moves
+  const scrollToThumb = (time) => {
+    const container = thumbnailsContainerRef.current;
+    const thumbWidth = 60;
+    const pos = (time / duration) * (thumbWidth * thumbnails.length);
+    container.scrollTo({
+      left: pos - container.offsetWidth / 2 + thumbWidth / 2,
+      behavior: 'smooth',
+    });
+  };
+
+  // Handle start slider
   const handleStartChange = (e) => {
     const value = parseFloat(e.target.value);
-    if (value >= 0 && value <= endTime - 1) {
+    if (value >= 0 && value < endTime) {
       setStartTime(value);
+      scrollToThumb(value);
       if (endTime - value > MAX_TRIM) {
         setEndTime(value + MAX_TRIM);
       }
@@ -80,102 +92,75 @@ export const VideoTrimmer = () => {
     }
   };
 
+  // Handle end slider
   const handleEndChange = (e) => {
     const value = parseFloat(e.target.value);
-    if (value <= duration && value >= startTime + 1) {
+    if (value <= duration && value > startTime) {
       if (value - startTime <= MAX_TRIM) {
         setEndTime(value);
       } else {
         setStartTime(value - MAX_TRIM);
         setEndTime(value);
       }
+      scrollToThumb(value);
       videoRef.current.currentTime = startTime;
     }
   };
 
-  const percent = (value) => (value / duration) * 100;
+  const blobURL = videoFile ? URL.createObjectURL(videoFile) : null;
 
   return (
-    <div className="p-4 max-w-2xl mx-auto">
-      <h2 className="text-xl font-bold mb-4">🎬 Trim 30s Max from Video</h2>
-
-      <input
-        type="file"
-        accept="video/*"
-        onChange={handleUpload}
-        className="mb-4"
+    <div className="w-full max-w-2xl mx-auto p-4 space-y-4">
+      <video
+        ref={videoRef}
+        src={blobURL}
+        controls
+        className="w-full rounded shadow"
+        onLoadedMetadata={(e) => {
+          const d = e.target.duration;
+          setDuration(d);
+          setEndTime(Math.min(d, MAX_TRIM));
+        }}
       />
 
-      {videoURL && (
-        <>
-          <video
-            ref={videoRef}
-            src={videoURL}
-            controls
-            className="w-full rounded mb-4"
-            onLoadedMetadata={onLoadedMetadata}
-          />
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Start: {startTime.toFixed(1)}s</label>
+        <input
+          type="range"
+          min="0"
+          max={duration}
+          step="0.1"
+          value={startTime}
+          onChange={handleStartChange}
+          className="w-full"
+        />
+      </div>
 
-          {/* Trim Thumbnails and Slider */}
-          <div className="relative mb-6">
-            <div className="flex overflow-hidden rounded-md border border-gray-300">
-              {thumbnails.map((thumb, idx) => (
-                <img key={idx} src={thumb} alt="thumb" className="w-[60px] h-[34px] object-cover" />
-              ))}
-            </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">End: {endTime.toFixed(1)}s</label>
+        <input
+          type="range"
+          min="0"
+          max={duration}
+          step="0.1"
+          value={endTime}
+          onChange={handleEndChange}
+          className="w-full"
+        />
+      </div>
 
-            {/* Trim range overlay */}
-            <div className="absolute top-0 left-0 right-0 bottom-0 pointer-events-none">
-              <div
-                className="absolute top-0 bottom-0 border-2 border-blue-500 bg-blue-100/20 rounded"
-                style={{
-                  left: `${percent(startTime)}%`,
-                  width: `${percent(endTime - startTime)}%`,
-                }}
-              ></div>
+      <div
+        ref={thumbnailsContainerRef}
+        className="flex overflow-x-auto border border-gray-300 rounded p-1 space-x-1 bg-gray-100"
+      >
+        {thumbnails.map((thumb, index) => (
+          <img key={index} src={thumb} alt={`thumb-${index}`} className="w-[60px] h-[34px] object-cover rounded" />
+        ))}
+      </div>
 
-              {/* Start ring */}
-              <div
-                className="absolute top-[-6px] w-3 h-10 border-2 border-blue-500 bg-white rounded-full shadow"
-                style={{ left: `${percent(startTime)}%`, transform: 'translateX(-50%)' }}
-              ></div>
-
-              {/* End ring */}
-              <div
-                className="absolute top-[-6px] w-3 h-10 border-2 border-blue-500 bg-white rounded-full shadow"
-                style={{ left: `${percent(endTime)}%`, transform: 'translateX(-50%)' }}
-              ></div>
-            </div>
-
-            {/* Invisible sliders */}
-            <input
-              type="range"
-              min="0"
-              max={duration}
-              step="0.1"
-              value={startTime}
-              onChange={handleStartChange}
-              className="absolute top-[50%] w-full opacity-0 cursor-ew-resize"
-            />
-            <input
-              type="range"
-              min="0"
-              max={duration}
-              step="0.1"
-              value={endTime}
-              onChange={handleEndChange}
-              className="absolute top-[50%] w-full opacity-0 cursor-ew-resize"
-            />
-          </div>
-
-          {/* Time display */}
-          <div className="flex justify-between text-sm text-gray-500 mb-2">
-            <span>Start: {startTime.toFixed(1)}s</span>
-            <span>End: {endTime.toFixed(1)}s</span>
-            <span>Selected: {(endTime - startTime).toFixed(1)}s</span>
-          </div>
-        </>
-      )}
+      <div className="text-sm text-gray-500">
+        Selected duration: {(endTime - startTime).toFixed(1)}s (max {MAX_TRIM}s)
+      </div>
     </div>
   );
 };
