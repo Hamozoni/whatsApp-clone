@@ -1,233 +1,182 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
-export const VideoTrimmer = ({ videoFile, onTrimmed }) => {
+export const VideoTrimmer = () => {
   const videoRef = useRef(null);
-  const canvasRef = useRef(null);
-  const containerRef = useRef(null);
-  
+  const [videoURL, setVideoURL] = useState('');
   const [duration, setDuration] = useState(0);
+  const [startTime, setStartTime] = useState(0);
+  const [endTime, setEndTime] = useState(30);
   const [thumbnails, setThumbnails] = useState([]);
-  const [selection, setSelection] = useState({ start: 0, end: 30 });
-  const [isDragging, setIsDragging] = useState(null);
-  const [trimmedVideo, setTrimmedVideo] = useState(null);
 
-  // Video initialization and thumbnail generation
-  useEffect(() => {
-    if (!videoFile) return;
+  const MAX_TRIM = 30; // max selectable seconds
+  const THUMB_COUNT = 15;
 
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    const url = URL.createObjectURL(videoFile);
-    
-    video.src = url;
-    
-    video.onloadedmetadata = async () => {
-      setDuration(video.duration);
-      const thumbs = await generateThumbnails(video, canvas);
-      setThumbnails(thumbs);
-      const initialEnd = Math.min(30, video.duration);
-      setSelection({ start: 0, end: initialEnd });
-    };
-
-    return () => URL.revokeObjectURL(url);
-  }, [videoFile]);
-
-  // Auto-trim when selection changes
-  useEffect(() => {
-    if (duration > 0) {
-      handleTrimVideo();
+  const handleUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setVideoURL(url);
+      setStartTime(0);
+      setEndTime(30);
+      setThumbnails([]);
     }
-  }, [selection, duration]);
+  };
 
-  // Thumbnail generation
-  const generateThumbnails = async (video, canvas) => {
-    const thumbnailCount = Math.floor(video.duration);
-    const thumbnails = [];
+  const onLoadedMetadata = () => {
+    const video = videoRef.current;
+    if (video) {
+      setDuration(video.duration);
+      const maxEnd = Math.min(video.duration, MAX_TRIM);
+      setEndTime(maxEnd);
+      generateThumbnails(video, maxEnd);
+    }
+  };
 
-    for (let i = 0; i < thumbnailCount; i++) {
-      const time = Math.min(i, video.duration);
-      await new Promise(resolve => {
+  const generateThumbnails = async (video, maxEnd) => {
+    const thumbs = [];
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    canvas.width = 160;
+    canvas.height = 90;
+
+    for (let i = 0; i < THUMB_COUNT; i++) {
+      const time = (maxEnd / THUMB_COUNT) * i;
+      await new Promise((resolve) => {
         video.currentTime = time;
         video.onseeked = () => {
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-          thumbnails.push(canvas.toDataURL());
+          context.drawImage(video, 0, 0, canvas.width, canvas.height);
+          thumbs.push(canvas.toDataURL('image/jpeg'));
           resolve();
         };
       });
     }
-    return thumbnails;
+
+    setThumbnails(thumbs);
   };
 
-  // Handle selection interactions
-  const handleMouseDown = (e) => {
-    const handle = e.target.closest('.handle');
-    if (handle?.classList.contains('left-handle')) {
-      setIsDragging('left');
-    } else if (handle?.classList.contains('right-handle')) {
-      setIsDragging('right');
-    } else {
-      setIsDragging('selection');
-    }
-    handleMouseMove(e);
-  };
-
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
-
-    const container = containerRef.current;
-    const rect = container.getBoundingClientRect();
-    const scrollLeft = container.scrollLeft;
-    const totalWidth = container.scrollWidth;
-    
-    const rawPosition = (e.clientX - rect.left + scrollLeft) / totalWidth;
-    const newPosition = Math.max(0, Math.min(1, rawPosition));
-    const newTime = newPosition * duration;
-
-    if (isDragging === 'left') {
-      setSelection(prev => ({
-        start: Math.max(0, newTime),
-        end: Math.min(prev.start + 30, duration)
-      }));
-    } else if (isDragging === 'right') {
-      setSelection(prev => ({
-        start: Math.max(0, prev.end - 30),
-        end: Math.min(newTime, duration)
-      }));
-    } else if (isDragging === 'selection') {
-      const newStart = Math.max(0, newTime - 15);
-      const newEnd = Math.min(newStart + 30, duration);
-      setSelection({
-        start: newStart,
-        end: newEnd
-      });
-    }
-
-    // Auto-scroll logic
-    const cursorPos = e.clientX - rect.left;
-    const edgeThreshold = 50;
-    const scrollAmount = 20;
-
-    requestAnimationFrame(() => {
-      if (cursorPos < edgeThreshold) {
-        container.scrollLeft -= scrollAmount;
-      } else if (cursorPos > container.clientWidth - edgeThreshold) {
-        container.scrollLeft += scrollAmount;
-      }
-    });
-  };
-
-  // Trim video functionality
-  const handleTrimVideo = async () => {
-    try {
-      const blob = await trimVideo();
-      const url = URL.createObjectURL(blob);
-      setTrimmedVideo(url);
-      onTrimmed(blob);
-    } catch (error) {
-      console.error('Trimming failed:', error);
-    }
-  };
-
-  const trimVideo = async () => {
+  // Trim enforcement & playback limitation
+  useEffect(() => {
     const video = videoRef.current;
-    const start = selection.start;
-    const end = selection.end;
-    
-    return new Promise((resolve) => {
-      video.currentTime = start;
-      
-      const chunks = [];
-      const stream = video.captureStream();
-      const mediaRecorder = new MediaRecorder(stream);
+    if (!video) return;
 
-      mediaRecorder.start();
-      video.play();
+    const onTimeUpdate = () => {
+      if (video.currentTime >= endTime) {
+        video.pause();
+      }
+    };
 
-      video.ontimeupdate = () => {
-        if (video.currentTime >= end) {
-          mediaRecorder.stop();
-          video.pause();
-        }
-      };
+    video.addEventListener('timeupdate', onTimeUpdate);
+    return () => video.removeEventListener('timeupdate', onTimeUpdate);
+  }, [endTime]);
 
-      mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
-      mediaRecorder.onstop = () => {
-        const blob = new Blob(chunks, { type: 'video/webm' });
-        resolve(blob);
-      };
-    });
+  const handleStartChange = (e) => {
+    const value = parseFloat(e.target.value);
+    if (value >= 0 && value <= endTime - 1) {
+      setStartTime(value);
+      if (endTime - value > MAX_TRIM) {
+        setEndTime(value + MAX_TRIM);
+      }
+      videoRef.current.currentTime = value;
+    }
   };
+
+  const handleEndChange = (e) => {
+    const value = parseFloat(e.target.value);
+    if (value <= duration && value >= startTime + 1) {
+      if (value - startTime <= MAX_TRIM) {
+        setEndTime(value);
+      } else {
+        setStartTime(value - MAX_TRIM);
+        setEndTime(value);
+      }
+      videoRef.current.currentTime = startTime;
+    }
+  };
+
+  const percent = (value) => (value / duration) * 100;
 
   return (
-    <div className="fixed left-0 top-0 w-dvw h-dvh bg-[#1f2937]">
-      {/* Trimmed Video Preview */}
-      <div className="relative mb-6 rounded-xl overflow-hidden shadow-lg">
-        <video
-          controls
-          src={trimmedVideo || URL.createObjectURL(videoFile)}
-          className="w-full aspect-video bg-black rounded-xl"
-        />
-        <div className="absolute inset-0 border-2 border-white/10 rounded-xl pointer-events-none" />
-      </div>
+    <div className="p-4 max-w-2xl mx-auto">
+      <h2 className="text-xl font-bold mb-4">🎬 Trim 30s Max from Video</h2>
 
-      {/* Hidden canvas */}
-      <canvas ref={canvasRef} className="hidden" width="160" height="90" />
+      <input
+        type="file"
+        accept="video/*"
+        onChange={handleUpload}
+        className="mb-4"
+      />
 
-      {/* Timeline */}
-      <div 
-        ref={containerRef}
-        className="relative group h-24 bg-gray-900/80 rounded-xl overflow-x-auto scrollbar-hide border border-white/5"
-        onMouseDown={handleMouseDown}
-        onMouseUp={() => setIsDragging(null)}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={() => setIsDragging(null)}
-      >
-        <div className="flex h-full gap-px" style={{ minWidth: 'max-content' }}>
-          {thumbnails.map((src, i) => (
-            <img 
-              key={i}
-              src={src}
-              alt=""
-              className="h-full w-auto flex-shrink-0 object-cover transition-opacity hover:opacity-80"
+      {videoURL && (
+        <>
+          <video
+            ref={videoRef}
+            src={videoURL}
+            controls
+            className="w-full rounded mb-4"
+            onLoadedMetadata={onLoadedMetadata}
+          />
+
+          {/* Trim Thumbnails and Slider */}
+          <div className="relative mb-6">
+            <div className="flex overflow-hidden rounded-md border border-gray-300">
+              {thumbnails.map((thumb, idx) => (
+                <img key={idx} src={thumb} alt="thumb" className="w-[60px] h-[34px] object-cover" />
+              ))}
+            </div>
+
+            {/* Trim range overlay */}
+            <div className="absolute top-0 left-0 right-0 bottom-0 pointer-events-none">
+              <div
+                className="absolute top-0 bottom-0 border-2 border-blue-500 bg-blue-100/20 rounded"
+                style={{
+                  left: `${percent(startTime)}%`,
+                  width: `${percent(endTime - startTime)}%`,
+                }}
+              ></div>
+
+              {/* Start ring */}
+              <div
+                className="absolute top-[-6px] w-3 h-10 border-2 border-blue-500 bg-white rounded-full shadow"
+                style={{ left: `${percent(startTime)}%`, transform: 'translateX(-50%)' }}
+              ></div>
+
+              {/* End ring */}
+              <div
+                className="absolute top-[-6px] w-3 h-10 border-2 border-blue-500 bg-white rounded-full shadow"
+                style={{ left: `${percent(endTime)}%`, transform: 'translateX(-50%)' }}
+              ></div>
+            </div>
+
+            {/* Invisible sliders */}
+            <input
+              type="range"
+              min="0"
+              max={duration}
+              step="0.1"
+              value={startTime}
+              onChange={handleStartChange}
+              className="absolute top-[50%] w-full opacity-0 cursor-ew-resize"
             />
-          ))}
-        </div>
-
-        {/* Selection Overlay */}
-        <div 
-          className="absolute top-0 h-full bg-gradient-to-r from-blue-400/30 to-purple-400/30 border-2 border-white/50 backdrop-blur-sm rounded-lg"
-          style={{
-            width: `${((selection.end - selection.start) / duration) * 100}%`,
-            left: `${(selection.start / duration) * 100}%`,
-          }}
-        >
-          <div className="absolute -left-2.5 w-5 h-full flex items-center left-handle handle">
-            <div className="w-2.5 h-8 bg-white rounded-full shadow-lg cursor-ew-resize" />
+            <input
+              type="range"
+              min="0"
+              max={duration}
+              step="0.1"
+              value={endTime}
+              onChange={handleEndChange}
+              className="absolute top-[50%] w-full opacity-0 cursor-ew-resize"
+            />
           </div>
-          <div className="absolute -right-2.5 w-5 h-full flex items-center right-handle handle">
-            <div className="w-2.5 h-8 bg-white rounded-full shadow-lg cursor-ew-resize" />
+
+          {/* Time display */}
+          <div className="flex justify-between text-sm text-gray-500 mb-2">
+            <span>Start: {startTime.toFixed(1)}s</span>
+            <span>End: {endTime.toFixed(1)}s</span>
+            <span>Selected: {(endTime - startTime).toFixed(1)}s</span>
           </div>
-        </div>
-      </div>
-
-      {/* Selection Info */}
-      <div className="mt-6 text-center text-gray-300 font-medium">
-        <span className="text-blue-400">{Math.round(selection.start)}s</span>
-        <span className="mx-2">–</span>
-        <span className="text-purple-400">{Math.round(selection.end)}s</span>
-        <span className="ml-2 text-gray-400">
-          ({(selection.end - selection.start).toFixed(1)}s selected)
-        </span>
-      </div>
-
-      {trimmedVideo && (
-        <div className="mt-4 text-center">
-          <p className="text-sm text-green-400">
-            Trimmed video ready! Drag to adjust selection
-          </p>
-        </div>
+        </>
       )}
     </div>
   );
 };
+
