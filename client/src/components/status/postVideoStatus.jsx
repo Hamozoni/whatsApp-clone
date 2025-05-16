@@ -8,60 +8,67 @@ import { FaPause } from "react-icons/fa6";
 
 export const PostVideoStatus = ({setStatusType,file})=> {
 
-    const [isLoading,setIsLoading] = useState(true);
+    const [isLoading,setIsLoading] = useState(false);
+    const [videoUrl,setVideoUrl] = useState(URL.createObjectURL(file))
     const [error,setError] = useState(null);
     const [text,setText] = useState('');
     const [isPlaying,setIsPlaying] = useState(false);
+    const [isVideoControlsBtn,setIsVideoControlsBtn] = useState(true);
     const videoRef = useRef(null);
+    const timeOutRef = useRef(null)
 
 
     const handleSubmitStatus = ()=> {
 
     };
 
-    useEffect(()=> {
+    const handlePlayPause = ()=> {
 
-            const reader = new FileReader();
+        if(isPlaying){
+            setIsPlaying(false);
+            setIsVideoControlsBtn(true);
+            videoRef.current.pause();
+            clearTimeout(timeOutRef.current)
+        }else {
+            setIsPlaying(true)
+            videoRef.current.play();
+          timeOutRef.current =  setTimeout(()=>  {
+                setIsVideoControlsBtn(false)
+        },[1500]);
+        }
 
-            reader.onload = (e)=>  {
-                videoRef.current.src = e.target.result;
-                setIsLoading(false);
-            };
-            
-            reader.readAsDataURL(file);
-            
-
-
-    },[file]);
+    }
 
     return (
         <div className="fixed z-50 inset-0 w-dvw h-dvh max-h-dvh flex flex-col justify-between bg-gray-900">
-            <div className="left-0 p-3">
+            {/* Back button */}
+            <div className="m-3 w-fit bg-[#29232367] rounded-full">
                 <RoundedBtn onClick={()=> setStatusType(null)} Icon={IoChevronBackOutline} />
             </div>
             <div className="fixed top-0 -z-10 left-0 w-dvw h-dvh max-h-dvh max-w-dvw flex items-center justify-center flex-1">
-                <video ref={videoRef}  className="max-h-dvh max-w-dvw" />
-                <button 
-                    onClick={()=> {
+                {/* Display selected video */}
+                <video 
+                    onClick={handlePlayPause} 
+                    src={videoUrl}
+                    ref={videoRef}  
+                    className="max-h-dvh max-w-dvw" 
+                    />
+                    {/* Video control button */}
+                    {
+                        isVideoControlsBtn && (
+                            <button 
+                                onClick={handlePlayPause}
+                                className="fixed top-1/2 left-1/2  -translate-1/2 p-4 rounded-full text-white bg-[#2926263a]"
+                                >
+                                    {
+                                        isPlaying ? 
+                                        <FaPause  size={28}/>: <FaPlay size={28} />
+                                    }
+                                
+                            </button>
 
-                        if(isPlaying){
-                             setIsPlaying(false)
-                            videoRef.current.pause();
-                        }else {
-
-                            setIsPlaying(true)
-                            videoRef.current.play();
-                        }
-
-                    }}
-                    className="fixed top-1/2 left-1/2  -translate-1/2 p-4 rounded-full text-white bg-[#2926263a]"
-                    >
-                        {
-                            isPlaying ? 
-                            <FaPause  size={28}/>: <FaPlay size={28} />
-                        }
-                    
-                </button>
+                        )
+                    }
             </div>
 
             {/* footer */}

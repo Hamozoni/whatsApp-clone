@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
-import { IoCloseSharp, IoColorPaletteSharp, IoSend } from "react-icons/io5";
-import { BeatLoader } from "react-spinners";
+import { IoCloseSharp, IoColorPaletteSharp } from "react-icons/io5";
 
 import { Close_model } from "../ui/close_model";
 import { User_context } from "../../contexts/user.context";

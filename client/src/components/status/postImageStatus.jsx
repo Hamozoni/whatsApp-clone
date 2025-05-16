@@ -4,7 +4,7 @@ import { IoCrop,IoColorFilterOutline,IoChevronBackOutline } from "react-icons/io
 import { MdOutlineDone } from "react-icons/md";
 import { FaPencilAlt } from "react-icons/fa";
 import { RiText } from "react-icons/ri";
-import { RoundedBtn } from "../ui/roudedBtn";
+import { RoundedBtn } from "../ui/roundedBtn";
 import { post_data } from "../../lib/post_data";
 import { User_context } from "../../contexts/user.context";
 import { TransparantLoader } from "../ui/transparantLoader";
