@@ -1,168 +1,135 @@
-import { useRef, useState, useEffect } from 'react';
-
-const MAX_DURATION = 30;
+import { useState, useRef, useEffect } from 'react';
 
 export const VideoTrimmer = ({ videoFile }) => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const timelineRef = useRef(null);
-
   const [duration, setDuration] = useState(0);
   const [thumbnails, setThumbnails] = useState([]);
   const [selection, setSelection] = useState({ start: 0, end: 0 });
-  const [dragging, setDragging] = useState(null);
 
+  // Load video and generate thumbnails
   useEffect(() => {
-    if (!videoFile) return;
+    if (!videoFile || !videoRef.current || !canvasRef.current) return;
+
     const video = videoRef.current;
+    const canvas = canvasRef.current;
     const url = URL.createObjectURL(videoFile);
     video.src = url;
 
-    video.onloadedmetadata = async () => {
-      const dur = video.duration;
-      const end = Math.min(MAX_DURATION, dur);
-      setDuration(dur);
-      setSelection({ start: 0, end });
-      const thumbs = await generateThumbnails(video, canvasRef.current);
-      setThumbnails(thumbs);
+    const handleLoadedMetadata = async () => {
+      try {
+        const dur = video.duration;
+        setDuration(dur);
+        const end = Math.min(30, dur);
+        setSelection({ start: 0, end });
+
+        // Generate thumbnails
+        const thumbs = [];
+        for (let i = 0; i < dur; i++) {
+          await new Promise((resolve) => {
+            video.currentTime = i;
+            video.onseeked = () => {
+              const ctx = canvas.getContext('2d');
+              if (ctx) {
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                thumbs.push(canvas.toDataURL());
+              }
+              resolve();
+            };
+          });
+        }
+        setThumbnails(thumbs);
+      } catch (error) {
+        console.error('Error loading video:', error);
+      }
     };
 
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
+
     return () => {
-      URL.revokeObjectURL(video.src);
+      URL.revokeObjectURL(url);
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
     };
   }, [videoFile]);
 
-  // Keep playback within selection range
+  // Handle video playback loop
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || !selection) return;
 
-    const checkTime = () => {
+    const handleTimeUpdate = () => {
       if (video.currentTime >= selection.end) {
-        video.pause();
         video.currentTime = selection.start;
         video.play();
       }
     };
 
-    video.addEventListener('timeupdate', checkTime);
-    return () => video.removeEventListener('timeupdate', checkTime);
-  }, [selection]);
-
-  const generateThumbnails = async (video, canvas) => {
-    const interval = 1; // 1 second per frame
-    const thumbs = [];
-    const ctx = canvas.getContext('2d');
-
-    for (let i = 0; i < Math.floor(video.duration); i += interval) {
-      await new Promise((resolve) => {
-        video.currentTime = i;
-        video.onseeked = () => {
-          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-          thumbs.push(canvas.toDataURL());
-          resolve();
-        };
-      });
-    }
-
-    return thumbs;
-  };
-
-  const handleMouseDown = (e, handle) => setDragging(handle);
-  const handleMouseUp = () => setDragging(null);
-
-  const handleMouseMove = (e) => {
-    if (!dragging) return;
-
-    const rect = timelineRef.current.getBoundingClientRect();
-    const percent = (e.clientX - rect.left) / rect.width;
-    const time = Math.max(0, Math.min(duration, percent * duration));
-
-    setSelection((prev) => {
-      if (dragging === 'left') {
-        const newStart = Math.min(time, prev.end);
-        return {
-          start: newStart,
-          end: Math.min(newStart + MAX_DURATION, duration),
-        };
-      } else if (dragging === 'right') {
-        const newEnd = Math.max(time, prev.start);
-        return {
-          start: Math.max(0, newEnd - MAX_DURATION),
-          end: newEnd,
-        };
-      }
-      return prev;
-    });
-  };
-
-  const handlePlay = () => {
-    const video = videoRef.current;
     video.currentTime = selection.start;
     video.play();
+    video.addEventListener('timeupdate', handleTimeUpdate);
+
+    return () => {
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+    };
+  }, [selection]);
+
+  // Handle thumbnail click selection
+  const handleThumbnailClick = (index) => {
+    const start = Math.max(0, index);
+    const end = Math.min(index + 30, duration);
+    setSelection({ start, end });
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-gray-900 text-white rounded-xl shadow-lg space-y-6">
+    <div className="fixed left-0 top-0 bg-green-950 w-dvw h-dvh">
       {/* Video Preview */}
       <video
         ref={videoRef}
         controls
-        className="w-full rounded-lg bg-black"
-        onPlay={handlePlay}
+        className="w-full aspect-video rounded-xl bg-black"
+        onError={(e) => console.error('Video error:', e)}
       />
 
-      {/* Hidden canvas for thumbnails */}
-      <canvas ref={canvasRef} width={160} height={90} className="hidden" />
+      {/* Hidden canvas for thumbnail generation */}
+      <canvas ref={canvasRef} width="160" height="90" className="hidden" />
 
-      {/* Timeline */}
-      <div
-        ref={timelineRef}
-        className="relative flex overflow-x-auto border border-gray-700 bg-gray-800 rounded-lg px-1 py-2"
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-      >
+      {/* Thumbnail timeline */}
+      <div className="flex overflow-x-auto gap-1 rounded-md border border-white/10 p-2 bg-gray-800">
         {thumbnails.map((src, i) => (
-          <img key={i} src={src} className="w-24 h-16 object-cover" />
+          <div
+            key={i}
+            onClick={() => handleThumbnailClick(i)}
+            className={`relative cursor-pointer border-2 ${
+              i >= selection.start && i < selection.end 
+                ? 'border-blue-400' 
+                : 'border-transparent'
+            }`}
+          >
+            <img
+              src={src}
+              alt=""
+              className="min-w-20 h-auto object-cover rounded"
+              onError={(e) => {
+                e.target.style.display = 'none';
+                console.error('Failed to load thumbnail:', src);
+              }}
+            />
+            {i === selection.start && (
+              <div className="absolute inset-0 border-2 border-green-400 rounded" />
+            )}
+            {i === selection.end - 1 && (
+              <div className="absolute inset-0 border-2 border-red-400 rounded" />
+            )}
+          </div>
         ))}
-
-        {/* Selected area overlay */}
-        <div
-          className="absolute top-0 bottom-0 bg-white/20 border-2 border-blue-400 rounded pointer-events-none"
-          style={{
-            left: `${(selection.start / duration) * 100}%`,
-            width: `${((selection.end - selection.start) / duration) * 100}%`,
-          }}
-        />
-
-        {/* Handles */}
-        <div
-          className="absolute top-0 bottom-0 w-3 bg-blue-400 cursor-ew-resize"
-          style={{
-            left: `${(selection.start / duration) * 100}%`,
-            transform: 'translateX(-50%)',
-          }}
-          onMouseDown={() => handleMouseDown(null, 'left')}
-        />
-        <div
-          className="absolute top-0 bottom-0 w-3 bg-blue-400 cursor-ew-resize"
-          style={{
-            left: `${(selection.end / duration) * 100}%`,
-            transform: 'translateX(-50%)',
-          }}
-          onMouseDown={() => handleMouseDown(null, 'right')}
-        />
       </div>
 
-      <div className="text-center text-gray-400">
-        Selected:{" "}
-        <span className="text-blue-400">
-          {selection.start.toFixed(1)}s - {selection.end.toFixed(1)}s
-        </span>{" "}
-        ({(selection.end - selection.start).toFixed(1)}s)
+      {/* Selection info */}
+      <div className="text-center text-sm text-gray-300">
+        Selected: {Math.floor(selection.start)}s - {Math.floor(selection.end)}s
+        <br />
+        ({(selection.end - selection.start).toFixed(1)} seconds)
       </div>
     </div>
   );
 };
-
