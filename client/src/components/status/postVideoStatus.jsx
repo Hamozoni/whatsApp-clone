@@ -313,18 +313,14 @@ export function VideoTrimmer({ videoFile, width = 600, height = 90 }) {
       >
         <div
           ref={contentRef}
-          style={{
-            position: 'relative',
-            height: THUMB_HEIGHT + 'px',
-            width: contentWidth + 'px',
-          }}
+          className={` relative w-[${contentWidth}px]`}
         >
           {/* Thumbnail images */}
           {thumbnails.map((thumb, index) => (
             <img
               key={index}
               src={thumb}
-              className={`inline-block w-[${THUMB_WIDTH}]`}
+              className={`inline-block w-[${THUMB_WIDTH}px]`}
               alt={`thumb-${index}`}
             />
           ))}
@@ -333,25 +329,13 @@ export function VideoTrimmer({ videoFile, width = 600, height = 90 }) {
           {videoDuration > 0 && (
             <div
               ref={selectionRef}
-              className=' absolute top-0 flex cursor-move'
-              style={{
-                left: selectionLeftPx + 'px',
-                width: selectionWidthPx + 'px',
-                height: THUMB_HEIGHT + 'px',
-                background: 'rgba(0,123,255,0.2)',
-                border: '2px solid #007bff',
-                boxSizing: 'border-box',
-              }}
+              className={` absolute top-0 flex cursor-move left-[${selectionLeftPx}px] w-[${selectionWidthPx}px] border border-[#224b42be] bg-[#224b424b]`}
               onPointerDown={onPointerDownCenter}
             >
               {/* Left resize handle */}
               <div
                 data-handle="left"
-                style={{
-                  width: '10px',
-                  background: '#007bff',
-                  cursor: 'ew-resize',
-                }}
+                className='w-2 bg-[#224b42be] cursor-ew-resize'
                 onPointerDown={onPointerDownLeft}
               />
               {/* Center area (flexible) */}
@@ -359,11 +343,7 @@ export function VideoTrimmer({ videoFile, width = 600, height = 90 }) {
               {/* Right resize handle */}
               <div
                 data-handle="right"
-                style={{
-                  width: '10px',
-                  background: '#007bff',
-                  cursor: 'ew-resize',
-                }}
+                className='w-2 bg-[#224b42be] cursor-ew-resize'
                 onPointerDown={onPointerDownRight}
               />
             </div>
