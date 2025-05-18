@@ -1,96 +1,88 @@
-import React, { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 export function VideoTrimmer({ videoFile, width = 600, height = 90 }) {
-  const videoRef = useRef(null);
+   const videoRef = useRef(null);
   const containerRef = useRef(null);
   const contentRef = useRef(null);
   const selectionRef = useRef(null);
 
   const [videoURL, setVideoURL] = useState('');
-
   const [videoDuration, setVideoDuration] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
   const [thumbnails, setThumbnails] = useState([]);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   // Constants
-  const MAX_DURATION = 30; // seconds
+  const MAX_DURATION = 30;
   const THUMB_WIDTH = 60;
   const THUMB_HEIGHT = 40;
-  const AUTO_SCROLL_THRESHOLD = 50; // px from edges to start auto scroll
-  const AUTO_SCROLL_SPEED = 10; // px per interval
-  const AUTO_SCROLL_INTERVAL = 50; // ms
+  const AUTO_SCROLL_THRESHOLD = 50;
+  const AUTO_SCROLL_SPEED = 10;
+  const AUTO_SCROLL_INTERVAL = 50;
 
-  const dragInfo = useRef({
-    dragging: false,
-    type: null, // 'left', 'right', or 'center'
-    startX: 0,
-    startTime: 0,
-    endTime: 0,
-    offsetX: 0,
-  });
+  const dragInfo = useRef({ dragging: false, type: null });
   const autoScrollTimer = useRef(null);
 
-  // When video metadata loads, initialize duration and trim range (0 to 30s)
+  // Video initialization
   useEffect(() => {
+    if (!videoFile) return;
+
     const video = videoRef.current;
-    if (!video || !videoFile) return;
+    const url = URL.createObjectURL(videoFile);
+    setVideoURL(url);
+
     const onLoaded = () => {
       const duration = video.duration;
       setVideoDuration(duration);
       setStartTime(0);
       setEndTime(Math.min(MAX_DURATION, duration));
       video.currentTime = 0;
-      video.pause();
     };
+
     video.addEventListener('loadedmetadata', onLoaded);
     return () => {
+      URL.revokeObjectURL(url);
       video.removeEventListener('loadedmetadata', onLoaded);
     };
   }, [videoFile]);
 
-  // Pause playback if it exceeds the trim endTime
+  // Handle video playback within selection
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+
     const handleTimeUpdate = () => {
-      if (video.currentTime > endTime) {
-        video.pause();
+      if (video.currentTime >= endTime) {
+        video.currentTime = startTime;
+        if (isPlaying) video.play();
       }
     };
+
     video.addEventListener('timeupdate', handleTimeUpdate);
-    return () => {
-      video.removeEventListener('timeupdate', handleTimeUpdate);
-    };
-  }, [endTime]);
+    return () => video.removeEventListener('timeupdate', handleTimeUpdate);
+  }, [startTime, endTime, isPlaying]);
 
-  
+  // Update playback when selection changes
   useEffect(() => {
-    if (!videoFile) return;
-    const url = URL.createObjectURL(videoFile);
-    setVideoURL(url);
+    const video = videoRef.current;
+    if (!video) return;
 
-    return () => URL.revokeObjectURL(url); // cleanup
-  }, [videoFile]);
+    if (video.currentTime < startTime || video.currentTime > endTime) {
+      video.currentTime = startTime;
+    }
+  }, [startTime, endTime]);
 
-  // Generate thumbnails once we know videoDuration
+  // Generate thumbnails
   useEffect(() => {
-    if (!videoDuration) return;
+    if (!videoDuration || !videoURL) return;
+
     const generateThumbnails = async () => {
-      if (!videoURL) return;
-      // Create a hidden video element for frame capture
       const video = document.createElement('video');
-      video.crossOrigin = 'anonymous';
       video.src = videoURL;
-      // Wait for metadata to load (duration known):contentReference[oaicite:4]{index=4}
-      await new Promise((resolve) => {
-        video.addEventListener('loadedmetadata', resolve, { once: true });
-      });
-      const duration = video.duration;
-      // Limit to max 60 thumbnails to avoid performance issues
-      let count = Math.ceil(duration);
-      count = Math.min(count, 60);
-      const interval = duration / count;
+      await new Promise(resolve => video.addEventListener('loadedmetadata', resolve));
+
+      const count = Math.min(Math.ceil(videoDuration), 60);
       const canvas = document.createElement('canvas');
       canvas.width = THUMB_WIDTH;
       canvas.height = THUMB_HEIGHT;
@@ -98,20 +90,33 @@ export function VideoTrimmer({ videoFile, width = 600, height = 90 }) {
       const thumbs = [];
 
       for (let i = 0; i < count; i++) {
-        video.currentTime = interval * i;
-        // Wait for seek operation to finish
-        await new Promise((resolve) => {
-          video.addEventListener('seeked', resolve, { once: true });
-        });
-        // Draw the current frame onto the canvas:contentReference[oaicite:5]{index=5}
+        video.currentTime = (i * videoDuration) / count;
+        await new Promise(resolve => video.addEventListener('seeked', resolve));
         ctx.drawImage(video, 0, 0, THUMB_WIDTH, THUMB_HEIGHT);
-        // Convert canvas to an image data URL:contentReference[oaicite:6]{index=6}
-        thumbs.push(canvas.toDataURL('image/png'));
+        thumbs.push(canvas.toDataURL());
       }
+
       setThumbnails(thumbs);
     };
+
     generateThumbnails();
   }, [videoDuration, videoURL]);
+
+  // Pointer handlers and selection logic remain mostly the same...
+
+  // Add play/pause control
+  const togglePlayback = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      video.play();
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
 
   // Pointer move handler (shared for left/right/center dragging)
   const onPointerMove = (e) => {
@@ -274,12 +279,39 @@ export function VideoTrimmer({ videoFile, width = 600, height = 90 }) {
   return (
     <div className='bg-neutral-900 fixed left-0 top-0 z-50 w-dvw h-dvh'>
       {/* Video player */}
-      <video
-        ref={videoRef}
-        src={videoURL}
-        controls
-        style={{ width: '100%', maxWidth: width + 'px', marginBottom: '10px' }}
-      />
+      <div style={{ position: 'relative' }}>
+        <video
+          ref={videoRef}
+          src={videoURL}
+          onClick={(e) => {
+            const rect = e.target.getBoundingClientRect();
+            const seekTime = ((e.clientX - rect.left) / rect.width) * videoDuration;
+            videoRef.current.currentTime = Math.max(startTime, Math.min(endTime, seekTime));
+          }}
+          style={{ 
+            width: '100%', 
+            maxWidth: width + 'px', 
+            marginBottom: '10px',
+            cursor: 'pointer'
+          }}
+        />
+        <button
+          onClick={togglePlayback}
+          style={{
+            position: 'absolute',
+            bottom: '20px',
+            left: '20px',
+            padding: '10px 20px',
+            background: '#007bff',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer'
+          }}
+        >
+          {isPlaying ? '⏸️ Pause' : '▶️ Play'}
+        </button>
+      </div>
       {/* Thumbnails timeline */}
       <div
         ref={containerRef}
