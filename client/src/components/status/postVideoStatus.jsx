@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { FaPause, FaPlay } from "react-icons/fa";
 import { MdArrowLeft ,MdArrowRight} from "react-icons/md";
+import { PostStatusFooter } from './postStatusFooter';
 
 export function VideoTrimmer({ videoFile, width = 600, height = 90 }) {
    const videoRef = useRef(null);
@@ -14,6 +15,7 @@ export function VideoTrimmer({ videoFile, width = 600, height = 90 }) {
   const [endTime, setEndTime] = useState(0);
   const [thumbnails, setThumbnails] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [text,setText] = useState('')
 
   // Constants
   const MAX_DURATION = 30;
@@ -280,89 +282,101 @@ export function VideoTrimmer({ videoFile, width = 600, height = 90 }) {
 
   return (
     <div className='bg-neutral-900 fixed left-0 top-0 z-50 w-dvw h-dvh'>
-            <div className=" relative flex items-center justify-center h-dvh">
-            {/* Thumbnails timeline */}
-                 <div className=" absolute top-1 left-1/2 -translate-x-1/2 w-full h-fit z-50  max-w-[950px]">
+          <section className=" relative flex items-center justify-center h-dvh">
+          {/* Thumbnails timeline */}
+                <div className=" absolute top-1 left-1/2 -translate-x-1/2 w-fit flex justify-center h-fit z-50  max-w-[950px]">
+                  <div
+                    ref={containerRef}
+                    className='relative overflow-x-auto whitespace-nowrap w-full boreder border-#ccc'
+                  >
                     <div
-                      ref={containerRef}
-                      className='relative overflow-x-auto whitespace-nowrap w-full boreder border-#ccc'
+                      ref={contentRef}
+                      className={` relative w-[${contentWidth}px]`}
                     >
-                      <div
-                        ref={contentRef}
-                        className={` relative w-[${contentWidth}px]`}
-                      >
-                        {/* Thumbnail images */}
-                        {thumbnails.map((thumb, index) => (
-                          <img
-                            key={index}
-                            src={thumb}
-                            className={`inline-block w-[${THUMB_WIDTH}px]`}
-                            alt={`thumb-${index}`}
-                          />
-                        ))}
+                      {/* Thumbnail images */}
+                      {thumbnails.map((thumb, index) => (
+                        <img
+                          key={index}
+                          src={thumb}
+                          className={`inline-block w-[${THUMB_WIDTH}px]`}
+                          alt={`thumb-${index}`}
+                        />
+                      ))}
 
-                        {/* Selection overlay (render only after video is loaded) */}
-                        {videoDuration > 0 && (
+                      {/* Selection overlay (render only after video is loaded) */}
+                      {videoDuration > 0 && (
+                        <div
+                          ref={selectionRef}
+                          className={` absolute top-0 h-full flex cursor-move  border border-[#224b42be] bg-[#224b427e]`}
+                          onPointerDown={onPointerDownCenter}
+                          style={{
+                            width: `${selectionWidthPx}px`,
+                            left: `${selectionLeftPx}px`
+                          }}
+                        >
+                          {/* Left resize handle */}
                           <div
-                            ref={selectionRef}
-                            className={` absolute top-0 h-full flex cursor-move  border border-[#224b42be] bg-[#224b427e]`}
-                            onPointerDown={onPointerDownCenter}
-                            style={{
-                              width: `${selectionWidthPx}px`,
-                              left: `${selectionLeftPx}px`
-                            }}
-                          >
-                            {/* Left resize handle */}
-                            <div
-                              data-handle="left"
-                              className='bg-[#224b42be] h-full p-0 cursor-ew-resize flex items-center justify-center'
-                              onPointerDown={onPointerDownLeft}
-                            > <MdArrowLeft size={24} /> </div>
-                            {/* Center area (flexible) */}
-                            <div style={{ flex: 1 }} />
-                            {/* Right resize handle */}
-                            <div
-                              data-handle="right"
-                              className='bg-[#224b42be] h-full cursor-ew-resize flex items-center p-0 justify-center'
-                              onPointerDown={onPointerDownRight}
-                            > <MdArrowRight size={24} /> </div>
-                          </div>
-                        )}
-                      </div>
+                            data-handle="left"
+                            className='bg-[#224b42be] h-full p-0 cursor-ew-resize flex items-center justify-center'
+                            onPointerDown={onPointerDownLeft}
+                          > <MdArrowLeft size={24} /> </div>
+                          {/* Center area (flexible) */}
+                          <div style={{ flex: 1 }} />
+                          {/* Right resize handle */}
+                          <div
+                            data-handle="right"
+                            className='bg-[#224b42be] h-full cursor-ew-resize flex items-center p-0 justify-center'
+                            onPointerDown={onPointerDownRight}
+                          > <MdArrowRight size={24} /> </div>
+                        </div>
+                      )}
                     </div>
+                  </div>
 
-                 </div>
-              {/* Video player */}
-              <div className='flex justify-center items-center relative max-h-dvh'>
-                <video
-                  ref={videoRef}
-                  src={videoURL}
-                  onClick={(e) => {
-                    const rect = e.target.getBoundingClientRect();
-                    const seekTime = ((e.clientX - rect.left) / rect.width) * videoDuration;
-                    videoRef.current.currentTime = Math.max(startTime, Math.min(endTime, seekTime));
-                  }}
+                </div>
+            {/* Video player */}
+            <div className='flex justify-center items-center relative max-h-dvh'>
+              <video
+                ref={videoRef}
+                src={videoURL}
+                onClick={(e) => {
+                  const rect = e.target.getBoundingClientRect();
+                  const seekTime = ((e.clientX - rect.left) / rect.width) * videoDuration;
+                  videoRef.current.currentTime = Math.max(startTime, Math.min(endTime, seekTime));
+                }}
 
-                  className='max-h-dvh'
-                  style={{ 
-                    width: '100%', 
-                    maxWidth: width + 'px', 
-                    marginBottom: '10px',
-                    cursor: 'pointer'
-                  }}
-                />
-                <button
-                  onClick={togglePlayback}
-                  className='absolute top-1/2 left-1/2  -translate-1/2 p-4 rounded-full text-white bg-[#2926263a]'
-                >
-                  {
-                      isPlaying ? 
-                      <FaPause  size={28}/>: <FaPlay size={28} />
-                  }
-                </button>
-              </div>
-
+                className='max-h-dvh'
+                style={{ 
+                  width: '100%', 
+                  maxWidth: width + 'px', 
+                  marginBottom: '10px',
+                  cursor: 'pointer'
+                }}
+              />
+              <button
+                onClick={togglePlayback}
+                className='absolute top-1/2 left-1/2  -translate-1/2 p-4 rounded-full text-white bg-[#2926263a]'
+              >
+                {
+                    isPlaying ? 
+                    <FaPause  size={28}/>: <FaPlay size={28} />
+                }
+              </button>
             </div>
+
+          </section>
+
+          {/* Footer */}
+          <div className="fixed left-0 bottom-0 w-dvw z-50">
+            <PostStatusFooter 
+                onClick={()=>''} 
+                isInput={true} 
+                placeholder='Add a caption' 
+                text={text} 
+                setText={setText}
+                />
+
+          </div>
     </div>
   );
 }
