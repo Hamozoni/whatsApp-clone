@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
+import { FaPause, FaPlay } from "react-icons/fa"
 
 export function VideoTrimmer({ videoFile, width = 600, height = 90 }) {
    const videoRef = useRef(null);
@@ -279,7 +280,7 @@ export function VideoTrimmer({ videoFile, width = 600, height = 90 }) {
   return (
     <div className='bg-neutral-900 fixed left-0 top-0 z-50 w-dvw h-dvh'>
       {/* Video player */}
-      <div style={{ position: 'relative' }}>
+      <div className='flex justify-center items-center relative'>
         <video
           ref={videoRef}
           src={videoURL}
@@ -297,31 +298,18 @@ export function VideoTrimmer({ videoFile, width = 600, height = 90 }) {
         />
         <button
           onClick={togglePlayback}
-          style={{
-            position: 'absolute',
-            bottom: '20px',
-            left: '20px',
-            padding: '10px 20px',
-            background: '#007bff',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer'
-          }}
+          className='absolute top-1/2 left-1/2  -translate-1/2 p-4 rounded-full text-white bg-[#2926263a]'
         >
-          {isPlaying ? '⏸️ Pause' : '▶️ Play'}
+          {
+              isPlaying ? 
+              <FaPause  size={28}/>: <FaPlay size={28} />
+          }
         </button>
       </div>
       {/* Thumbnails timeline */}
       <div
         ref={containerRef}
-        style={{
-          position: 'relative',
-          overflowX: 'auto',
-          whiteSpace: 'nowrap',
-          width: width + 'px',
-          border: '1px solid #ccc',
-        }}
+        className=' relative overflow-x-auto whitespace-nowrap w-full boreder border-#ccc'
       >
         <div
           ref={contentRef}
@@ -336,11 +324,7 @@ export function VideoTrimmer({ videoFile, width = 600, height = 90 }) {
             <img
               key={index}
               src={thumb}
-              style={{
-                display: 'inline-block',
-                width: THUMB_WIDTH + 'px',
-                height: THUMB_HEIGHT + 'px',
-              }}
+              className={`inline-block w-[${THUMB_WIDTH}]`}
               alt={`thumb-${index}`}
             />
           ))}
@@ -349,17 +333,14 @@ export function VideoTrimmer({ videoFile, width = 600, height = 90 }) {
           {videoDuration > 0 && (
             <div
               ref={selectionRef}
+              className=' absolute top-0 flex cursor-move'
               style={{
-                position: 'absolute',
-                top: 0,
                 left: selectionLeftPx + 'px',
                 width: selectionWidthPx + 'px',
                 height: THUMB_HEIGHT + 'px',
                 background: 'rgba(0,123,255,0.2)',
                 border: '2px solid #007bff',
                 boxSizing: 'border-box',
-                display: 'flex',
-                cursor: 'move',
               }}
               onPointerDown={onPointerDownCenter}
             >
