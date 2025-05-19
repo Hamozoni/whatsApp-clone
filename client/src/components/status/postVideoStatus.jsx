@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { FaPause, FaPlay } from "react-icons/fa";
 import { MdArrowLeft ,MdArrowRight} from "react-icons/md";
 import { PostStatusFooter } from './postStatusFooter';
+import { post_data } from '../../lib/post_data';
 
 export function VideoTrimmer({ videoFile, width = 600,setStatusType }) {
    const videoRef = useRef(null);
@@ -43,19 +44,12 @@ const handleTrimAndUpload = async () => {
     
     // 2. Create FormData and append the file
     const formData = new FormData();
-    formData.append('video', trimmedFile);
+    formData.append('file', trimmedFile);
     formData.append('startTime', startTime.toFixed(2));
     formData.append('endTime', endTime.toFixed(2));
 
     // 3. Send to your Express endpoint
-    const response = await fetch('/api/trim', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (!response.ok) throw new Error('Upload failed');
-    const result = await response.json();
-    console.log('Upload successful:', result);
+      await post_data('status',formData)
     
   } catch (error) {
     console.error('Trim and upload failed:', error);
@@ -64,41 +58,40 @@ const handleTrimAndUpload = async () => {
   }
 };
 
+
 const trimVideoToFile = async () => {
   const video = videoRef.current;
-  if (!video) return;
+  const duration = endTime - startTime;
+  
+  // Create a canvas to repackage frames
+  const canvas = document.createElement('canvas');
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  const ctx = canvas.getContext('2d');
 
-  return new Promise((resolve) => {
-    const stream = video.captureStream();
-    const mediaRecorder = new MediaRecorder(stream);
-    const chunks = [];
+  // Seek to start time
+  video.currentTime = startTime;
+  await new Promise(resolve => video.onseeked = resolve);
 
-    mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
-    
-    mediaRecorder.onstop = () => {
-      // Create a proper File object with metadata
-      const blob = new Blob(chunks, { type: 'video/mp4' });
-      const fileName = `trimmed-${Date.now()}.mp4`;
-      const file = new File([blob], fileName, {
-        type: 'video/mp4',
-        lastModified: Date.now()
-      });
-      resolve(file);
-    };
-
-    // Start recording from selection
-    video.currentTime = startTime;
-    mediaRecorder.start();
-    video.play();
-
-    // Stop when reaching end of selection
-    video.ontimeupdate = () => {
-      if (video.currentTime >= endTime) {
-        mediaRecorder.stop();
-        video.pause();
-      }
-    };
+  // Capture frames
+  const chunks = [];
+  const mediaRecorder = new MediaRecorder(canvas.captureStream(), {
+    mimeType: 'video/webm;codecs=vp9'
   });
+
+  mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
+  mediaRecorder.start();
+
+  // Record until end time
+  const frameRate = 30; // Match your video's FPS
+  while (video.currentTime < endTime) {
+    ctx.drawImage(video, 0, 0);
+    await new Promise(r => setTimeout(r, 1000 / frameRate));
+    video.currentTime += 1 / frameRate;
+  }
+
+  mediaRecorder.stop();
+  return new File(chunks, `trimmed.mp4`, { type: 'video/mp4' });
 };
 
   // Video initialization
