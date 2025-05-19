@@ -3,13 +3,15 @@ import { FaPause, FaPlay } from "react-icons/fa";
 import { MdArrowLeft ,MdArrowRight} from "react-icons/md";
 import { PostStatusFooter } from './postStatusFooter';
 
-export function VideoTrimmer({ videoFile, width = 600, height = 90 }) {
+export function VideoTrimmer({ videoFile, width = 600,setStatusType }) {
    const videoRef = useRef(null);
   const containerRef = useRef(null);
   const contentRef = useRef(null);
   const selectionRef = useRef(null);
 
   const [videoURL, setVideoURL] = useState('');
+  const [isLoading,setIsLoading] = useState(false);
+  const [error,setError] = useState(null);
   const [videoDuration, setVideoDuration] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
@@ -27,6 +29,77 @@ export function VideoTrimmer({ videoFile, width = 600, height = 90 }) {
 
   const dragInfo = useRef({ dragging: false, type: null });
   const autoScrollTimer = useRef(null);
+
+    // ... existing state and refs ...
+  const [isTrimming, setIsTrimming] = useState(false);
+  const [trimProgress, setTrimProgress] = useState(0);
+
+// In your React component
+const handleTrimAndUpload = async () => {
+  setIsTrimming(true);
+  try {
+    // 1. Trim the video and get a File object
+    const trimmedFile = await trimVideoToFile();
+    
+    // 2. Create FormData and append the file
+    const formData = new FormData();
+    formData.append('video', trimmedFile);
+    formData.append('startTime', startTime.toFixed(2));
+    formData.append('endTime', endTime.toFixed(2));
+
+    // 3. Send to your Express endpoint
+    const response = await fetch('/api/trim', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) throw new Error('Upload failed');
+    const result = await response.json();
+    console.log('Upload successful:', result);
+    
+  } catch (error) {
+    console.error('Trim and upload failed:', error);
+  } finally {
+    setIsTrimming(false);
+  }
+};
+
+const trimVideoToFile = async () => {
+  const video = videoRef.current;
+  if (!video) return;
+
+  return new Promise((resolve) => {
+    const stream = video.captureStream();
+    const mediaRecorder = new MediaRecorder(stream);
+    const chunks = [];
+
+    mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
+    
+    mediaRecorder.onstop = () => {
+      // Create a proper File object with metadata
+      const blob = new Blob(chunks, { type: 'video/mp4' });
+      const fileName = `trimmed-${Date.now()}.mp4`;
+      const file = new File([blob], fileName, {
+        type: 'video/mp4',
+        lastModified: Date.now()
+      });
+      resolve(file);
+    };
+
+    // Start recording from selection
+    video.currentTime = startTime;
+    mediaRecorder.start();
+    video.play();
+
+    // Stop when reaching end of selection
+    video.ontimeupdate = () => {
+      if (video.currentTime >= endTime) {
+        mediaRecorder.stop();
+        video.pause();
+      }
+    };
+  });
+};
 
   // Video initialization
   useEffect(() => {
@@ -284,56 +357,56 @@ export function VideoTrimmer({ videoFile, width = 600, height = 90 }) {
     <div className='bg-neutral-900 fixed left-0 top-0 z-50 w-dvw h-dvh'>
           <section className=" relative flex items-center justify-center h-dvh">
           {/* Thumbnails timeline */}
-                <div className=" absolute top-1 left-1/2 -translate-x-1/2 w-fit flex justify-center h-fit z-50  max-w-[950px]">
+              <div className=" absolute top-1 left-1/2 -translate-x-1/2 w-full flex justify-center h-fit z-50  max-w-[950px]">
+                <div
+                  ref={containerRef}
+                  className='relative overflow-x-auto whitespace-nowrap w-fit boreder border-#ccc'
+                >
                   <div
-                    ref={containerRef}
-                    className='relative overflow-x-auto whitespace-nowrap w-full boreder border-#ccc'
+                    ref={contentRef}
+                    className={` relative w-[${contentWidth}px]`}
                   >
-                    <div
-                      ref={contentRef}
-                      className={` relative w-[${contentWidth}px]`}
-                    >
-                      {/* Thumbnail images */}
-                      {thumbnails.map((thumb, index) => (
-                        <img
-                          key={index}
-                          src={thumb}
-                          className={`inline-block w-[${THUMB_WIDTH}px]`}
-                          alt={`thumb-${index}`}
-                        />
-                      ))}
+                    {/* Thumbnail images */}
+                    {thumbnails.map((thumb, index) => (
+                      <img
+                        key={index}
+                        src={thumb}
+                        className={`inline-block w-[${THUMB_WIDTH}px]`}
+                        alt={`thumb-${index}`}
+                      />
+                    ))}
 
-                      {/* Selection overlay (render only after video is loaded) */}
-                      {videoDuration > 0 && (
+                    {/* Selection overlay (render only after video is loaded) */}
+                    {videoDuration > 0 && (
+                      <div
+                        ref={selectionRef}
+                        className={` absolute top-0 h-full flex cursor-move  border border-[#224b42be] bg-[#224b427e]`}
+                        onPointerDown={onPointerDownCenter}
+                        style={{
+                          width: `${selectionWidthPx}px`,
+                          left: `${selectionLeftPx}px`
+                        }}
+                      >
+                        {/* Left resize handle */}
                         <div
-                          ref={selectionRef}
-                          className={` absolute top-0 h-full flex cursor-move  border border-[#224b42be] bg-[#224b427e]`}
-                          onPointerDown={onPointerDownCenter}
-                          style={{
-                            width: `${selectionWidthPx}px`,
-                            left: `${selectionLeftPx}px`
-                          }}
-                        >
-                          {/* Left resize handle */}
-                          <div
-                            data-handle="left"
-                            className='bg-[#224b42be] h-full p-0 cursor-ew-resize flex items-center justify-center'
-                            onPointerDown={onPointerDownLeft}
-                          > <MdArrowLeft size={24} /> </div>
-                          {/* Center area (flexible) */}
-                          <div style={{ flex: 1 }} />
-                          {/* Right resize handle */}
-                          <div
-                            data-handle="right"
-                            className='bg-[#224b42be] h-full cursor-ew-resize flex items-center p-0 justify-center'
-                            onPointerDown={onPointerDownRight}
-                          > <MdArrowRight size={24} /> </div>
-                        </div>
-                      )}
-                    </div>
+                          data-handle="left"
+                          className='bg-[#224b42be] h-full p-0 cursor-ew-resize flex items-center justify-center'
+                          onPointerDown={onPointerDownLeft}
+                        > <MdArrowLeft size={24} /> </div>
+                        {/* Center area (flexible) */}
+                        <div style={{ flex: 1 }} />
+                        {/* Right resize handle */}
+                        <div
+                          data-handle="right"
+                          className='bg-[#224b42be] h-full cursor-ew-resize flex items-center p-0 justify-center'
+                          onPointerDown={onPointerDownRight}
+                        > <MdArrowRight size={24} /> </div>
+                      </div>
+                    )}
                   </div>
-
                 </div>
+
+              </div>
             {/* Video player */}
             <div className='flex justify-center items-center relative max-h-dvh'>
               <video
@@ -369,7 +442,7 @@ export function VideoTrimmer({ videoFile, width = 600, height = 90 }) {
           {/* Footer */}
           <div className="fixed left-0 bottom-0 w-dvw z-50">
             <PostStatusFooter 
-                onClick={()=>''} 
+                onClick={handleTrimAndUpload} 
                 isInput={true} 
                 placeholder='Add a caption' 
                 text={text} 

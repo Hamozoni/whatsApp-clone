@@ -26,8 +26,7 @@ export const Status = ()=> {
                     : statusType === 'image' ? 
                      <PostImageStatus setStatusType={setStatusType} file={file} />
                     : statusType === 'video' && 
-                    <VideoTrimmer videoFile={file} />
-                    // <PostVideoStatus  setStatusType={setStatusType} file={file}/>
+                    <VideoTrimmer videoFile={file} setStatusType={setStatusType} />
                 }
                 <header className="relative h-fit">
                     <div className="flex items-center justify-between">
