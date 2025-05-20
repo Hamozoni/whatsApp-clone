@@ -35,6 +35,8 @@ const socket_io = new Server(server,{
 
 const users_socket = new Map();
 
+// handling socket io emmits
+
 socket_io.on('connection',socket => {
 
   const {user_id} = socket.handshake.query;
