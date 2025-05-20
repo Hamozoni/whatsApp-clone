@@ -346,6 +346,8 @@ const trimVideoToFile = async () => {
   const selectionLeftPx = videoDuration ? (startTime / videoDuration) * contentWidth : 0;
   const selectionWidthPx = videoDuration ? ((endTime - startTime) / videoDuration) * contentWidth : 0;
 
+
+
   return (
     <div className='bg-neutral-900 fixed left-0 top-0 z-50 w-dvw h-dvh'>
           <section className=" relative flex items-center justify-center h-dvh">

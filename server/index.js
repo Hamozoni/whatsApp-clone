@@ -8,6 +8,7 @@ import { Server } from "socket.io";
 import connect_db from "./src/config.js/db.js";
 import Status from "./src/models/status.model.js";
 import cloudinary from "./src/config.js/cloudinary.js";
+import File from "./src/models/file.model.js";
 
 
 
@@ -80,7 +81,16 @@ socket_io.on('connection',socket => {
   socket.on('call_end',({to})=> {
     const callee = users_socket.get(to);
     socket.to(callee).emit('call_end');
-  });
+  })
+  
+
+  socket.on('disconnect',()=> {
+    users_socket.delete(user_id);
+  })
+
+});
+
+
 
   // deleting expired statuses and related files from cloudinary
 
@@ -92,7 +102,8 @@ cron.schedule('*/30 * * * *', async ()=> {
   for(const status of expired_statuses) {
     try {
       if(status.type === 'MEDIA' && status.file) {
-          await cloudinary.uploader.destroy(status.file.public_id)
+          await cloudinary.uploader.destroy(status.file.public_id);
+          await File.findByIdAndDelete(status.file._id);
       };
 
        await status.deleteOne();
@@ -103,13 +114,6 @@ cron.schedule('*/30 * * * *', async ()=> {
   }
 
 })
-  
-
-  socket.on('disconnect',()=> {
-    users_socket.delete(user_id);
-  })
-
-});
 
 
   
