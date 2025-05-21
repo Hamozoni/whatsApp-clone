@@ -25,6 +25,8 @@ export const post_status = async (req,res,next)=> {
         }
     }
     catch (error) {
+
+        console.log(error.message)
         next(error)
     }
 };

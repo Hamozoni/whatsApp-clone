@@ -12,10 +12,12 @@ import { useContext } from 'react';
 export function VideoTrimmer({ videoFile,setStatusType }) {
 
   const {user} = useContext(User_context);
-   const videoRef = useRef(null);
+  const videoRef = useRef(null);
   const containerRef = useRef(null);
   const contentRef = useRef(null);
   const selectionRef = useRef(null);
+  const mediaRecorder = useRef(null);
+  const recordedChunks = useRef([]);
 
   const [videoURL, setVideoURL] = useState('');
   const [isLoading,setIsLoading] = useState(true);
@@ -39,71 +41,106 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
   const autoScrollTimer = useRef(null);
 
     // ... existing state and refs ...
-  const [isTrimming, setIsTrimming] = useState(false);
-  const [trimProgress, setTrimProgress] = useState(0);
+ const [progress, setProgress] = useState(0);
 
-// In your React component
-const handleTrimAndUpload = async () => {
-  setIsLoading(true);
-  try {
-    // 1. Trim the video and get a File object
-    const trimmedFile = await trimVideoToFile();
-    
-    // 2. Create FormData and append the file
+  // Start trimming process
+  const startTrimming = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      recordedChunks.current = [];
+      
+      const video = videoRef.current;
+      video.currentTime = startTime;
+
+      // Wait for video to be ready
+      await new Promise(resolve => {
+        video.onloadedmetadata = resolve;
+      });
+
+      // Setup media recorder
+      const stream = video.captureStream();
+      mediaRecorder.current = new MediaRecorder(stream, {
+        mimeType: 'video/webm;codecs=vp9'
+      });
+
+      // Collect data chunks
+      mediaRecorder.current.ondataavailable = (e) => {
+        if (e.data.size > 0) {
+          recordedChunks.current.push(e.data);
+        }
+      };
+
+      // Finalize recording
+      mediaRecorder.current.onstop = async () => {
+        const blob = new Blob(recordedChunks.current, {
+          type: 'video/webm'
+        });
+        
+        // Create proper file object
+        const trimmedFile = new File([blob], `trimmed-video-${Date.now()}.webm`, {
+          type: 'video/webm',
+          lastModified: Date.now()
+        });
+
+        // Send to server
+        await sendToServer(trimmedFile);
+      };
+
+      // Start recording
+      mediaRecorder.current.start();
+      video.play();
+
+      // Update progress
+      const updateProgress = () => {
+        if (!video.paused && !video.ended) {
+          const percent = (video.currentTime / video.duration) * 100;
+          setProgress(percent);
+          requestAnimationFrame(updateProgress);
+        }
+      };
+      updateProgress();
+
+    } catch (err) {
+      setError('Error starting trimming process');
+      console.error(err);
+    }
+  };
+
+  // Stop trimming and finalize file
+  const stopTrimming = () => {
+    if (mediaRecorder.current) {
+      mediaRecorder.current.stop();
+      videoRef.current.pause();
+      setIsLoading(false);
+      setProgress(0);
+    }
+  };
+
+  // Send file to backend
+  const sendToServer = async (file) => {
+    try {
     const formData = new FormData();
-    formData.append('file', trimmedFile);
+    formData.append('file', file);
     formData.append('text',text);
     formData.append('user',user._id);
     formData.append('type','MEDIA');
 
     // 3. Send to your Express endpoint
-      await post_data('status',formData);
+     const st =  await post_data('status',formData);
+
+     console.log(st);
+
+
+    } catch (err) {
+      setError('Error uploading trimmed video');
+      console.error(err);
+    }
+    finally {
       setStatusType(null);
-    
-  } catch (error) {
-    setError(error.message);
-    console.error('Trim and upload failed:', error);
-  } finally {
-    setIsLoading(false);
-  }
-};
-
-
-const trimVideoToFile = async () => {
-  const video = videoRef.current;
-  const duration = endTime - startTime;
-  
-  // Create a canvas to repackage frames
-  const canvas = document.createElement('canvas');
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-  const ctx = canvas.getContext('2d');
-
-  // Seek to start time
-  video.currentTime = startTime;
-  await new Promise(resolve => video.onseeked = resolve);
-
-  // Capture frames
-  const chunks = [];
-  const mediaRecorder = new MediaRecorder(canvas.captureStream(), {
-    mimeType: 'video/webm;codecs=vp9'
-  });
-
-  mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
-  mediaRecorder.start();
-
-  // Record until end time
-  const frameRate = 30; // Match your video's FPS
-  while (video.currentTime < endTime) {
-    ctx.drawImage(video, 0, 0);
-    await new Promise(r => setTimeout(r, 1000 / frameRate));
-    video.currentTime += 1 / frameRate;
-  }
-
-  mediaRecorder.stop();
-  return new File(chunks, `trimmed.mp4`, { type: 'video/mp4' });
-};
-
+      setIsLoading(false)
+    }
+  };
   // Video initialization
   useEffect(() => {
     if (!videoFile) return;
@@ -201,11 +238,17 @@ const trimVideoToFile = async () => {
 
   // Pointer move handler (shared for left/right/center dragging)
   const onPointerMove = (e) => {
+
     if (!dragInfo.current.dragging) return;
+
     const { type, offsetX, startX: initialX, startTime: initialStart, endTime: initialEnd } = dragInfo.current;
+
     const container = containerRef.current;
+
     if (!container) return;
+
     const rect = container.getBoundingClientRect();
+    console.log(container.getBoundingClientRect())
     const pointerX = e.clientX;
     const scrollLeft = container.scrollLeft;
     const relativeX = pointerX - rect.left + scrollLeft;
@@ -339,6 +382,7 @@ const trimVideoToFile = async () => {
     // Ignore clicks on the handle elements themselves
     if (e.target.dataset.handle) return;
     const pointerX = e.clientX;
+
     dragInfo.current = {
       dragging: true,
       type: 'center',
@@ -443,7 +487,7 @@ const trimVideoToFile = async () => {
           {/* Footer */}
           <div className="fixed left-0 bottom-0 w-dvw z-50">
             <PostStatusFooter 
-                onClick={handleTrimAndUpload} 
+                onClick={startTrimming} 
                 isInput={true} 
                 placeholder='Add a caption' 
                 text={text} 
