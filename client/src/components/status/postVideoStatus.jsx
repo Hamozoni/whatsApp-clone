@@ -3,15 +3,22 @@ import { FaPause, FaPlay } from "react-icons/fa";
 import { MdArrowLeft ,MdArrowRight} from "react-icons/md";
 import { PostStatusFooter } from './postStatusFooter';
 import { post_data } from '../../lib/post_data';
+import { TransparantLoader } from '../ui/transparantLoader';
+import { RoundedBtn } from '../ui/roundedBtn';
+import { MdArrowBackIosNew } from "react-icons/md";
+import { User_context } from '../../contexts/user.context';
+import { useContext } from 'react';
 
-export function VideoTrimmer({ videoFile, width = 600,setStatusType }) {
+export function VideoTrimmer({ videoFile,setStatusType }) {
+
+  const {user} = useContext(User_context);
    const videoRef = useRef(null);
   const containerRef = useRef(null);
   const contentRef = useRef(null);
   const selectionRef = useRef(null);
 
   const [videoURL, setVideoURL] = useState('');
-  const [isLoading,setIsLoading] = useState(false);
+  const [isLoading,setIsLoading] = useState(true);
   const [error,setError] = useState(null);
   const [videoDuration, setVideoDuration] = useState(0);
   const [startTime, setStartTime] = useState(0);
@@ -37,7 +44,7 @@ export function VideoTrimmer({ videoFile, width = 600,setStatusType }) {
 
 // In your React component
 const handleTrimAndUpload = async () => {
-  setIsTrimming(true);
+  setIsLoading(true);
   try {
     // 1. Trim the video and get a File object
     const trimmedFile = await trimVideoToFile();
@@ -45,16 +52,19 @@ const handleTrimAndUpload = async () => {
     // 2. Create FormData and append the file
     const formData = new FormData();
     formData.append('file', trimmedFile);
-    formData.append('startTime', startTime.toFixed(2));
-    formData.append('endTime', endTime.toFixed(2));
+    formData.append('text',text);
+    formData.append('user',user._id);
+    formData.append('type','MEDIA');
 
     // 3. Send to your Express endpoint
-      await post_data('status',formData)
+      await post_data('status',formData);
+      setStatusType(null);
     
   } catch (error) {
+    setError(error.message);
     console.error('Trim and upload failed:', error);
   } finally {
-    setIsTrimming(false);
+    setIsLoading(false);
   }
 };
 
@@ -167,6 +177,7 @@ const trimVideoToFile = async () => {
       }
 
       setThumbnails(thumbs);
+      setIsLoading(false)
     };
 
     generateThumbnails();
@@ -352,7 +363,8 @@ const trimVideoToFile = async () => {
     <div className='bg-neutral-900 fixed left-0 top-0 z-50 w-dvw h-dvh'>
           <section className=" relative flex items-center justify-center h-dvh">
           {/* Thumbnails timeline */}
-              <div className=" absolute top-1 left-1/2 -translate-x-1/2 w-full flex justify-center h-fit z-50  max-w-[950px]">
+              <div className=" absolute top-1 left-1/2 -translate-x-1/2 w-full flex justify-center gap-1 h-fit z-50  max-w-[950px]">
+                 <RoundedBtn onClick={()=> setStatusType(false)} Icon={MdArrowBackIosNew} />
                 <div
                   ref={containerRef}
                   className='relative overflow-x-auto whitespace-nowrap w-fit boreder border-#ccc'
@@ -413,13 +425,7 @@ const trimVideoToFile = async () => {
                   videoRef.current.currentTime = Math.max(startTime, Math.min(endTime, seekTime));
                 }}
 
-                className='max-h-dvh'
-                style={{ 
-                  width: '100%', 
-                  maxWidth: width + 'px', 
-                  marginBottom: '10px',
-                  cursor: 'pointer'
-                }}
+                className='max-h-dvh w-full max-w-[950px]'
               />
               <button
                 onClick={togglePlayback}
@@ -445,6 +451,12 @@ const trimVideoToFile = async () => {
                 />
 
           </div>
+
+          {/* loader */}
+
+          {
+            isLoading && <TransparantLoader />
+          }
     </div>
   );
 }

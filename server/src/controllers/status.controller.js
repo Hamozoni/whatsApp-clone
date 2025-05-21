@@ -16,14 +16,10 @@ export const post_status = async (req,res,next)=> {
         };
 
         if(data.type === 'TEXT') {
-
             const status = await Status.create(data)
             return res.status(200).json({status});
-
         }else if (data.type === 'MEDIA') {
-
             const file_result = await upload_file(req.file,'status')
-
             const status = await Status.create({...data,file:file_result._id})
             return res.status(200).json({status});
         }
