@@ -39,11 +39,15 @@ export const StatusPreview = ({ status, setIsStatus }) => {
     });
   };
 
+    const currentStatus = status[playingIndex];
+
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       if (isPlaying) {
+        const duration = currentStatus.file.duration * 10 || 300;
+        console.log(duration)
         setTimer((prev) => {
-          if (prev < 300) return prev + 1;
+          if (prev < duration) return prev + 1;
           resetTimerAndAdvance(true);
           return 0;
         });
@@ -58,7 +62,6 @@ export const StatusPreview = ({ status, setIsStatus }) => {
       isPrev ? "left-1 md:left-4" : "right-1 md:right-4"
     } text-[#eee6e67c] border-2 border-[#00000010] top-1/2 w-[200px] h-dvh opacity-0 sm:opacity-100  sm:w-fit sm:h-fit -translate-y-1/2 bg-[#00000023] rounded-full p-1 md:p-2 -z-10`;
 
-  const currentStatus = status[playingIndex];
 
   return (
     <div
@@ -167,7 +170,7 @@ export const StatusPreview = ({ status, setIsStatus }) => {
                     }
               </>
             ) : currentStatus?.file?.type === "VIDEO" && (
-              <VideoPlayer src={currentStatus.file.url} />
+              <VideoPlayer src={currentStatus.file.url} isAutoPlay={true} />
             )
           }
         </div>

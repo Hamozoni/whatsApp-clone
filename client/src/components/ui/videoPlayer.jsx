@@ -2,10 +2,10 @@ import { useRef, useState } from "react";
 import { FaPause, FaPlay } from "react-icons/fa"
 
 
-export const VideoPlayer = ({src})=> {
+export const VideoPlayer = ({src,isAutoPlay = false})=> {
 
-    const [isPlaying,setIsPlaying] = useState(false);
-    const [isVideoControlsBtn,setIsVideoControlsBtn] = useState(true);
+    const [isPlaying,setIsPlaying] = useState(isAutoPlay);
+    const [isVideoControlsBtn,setIsVideoControlsBtn] = useState(!isAutoPlay);
     const videoRef = useRef(null);
     const timeOutRef = useRef(null)
 
@@ -33,6 +33,7 @@ export const VideoPlayer = ({src})=> {
                 src={src}
                 ref={videoRef}  
                 className="max-h-dvh max-w-dvw" 
+                autoPlay={isAutoPlay}
                 />
                 {/* Video control button */}
                 {

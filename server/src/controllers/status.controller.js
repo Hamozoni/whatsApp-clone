@@ -49,7 +49,7 @@ export const get_status = async (req,res,next)=> {
             const statuses = await Status.find({user: {$in : user.contacts}
             }).populate([
                 {path: 'user' ,select: 'name _id profile_picture'},
-                {path: 'file',select: '_id url type'}])
+                {path: 'file',select: '_id url type size duration'}])
             return res.status(200).json({statuses})
 
         }
