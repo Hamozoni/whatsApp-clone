@@ -14,6 +14,7 @@ import { MdSend } from "react-icons/md";
 import { Avatar } from "../ui/avatar";
 import { useEffect, useRef, useState } from "react";
 import { TextEmojiInput } from "../ui/textEmojiInput";
+import { VideoPlayer } from "../ui/videoPlayer";
 
 export const StatusPreview = ({ status, setIsStatus }) => {
 
@@ -150,19 +151,27 @@ export const StatusPreview = ({ status, setIsStatus }) => {
         >
           {currentStatus?.text}
         </p>
-      ) : currentStatus?.type === "MEDIA" && (
+      ) : (
         <div className="flex items-center justify-center fixed -z-10 left-0 top-0 h-dvh  w-dvw max-h-dvh">
-              <img src={currentStatus.file.url} alt="status image" />
-              {
-                currentStatus.text.length && (
-                <p className=" fixed left-0 w-full bottom-[68px] text-sm sm:text-xl md:text-2xl text-white px-2 bg-[#2e2a2a52] text-center"> 
-                    {currentStatus.text}
-                </p>
+          {
+            currentStatus?.file?.type === "IMAGE" ? (
+              <>
+                    <img src={currentStatus.file.url} alt="status image" />
+                    {
+                      currentStatus.text.length && (
+                      <p className=" fixed left-0 w-full bottom-[68px] text-sm sm:text-xl md:text-2xl text-white px-2 bg-[#2e2a2a52] text-center"> 
+                          {currentStatus.text}
+                      </p>
 
-                )
-              }
+                      )
+                    }
+              </>
+            ) : currentStatus?.file?.type === "VIDEO" && (
+              <VideoPlayer src={currentStatus.file.url} />
+            )
+          }
         </div>
-      )
+      ) 
     }
 
       {/* Navigation Buttons */}
