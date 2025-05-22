@@ -19,7 +19,7 @@ export const post_status = async (req,res,next)=> {
             const status = await Status.create(data)
             return res.status(200).json({status});
         }else if (data.type === 'MEDIA') {
-            const file_result = await upload_file(req.file,'status')
+            const file_result = await upload_file(req.file,'status',data.duration ? +data.duration: 0);
             const status = await Status.create({...data,file:file_result._id})
             return res.status(200).json({status});
         }

@@ -2,7 +2,7 @@ import cloudinary from "../config.js/cloudinary.js";
 import File from "../models/file.model.js";
 
 
-export const upload_file = async(file,folder)=> {
+export const upload_file = async(file,folder,duration = 0)=> {
 
 
           const type = file.mimetype.split('/')[0];
@@ -29,7 +29,8 @@ export const upload_file = async(file,folder)=> {
                 type: type?.toUpperCase(),
                 url: result?.secure_url,
                 public_id: result?.public_id,
-                size: file?.size
+                size: file?.size,
+                duration,
             });
 
         return file_result;

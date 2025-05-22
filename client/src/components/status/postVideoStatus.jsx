@@ -40,23 +40,24 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
   const autoScrollTimer = useRef(null);
   const trimmedVideoRef = useRef(null);
   const mediaRecorderRef = useRef(null);
-
-  const [trimmedBlob,setTrimmedBlob] = useState(null);
   const [isTrimming,setIsTrimming] = useState(false);
 
   const handleTrimVideo = async ()=> {
+
+    if(!trimmedVideoRef.current)  return;
+
+    setIsTrimming(true);
     const stream = trimmedVideoRef.current.captureStream();
     mediaRecorderRef.current = new MediaRecorder(stream);
     let chunks = [];
 
      mediaRecorderRef.current.ondataavailable = (e)=> {
       chunks.push(e.data);
-      setIsTrimming(true);
     };
 
-     mediaRecorderRef.current.onstop = ()=> {
-        const blob = new Blob(chunks,{type: 'video/webm'});
-        setTrimmedBlob(blob);
+     mediaRecorderRef.current.onstop = async()=> {
+       const  blob = new Blob(chunks,{type: 'video/webm'});
+        handleSubmit(blob);
      };
 
      trimmedVideoRef.current.currentTime = startTime;
@@ -65,38 +66,36 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
 
      trimmedVideoRef.current.play();
 
-     setStartTime(()=> {
-
+     setTimeout(()=> {
       mediaRecorderRef.current.stop();
       trimmedVideoRef.current.pause();
-      setIsTrimming(false)
+      setIsTrimming(false);
 
-     },(endTime - startTime) * 1000 )
-
-
-
+      
+    }, (endTime - startTime) * 1000 );
 
   }
 
 
 
   // Send file to backend
-  const handleSubmit = async () => {
-    try {
-
+  const handleSubmit = async (blob) => {
     setIsLoading(true)
-    const file  = new File([trimmedBlob],videoFile.name,{type: 'video/webm',lastModified: Date.now()})
+    try {  
+     const file  = new File([blob],videoFile.name,{type: 'video/webm',lastModified: Date.now()})
     const formData = new FormData();
     formData.append('file', file);
     formData.append('text',text);
     formData.append('user',user._id);
+    formData.append('size',file.size);
+    formData.append('duration',Number(endTime - startTime));
     formData.append('type','MEDIA');
 
     // 3. Send to your Express endpoint
      const st =  await post_data('status',formData);
 
      console.log(st);
-
+  
 
     } catch (err) {
       setError('Error uploading trimmed video');
@@ -109,12 +108,13 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
   };
   // Video initialization
   useEffect(() => {
-    if (!videoFile) return;
+    if (!videoFile || !videoRef.current) return;
 
     const video = videoRef.current;
+    const duration = videoRef.current.duration;
+    setEndTime(duration < 30 ? duration : 30);
     const url = URL.createObjectURL(videoFile);
     setVideoURL(url);
-     handleTrimVideo()
 
     const onLoaded = () => {
       const duration = video.duration;
@@ -130,7 +130,7 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
       URL.revokeObjectURL(url);
       video.removeEventListener('loadedmetadata', onLoaded);
     };
-  }, [videoFile,handleTrimVideo]);
+  }, [videoFile]);
 
   // Handle video playback within selection
   useEffect(() => {
@@ -156,6 +156,7 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
     if (video.currentTime < startTime || video.currentTime > endTime) {
       video.currentTime = startTime;
     }
+
   }, [startTime, endTime]);
 
   // Generate thumbnails
@@ -259,9 +260,8 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
     }
 
     // Update state (React will reposition the overlay in render)
-    setStartTime(newStart);
-    setEndTime(newEnd);
-
+    setStartTime(Math.floor(newStart));
+    setEndTime(Math.floor(newEnd));
 
     // Auto-scroll logic: if pointer is near left/right edge, scroll container
     if (pointerX - rect.left < AUTO_SCROLL_THRESHOLD) {
@@ -450,14 +450,14 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
               </button>
             </div>
             {/* trimmed video */}
-            <video src={videoURL} ref={trimmedVideoRef} hidden />
+            <video src={videoURL} muted ref={trimmedVideoRef} hidden />
 
           </section>
 
           {/* Footer */}
           <div className="fixed left-0 bottom-0 w-dvw z-50">
             <PostStatusFooter 
-                onClick={handleSubmit} 
+                onClick={handleTrimVideo} 
                 isInput={true} 
                 placeholder='Add a caption' 
                 text={text} 
