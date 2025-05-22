@@ -89,7 +89,7 @@ export const StatusPreview = ({ status, setIsStatus }) => {
                   style={{
                     width:
                       playingIndex === i
-                        ? `${(timer / 300) * 100}%`
+                        ? `${(timer / (currentStatus.file.duration * 10 || 300)) * 100}%`
                         : playingIndex > i
                         ? "100%"
                         : "0",
