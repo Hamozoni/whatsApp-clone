@@ -45,15 +45,17 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
   const [isTrimming,setIsTrimming] = useState(false);
 
   const handleTrimVideo = async ()=> {
-
-    setIsTrimming(true);
     const stream = trimmedVideoRef.current.captureStream();
     mediaRecorderRef.current = new MediaRecorder(stream);
     let chunks = [];
-     mediaRecorderRef.current.ondataavailable = (e)=> chunks.push(e.data)
+
+     mediaRecorderRef.current.ondataavailable = (e)=> {
+      chunks.push(e.data);
+      setIsTrimming(true);
+    };
+
      mediaRecorderRef.current.onstop = ()=> {
         const blob = new Blob(chunks,{type: 'video/webm'});
-
         setTrimmedBlob(blob);
      };
 
@@ -76,11 +78,13 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
 
   }
 
+
+
   // Send file to backend
   const handleSubmit = async () => {
     try {
 
-      setIsLoading(true)
+    setIsLoading(true)
     const file  = new File([trimmedBlob],videoFile.name,{type: 'video/webm',lastModified: Date.now()})
     const formData = new FormData();
     formData.append('file', file);
@@ -110,6 +114,7 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
     const video = videoRef.current;
     const url = URL.createObjectURL(videoFile);
     setVideoURL(url);
+     handleTrimVideo()
 
     const onLoaded = () => {
       const duration = video.duration;
@@ -120,11 +125,12 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
     };
 
     video.addEventListener('loadedmetadata', onLoaded);
+   
     return () => {
       URL.revokeObjectURL(url);
       video.removeEventListener('loadedmetadata', onLoaded);
     };
-  }, [videoFile]);
+  }, [videoFile,handleTrimVideo]);
 
   // Handle video playback within selection
   useEffect(() => {
@@ -255,7 +261,7 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
     // Update state (React will reposition the overlay in render)
     setStartTime(newStart);
     setEndTime(newEnd);
-    handleTrimVideo()
+
 
     // Auto-scroll logic: if pointer is near left/right edge, scroll container
     if (pointerX - rect.left < AUTO_SCROLL_THRESHOLD) {
@@ -287,7 +293,7 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
     if (autoScrollTimer.current) {
       clearInterval(autoScrollTimer.current);
       autoScrollTimer.current = null;
-    }
+    };
   };
 
   // Pointer down on left handle
