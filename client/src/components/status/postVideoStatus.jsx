@@ -16,15 +16,13 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
   const containerRef = useRef(null);
   const contentRef = useRef(null);
   const selectionRef = useRef(null);
-  const mediaRecorder = useRef(null);
-  const recordedChunks = useRef([]);
 
   const [videoURL, setVideoURL] = useState('');
   const [isLoading,setIsLoading] = useState(true);
   const [error,setError] = useState(null);
   const [videoDuration, setVideoDuration] = useState(0);
   const [startTime, setStartTime] = useState(0);
-  const [endTime, setEndTime] = useState(0);
+  const [endTime, setEndTime] = useState(30);
   const [thumbnails, setThumbnails] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [text,setText] = useState('')
@@ -38,88 +36,52 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
   const AUTO_SCROLL_INTERVAL = 50;
 
   const dragInfo = useRef({ dragging: false, type: null });
+
   const autoScrollTimer = useRef(null);
+  const trimmedVideoRef = useRef(null);
+  const mediaRecorderRef = useRef(null);
 
-    // ... existing state and refs ...
- const [progress, setProgress] = useState(0);
+  const [trimmedBlob,setTrimmedBlob] = useState(null);
+  const [isTrimming,setIsTrimming] = useState(false);
 
-  // Start trimming process
-  const startTrimming = async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      recordedChunks.current = [];
-      
-      const video = videoRef.current;
-      video.currentTime = startTime;
+  const handleTrimVideo = async ()=> {
 
-      // Wait for video to be ready
-      await new Promise(resolve => {
-        video.onloadedmetadata = resolve;
-      });
+    setIsTrimming(true);
+    const stream = trimmedVideoRef.current.captureStream();
+    mediaRecorderRef.current = new MediaRecorder(stream);
+    let chunks = [];
+     mediaRecorderRef.current.ondataavailable = (e)=> chunks.push(e.data)
+     mediaRecorderRef.current.onstop = ()=> {
+        const blob = new Blob(chunks,{type: 'video/webm'});
 
-      // Setup media recorder
-      const stream = video.captureStream();
-      mediaRecorder.current = new MediaRecorder(stream, {
-        mimeType: 'video/webm;codecs=vp9'
-      });
+        setTrimmedBlob(blob);
+     };
 
-      // Collect data chunks
-      mediaRecorder.current.ondataavailable = (e) => {
-        if (e.data.size > 0) {
-          recordedChunks.current.push(e.data);
-        }
-      };
+     trimmedVideoRef.current.currentTime = startTime;
 
-      // Finalize recording
-      mediaRecorder.current.onstop = async () => {
-        const blob = new Blob(recordedChunks.current, {
-          type: 'video/webm'
-        });
-        
-        // Create proper file object
-        const trimmedFile = new File([blob], `trimmed-video-${Date.now()}.webm`, {
-          type: 'video/webm',
-          lastModified: Date.now()
-        });
+     mediaRecorderRef.current.start();
 
-        // Send to server
-        await sendToServer(trimmedFile);
-      };
+     trimmedVideoRef.current.play();
 
-      // Start recording
-      mediaRecorder.current.start();
-      video.play();
+     setStartTime(()=> {
 
-      // Update progress
-      const updateProgress = () => {
-        if (!video.paused && !video.ended) {
-          const percent = (video.currentTime / video.duration) * 100;
-          setProgress(percent);
-          requestAnimationFrame(updateProgress);
-        }
-      };
-      updateProgress();
+      mediaRecorderRef.current.stop();
+      trimmedVideoRef.current.pause();
+      setIsTrimming(false)
 
-    } catch (err) {
-      setError('Error starting trimming process');
-      console.error(err);
-    }
-  };
+     },(endTime - startTime) * 1000 )
 
-  // Stop trimming and finalize file
-  const stopTrimming = () => {
-    if (mediaRecorder.current) {
-      mediaRecorder.current.stop();
-      videoRef.current.pause();
-      setIsLoading(false);
-      setProgress(0);
-    }
-  };
+
+
+
+  }
 
   // Send file to backend
-  const sendToServer = async (file) => {
+  const handleSubmit = async () => {
     try {
+
+      setIsLoading(true)
+    const file  = new File([trimmedBlob],videoFile.name,{type: 'video/webm',lastModified: Date.now()})
     const formData = new FormData();
     formData.append('file', file);
     formData.append('text',text);
@@ -248,7 +210,6 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
     if (!container) return;
 
     const rect = container.getBoundingClientRect();
-    console.log(container.getBoundingClientRect())
     const pointerX = e.clientX;
     const scrollLeft = container.scrollLeft;
     const relativeX = pointerX - rect.left + scrollLeft;
@@ -294,6 +255,7 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
     // Update state (React will reposition the overlay in render)
     setStartTime(newStart);
     setEndTime(newEnd);
+    handleTrimVideo()
 
     // Auto-scroll logic: if pointer is near left/right edge, scroll container
     if (pointerX - rect.left < AUTO_SCROLL_THRESHOLD) {
@@ -481,13 +443,15 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
                 }
               </button>
             </div>
+            {/* trimmed video */}
+            <video src={videoURL} ref={trimmedVideoRef} hidden />
 
           </section>
 
           {/* Footer */}
           <div className="fixed left-0 bottom-0 w-dvw z-50">
             <PostStatusFooter 
-                onClick={startTrimming} 
+                onClick={handleSubmit} 
                 isInput={true} 
                 placeholder='Add a caption' 
                 text={text} 
@@ -499,7 +463,7 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
           {/* loader */}
 
           {
-            isLoading && <TransparantLoader />
+            (isLoading || isTrimming) && <TransparantLoader />
           }
     </div>
   );
