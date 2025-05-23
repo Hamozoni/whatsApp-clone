@@ -147,7 +147,7 @@ export const StatusPreview = ({ status, setIsStatus }) => {
         </div>
       </header>
 
-      {/* Status text */}
+      {/* Status */}
       {currentStatus?.type === "TEXT" ? (
         <p
           className="text-xl md:text-4xl text-white text-center p-4 -z-20"

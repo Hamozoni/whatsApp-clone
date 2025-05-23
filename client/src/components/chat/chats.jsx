@@ -3,7 +3,7 @@ import { RiChatNewLine } from "react-icons/ri";
 import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 import { Chat_card } from "./chat_card";
 import { useContext, useState } from "react";
-import { Search_form } from "../ui/search_form";
+import { SearchInput } from "../ui/searchInput";
 import { Contacts } from "../contacts/contacts";
 import { User_context } from "../../contexts/user.context";
 
@@ -11,7 +11,7 @@ import { User_context } from "../../contexts/user.context";
 export const Chats = ()=> {
 
     const {chats} = useContext(User_context);
-    const [search_value,set_search_value] = useState('');
+    const [searchText,setSearchText] = useState('');
     const [is_contacts,set_is_contact] = useState(false);
 
     return (
@@ -29,7 +29,7 @@ export const Chats = ()=> {
                         </div>    
                     </div>
                 </div>
-                <Search_form value={search_value} set_value={set_search_value} handle_search={()=> ''} />
+                <SearchInput text={searchText} setText={setSearchText} handle_search={()=> ''} />
             </header>
             <div className="overflow-y-auto">
                 <div className="">

@@ -1,17 +1,17 @@
 import { MdAddIcCall } from "react-icons/md";
-import { Search_form } from "../ui/search_form";
 import { useContext, useState } from "react";
 import { User_context } from "../../contexts/user.context";
 import { Call_card } from "../chat/call_card";
 import { IoVideocam,IoKeypad } from "react-icons/io5";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 import { Avatar } from "../ui/avatar";
+import { SearchInput } from "../ui/searchInput";
 
 export const Calls =  ()=> {
 
     const {calls,user} = useContext(User_context);
 
-    const [search_value,set_search_value] = useState('');
+    const [searchText,setSearchText] = useState('');
 
 
     const handle_search =()=> {
@@ -32,10 +32,10 @@ export const Calls =  ()=> {
                             <MdAddIcCall size={24} />
                         </button>
                     </div>
-                    <Search_form 
-                        set_value={search_value}
-                        search_value={set_search_value} 
-                        handle_search={handle_search}
+                    <SearchInput 
+                        setText={searchText}
+                         text={setSearchText} 
+                        handleSearch={handle_search}
                         />
                 </header>
                 <div className="p-3">

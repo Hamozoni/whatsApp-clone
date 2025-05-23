@@ -1,4 +1,4 @@
-import { Search_form } from "../ui/search_form";
+import { SearchInput } from "../ui/searchInput";
 import { GrGroup,GrUserAdd } from "react-icons/gr";
 import { Contact_header } from "./contact_header";
 import { New_contact } from "./new_contact";
@@ -44,7 +44,7 @@ export const Contacts = ({set_is_contact})=> {
                             set_search_value={set_search_value}
                             handle_search={()=> ''}
                             >
-                                <Search_form  
+                                <SearchInput  
                                     value={search_value} 
                                     set_value={set_search_value} 
                                     handle_search={()=> ''}

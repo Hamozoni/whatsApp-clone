@@ -1,20 +1,66 @@
 import { useContext } from 'react';
-import {firebase_auth} from '../../lib/firebase_config'
-import { signOut } from 'firebase/auth';
+// import {firebase_auth} from '../../lib/firebase_config'
+// import { signOut } from 'firebase/auth';
 import { User_context } from '../../contexts/user.context';
+import { useState } from "react";
+import { SearchInput } from "../ui/searchInput";
+import { Avatar } from "../ui/avatar";
+
+import { BsKey } from "react-icons/bs";
+import { MdOutlinePrivacyTip,MdOutlineChat,MdNotificationsNone,MdOutlineKeyboard,MdOutlineHelpOutline } from "react-icons/md";
+
+const settingButtons = [
+    {name: 'acount', Icon: BsKey, info: 'Security notifications, acount info' },
+    {name: 'privacy', Icon: MdOutlinePrivacyTip, info: 'Blocked contacts, disappearing messages' },
+    {name: 'chats', Icon: MdOutlineChat, info: 'Theme, wallpaper, chat settings' },
+    {name: 'notifications', Icon: MdNotificationsNone, info: 'Messages notifications' },
+    {name: 'keyboard shortcuts', Icon: MdOutlineKeyboard, info: 'Quick actions' },
+    {name: 'help', Icon: MdOutlineHelpOutline, info: 'Help center, contact us, privacy policy' },
+]
 
 export const Setting = ()=> {
 
-    const {set_user} = useContext(User_context);
+    const [text,setText] = useState('')
 
-    const signout = async ()=> {
-       await signOut(firebase_auth);
-       set_user(null)
-    };
+    const {user} = useContext(User_context);
+
+    // const signout = async ()=> {
+    //    await signOut(firebase_auth);
+    //    set_user(null)
+    // };
 
     return (
-        <div className="">
-            <button onClick={signout}>sign out</button>
+        <div className="flex h-dvh">
+            <div className="p-3 flex-1 border-r border-cyan-950 flex flex-col">
+                {/* Header */}
+                <header className='border-b border-b-black mb-4'>
+                    <h5 className="text-xl font-bold mb-4">Settings</h5>
+                    <SearchInput handleSearch={()=> ''} text={text} setText={setText} />
+                    <div className="flex gap-2 my-4 cursor-pointer p-3 rounded-md hover:bg-black">
+                         <Avatar size='lg' user_photo={user.profile_picture} />
+                         <div className="">
+                            <h5>{user?.name}</h5>
+                            <p>{user?.about || 'active'}</p>
+                         </div>
+                    </div>
+                </header>
+                {/* buttons */}
+                <div className="flex-1 max-h-full overflow-y-auto">
+                    {
+                        settingButtons?.map(({name,info,Icon})=> (
+                            <button key={name} className='flex gap-2 items-center my-3 p-3 rounded-md  hover:bg-black w-full'>
+                                <Icon size={28}/>
+                                <div className="flex-1 text-start">
+                                    <h6>{name}</h6>
+                                    <span className='text-xs line-clamp-1'>{info}</span>
+                                </div>
+                            </button>
+                        ))
+                    }
+                </div>
+
+            </div>
+            <div className="hidden md:flex flex-2"></div>
         </div>
     )
 }
