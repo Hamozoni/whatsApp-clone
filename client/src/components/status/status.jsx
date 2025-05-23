@@ -9,6 +9,9 @@ import { Avatar } from "../ui/avatar";
 import {PostImageStatus } from "./postImageStatus";
 import{ VideoTrimmer }from "./postVideoStatus";
 
+import { SiGradleplaypublisher } from "react-icons/si";
+import { MdLockOutline } from "react-icons/md";
+
 
 export const Status = ()=> {
 
@@ -77,7 +80,17 @@ export const Status = ()=> {
                     </div>
                 </div>
             </div>
-            <div className="hidden md:flex flex-2"></div>
+            <div className="hidden md:flex flex-2 flex-col p-4 justify-center">
+                <div className="flex-1 flex flex-col justify-center items-center gap-4 text-center">
+                    <SiGradleplaypublisher size={40} />
+                    <div className="">
+                        <h6 className="text-2xl">Share status updates</h6>
+                        <p>Share photos, videos and text that disappear after 24 hours.</p>
+                    </div>
+
+                </div>
+                <h6 className="w-full flex justify-center items-center "><MdLockOutline /> Your status updates are end-to-end encrypted</h6>
+            </div>
         </div>
     )
 };
