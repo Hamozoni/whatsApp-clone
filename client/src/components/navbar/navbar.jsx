@@ -4,7 +4,8 @@ import { SiGradleplaypublisher } from "react-icons/si";
 import { MdOutlineGroups2 } from "react-icons/md";
 import { useContext } from "react";
 import { User_context } from "../../contexts/user.context";
-import { Navbar_icon } from "./navbar_icon";
+import { NavbarIcon } from "./navbarIcon";
+import { Avatar } from "../ui/avatar";
 
 const options = [
     {Icon: BsChatText,text: 'chats'},
@@ -22,7 +23,7 @@ export const Navbar = ()=>  {
             <section className="flex md:flex-col gap-2">
                 {
                     options?.map(({Icon,text})=> (
-                        <Navbar_icon 
+                        <NavbarIcon 
                             Icon={Icon} 
                             text={text} 
                             key={text}
@@ -33,8 +34,8 @@ export const Navbar = ()=>  {
             <section>
                 <hr className="text-[#394b55] my-5 hidden md:visible" />
                 <section className="flex flex-col gap-3" >
-                    <Navbar_icon Icon={IoSettingsOutline} text='settings' />
-                    {/* <Navbar_icon user_photo={user?.profile_picture} /> */}
+                    <NavbarIcon Icon={IoSettingsOutline} text='settings' />
+                    <Avatar  user_photo={user?.profile_picture} />
                 </section>
             </section>
         </nav>

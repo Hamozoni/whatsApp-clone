@@ -2,7 +2,7 @@ import { User_context } from "../../contexts/user.context";
 import { useContext } from "react";
 
  
-export const Navbar_icon = ({text,Icon})=> {
+export const NavbarIcon = ({text,Icon})=> {
 
     const {active_navbar,set_active_navbar} = useContext(User_context);
 

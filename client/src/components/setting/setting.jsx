@@ -1,10 +1,12 @@
 import { useContext } from 'react';
-// import {firebase_auth} from '../../lib/firebase_config'
-// import { signOut } from 'firebase/auth';
+import {firebase_auth} from '../../lib/firebase_config'
+import { signOut } from 'firebase/auth';
 import { User_context } from '../../contexts/user.context';
 import { useState } from "react";
 import { SearchInput } from "../ui/searchInput";
 import { Avatar } from "../ui/avatar";
+
+import {IoSettingsOutline } from "react-icons/io5";
 
 import { BsKey } from "react-icons/bs";
 import { PiSignOutLight } from "react-icons/pi";
@@ -23,12 +25,12 @@ export const Setting = ()=> {
 
     const [text,setText] = useState('')
 
-    const {user} = useContext(User_context);
+    const {user,set_user} = useContext(User_context);
 
-    // const signout = async ()=> {
-    //    await signOut(firebase_auth);
-    //    set_user(null)
-    // };
+    const logOut = async ()=> {
+       await signOut(firebase_auth);
+       set_user(null)
+    };
 
     return (
         <div className="flex h-dvh">
@@ -58,14 +60,17 @@ export const Setting = ()=> {
                             </button>
                         ))
                     }
-                    <button className='flex text-red-400 gap-3 items-center my-3 p-3 rounded-md  hover:bg-black w-full'>
+                    <button onClick={logOut} className='flex text-red-400 gap-3 items-center my-3 p-3 rounded-md  hover:bg-black w-full'>
                         <PiSignOutLight size={28} />
                         <h6>Log out</h6>
                     </button>
                 </div>
 
             </div>
-            <div className="hidden md:flex flex-2"></div>
+            <div className="hidden md:flex flex-2 items-center justify-center flex-col gap-5">
+                <IoSettingsOutline size={48} />
+                <h6 className='text-3xl'>Settings</h6>
+            </div>
         </div>
     )
 }
