@@ -51,7 +51,7 @@ export default function Home() {
             active_navbar === 'groups' ?
             <Group /> : 
             active_navbar === 'settings' ?
-            <Setting /> :
+            <Setting /> : active_navbar === 'profile' &&
             <Profile />
           }
 

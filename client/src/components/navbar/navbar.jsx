@@ -16,7 +16,7 @@ const options = [
 
 export const Navbar = ()=>  {
 
-    const {user} = useContext(User_context);
+    const {user,active_navbar,set_active_navbar} = useContext(User_context);
 
     return (
         <nav className=" flex md:flex-col justify-between items-center md:px-2 md:py-4 py-2 px-3 bg-[#162127]" >
@@ -33,9 +33,13 @@ export const Navbar = ()=>  {
             </section >
             <section>
                 <hr className="text-[#394b55] my-5 hidden md:visible" />
-                <section className="flex flex-col gap-3" >
+                <section className="flex flex-col gap-3 justify-center items-center" >
                     <NavbarIcon Icon={IoSettingsOutline} text='settings' />
-                    <Avatar  user_photo={user?.profile_picture} />
+                    <button 
+                        className={active_navbar === 'profile' && 'border-2 border-emerald-400 rounded-full'}
+                        onClick={()=> set_active_navbar('profile')}>
+                        <Avatar  user_photo={user?.profile_picture} />
+                    </button>
                 </section>
             </section>
         </nav>
