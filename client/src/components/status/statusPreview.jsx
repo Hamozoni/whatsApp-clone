@@ -23,6 +23,7 @@ export const StatusPreview = ({ status, setIsStatus }) => {
   const [timer, setTimer] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMute, setIsMute] = useState(false);
+  const [duration,setDuration] = useState(300)
   const intervalRef = useRef(null);
 
   const resetTimerAndAdvance = (advance = true) => {
@@ -44,10 +45,10 @@ export const StatusPreview = ({ status, setIsStatus }) => {
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       if (isPlaying) {
-        const duration = currentStatus.file.duration * 10 || 300;
-        console.log(duration)
+        let d = currentStatus.type === 'MEDIA' ? currentStatus.file.duration * 10 || 300 : 300
+        setDuration(d)
         setTimer((prev) => {
-          if (prev < duration) return prev + 1;
+          if (prev < d) return prev + 1;
           resetTimerAndAdvance(true);
           return 0;
         });
@@ -89,7 +90,7 @@ export const StatusPreview = ({ status, setIsStatus }) => {
                   style={{
                     width:
                       playingIndex === i
-                        ? `${(timer / (currentStatus.file.duration * 10 || 300)) * 100}%`
+                        ? `${(timer / duration) * 100}%`
                         : playingIndex > i
                         ? "100%"
                         : "0",
