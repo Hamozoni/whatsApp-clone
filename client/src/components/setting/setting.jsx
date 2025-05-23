@@ -7,6 +7,7 @@ import { SearchInput } from "../ui/searchInput";
 import { Avatar } from "../ui/avatar";
 
 import { BsKey } from "react-icons/bs";
+import { PiSignOutLight } from "react-icons/pi";
 import { MdOutlinePrivacyTip,MdOutlineChat,MdNotificationsNone,MdOutlineKeyboard,MdOutlineHelpOutline } from "react-icons/md";
 
 const settingButtons = [
@@ -48,15 +49,19 @@ export const Setting = ()=> {
                 <div className="flex-1 max-h-full overflow-y-auto">
                     {
                         settingButtons?.map(({name,info,Icon})=> (
-                            <button key={name} className='flex gap-2 items-center my-3 p-3 rounded-md  hover:bg-black w-full'>
+                            <button key={name} className='flex gap-3 items-center my-3 p-3 rounded-md  hover:bg-black w-full'>
                                 <Icon size={28}/>
                                 <div className="flex-1 text-start">
-                                    <h6>{name}</h6>
+                                    <h6 className='capitalize'>{name}</h6>
                                     <span className='text-xs line-clamp-1'>{info}</span>
                                 </div>
                             </button>
                         ))
                     }
+                    <button className='flex text-red-400 gap-3 items-center my-3 p-3 rounded-md  hover:bg-black w-full'>
+                        <PiSignOutLight size={28} />
+                        <h6>Log out</h6>
+                    </button>
                 </div>
 
             </div>
