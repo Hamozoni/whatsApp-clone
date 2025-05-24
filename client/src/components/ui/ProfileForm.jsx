@@ -11,7 +11,8 @@ export const ProfileForm = ()=> {
         const [userAvatarURL, setUserAvatarURL] = useState(user?.profile_picture);
         const [name, setName] = useState(user?.name);
         const [isEditName, setIsEditName] = useState(false);
-        const [about, setAbout] = useState(null);
+        const [isEditAbout, setIsEditAbout] = useState(false);
+        const [about, setAbout] = useState(user.about);
 
  const handleChangeAvatar = (e) => {
     const file = e.target.files?.[0];
@@ -19,7 +20,34 @@ export const ProfileForm = ()=> {
     setUserAvatarURL(src)
   };
 
-
+  const Input = ({isEdit,setIsEdit,setValue,value,label})=> {
+    return (
+            <div className="">
+              <label>{label}</label>
+              <div className={`${isEdit ? ' border-b-amber-300' : 'border-b-transparent'} border-b flex justify-center items-center`}>
+                  <input
+                     disabled={!isEdit}
+                    className="w-full flex-1"
+                    type="text" 
+                    value={value} 
+                    onChange={(e)=> setValue(e.target.value)}
+                    />
+                    <div className="">
+                        {
+                          isEdit ? 
+                        <button onClick={()=> setIsEdit(false)}>
+                            <MdCheck size={28} />
+                        </button> :
+                        <button onClick={()=> setIsEdit(true)}>
+                            <MdOutlineEdit size={28} />
+                        </button> 
+                        }
+                    </div>
+              </div>
+               
+            </div>
+    )
+  }
 
 
     return (
@@ -43,31 +71,26 @@ export const ProfileForm = ()=> {
 
           {/*Name */}
           <div className="">
-              <h6>Your name</h6>
-              <div className={`${isEditName ? ' border-b-amber-300' : 'border-b-transparent'} border-b flex justify-center items-center`}>
-                  <input
-
-                    className="w-full flex-1"
-                    type="text" 
-                    value={name} 
-                    onChange={(e)=> setName(e.target.value)}
-                    />
-                    <div className="">
-                        {
-                          isEditName ? 
-                        <button onClick={()=> setIsEditName(false)}>
-                            <MdCheck size={28} />
-                        </button> :
-                        <button onClick={()=> setIsEditName(true)}>
-                            <MdOutlineEdit size={28} />
-                        </button> 
-                        }
-                    </div>
-              </div>
-              <span 
-                  className="text-sm text-gray-400">
-                    This is not your username or PIN. This name will be visible to your WhatsApp contacts.
-              </span>
+            <Input     
+                isEdit={isEditName}
+                setIsEdit={setIsEditName}
+                setValue={setName}
+                value={name}
+                label='Your name'
+                />
+            <span 
+                className="text-sm text-gray-400">
+                  This is not your username or PIN. This name will be visible to your WhatsApp contacts.
+            </span>
+          </div>
+          <div className="">
+              <Input     
+                isEdit={isEditAbout}
+                setIsEdit={setIsEditAbout}
+                setValue={setAbout}
+                value={about}
+                label='About'
+                />
           </div>
         </div>
     )
