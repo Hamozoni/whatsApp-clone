@@ -1,9 +1,7 @@
 import { useContext, useState } from "react";
 import { User_context } from "../../contexts/user.context";
 import { ImFilePicture } from "react-icons/im";
-import { Input } from "./input";
-import { Phone_input } from "./phone_input";
-import { Submit_btn } from "./submit_btn";
+import { MdOutlineEdit,MdCheck } from "react-icons/md";
 import { Avatar } from "./avatar";
 
 
@@ -11,10 +9,9 @@ export const ProfileForm = ()=> {
 
         const { user } = useContext(User_context);
         const [userAvatarURL, setUserAvatarURL] = useState(user?.profile_picture);
-        const [name, set_name] = useState(user?.name);
-        const [phone, set_phone] = useState(user?.phone);
-        const [email, set_email] = useState(user?.email);
-        const [about, set_about] = useState(null);
+        const [name, setName] = useState(user?.name);
+        const [isEditName, setIsEditName] = useState(false);
+        const [about, setAbout] = useState(null);
 
  const handleChangeAvatar = (e) => {
     const file = e.target.files?.[0];
@@ -22,14 +19,11 @@ export const ProfileForm = ()=> {
     setUserAvatarURL(src)
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-  }
 
 
     return (
-        <form className="w-full" onSubmit={handleSubmit}>
+        <div className="w-full" >
           {/* Avatar Upload */}
           <div className="flex flex-col items-center">
             <div className="relative inline-block">
@@ -47,41 +41,34 @@ export const ProfileForm = ()=> {
             </div>
           </div>
 
-          {/* Full Name */}
-          <Input 
-              label='Full Name' 
-              value={name} 
-              set_value={set_name} 
-              type='text'
-              required={true} 
-              placeholder="John Doe"
-            />
+          {/*Name */}
+          <div className="">
+              <h6>Your name</h6>
+              <div className={`${isEditName ? ' border-b-amber-300' : 'border-b-transparent'} border-b flex justify-center items-center`}>
+                  <input
 
-          {/* Email */}
-          <Input 
-              label='Email Address' 
-              value={email} 
-              set_value={set_email} 
-              type='email'
-              required={true} 
-              placeholder="john@example.com"
-              disabled={true}
-            />
-
-          {/* Phone Number */}
-          <Phone_input value={phone} set_value={set_phone}/>
-
-          {/* about */}
-          <Input 
-              label='About' 
-              value={about} 
-              set_value={set_about} 
-              type='text'
-              required={false} 
-             placeholder="about you..   (optional)"
-            />
-          {/* Submit Button */}
-          <Submit_btn text='save' is_loading={false} />
-        </form>
+                    className="w-full flex-1"
+                    type="text" 
+                    value={name} 
+                    onChange={(e)=> setName(e.target.value)}
+                    />
+                    <div className="">
+                        {
+                          isEditName ? 
+                        <button onClick={()=> setIsEditName(false)}>
+                            <MdCheck size={28} />
+                        </button> :
+                        <button onClick={()=> setIsEditName(true)}>
+                            <MdOutlineEdit size={28} />
+                        </button> 
+                        }
+                    </div>
+              </div>
+              <span 
+                  className="text-sm text-gray-400">
+                    This is not your username or PIN. This name will be visible to your WhatsApp contacts.
+              </span>
+          </div>
+        </div>
     )
 }
