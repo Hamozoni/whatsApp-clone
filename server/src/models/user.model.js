@@ -6,7 +6,7 @@ const USER_SCHEMA = new mongoose.Schema({
     name: {type: String,require: true},
     email: {type: String,require: true,unique: true},
     phone: {type: String,require: false},
-    about: {type: String,require: false},
+    about: {type: String,require: false,default:'Hey there! I am using WhatsApp.'},
     email_verified:{type: Boolean, default: false },
     profile_picture: {type: String,require: true,default: '/placeholder_avatar.jpg'},
     picture_id: {type: String,require: false},

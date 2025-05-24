@@ -23,7 +23,7 @@ export const ProfileForm = ()=> {
   const Input = ({isEdit,setIsEdit,setValue,value,label})=> {
     return (
             <div className="">
-              <label>{label}</label>
+              <label className="my-8 text-gray-400 text-xl">{label}</label>
               <div className={`${isEdit ? ' border-b-amber-300' : 'border-b-transparent'} border-b flex justify-center items-center`}>
                   <input
                      disabled={!isEdit}
@@ -70,7 +70,7 @@ export const ProfileForm = ()=> {
           </div>
 
           {/*Name */}
-          <div className="">
+          <div className="my-8">
             <Input     
                 isEdit={isEditName}
                 setIsEdit={setIsEditName}

@@ -5,7 +5,7 @@ import { PiUserCircleFill } from "react-icons/pi";
 export const Profile = ()=> {
     return (
         <div className="flex h-dvh flex-1">
-            <div className="min-w-[350px] p-4  border-r border-cyan-950">
+            <div className="min-w-[350px] md:max-w-[380px] p-4  border-r border-cyan-950">
                 <h5 className="text-xl mb-3">Profile</h5>
                 <ProfileForm />
             </div>
