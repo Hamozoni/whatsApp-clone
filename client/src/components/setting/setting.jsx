@@ -12,6 +12,7 @@ import { BsKey } from "react-icons/bs";
 import { PiSignOutLight } from "react-icons/pi";
 import { MdOutlinePrivacyTip,MdOutlineChat,MdNotificationsNone,MdOutlineKeyboard,MdOutlineHelpOutline } from "react-icons/md";
 import { Account } from './account';
+import { Privacy } from './privacy';
 
 const settingButtons = [
     {name: 'account', Icon: BsKey, info: 'Security notifications, acount info' },
@@ -44,7 +45,7 @@ export const Setting = ()=> {
                         <>
                             {/* Header */}
                             <header className='border-b border-b-black mb-4'>
-                                <h5 className="text-xl font-bold mb-4">Settings</h5>
+                                <h5 className="text-lg font-bold mb-4">Settings</h5>
                                 <SearchInput handleSearch={()=> ''} text={text} setText={setText} />
                                 <div className="flex gap-2 my-4 cursor-pointer p-3 rounded-full hover:bg-cyan-950">
                                     <Avatar size='lg' user_photo={user.profile_picture} />
@@ -64,7 +65,7 @@ export const Setting = ()=> {
                                             onClick={()=> setActivePage(name)}
                                             key={name} 
                                             className='flex gap-3 items-center my-3 p-3 rounded-full  hover:bg-cyan-950 w-full'>
-                                            <Icon size={28}/>
+                                            <Icon size={24}/>
                                             <div className="flex-1 text-start">
                                                 <h6 className='capitalize'>{name}</h6>
                                                 <span className='text-xs line-clamp-1 text-gray-400'>{info}</span>
@@ -73,13 +74,14 @@ export const Setting = ()=> {
                                     ))
                                 }
                                 <button onClick={logOut} className='flex text-red-400 gap-3 items-center my-3 p-3 rounded-full hover:bg-cyan-950 w-full'>
-                                    <PiSignOutLight size={28} />
+                                    <PiSignOutLight size={24} />
                                     <h6>Log out</h6>
                                 </button>
                             </div>
                         </>
-                    ) :   activePage === 'account' && 
-                    <Account setActivePage={setActivePage} />
+                    ) :   activePage === 'account' ?
+                    <Account setActivePage={setActivePage} /> : 
+                    <Privacy setActivePage={setActivePage} />
                 }
 
             </div>
