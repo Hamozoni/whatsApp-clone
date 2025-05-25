@@ -7,13 +7,13 @@ import { Header } from "./header";
 
 export const Account = ({setActivePage})=> {
     return (
-        <div className="">
+        <>
             <Header title='Account' setActivePage={()=> setActivePage('main')} />
             <div className="">
                 <IconTextBtn Icon={MdSecurity} text='Security notification' onClick={()=> ''}/>
                 <IconTextBtn Icon={IoDocumentTextOutline} text='Requist account info'  onClick={()=> ''}/>
                 <IconTextBtn Icon={FaRegCircleQuestion} text='How to delete my account'  onClick={()=> ''}/>
             </div>
-        </div>
+        </>
     )
 }
