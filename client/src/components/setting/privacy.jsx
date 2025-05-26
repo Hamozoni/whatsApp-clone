@@ -10,6 +10,12 @@ const personalInfo = [
     {id: 4, privacyName: 'Status', selectedOption: 'Everyone'},
 ];
 
+const advancedPersonalInfo = [
+    {id: 1, privacyName: 'Groups', selectedOption: 'Everyone'},
+    {id: 2, privacyName: 'Blocked contacts', selectedOption: 1},
+    {id: 3, privacyName: 'App lock',selectedOption:'Require password to unlock Whatsapp'},
+];
+
 const OptionBtn = ({privacyName,selectedOption})=> {
     return (
             <div className="flex justify-between cursor-pointer py-3 border-b border-b-gray-800">
@@ -81,6 +87,23 @@ export const Privacy = ({setActivePage})=> {
                         desc="To protect your account and improve device performance, WhatsApp will block messages from unknown accounts if they exceed a certain volume."
                         setIsOn={()=> ''}
                       />
+                      <br />
+                    <Switch 
+                        title='Disable link previews'
+                        desc="To help protect your IP address from being inferred by third-party websites, previews for the links you share in chats will no longer be generated."
+                        setIsOn={()=> ''}
+                      />
+                      <div className="my-5">
+                        {
+                            advancedPersonalInfo?.map(({id,privacyName,selectedOption})=> (
+                                <OptionBtn 
+                                    key={id}
+                                    privacyName={privacyName} 
+                                    selectedOption={selectedOption} 
+                                    />
+                            ))
+                        }
+                    </div>
                 </section>
             </div>
         </>
