@@ -42,7 +42,7 @@ export const MainSetting = ({setActivePage})=> {
             <header className='border-b border-b-black'>
                 <h5 className="text-lg font-bold mb-4">Settings</h5>
                 <SearchInput handleSearch={()=> ''} text={text} setText={setText} />
-                <div className="flex gap-2 my-4 cursor-pointer p-3 rounded-full hover:bg-cyan-950">
+                <div className="flex gap-2 my-4 cursor-pointer p-3 rounded-md  hover:bg-gray-800">
                     <Avatar size='lg' user_photo={user.profile_picture} />
                     <div className="">
                         <h5>{user?.name}</h5>
@@ -59,7 +59,7 @@ export const MainSetting = ({setActivePage})=> {
                         <button 
                             onClick={()=> setActivePage(name)}
                             key={name} 
-                            className='flex gap-3 items-center my-3 p-3 rounded-full  hover:bg-cyan-950 w-full'>
+                            className='flex gap-3 items-center my-3 p-3 rounded-md  hover:bg-gray-800 w-full'>
                             <Icon size={24}/>
                             <div className="flex-1 text-start">
                                 <h6 className='capitalize'>{name}</h6>
@@ -68,7 +68,9 @@ export const MainSetting = ({setActivePage})=> {
                         </button>
                     ))
                 }
-                <button onClick={logOut} className='flex text-red-400 gap-3 items-center my-3 p-3 rounded-full hover:bg-cyan-950 w-full'>
+                <button 
+                    onClick={logOut} 
+                    className='flex text-red-400 gap-3 items-center my-3 p-3 rounded-md  hover:bg-gray-800 w-full'>
                     <PiSignOutLight size={24} />
                     <h6>Log out</h6>
                 </button>

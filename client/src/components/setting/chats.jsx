@@ -20,7 +20,7 @@ export const Chats = ({setActivePage})=> {
                          privacyName='Wallpaper'
                       />
                 </section>
-                                <section>
+                <section>
                     <h6 className="text-md text-gray-400 font-medium">
                         Chats settings
                     </h6>

@@ -5,6 +5,8 @@ import { Account } from './account';
 import { Privacy } from './privacy';
 import { MainSetting } from './mainSetting';
 import { Chats } from './chats';
+import { Notifications } from "./notifications";
+import { Help } from "./help";
 
 
 export const Setting = ()=> {
@@ -21,7 +23,11 @@ export const Setting = ()=> {
                     <Account setActivePage={setActivePage} /> : 
                     activePage === 'privacy' ?
                     <Privacy setActivePage={setActivePage} /> :
-                    <Chats setActivePage={setActivePage}/>
+                    activePage === 'chats' ?
+                    <Chats setActivePage={setActivePage}/> :
+                     activePage === 'notifications' ?
+                    <Notifications setActivePage={setActivePage}/> :
+                    <Help setActivePage={setActivePage} />
                 }
             </div>
             <div className="hidden md:flex flex-2 items-center justify-center flex-col gap-5">
