@@ -15,7 +15,7 @@ export const Setting = ()=> {
 
     return (
         <div className="flex h-dvh">
-            <div className="p-3 flex-1 border-r border-cyan-950 flex flex-col min-w-[350px] md:max-w-[380px] ">
+            <div className="p-3 flex-1 border-r border-r-gray-800 flex flex-col min-w-[350px] md:max-w-[380px] ">
                 {
                     activePage === 'main' ? 
                     <MainSetting setActivePage={setActivePage}/>:

@@ -5,6 +5,7 @@ import { MdOutlineContactSupport } from "react-icons/md";
 import { FaRegFileAlt } from "react-icons/fa";
 import { GrHelpBook } from "react-icons/gr";
 import { IconTextBtn } from "../ui/iconTextBtn";
+import { Switch } from "./switch";
 
 let helpOptions = [
     {id: 1, title: 'help center', Icon : TbHelpTriangle},
@@ -16,14 +17,29 @@ let helpOptions = [
 export const Help = ({setActivePage})=> {
     return (
         <>
-         <Header title='Help' setActivePage={()=> setActivePage('main')} />
-            <div className="">
+         <Header 
+            title='Help' 
+            setActivePage={()=> setActivePage('main')} 
+            />
+            <div className="mb-5 pb-4 border-b border-b-gray-800">
                 {
-                    helpOptions?.map(({id,title})=> (
-                        <IconTextBtn key={id} text={title} onClick={()=> ''} />
+                    helpOptions?.map(({id,title,Icon})=> (
+                        <IconTextBtn 
+                            key={id} 
+                            text={title} 
+                            Icon={Icon} 
+                            onClick={()=> ''} 
+                            />
                     ))
                 }
             </div>
+            <div className="my-5 pb-5 border-b border-b-gray-800">
+                <Switch 
+                    title='Join the beta' 
+                    desc="Get new features before they released. Report bugs using the contact us form above."
+                     />
+            </div>
+            
         </>
     )
 }
