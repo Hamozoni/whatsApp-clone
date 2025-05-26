@@ -9,9 +9,9 @@ export const OptionBtn = ({privacyName,selectedOption = null})=> {
                     </h6>
                     {
                         selectedOption && (
-                            <span className="text-xs  text-gray-400">
+                            <p className="text-xs  text-gray-400">
                                 {selectedOption}
-                            </span>
+                            </p>
 
                         )
                     }

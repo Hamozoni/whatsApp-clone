@@ -2,7 +2,7 @@
 export const Switch = ({title,desc,setIsOn,isOn = true})=> {
     return (
      <section className=" cursor-pointer" onClick={()=> setIsOn(!isOn)}>
-        <h6 className="text-ms mb-3">{title}</h6>
+        <h6 className="text-ms">{title}</h6>
         <div className="flex justify-between gap-2">
             <p className="text-xs  text-gray-400">
                 {desc}

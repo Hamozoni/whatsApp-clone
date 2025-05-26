@@ -1,5 +1,6 @@
 import { Header } from "./header"
 import { OptionBtn } from "./optionBtn"
+import { Switch } from "./switch"
 
 export const Chats = ({setActivePage})=> {
     return (
@@ -21,16 +22,30 @@ export const Chats = ({setActivePage})=> {
                 </section>
                                 <section>
                     <h6 className="text-md text-gray-400 font-medium">
-                        Display
+                        Chats settings
                     </h6>
                     <br />
                     <OptionBtn 
-                         privacyName='Theme'
-                        selectedOption='Dark mode' 
+                         privacyName='Media upload quality'
                       />
                     <OptionBtn 
-                         privacyName='Wallpaper'
+                         privacyName='Media auto-download'
                       />
+                      <br />
+                      <Switch 
+                            title='Spell check' 
+                            desc="Check spelling while typing" 
+                            />
+                       <br />
+                      <Switch 
+                            title='Replace text with emoji' 
+                            desc="Emoji will replace specific text as you type"
+                             />
+                        <br />
+                      <Switch 
+                        title='Enter is send' 
+                        desc="Enter key will send your message" 
+                        />
                 </section>
             </div>
 

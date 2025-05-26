@@ -39,7 +39,7 @@ export const MainSetting = ({setActivePage})=> {
     return (
         <>
             {/* Header */}
-            <header className='border-b border-b-black mb-4'>
+            <header className='border-b border-b-black'>
                 <h5 className="text-lg font-bold mb-4">Settings</h5>
                 <SearchInput handleSearch={()=> ''} text={text} setText={setText} />
                 <div className="flex gap-2 my-4 cursor-pointer p-3 rounded-full hover:bg-cyan-950">
