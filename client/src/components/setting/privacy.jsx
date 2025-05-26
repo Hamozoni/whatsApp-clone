@@ -1,7 +1,6 @@
 import { Header } from "./header";
-
-import { MdKeyboardArrowRight } from "react-icons/md";
 import { Switch } from "./switch";
+import { OptionBtn } from "./optionBtn";
 
 const personalInfo = [
     {id: 1, privacyName: 'Last seen and online', selectedOption: 'Everyone'},
@@ -15,20 +14,6 @@ const advancedPersonalInfo = [
     {id: 2, privacyName: 'Blocked contacts', selectedOption: 1},
     {id: 3, privacyName: 'App lock',selectedOption:'Require password to unlock Whatsapp'},
 ];
-
-const OptionBtn = ({privacyName,selectedOption})=> {
-    return (
-            <div className="flex justify-between cursor-pointer py-3 border-b border-b-gray-800">
-                <div className="">
-                    <h6 className="text-ms">{privacyName}</h6>
-                    <span className="text-xs  text-gray-400">{selectedOption}</span>
-                </div>
-                <div className="text-gray-400">
-                <MdKeyboardArrowRight size={24}/>
-                </div>
-            </div>
-        )
-};
 
 export const Privacy = ({setActivePage})=> {
 
