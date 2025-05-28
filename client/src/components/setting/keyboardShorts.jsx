@@ -1,3 +1,5 @@
+import { Header } from "./header"
+
 const keyboardShorts = [
     {id: 1,shortName: 'Mark as unread', key: 'ctrl+alt+shift+u'},
     {id: 2,shortName: 'mute', key: 'ctrl+alt+shift+m'},
@@ -12,10 +14,11 @@ const keyboardShorts = [
     {id: 11,shortName: 'new group', key: 'ctrl+alt+shift+n'},
     {id: 12,shortName: 'profile and about', key: 'ctrl+alt+p'},
 ]
-export const KeyboardShorts = ()=> {
+export const KeyboardShorts = ({setActivePage})=> {
     return (
-        <div className="bg-amber-300">
-            <div className="">
+        <div className="bg-gray-800 flex flex-col fixed z-50 p-5 rounded-md top-[50px] left-1/2 -translate-x-1/2 max-w-dvw w-[650px] h-[calc(100vh - 100px)]">
+            <Header title='keyboard shortcuts' setActivePage={()=> setActivePage('main')}/>
+            <div className="flex-1 max-h-full overflow-y-auto flex flex-col">
                 {
                     keyboardShorts?.map(({id,shortName,key})=> (
                         <div key={id} className="flex justify-between items-center">

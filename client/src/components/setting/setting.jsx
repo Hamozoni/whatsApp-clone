@@ -8,6 +8,7 @@ import { Chats } from './chats';
 import { Notifications } from "./notifications";
 import { Help } from "./help";
 import { KeyboardShorts } from "./keyboardShorts";
+import { Close_model } from "../ui/close_model";
 
 
 export const Setting = ()=> {
@@ -16,10 +17,15 @@ export const Setting = ()=> {
 
     return (
         <div className="flex h-dvh">
+             {
+                 activePage === 'keyboard shortcuts' &&
+                 <>
+                 <KeyboardShorts setActivePage={setActivePage} />
+                 <Close_model set_model={setActivePage} />
+                 </>
+             }
             <div className="p-3 flex-1 border-r border-r-gray-800 flex flex-col min-w-[350px] md:max-w-[380px] ">
                 {
-                    activePage === 'main' ? 
-                    <MainSetting setActivePage={setActivePage}/>:
                     activePage === 'account' ?
                     <Account setActivePage={setActivePage} /> : 
                     activePage === 'privacy' ?
@@ -30,7 +36,8 @@ export const Setting = ()=> {
                     <Notifications setActivePage={setActivePage}/> :
                      activePage === 'help' ?
                     <Help setActivePage={setActivePage} />:
-                    <KeyboardShorts />
+                    <MainSetting setActivePage={setActivePage}/>
+
                 }
             </div>
             <div className="hidden md:flex flex-2 items-center justify-center flex-col gap-5">
