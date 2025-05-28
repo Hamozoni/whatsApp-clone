@@ -7,6 +7,7 @@ import { MainSetting } from './mainSetting';
 import { Chats } from './chats';
 import { Notifications } from "./notifications";
 import { Help } from "./help";
+import { KeyboardShorts } from "./keyboardShorts";
 
 
 export const Setting = ()=> {
@@ -27,7 +28,9 @@ export const Setting = ()=> {
                     <Chats setActivePage={setActivePage}/> :
                      activePage === 'notifications' ?
                     <Notifications setActivePage={setActivePage}/> :
-                    <Help setActivePage={setActivePage} />
+                     activePage === 'help' ?
+                    <Help setActivePage={setActivePage} />:
+                    <KeyboardShorts />
                 }
             </div>
             <div className="hidden md:flex flex-2 items-center justify-center flex-col gap-5">
