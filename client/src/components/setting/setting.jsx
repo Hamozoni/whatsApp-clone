@@ -9,6 +9,7 @@ import { Notifications } from "./notifications";
 import { Help } from "./help";
 import { KeyboardShorts } from "./keyboardShorts";
 import { Close_model } from "../ui/close_model";
+import { Profile } from "../profile/profile";
 
 
 export const Setting = ()=> {
@@ -26,6 +27,8 @@ export const Setting = ()=> {
              }
             <div className="p-3 flex-1 border-r border-r-gray-800 flex flex-col min-w-[350px] md:max-w-[380px] ">
                 {
+                    activePage === 'profile' ?
+                    <Profile setActivePage={setActivePage} /> :
                     activePage === 'account' ?
                     <Account setActivePage={setActivePage} /> : 
                     activePage === 'privacy' ?

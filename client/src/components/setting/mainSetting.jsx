@@ -42,7 +42,10 @@ export const MainSetting = ({setActivePage})=> {
             <header className='border-b border-b-black'>
                 <h5 className="text-lg font-bold mb-4">Settings</h5>
                 <SearchInput handleSearch={()=> ''} text={text} setText={setText} />
-                <div className="flex gap-2 my-4 cursor-pointer p-3 rounded-md  hover:bg-gray-800">
+                <div 
+                    onClick={()=> setActivePage('profile')} 
+                    className="flex gap-2 my-4 cursor-pointer p-3 rounded-md  hover:bg-gray-800"
+                    >
                     <Avatar size='lg' user_photo={user.profile_picture} />
                     <div className="">
                         <h5>{user?.name}</h5>

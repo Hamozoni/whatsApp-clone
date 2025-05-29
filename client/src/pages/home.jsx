@@ -2,7 +2,7 @@ import { Chats } from '../components/chat/chats';
 import {Calls} from '../components/call/calls'
 import { Chat_window } from '../components/chat_window/chat_window';
 import { No_active_chat } from '../components/chat_window/No_active_chat';
-import { Group } from '../components/group/group';
+import { Channel } from '../components/channel/channel';
 import { Navbar } from '../components/navbar/navbar';
 import { Profile } from '../components/profile/profile';
 import { Setting } from '../components/setting/setting';
@@ -48,8 +48,8 @@ export default function Home() {
             <Calls /> : 
             active_navbar === 'status' ? 
             <Status /> :
-            active_navbar === 'groups' ?
-            <Group /> : 
+            active_navbar === 'channels' ?
+            <Channel /> : 
             active_navbar === 'settings' ?
             <Setting /> : active_navbar === 'profile' &&
             <Profile />

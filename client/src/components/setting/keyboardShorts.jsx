@@ -25,12 +25,12 @@ export const KeyboardShorts = ({setActivePage})=> {
                             <h4 className="text-sm font-medium capitalize">
                                 {shortName}
                             </h4>
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-1">
                                 {
                                     key.split('+').map((key)=> (
                                         <div 
                                             key={key} 
-                                            className="flex justify-center items-center p-1 text-xs font-medium capitalize rounded-md bg-gray-600 border border-gray-500"
+                                            className="flex justify-center items-center p-1 text-xs font-medium capitalize rounded-md border border-gray-500"
                                             >
                                                 {key}
                                             </div>

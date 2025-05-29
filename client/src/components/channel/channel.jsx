@@ -1,8 +1,8 @@
 
-export const Group = () => {
+export const Channel = () => {
     return (
         <div className="">
-            groups
+            channels
         </div>
     )
 }
