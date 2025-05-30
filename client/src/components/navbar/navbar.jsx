@@ -1,7 +1,6 @@
 import { BsChatText } from "react-icons/bs";
 import { IoCallOutline,IoSettingsOutline } from "react-icons/io5";
 import { SiGradleplaypublisher } from "react-icons/si";
-import { MdOutlineGroups2 } from "react-icons/md";
 import { GrChannel } from "react-icons/gr";
 import { useContext } from "react";
 import { User_context } from "../../contexts/user.context";
