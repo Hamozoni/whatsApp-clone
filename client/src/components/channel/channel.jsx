@@ -1,11 +1,16 @@
+import { useState } from "react";
 import { GrChannel } from "react-icons/gr";
+import {SearchInput} from '../ui/searchInput';
 
 export const Channel = () => {
+
+    const [text,setText] = useState('')
+
     return (
         <div className="flex h-dvh">
             <div className="p-3 flex-1 border-r border-r-gray-800 flex flex-col min-w-[350px] md:max-w-[380px] ">
                 <header className='border-b border-b-black'>
-                    <h5 className="text-lg font-bold mb-4">Settings</h5>
+                    <h5 className="text-lg font-bold mb-4">Channels</h5>
                     <SearchInput handleSearch={()=> ''} text={text} setText={setText} />
                 </header>
 
