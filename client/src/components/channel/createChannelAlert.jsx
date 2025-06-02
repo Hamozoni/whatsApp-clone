@@ -38,7 +38,7 @@ export const CreateChannelAlert = ( )=> {
                     </div>
                     <div className="">
                         <h5>You’re responsible for your channel</h5>
-                        <p></p>
+                        <p>Your channel needs to follow our guidelines and is reviewed against them</p>
                     </div>
                 </div>
             </div>
