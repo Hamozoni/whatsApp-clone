@@ -1,8 +1,8 @@
 import { GrChannel } from "react-icons/gr";
 import { GiWorld } from "react-icons/gi";
+import { FaEyeSlash } from "react-icons/fa6";
+
 export const CreateChannelAlert = ( )=> {
-
-
     return (
         <div className="">
 
@@ -22,9 +22,27 @@ export const CreateChannelAlert = ( )=> {
                         <p>Channels are poblic, so anyone can find them and 30 dayes of history</p>
                     </div>
                 </div>
+                <div className="">
+                    <div className="">
+                        <FaEyeSlash />
+                    </div>
+                    <div className="">
+                        <h5>Anyone can discover your channel</h5>
+                        <p>"Followers can’t see your phone number, profile picture or name, but other admins can</p>
+                    </div>
+                </div>
+                <div className="">
+                    <div className="">
+                        <GiWorld />
+                    </div>
+                    <div className="">
+                        <h5>Anyone can discover your channel</h5>
+                        <p>Channels are poblic, so anyone can find them and 30 dayes of history</p>
+                    </div>
+                </div>
             </div>
             <footer>
-                
+
             </footer>
         </div>
     )
