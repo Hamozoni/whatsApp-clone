@@ -1,6 +1,7 @@
 import { GrChannel } from "react-icons/gr";
 import { GiWorld } from "react-icons/gi";
 import { FaEyeSlash } from "react-icons/fa6";
+import { SiSpringsecurity } from "react-icons/si";
 
 export const CreateChannelAlert = ( )=> {
     return (
@@ -33,11 +34,11 @@ export const CreateChannelAlert = ( )=> {
                 </div>
                 <div className="">
                     <div className="">
-                        <GiWorld />
+                        <SiSpringsecurity />
                     </div>
                     <div className="">
-                        <h5>Anyone can discover your channel</h5>
-                        <p>Channels are poblic, so anyone can find them and 30 dayes of history</p>
+                        <h5>You’re responsible for your channel</h5>
+                        <p></p>
                     </div>
                 </div>
             </div>
