@@ -9,18 +9,23 @@ export const NewChannelForm = ({setIsNewChannel})=> {
 
     const [photo,setPhoto] = useState(null);
     const [name,setName] = useState('');
-    const [about,setAbout] = useState('');
+    const [description,setDescription] = useState('');
 
-      const handlePhoto = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPhoto(reader?.result);
-      };
-      reader.readAsDataURL(file);
+    const handlePhoto = (e) => {
+        const file = e.target.files?.[0];
+        if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setPhoto(reader?.result);
+        };
+        reader.readAsDataURL(file);
+        }
+    };
+
+    const handleSubmit = (e)=> {
+        e.preventDefault();
+        
     }
-  };
 
     return (
         <div className="p-3 flex-1 border-r border-r-gray-800 flex flex-col min-w-[350px] md:max-w-[380px]">
@@ -29,7 +34,7 @@ export const NewChannelForm = ({setIsNewChannel})=> {
                 <h5 className="text-lg">new channel</h5>
             </header>
             <div className="">
-                <form action="w-full">
+                <form  onSubmit={handleSubmit}>
 
                     {/* Avatar Upload */}
                     <div className="flex flex-col items-center">
@@ -49,6 +54,7 @@ export const NewChannelForm = ({setIsNewChannel})=> {
                     </div>
                     <div className="my-10 flex items-center pb-5 border-b border-b-gray-400 ">
                         <input
+                            value={name}
                             className="w-full flex-1"
                             onChange={e=> setName(e.target.value)} 
                             type="text" 
@@ -56,13 +62,22 @@ export const NewChannelForm = ({setIsNewChannel})=> {
                             />
                         <EmojiBtn setText={setName} />
                     </div>
-                    <div className="">
+                    <section className=" bg-gray-800 p-3">
+                        <h4>channel description</h4>
+                        <div className="flex items-start gap-1">
                             <textarea 
-                                 className="w-full h-[150px]"
+                                value={description}
+                                className="w-full h-[150px] flex-1"
                                 placeholder="Describe your channel. Include information to help people understand what your channel is about." 
-                                onChange={e=> setAbout(e.target.value)} 
+                                onChange={e=> setDescription(e.target.value)} 
                                 id="channelAbout"/>
-                    </div>
+
+                                <EmojiBtn setText={setDescription} />
+                        </div>
+                     </section>
+                     <div className="flex justify-center mt-8">
+                         <button className="bg-gray-800 border border-gray-600 rounded-full px-4 py-1">create channel</button>
+                     </div>
                 </form>
             </div>
         </div>
