@@ -3,7 +3,12 @@ import { GiWorld } from "react-icons/gi";
 import { FaEyeSlash } from "react-icons/fa6";
 import { SiSpringsecurity } from "react-icons/si";
 
-export const CreateChannelAlert = ( )=> {
+export const CreateChannelAlert = ( {setIsCreateChannel,setIsNewChannel} )=> {
+
+    const handleContinue = ()=> {
+        setIsNewChannel(true);
+        setIsCreateChannel(false)
+    }
     return (
         <div className="bg-gray-950 rounded-md fixed left-1/2 top-1/2 -translate-1/2 z-50 p-5">
 
@@ -43,12 +48,12 @@ export const CreateChannelAlert = ( )=> {
                     </div>
                 </div>
             </div>
-            <footer className="mt-5">
-                <div className="flex items-center gap-4 justify-end">
-                    <button className="text-lg font-medium">
+            <footer className="mt-8">
+                <div className="flex items-center gap-5 justify-end">
+                    <button onClick={()=> setIsCreateChannel(false)} className="text-md">
                         close
                     </button>
-                    <button className=" rounded-full text-lg font-medium bg-emerald-950 p-2 px-6">
+                    <button onClick={handleContinue} className=" rounded-full text-md bg-emerald-950 py-1 px-6">
                         continue
                     </button>
 

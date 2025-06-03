@@ -5,16 +5,16 @@ import {RoundedBtn} from "../ui/roundedBtn";
 import { IoMdAdd } from "react-icons/io";
 import { CreateChannelAlert } from "./createChannelAlert";
 import { Close_model } from "../ui/close_model";
+import { NewChannelForm } from "./newChannelForm";
 
 export const Channel = () => {
 
     const [text,setText] = useState('');
 
-    const [isCreateChannel,setIsCreateChannel] = useState(false)
+    const [isCreateChannel,setIsCreateChannel] = useState(false);
+    const [isNewChannel,setIsNewChannel] = useState(false);
 
-    const handleCreateChannel = ()=> [
 
-    ]
 
     return (
         <div className="flex h-dvh">
@@ -22,21 +22,30 @@ export const Channel = () => {
                isCreateChannel && (
                 <>
                  <Close_model set_model={setIsCreateChannel} />
-                 <CreateChannelAlert />
+                 <CreateChannelAlert 
+                    setIsCreateChannel={setIsCreateChannel}
+                    setIsNewChannel={setIsNewChannel}
+                     />
                 </>
                ) 
             }
-            <div className="p-3 flex-1 border-r border-r-gray-800 flex flex-col min-w-[350px] md:max-w-[380px] ">
-                <header className='border-b border-b-black'>
-                    <div className="flex items-center justify-between mb-4">
-                        <h5 className="text-lg font-bold">Channels</h5>
-                        <RoundedBtn Icon={IoMdAdd} onClick={()=> setIsCreateChannel(true)} />
+            {
+                 isNewChannel ? (
+                     <NewChannelForm setIsNewChannel={setIsNewChannel} />
+                 ) : (
+                    <div className="p-3 flex-1 border-r border-r-gray-800 flex flex-col min-w-[350px] md:max-w-[380px] ">
+                        <header className='border-b border-b-black'>
+                            <div className="flex items-center justify-between mb-4">
+                                <h5 className="text-lg font-bold">Channels</h5>
+                                <RoundedBtn Icon={IoMdAdd} onClick={()=> setIsCreateChannel(true)} />
+                            </div>
+                            <SearchInput handleSearch={()=> ''} text={text} setText={setText} />
+                        </header>
+
+
                     </div>
-                    <SearchInput handleSearch={()=> ''} text={text} setText={setText} />
-                </header>
-
-
-            </div>
+                 )
+            }
             <div className="hidden md:flex flex-2 items-center justify-center flex-col gap-5">
                 <GrChannel size={48} className="text-gray-400" />
                 <h3 className='text-3xl'>
