@@ -15,7 +15,7 @@ export const CreateChannelAlert = ( )=> {
                 <h4 className=" capitalize text-xl text-center font-bold">create a channel to reach unlimted followers</h4>
             </header>
             <div className="">
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-5">
                     <div className="">
                         <GiWorld size={28} />
                     </div>
@@ -24,7 +24,7 @@ export const CreateChannelAlert = ( )=> {
                         <p className=" text-md font-medium text-gray-400">Channels are poblic, so anyone can find them and 30 dayes of history</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-3 my-5">
+                <div className="flex items-center gap-5 my-5">
                     <div className="">
                         <FaEyeSlash size={28}/>
                     </div>
@@ -33,7 +33,7 @@ export const CreateChannelAlert = ( )=> {
                         <p className=" text-md font-medium text-gray-400">"Followers can’t see your phone number, profile picture or name, but other admins can</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-5">
                     <div className="">
                         <SiSpringsecurity size={28} />
                     </div>
@@ -43,12 +43,12 @@ export const CreateChannelAlert = ( )=> {
                     </div>
                 </div>
             </div>
-            <footer className="mt-4">
-                <div className="flex items-center gap-2 justify-end">
-                    <button>
+            <footer className="mt-5">
+                <div className="flex items-center gap-4 justify-end">
+                    <button className="text-lg font-medium">
                         close
                     </button>
-                    <button>
+                    <button className=" rounded-full text-lg font-medium bg-emerald-950 p-2 px-6">
                         continue
                     </button>
 
