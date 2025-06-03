@@ -7,7 +7,7 @@ const CHANNEL_SCHEMA = new mongoose.Schema({
     name: {type: String, require: true},
     about: {type: String, require: true},
     messages: [{type: mongoose.Schema.Types.ObjectId,ref: 'Message'}],
-    profile_picture: {type: String,require: true,default: '/placeholder_avatar.jpg'},
+    profile_picture: {type: String,require: true,default: '/channelAvatar.jpg'},
 
 },{timestamps: true});
 
