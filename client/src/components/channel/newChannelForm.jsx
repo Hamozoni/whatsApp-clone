@@ -24,6 +24,9 @@ export const NewChannelForm = ({setIsNewChannel})=> {
 
     const handleSubmit = (e)=> {
         e.preventDefault();
+
+        if(!name || !photo || !description) return;
+
         
     }
 
@@ -33,7 +36,7 @@ export const NewChannelForm = ({setIsNewChannel})=> {
                 <RoundedBtn Icon={IoArrowBack} onClick={()=> setIsNewChannel(false)} />
                 <h5 className="text-lg">new channel</h5>
             </header>
-            <div className="">
+            <div className="p-2">
                 <form  onSubmit={handleSubmit}>
 
                     {/* Avatar Upload */}
@@ -63,7 +66,7 @@ export const NewChannelForm = ({setIsNewChannel})=> {
                         <EmojiBtn setText={setName} />
                     </div>
                     <section className=" bg-gray-800 p-3">
-                        <h4>channel description</h4>
+                        <h4 className="text-xs font-medium mb-1">channel description</h4>
                         <div className="flex items-start gap-1">
                             <textarea 
                                 value={description}

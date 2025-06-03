@@ -11,7 +11,7 @@ export const CreateChannelAlert = ( {setIsCreateChannel,setIsNewChannel} )=> {
         setIsCreateChannel(false)
     }
     return (
-        <div className="bg-gray-950 rounded-md fixed left-1/2 top-1/2 -translate-1/2 z-50 p-5">
+        <div className="bg-gray-950 rounded-md left-0 top-0 rounded-b-xl max-h-dvh overflow-y-auto fixed md:left-1/2 md:top-1/2 md:-translate-1/2 z-50 p-5">
 
             <header className="mb-5">
                 <div className="mx-auto mb-5 w-fit rounded-full bg-emerald-900 p-4">

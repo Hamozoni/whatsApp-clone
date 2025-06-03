@@ -33,7 +33,7 @@ export const Navbar = ()=>  {
             </section >
             <section>
                 <hr className="text-[#394b55] my-5 hidden md:visible" />
-                <section className="flex flex-col gap-3 justify-center items-center" >
+                <section className="flex md:flex-col gap-3 justify-center items-center" >
                     <NavbarIcon Icon={IoSettingsOutline} text='settings' />
                     <button 
                         className={active_navbar === 'profile' && 'border-2 border-emerald-400 rounded-full'}
