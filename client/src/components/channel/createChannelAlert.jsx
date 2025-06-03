@@ -5,7 +5,7 @@ import { SiSpringsecurity } from "react-icons/si";
 
 export const CreateChannelAlert = ( )=> {
     return (
-        <div className="">
+        <div className="bg-gray-900 rounded-md fixed left-1/2 top-1/2 -translate-1/2 z-50">
 
             <header>
                 <div className="">
@@ -43,7 +43,15 @@ export const CreateChannelAlert = ( )=> {
                 </div>
             </div>
             <footer>
+                <div className="flex items-center gap-2 justify-end">
+                    <button>
+                        close
+                    </button>
+                    <button>
+                        continue
+                    </button>
 
+                </div>
             </footer>
         </div>
     )
