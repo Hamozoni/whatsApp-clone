@@ -1,18 +1,26 @@
 import { IoArrowBack } from "react-icons/io5"
 import { RoundedBtn } from "../ui/roundedBtn"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { EmojiBtn } from "../ui/emojiBtn";
 import { ImFilePicture } from "react-icons/im";
 import {Avatar} from "../ui/avatar"
+import { post_data } from "../../lib/post_data";
+import { User_context } from "../../contexts/user.context";
 
 export const NewChannelForm = ({setIsNewChannel})=> {
 
-    const [photo,setPhoto] = useState(null);
+    const {user} = useContext(User_context)
+
+    const [photo,setPhoto] = useState('/channelAvatar.jpg');
+    const [file,setFile] = useState(null);
     const [name,setName] = useState('');
     const [description,setDescription] = useState('');
+    const [error,setError] = useState(null);
+    const [isLoading,setIsLoading] = useState(null);
 
     const handlePhoto = (e) => {
         const file = e.target.files?.[0];
+        setFile(file);
         if (file) {
         const reader = new FileReader();
         reader.onloadend = () => {
@@ -22,12 +30,36 @@ export const NewChannelForm = ({setIsNewChannel})=> {
         }
     };
 
-    const handleSubmit = (e)=> {
+    const handleSubmit = async(e)=> {
         e.preventDefault();
 
         if(!name || !photo || !description) return;
+        setIsLoading(true);
+        setError(null);
 
-        
+
+        try {
+
+            const formData = new FormData();
+
+            formData.append('file',file);
+            formData.append('name',name);
+            formData.append('description',description);
+            formData.append('admin',user?._id);
+            
+           const channel = await post_data('channel',formData);
+
+           console.table(channel);
+
+        }
+        catch (error) {
+            setError(error.message);
+        }
+        finally {
+            setIsLoading(false);
+        }
+
+
     }
 
     return (
@@ -42,7 +74,7 @@ export const NewChannelForm = ({setIsNewChannel})=> {
                     {/* Avatar Upload */}
                     <div className="flex flex-col items-center">
                         <div className="relative inline-block">
-                            <Avatar size="2xl" user_photo={photo || '/channelAvatar.jpg'} />
+                            <Avatar size="2xl" user_photo={photo} />
                             <label className="absolute opacity-0 hover:opacity-100 bottom-0 right-0 text-white rounded-full w-full h-full p-2 cursor-pointer flex flex-col items-center justify-center bg-[#00000059]">
                             <ImFilePicture size={24}/>
                             <span className="text-xs">change Avatar</span>
