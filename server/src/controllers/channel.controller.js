@@ -1,3 +1,5 @@
+import Channel from "../models/channel.model.js";
+import { upload_file } from "../utils/upload_file.js";
 
 export const post_channel = async (req,res,next)=> {
 
@@ -9,9 +11,13 @@ export const post_channel = async (req,res,next)=> {
             return res.status(5000).json({message: 'name and description andadminr are requred'})
         };
 
-        console.log({name,description,admin,profile_picure});
+        const file_result = await upload_file(profile_picure,'channel');
 
-        return res.status(200).json({name,description,admin,profile_picure})
+        const new_channel = await Channel.create({name,description,admins:admin,profile_picure:file_result?._id})
+
+        console.log({new_channel});
+
+        return res.status(200).json({...new_channel})
 
 
     }

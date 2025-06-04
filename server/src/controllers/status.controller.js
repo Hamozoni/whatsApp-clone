@@ -8,9 +8,6 @@ export const post_status = async (req,res,next)=> {
 
         const data = req.body;
 
-        console.log(data)
-        console.log(req.file)
-
         if(!data.user) {
           return  res.status(401).json({message: 'user id is required'})
         };

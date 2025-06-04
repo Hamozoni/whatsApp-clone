@@ -51,6 +51,7 @@ export const NewChannelForm = ({setIsNewChannel})=> {
            const channel = await post_data('channel',formData);
 
            console.table(channel);
+          setIsNewChannel(false);
 
         }
         catch (error) {
