@@ -6,6 +6,7 @@ import { ImFilePicture } from "react-icons/im";
 import {Avatar} from "../ui/avatar"
 import { post_data } from "../../lib/post_data";
 import { User_context } from "../../contexts/user.context";
+import { TransparantLoader } from "../ui/transparantLoader";
 
 export const NewChannelForm = ({setIsNewChannel})=> {
 
@@ -115,6 +116,9 @@ export const NewChannelForm = ({setIsNewChannel})=> {
                      </div>
                 </form>
             </div>
+            {
+                isLoading && <TransparantLoader />
+            }
         </div>
     )
 }
