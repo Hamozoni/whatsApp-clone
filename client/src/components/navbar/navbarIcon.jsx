@@ -13,9 +13,8 @@ export const NavbarIcon = ({text,Icon})=> {
             <Icon size={20} className={`${active_navbar === text ? 'text-emerald-400' :'text-[#f7f8fa]'}`}/>
             {
                 active_navbar === text && 
-                <div className="absolute top-[6px] left-[-2px] w-[4px] h-[26px] bg-emerald-400 rounded-full"></div>
+                <div className="absolute  bottom-0 left-0 w-full h-[4px] bg-emerald-400 rounded-full"></div>
             }
-            <div className=""></div>
         </button>
     )
     };

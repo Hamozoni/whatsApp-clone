@@ -17,7 +17,7 @@ export const post_channel = async (req,res,next)=> {
 
         console.log({new_channel});
 
-        return res.status(200).json({...new_channel})
+        return res.status(200).json({new_channel})
 
 
     }
