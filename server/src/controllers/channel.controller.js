@@ -15,8 +15,6 @@ export const post_channel = async (req,res,next)=> {
 
         const new_channel = await Channel.create({name,description,admins:admin,profile_picure:file_result?._id})
 
-        console.log({new_channel});
-
         return res.status(200).json({new_channel})
 
 
@@ -25,4 +23,16 @@ export const post_channel = async (req,res,next)=> {
         next(error)
     }
 
+};
+
+export const get_channel = async (req,res,nex) => {
+
+    const {admin} = req.params
+
+    try {
+
+    }
+    catch {
+
+    }
 }
