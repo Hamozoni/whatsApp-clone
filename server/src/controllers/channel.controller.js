@@ -27,9 +27,13 @@ export const post_channel = async (req,res,next)=> {
 
 export const get_channel = async (req,res,nex) => {
 
-    const {admin} = req.params
+    const {user_id} = req.query
 
     try {
+
+        const channels = await Channel.find({admins: {$in: user_id},followers: {$in : user_id}});
+
+        return res.status(200).json({channels})
 
     }
     catch {
