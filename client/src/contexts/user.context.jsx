@@ -18,6 +18,7 @@ export const  User_context_provider =  ({children})=> {
     const [chats,set_chats] = useState([]);
     const [status,set_status] =  useState([]);
     const [calls,set_calls] = useState([]);
+    const [channels,setChannels] = useState([]);
     const [socket,set_socket] = useState(null);
     const [active_navbar,set_active_navbar] = useState('chats');
 
@@ -40,6 +41,8 @@ export const  User_context_provider =  ({children})=> {
                  set_calls(data?.user?.calls)
                  set_chats(data?.chats);
                  set_contacts(data?.user?.contacts);
+                 setChannels(data?.channels);
+                 console.log(data?.channels)
   
                const socket = await io.connect(import.meta.env.VITE_SOCKET_URL,{
                   reconnection: true,
@@ -92,7 +95,8 @@ export const  User_context_provider =  ({children})=> {
                   calls,
                   set_calls,
                   status,
-                  set_status
+                  set_status,
+                  channels
                 }
               }>
               {children}

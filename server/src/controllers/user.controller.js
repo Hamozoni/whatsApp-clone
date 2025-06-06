@@ -1,3 +1,4 @@
+import Channel from '../models/channel.model.js';
 import Chat from '../models/chat.model.js';
 import User from '../models/user.model.js';
 
@@ -61,10 +62,12 @@ export const get_user_controller = async (req,res,next) => {
                 
               },
           ])
-          .select('createdAt contact last_message user _id')
+          .select('createdAt contact last_message user _id');
+
+        const channels = await Channel.find({admins: {$in: user_id},followers: {$in : user_id}});
         
         
-        return res.status(200).json({message: 'user info found', user,chats});
+        return res.status(200).json({message: 'user info found', user,chats,channels});
 
     }
     catch (error) {
