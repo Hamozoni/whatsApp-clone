@@ -64,7 +64,8 @@ export const get_user_controller = async (req,res,next) => {
           ])
           .select('createdAt contact last_message user _id');
 
-        const channels = await Channel.find().populate({path: 'avatar',select: '_id url'})
+        const channels = await Channel.find()
+        .populate([{path: 'avatar',select: '_id url'},{path:'last_message'}])
         
         
         return res.status(200).json({message: 'user info found', user,chats,channels});
