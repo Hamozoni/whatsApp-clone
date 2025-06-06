@@ -10,7 +10,9 @@ export const ChannelsContainer = ()=> {
         <div className="">
             {
                 channels?.map(()=> (
-                    <div className=""></div>
+                    <div className="">
+                        
+                    </div>
                 ))
             }
         </div>

@@ -7,7 +7,7 @@ import { CreateChannelAlert } from "./createChannelAlert";
 import { Close_model } from "../ui/close_model";
 import { NewChannelForm } from "./newChannelForm";
 
-export const Channel = () => {
+export const Channels = () => {
 
     const [text,setText] = useState('');
 

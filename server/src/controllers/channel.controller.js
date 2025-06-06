@@ -5,15 +5,16 @@ export const post_channel = async (req,res,next)=> {
 
     try {
         const {name,description,admin} = req.body;
-        const profile_picure = req.file;
 
-        if(!name || !description || !admin || !profile_picure) {
+        if(!name || !description || !admin || !req.file) {
             return res.status(5000).json({message: 'name and description andadminr are requred'})
         };
 
-        const file_result = await upload_file(profile_picure,'channel');
+        const file_result = await upload_file(req.file,'channel');
 
-        const new_channel = await Channel.create({name,description,admins:admin,profile_picure:file_result?._id})
+        console.log(file_result);
+
+        const new_channel = await Channel.create({name,description,admins:admin,avatar:file_result?._id})
 
         return res.status(200).json({new_channel})
 

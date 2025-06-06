@@ -7,7 +7,8 @@ const CHANNEL_SCHEMA = new mongoose.Schema({
     name: {type: String, require: true},
     description: {type: String, require: true},
     messages: [{type: mongoose.Schema.Types.ObjectId,ref: 'Message'}],
-    profile_picture: {type: mongoose.Schema.Types.ObjectId, ref: 'File'},
+    last_message: {type: mongoose.Schema.Types.ObjectId,ref: 'Message'},
+    avatar: {type: mongoose.Schema.Types.ObjectId, ref: 'File' , require: true},
 
 },{timestamps: true});
 
