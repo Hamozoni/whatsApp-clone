@@ -6,6 +6,7 @@ import { IoMdAdd } from "react-icons/io";
 import { CreateChannelAlert } from "./createChannelAlert";
 import { Close_model } from "../ui/close_model";
 import { NewChannelForm } from "./newChannelForm";
+import { ChannelsContainer } from "./channelsContainer";
 
 export const Channels = () => {
 
@@ -33,14 +34,15 @@ export const Channels = () => {
                  isNewChannel ? (
                      <NewChannelForm setIsNewChannel={setIsNewChannel} />
                  ) : (
-                    <div className="p-3 flex-1 border-r border-r-gray-800 flex flex-col min-w-[350px] md:max-w-[380px] ">
-                        <header className='border-b border-b-black'>
+                    <div className="p-3 flex-1 border-r-[1px] border-r-gray-900 flex flex-col min-w-[350px] md:max-w-[380px] max-h-dvh">
+                        <header className='border-b border-b-gray-700 pb-3'>
                             <div className="flex items-center justify-between mb-4">
                                 <h5 className="text-lg font-bold">Channels</h5>
                                 <RoundedBtn Icon={IoMdAdd} onClick={()=> setIsCreateChannel(true)} />
                             </div>
                             <SearchInput handleSearch={()=> ''} text={text} setText={setText} />
                         </header>
+                        <ChannelsContainer />
 
 
                     </div>
