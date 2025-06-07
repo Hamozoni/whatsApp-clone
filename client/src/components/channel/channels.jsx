@@ -6,11 +6,14 @@ import { IoMdAdd } from "react-icons/io";
 import { CreateChannelAlert } from "./createChannelAlert";
 import { Close_model } from "../ui/close_model";
 import { NewChannelForm } from "./newChannelForm";
-import { ChannelsContainer } from "./channelsContainer";
+import { ChannelCard } from "./channelCard";
+import { useContext } from "react";
+import { User_context } from "../../contexts/user.context";
 
 export const Channels = () => {
 
     const [text,setText] = useState('');
+    const {channels} = useContext(User_context);
 
     const [isCreateChannel,setIsCreateChannel] = useState(false);
     const [isNewChannel,setIsNewChannel] = useState(false);
@@ -42,7 +45,14 @@ export const Channels = () => {
                             </div>
                             <SearchInput handleSearch={()=> ''} text={text} setText={setText} />
                         </header>
-                        <ChannelsContainer />
+
+                       <div className="py-3 flex-1 max-w-full overflow-y-auto">
+                            {
+                                channels?.map((channel)=> (
+                                    <ChannelCard channel={channel}/>
+                                ))
+                            }
+                        </div>
 
 
                     </div>
