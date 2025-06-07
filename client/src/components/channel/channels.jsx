@@ -23,17 +23,6 @@ export const Channels = () => {
     return (
         <div className="flex h-dvh">
             {
-               isCreateChannel && (
-                <>
-                 <Close_model set_model={setIsCreateChannel} />
-                 <CreateChannelAlert 
-                    setIsCreateChannel={setIsCreateChannel}
-                    setIsNewChannel={setIsNewChannel}
-                     />
-                </>
-               ) 
-            }
-            {
                  isNewChannel ? (
                      <NewChannelForm setIsNewChannel={setIsNewChannel} />
                  ) : (
@@ -58,6 +47,7 @@ export const Channels = () => {
                     </div>
                  )
             }
+            
             <div className="hidden md:flex flex-2 items-center justify-center flex-col gap-5">
                 <GrChannel size={48} className="text-gray-400" />
                 <h3 className='text-3xl'>
@@ -67,6 +57,18 @@ export const Channels = () => {
                     Entertainment, sports, news, lifestyle, people and more. Follow the channels that interest you
                 </p>
             </div>
+
+            {
+               isCreateChannel && (
+                <>
+                 <Close_model set_model={setIsCreateChannel} />
+                 <CreateChannelAlert 
+                    setIsCreateChannel={setIsCreateChannel}
+                    setIsNewChannel={setIsNewChannel}
+                     />
+                </>
+               ) 
+            }
         </div>
     )
 }

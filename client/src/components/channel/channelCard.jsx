@@ -8,9 +8,17 @@ export const ChannelCard = ({channel})=> {
             <Avatar size='lg' user_photo={channel.avatar.url}/>
             <div className="flex-1">
                 <div className="flex items-center justify-between">
-                    <h4 className=" text-gray-100 text-lg font-medium">{channel?.name}</h4>
+                    <h4 className=" text-gray-100 text-lg font-medium">
+                        {channel?.name}
+                    </h4>
                     <span className="text-gray-400 text-sm">
-                        7:30
+                         {
+                            channel?.last_message ? (
+                                '7:30'
+                            ) : (
+                                '9:00'
+                            )
+                        }
                     </span>
                 </div>
                 <div className="flex items-center justify-between">
