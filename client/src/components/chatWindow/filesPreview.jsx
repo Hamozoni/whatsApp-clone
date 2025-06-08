@@ -1,7 +1,7 @@
 import { Chat_window_context as ChatsContext } from "../../contexts/chats.context";
 import { useContext} from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { Files_gallery } from "../ui/files_gallery";
+import { MediaGalleryFile } from "./mediaGalleryFile";
 
 export const FilesPreview  = () => {
 
@@ -28,7 +28,7 @@ export const FilesPreview  = () => {
                     <AiOutlineClose />
                 </button>
             </header>
-            <Files_gallery 
+            <MediaGalleryFile 
                 file_data={message?.file} 
                 is_blob={true}
                 />

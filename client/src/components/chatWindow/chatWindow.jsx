@@ -1,10 +1,10 @@
 import { ChatsContext } from "../../contexts/chats.context";
 import { useContext} from "react"
-import{ Active_chat} from "./active_chat";
+import{ ChatMessages} from "./chatMessages";
 import { ChatHeader } from "./chatHeader";
 import { Chat_footer } from "./chat_footer";
 import { FilesPreview } from "./filesPreview";
-import { Media_gallery } from "./media_gallery";
+import { MediaGallery } from "./mediaGallery";
 import { MediaCapture } from "./mediaCapture";
 
 
@@ -28,7 +28,7 @@ export const ChatWindow = ()=> {
                     
                    : isCamera ?
                     <MediaCapture />
-                      : <Active_chat />
+                      : <ChatMessages />
                    }
                    {
                     isCamera ? '' :
@@ -37,7 +37,7 @@ export const ChatWindow = ()=> {
                 </div>
                 {
                     isSelectedGalleryFile && (
-                        <Media_gallery  />
+                        <MediaGallery  />
                     ) 
                 }
             </div>

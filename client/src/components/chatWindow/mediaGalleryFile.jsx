@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 
-export const Files_gallery = ({file_data,is_blob = false})=> {
+export const MediaGalleryFile = ({fileData,isBlob = false})=> {
 
-    const [file,set_file] = useState(null)
+    const [file,setFile] = useState(null)
 
         useEffect(()=> {
-            if(file_data && is_blob) {
+            if(fileData && isBlob) {
                 const reader = new FileReader();
                 reader.onload = (e)=> {
-                    set_file({url:e.target.result,type:file_data?.type?.split('/')[0]?.toUpperCase()})
+                    setFile({url:e.target.result,type:fileData?.type?.split('/')[0]?.toUpperCase()})
                 };
-                reader.readAsDataURL(file_data)
+                reader.readAsDataURL(fileData)
             }else {
-                set_file({url:file_data?.url,type:file_data?.type})
+                setFile({url:fileData?.url,type:fileData?.type})
             }
-        },[file_data]);
+        },[fileData]);
 
     return (
         <div className="flex items-center justify-center gap-3 w-fit mx-auto flex-1 max-h-full">

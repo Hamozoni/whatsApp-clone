@@ -1,27 +1,26 @@
 
-import React, { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { User_context } from '../../contexts/user.context';
-import { Message_card } from './message_card';
+import { MessageCard } from './messageCard';
 import { Loading_component } from '../ui/loading_component';
-import { Chat_window_context } from '../../contexts/chat_window.context';
+import {ChatsContext } from '../../contexts/chats.context';
 import { AiOutlineWechatWork } from "react-icons/ai";
 
-const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern hide_model'
+const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern hide_model';
 
-export const Active_chat = () => {
+export const ChatMessages = () => {
 
   const {user,socket} = useContext(User_context);
-  const {messages,active_chat,loading,error,set_messages} = useContext(Chat_window_context);
+  const {messages,activeChat,loading,error,setMessages} = useContext(ChatsContext);
 
-
-  const chat_sound_ref = useRef(null);
+  const chatSoundRef = useRef(null);
 
   useEffect(()=> {
-    if(!active_chat._id) return
+    if(!activeChat._id) return
     socket?.on('message_sent',data=> {
-      if(active_chat?._id === data?._id) {
-          set_messages(prev=> [...prev,data?.last_message]);
-          chat_sound_ref?.current?.play()
+      if(activeChat?._id === data?._id) {
+          setMessages(prev=> [...prev,data?.last_message]);
+          chatSoundRef?.current?.play()
       }else {
       }
     })
@@ -31,7 +30,7 @@ export const Active_chat = () => {
      }
   },[socket])
 
-  if(!active_chat._id) {
+  if(!activeChat._id) {
     return (
       <div className={className}>
         <div className="flex flex-col w-full h-full justify-center items-center">
@@ -54,7 +53,7 @@ export const Active_chat = () => {
   return (
               
       <div className={className}>
-            <audio ref={chat_sound_ref} src="./new_message_sound_2.mp3" className=" hidden"></audio>
+            <audio ref={chatSoundRef} src="./new_message_sound_2.mp3" className=" hidden"></audio>
             {
                 loading ? 
                 <div className={className}>
@@ -62,10 +61,10 @@ export const Active_chat = () => {
 
                 </div>
                   : messages?.map(message => (
-                    <Message_card 
+                    <MessageCard 
                       key={message?._id} 
                       message={message} 
-                      user_id={user?._id}
+                      userId={user?._id}
                     />
                 ))
               }

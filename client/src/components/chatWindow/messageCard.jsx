@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react";
-import { Media_message_card } from './media_message_card'
+import { MediaMessageCard } from './mediaMessageCard'
 import { Call_card } from "../chats/call_card";
+import { timeFormat } from "../../lib/timeFormat";
 
-export const Message_card = ({user_id,message})=> {
+export const MessageCard = ({userId,message})=> {
 
-    const [is_my_message,set_is_my_message] = useState(false);
+    const [isMyMessage,setIsMyMessage] = useState(false);
 
     useEffect(()=> {
-        set_is_my_message(message?.sender === user_id);
-    },[]);
+        setIsMyMessage(message?.sender === userId);
+    },[userId,message]);
 
     return (
         <div
-            className={`flex hide_model ${is_my_message ? 'justify-end' : 'justify-start'}`}
+            className={`flex hide_model ${isMyMessage ? 'justify-end' : 'justify-start'}`}
         >
             <div
                 className={`max-w-[65%] rounded-lg p-1 relative hide_model ${
-                    is_my_message
+                    isMyMessage
                     ? 'bg-emerald-800  ml-12'
                     : 'bg-[#222e35] mr-12'
                 }`}
@@ -26,7 +27,7 @@ export const Message_card = ({user_id,message})=> {
             >
             {
                 message.type === 'MEDIA' ?
-              <Media_message_card file={message?.file}/>
+              <MediaMessageCard file={message?.file}/>
               : message.type === 'CALL' && 
                <div className="p-2 ">
                    <Call_card call={message?.call} />
@@ -38,9 +39,9 @@ export const Message_card = ({user_id,message})=> {
             }
             <div className="flex items-center justify-end space-x-1 mt-1 hide_model">
                 <span className="text-[10px] text-gray-300 font-[100] hide_model">
-                    {new Date(message?.createdAt).toLocaleTimeString([],{hour: '2-digit',minute: '2-digit'})}
+                    {timeFormat(message?.createdAt)}
                 </span>
-                {(is_my_message && message.type !== 'CALL') &&(
+                {(isMyMessage && message.type !== 'CALL') &&(
                 <span className={`${message?.status === 'READ' ? 'text-emerald-300' :''} text-[10px] hide_model`}>
                     {message?.status === 'SENT' ? '✓' : '✓✓'}
                 </span>

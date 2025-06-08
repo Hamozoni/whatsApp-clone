@@ -5,45 +5,45 @@ import { BsFillCameraFill } from "react-icons/bs";
 
 export const MediaCapture = ()=> {
 
-    const {set_is_camera,set_message,set_is_preview} = useContext(ChatsContext)
-    const [photo,set_photo] = useState(null);
-    const [camera_user_mode,set_camera_user_mode] = useState(true);
-    const [recorded_chunks,set_recorded_chunks] = useState(null);
-    const media_recorder = useRef(null);
-    const stream_ref = useRef(null);
-    const canvas_ref = useRef(null);
+    const {setIsCamera,setNessage,setIsPreview} = useContext(ChatsContext)
+    const [photo,setPhoto] = useState(null);
+    const [cameraUserMode,setCameraUserMode] = useState(true);
+    const [recordedChunks,setRecordedChunks] = useState(null);
+    const mediaRecorderRef = useRef(null);
+    const streamRef = useRef(null);
+    const canvasRef = useRef(null);
 
-    const video_ref = useRef(null);
+    const videoRef = useRef(null);
 
     useEffect(()=> {
-        const initialize_camera = async () => {
+        const initializeCamera = async () => {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({
                     audio: true, 
-                    video:{facingMode: camera_user_mode ? 'user':'environment'},
+                    video:{facingMode: cameraUserMode ? 'user':'environment'},
                 });
 
-                if(video_ref?.current) {
-                    stream_ref.current = stream;
-                    video_ref.current.srcObject = stream_ref.current;
-                    recorder = new MediaRecorder(stream_ref.current);
+                if(videoRef?.current) {
+                    streamRef.current = stream;
+                    videoRef.current.srcObject = streamRef.current;
+                    recorder = new MediaRecorder(streamRef.current);
 
                     recorder.ondataavailable = (e) => {
-                        set_recorded_chunks(prev=> [...prev,e.data])
+                        setRecordedChunks(prev=> [...prev,e.data])
                     };
 
-                    media_recorder.current = recorder
+                    mediaRecorderRef.current = recorder
                 }
             }
             catch (error) {
 
             }
         };
-        initialize_camera();
+        initializeCamera();
 
         return ()=> {
-                if(stream_ref.current){
-                    const tracks = stream_ref.current.getTracks();
+                if(streamRef.current){
+                    const tracks = streamRef.current.getTracks();
                     tracks.forEach(track=> track.stop());
 
                 }
@@ -52,12 +52,12 @@ export const MediaCapture = ()=> {
         
     },[]);
 
-    const capture_photo = ()=> {
-        if(!canvas_ref.current || !video_ref.current) return;
+    const capturePhoto = ()=> {
+        if(!canvasRef.current || !videoRef.current) return;
 
-        const canvas = canvas_ref.current;
+        const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
-        const video = video_ref.current;
+        const video = videoRef.current;
 
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
@@ -70,11 +70,11 @@ export const MediaCapture = ()=> {
                 type:'image/png'
             });
 
-            set_message(prev=> ({...prev,type: 'MEDIA',file}));
+            setNessage(prev=> ({...prev,type: 'MEDIA',file}));
         },'image/png')
 
-        set_is_preview(true);
-        set_is_camera(false)
+        setIsPreview(true);
+        setIsCamera(false)
 
     }
 
@@ -83,16 +83,16 @@ export const MediaCapture = ()=> {
     return (
         <div className="w-full h-full bg-[#111b21]">
             <header>
-                <button onClick={()=> set_is_camera(false)}>cansel</button>
+                <button onClick={()=> setIsCamera(false)}>cansel</button>
             </header>
             <div className="max-w-full w-[450px] mx-auto relative">
-                <video ref={video_ref} className="w-full min-w-[500px] min-h-[300px]" autoPlay playsInline muted></video>
-                <button onClick={capture_photo} className=" absolute bottom-0 left-1/2 translate-x-1/2 translate-y-1/2 bg-emerald-600 rounded-full p-3">
+                <video ref={videoRef} className="w-full min-w-[500px] min-h-[300px]" autoPlay playsInline muted></video>
+                <button onClick={capturePhoto} className=" absolute bottom-0 left-1/2 translate-x-1/2 translate-y-1/2 bg-emerald-600 rounded-full p-3">
                     <BsFillCameraFill size={30} />
                 </button>
             </div>
 
-            <canvas ref={canvas_ref} className=" hidden" />
+            <canvas ref={canvasRef} className=" hidden" />
         </div>
     )
 }
