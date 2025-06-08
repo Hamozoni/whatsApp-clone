@@ -1,11 +1,11 @@
-import { Chat_window_context } from "../../contexts/chat_window.context";
+import { ChatsContext } from "../../contexts/chats.context";
 import { useContext, useEffect, useRef, useState } from "react";
 import { BsFillCameraFill } from "react-icons/bs";
 
 
-export const Media_capture = ()=> {
+export const MediaCapture = ()=> {
 
-    const {set_is_camera,set_message,set_is_preview} = useContext(Chat_window_context)
+    const {set_is_camera,set_message,set_is_preview} = useContext(ChatsContext)
     const [photo,set_photo] = useState(null);
     const [camera_user_mode,set_camera_user_mode] = useState(true);
     const [recorded_chunks,set_recorded_chunks] = useState(null);

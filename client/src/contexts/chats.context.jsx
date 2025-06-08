@@ -40,7 +40,7 @@ export const ChatsContextProvider = ({children})=> {
           status: 'SENT',
         });
 
-        const fetch_messages = async ()=> {
+        const fetchMessages = async ()=> {
             setLoading(true);
             setError(null);
             try{
@@ -58,7 +58,7 @@ export const ChatsContextProvider = ({children})=> {
       
 
           if(activeChat?._id) {
-              fetch_messages();
+              fetchMessages();
           }
 
     },[activeChat]);
@@ -93,7 +93,7 @@ export const ChatsContextProvider = ({children})=> {
                     setMessages,
                     message,
                     setMessage,
-                   activeChat,
+                    activeChat,
                     setActiveChat,
                     loading,
                     error,

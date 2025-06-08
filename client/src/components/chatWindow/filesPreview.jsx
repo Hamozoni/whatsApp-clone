@@ -1,16 +1,16 @@
-import { Chat_window_context } from "../../contexts/chat_window.context";
+import { Chat_window_context as ChatsContext } from "../../contexts/chats.context";
 import { useContext} from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { Files_gallery } from "../ui/files_gallery";
 
-export const Files_preview  = () => {
+export const FilesPreview  = () => {
 
-    const {message,set_is_preview,set_message} = useContext(Chat_window_context);
+    const {message,setIsPreview,setMessage} = useContext(ChatsContext);
 
-    const cansel_file = ()=> {
-        set_message( prev => {
+    const canselFile = ()=> {
+        setMessage( prev => {
             return {
-              chat_id: prev?.chat_id,
+              chatId: prev?.chat_id,
               sender: prev?.sender,
               contact: prev?.contact,
               text:'',
@@ -18,13 +18,13 @@ export const Files_preview  = () => {
               status: 'SENT',
             }
           } );
-        set_is_preview(false);
+        setIsPreview(false);
     }
 
     return (
         <div className="bg-[#111b21] flex flex-col items-center justify-center h-full">
             <header>
-                <button onClick={cansel_file}>
+                <button onClick={canselFile}>
                     <AiOutlineClose />
                 </button>
             </header>

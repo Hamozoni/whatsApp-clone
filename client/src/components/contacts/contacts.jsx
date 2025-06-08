@@ -19,7 +19,7 @@ const Button = ({Icon,text,handle_cleck})=> {
     )
 };
 
-export const Contacts = ({set_is_contact})=> {
+export const Contacts = ()=> {
 
     const {contacts} = useContext(User_context)
 
@@ -39,7 +39,7 @@ export const Contacts = ({set_is_contact})=> {
                     <div className="hide_model">
                         <Contact_header 
                             title='new chat' 
-                            set_backword={set_is_contact}
+                            set_backword={()=> ''}
                             search_value={search_value}
                             set_search_value={set_search_value}
                             handle_search={()=> ''}
@@ -66,7 +66,7 @@ export const Contacts = ({set_is_contact})=> {
                                             email={email} 
                                             profile_picture={profile_picture} 
                                             name={name}
-                                            set_is_contact={set_is_contact}
+                                            set_is_contact={()=> ''}
                                             />
                                             
                                     ))

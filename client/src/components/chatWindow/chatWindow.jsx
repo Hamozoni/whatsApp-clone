@@ -1,41 +1,42 @@
-import { Chat_window_context } from "../../contexts/chat_window.context";
+import { ChatsContext } from "../../contexts/chats.context";
 import { useContext} from "react"
 import{ Active_chat} from "./active_chat";
-import { Chat_header } from "./chat_header";
+import { ChatHeader } from "./chatHeader";
 import { Chat_footer } from "./chat_footer";
-import { Files_preview } from "./files_preview";
+import { FilesPreview } from "./filesPreview";
 import { Media_gallery } from "./media_gallery";
-import { Media_capture } from "./media_capture";
+import { MediaCapture } from "./mediaCapture";
 
 
-export const Chat_window = ()=> {
+export const ChatWindow = ()=> {
 
     const {
-        is_preview, 
-        active_chat,
-        is_gallery_file,
-        is_camera} = useContext(Chat_window_context);
+        isPreview, 
+        activeChat,
+        isSelectedGalleryFile,
+        isCamera
+    } = useContext(ChatsContext);
 
     return (
 
             <div className="text-[#f7f8fa] flex-1 h-dvh max-h-dvh">
                 <div className=" h-screen flex flex-col max-h-full">
-                   <Chat_header receiver={active_chat?.contact}/>
+                   <ChatHeader receiver={activeChat?.contact}/>
                    {
-                      is_preview ?
-                      <Files_preview />
+                      isPreview ?
+                      <FilesPreview />
                     
-                   : is_camera ?
-                    <Media_capture />
+                   : isCamera ?
+                    <MediaCapture />
                       : <Active_chat />
                    }
                    {
-                    is_camera ? '' :
+                    isCamera ? '' :
                    <Chat_footer />
                    }
                 </div>
                 {
-                    is_gallery_file && (
+                    isSelectedGalleryFile && (
                         <Media_gallery  />
                     ) 
                 }
