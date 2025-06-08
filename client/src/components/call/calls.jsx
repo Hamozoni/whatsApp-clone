@@ -21,7 +21,7 @@ export const Calls =  ()=> {
 
     return (
         <div className="h-dvh flex">
-            <div className="flex-1 border-r border-cyan-950">
+            <div className="flex-1 border-r border-r-gray-700 w-[350px] min-w-[350px] max-w-full">
                 <header className="p-3">
                     <div className="flex items-center justify-between mb-3">
                         <h4 className="text-xl font-bold">Calls</h4>

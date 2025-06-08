@@ -1,4 +1,4 @@
-import { Chat_window_context as ChatsContext } from "../../contexts/chats.context";
+import { ChatsContext } from "../../contexts/chats.context";
 import { useContext} from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { MediaGalleryFile } from "./mediaGalleryFile";
@@ -10,7 +10,7 @@ export const FilesPreview  = () => {
     const canselFile = ()=> {
         setMessage( prev => {
             return {
-              chatId: prev?.chat_id,
+              chat_id: prev?.chat_id,
               sender: prev?.sender,
               contact: prev?.contact,
               text:'',
@@ -29,8 +29,8 @@ export const FilesPreview  = () => {
                 </button>
             </header>
             <MediaGalleryFile 
-                file_data={message?.file} 
-                is_blob={true}
+                fileData={message?.file} 
+                isBlob={true}
                 />
 
         </div>

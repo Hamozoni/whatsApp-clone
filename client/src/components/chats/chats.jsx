@@ -6,6 +6,7 @@ import { SearchInput } from "../ui/searchInput";
 import { User_context } from "../../contexts/user.context";
 import { ChatsContext } from "../../contexts/chats.context";
 import { NoActiveChat } from "./NoActiveChat";
+import { ChatWindow } from "../chatWindow/chatWindow";
 
 
 export const Chats = ()=> {
@@ -16,7 +17,7 @@ export const Chats = ()=> {
 
     return (
         <div className="flex">
-            <div className="flex flex-col border-b border-b-[#213036] max-h-dvh h-dvh w-[650px] max-full">
+            <div className="flex flex-col border-r border-r-[#213036] max-h-dvh h-dvh w-[350px] min-w-[350px] max-w-full">
                 <header className="p-3 mb-2">
                     <div className="flex items-center justify-between mb-3">
                         <h3 className="text-xl font-bold">
@@ -48,7 +49,7 @@ export const Chats = ()=> {
             <div className={`${activeChat ? 'flex absolute z-20 left-0 top-0 w-full h-full max-w-full md:static md:left-auto md:top-auto' : 'hidden md:flex'} max-w-dvw flex-2`}>
                 {
                     activeChat ? 
-                    <Chat_window /> :
+                    <ChatWindow /> :
                     <NoActiveChat />
                 }
             </div>

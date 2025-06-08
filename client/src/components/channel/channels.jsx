@@ -26,7 +26,7 @@ export const Channels = () => {
                  isNewChannel ? (
                      <NewChannelForm setIsNewChannel={setIsNewChannel} />
                  ) : (
-                    <div className="p-3 flex-1 border-r-[1px] border-r-gray-800 flex flex-col min-w-[350px] md:max-w-[380px] max-h-dvh">
+                    <div className="p-3 flex-1 border-r border-r-gray-700 w-[350px] max-w-full flex flex-col min-w-[350px] max-h-dvh">
                         <header className='border-b border-b-gray-800 pb-3'>
                             <div className="flex items-center justify-between mb-4">
                                 <h5 className="text-lg font-bold">Channels</h5>

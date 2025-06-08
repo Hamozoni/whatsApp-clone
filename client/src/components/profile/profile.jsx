@@ -7,7 +7,7 @@ import { MdArrowBack } from "react-icons/md";
 export const Profile = ({setActivePage = null})=> {
     return (
         <div className="flex h-dvh flex-1">
-            <div className="min-w-[350px] md:max-w-[380px] p-4  border-r border-cyan-950">
+            <div className="p-4 border-r border-r-gray-700 w-[350px] min-w-[350px] max-w-full">
                 <div className="flex gap-3 items-center mb-3">
                     {
                         setActivePage && 

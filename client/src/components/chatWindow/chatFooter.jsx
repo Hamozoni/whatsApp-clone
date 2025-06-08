@@ -1,7 +1,7 @@
 import { AiOutlinePaperClip } from "react-icons/ai"
 import { SlMicrophone } from "react-icons/sl"
 import { useContext, useState } from "react";
-import { Chose_document } from "../ui/chose_document";
+import { SelectMessageFile } from "./selectMessageFile";
 import {ChatsContext } from "../../contexts/chats.context";
 import { Close_model } from "../ui/close_model";
 
@@ -55,7 +55,7 @@ export const ChatFooter = ()=> {
                 isDocument && 
                 <>
                     <Close_model set_model={setIsDocument} />
-                    <Chose_document set_is_document={setIsDocument} />
+                    <SelectMessageFile set_is_document={setIsDocument} />
                 </>
             }
 

@@ -1,4 +1,4 @@
-import { Chat_window_context } from "../../contexts/chat_window.context";
+import {ChatsContext } from "../../contexts/chats.context";
 import { useContext } from "react";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { 
@@ -18,14 +18,14 @@ const optionas = [
 
 const className = "flex items-center gap-3 text-[#f7f8fa] rounded-md hover:bg-[#2b3c46] min-w-[150px] capitalize p-2"
 
-export const Chose_document = ({set_is_document}) => {
+export const SelectMessageFile = ({set_is_document}) => {
 
     // const [file,set_file] = useState(null);
-    const {set_message,set_is_preview,set_is_camera} = useContext(Chat_window_context);
+    const {setMessage,setIsPreview,setIsCamera} = useContext(ChatsContext);
 
-    const handle_select_file = (e)=> {
-        set_is_preview(true);
-       set_message(prev=> ({...prev,file:e.target.files[0],type:'MEDIA'}));
+    const handleS0electFile = (e)=> {
+        setIsPreview(true);
+       setMessage(prev=> ({...prev,file:e.target.files[0],type:'MEDIA'}));
        set_is_document(false)
     }
 
@@ -39,7 +39,7 @@ export const Chose_document = ({set_is_document}) => {
                             {
                              (title === 'camera' || title === 'contact') ? 
                              <div onClick={()=>{
-                                title === 'camera' && set_is_camera(true)
+                                title === 'camera' && setIsCamera(true)
                              }} className={className}>
                                 < Icon size={24}/>
                                 <span>{title}</span> 
@@ -48,7 +48,7 @@ export const Chose_document = ({set_is_document}) => {
                                 <label className={className}>
                                     < Icon size={24}/>
                                     <span>{title}</span> 
-                                    <input onChange={handle_select_file} type={type} accept={accept} hidden/>
+                                    <input onChange={handleS0electFile} type={type} accept={accept} hidden/>
                                 </label>
                             }
                         </li>

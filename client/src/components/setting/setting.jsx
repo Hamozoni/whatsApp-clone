@@ -25,7 +25,7 @@ export const Setting = ()=> {
                  <Close_model set_model={setActivePage} />
                  </>
              }
-            <div className="p-3 flex-1 border-r border-r-gray-800 flex flex-col min-w-[350px] md:max-w-[380px] ">
+            <div className="p-3 flex-1 flex flex-col border-r border-r-gray-700 w-[350px] min-w-[350px] max-w-full ">
                 {
                     activePage === 'profile' ?
                     <Profile setActivePage={setActivePage} /> :
