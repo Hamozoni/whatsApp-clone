@@ -1,26 +1,26 @@
-import { Chat_window_context } from "../../contexts/chat_window.context";
+import {ChatsContext } from "../../contexts/chats.context";
 import { User_context } from "../../contexts/user.context";
 import { handle_send_message } from "../../lib/handle_send_message";
 import { useContext, useState } from "react";
 import { LuSendHorizontal } from "react-icons/lu"
 
 
-export const Send_message_btn = ()=> {
+export const SendMessageBtn = ()=> {
 
-    const [loading,set_loading] = useState(false);
-    const [error,set_error] = useState(null);
+    // const [loading,setLoading] = useState(false);
+    const [error,setError] = useState(null);
 
 
     const {
         message,
-        set_active_chat,
-        set_text,
-        active_chat,
-        set_is_recorder,
-        set_message,
-        set_is_preview,
-        set_messages
-    } = useContext(Chat_window_context);
+        setActiveChat,
+        setText,
+        activeChat,
+        setIsRecorder,
+        setMessage,
+        setIsPreview,
+        setMessages
+    } = useContext(ChatsContext);
 
     const {socket,set_chats} = useContext(User_context);
 
@@ -30,17 +30,17 @@ export const Send_message_btn = ()=> {
                 handle_send_message({
                     message,
                     set_chats,
-                    active_chat,
-                    set_active_chat,
-                    set_messages,
+                    active_chat: activeChat,
+                    set_active_chat: setActiveChat,
+                    set_messages: setMessages,
                     socket
                 });
                 if(!error) {
-                    set_text('');
-                    set_is_recorder(false);
-                    set_message( prev => {
+                    setText('');
+                    setIsRecorder(false);
+                    setMessage( prev => {
                         return {
-                          chat_id: prev?.chat_id,
+                          chat_id: prev?.chatId,
                           sender: prev?.sender,
                           contact: prev?.contact,
                           text:'',
@@ -48,7 +48,7 @@ export const Send_message_btn = ()=> {
                           status: 'SENT',
                         }
                       } );
-                    set_is_preview(false);
+                    setIsPreview(false);
                 }
 
             }}

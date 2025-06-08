@@ -6,6 +6,7 @@ import { IoVideocam,IoKeypad } from "react-icons/io5";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 import { Avatar } from "../ui/avatar";
 import { SearchInput } from "../ui/searchInput";
+import { timeFormat } from "../../lib/timeFormat";
 
 export const Calls =  ()=> {
 
@@ -17,10 +18,6 @@ export const Calls =  ()=> {
     const handle_search =()=> {
 
     };
-
-   const time = (time)=> {
-    return new Date(time).toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
-    }
 
     return (
         <div className="h-dvh flex">
@@ -49,7 +46,7 @@ export const Calls =  ()=> {
                                         <div className="flex items-center justify-between">
                                            <h6>{call?.caller?._id === user?._id ?  call?.callee?.name : call?.caller?.name}</h6>
                                            <span className="text-xs text-[#667781]">
-                                               {time(call?.createdAt || call?.updatedAt)}
+                                               {timeFormat(call?.createdAt || call?.updatedAt)}
                                             </span>
                                         </div>
                                         <Call_card call={call} />

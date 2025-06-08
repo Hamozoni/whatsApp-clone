@@ -32,7 +32,7 @@ export const ChatsContextProvider = ({children})=> {
         setMessages([]);
         setText('')
         setMessage({
-          chatId: activeChat?._id ?  activeChat?._id : null,
+          chat_id: activeChat?._id ?  activeChat?._id : null,
           sender: user?._id,
           contact: activeChat?.contact?._id,
           text:'',

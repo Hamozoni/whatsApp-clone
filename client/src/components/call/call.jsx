@@ -6,7 +6,7 @@ import { Connected_call } from "./connected_call";
 import { User_context } from "../../contexts/user.context";
 import { post_data } from "../../lib/post_data";
 import { handle_send_message } from "../../lib/handle_send_message";
-import { Chat_window_context } from "../../contexts/chat_window.context";
+import {ChatsContext } from "../../contexts/chats.context";
 import { update_data } from "../../lib/update_data";
 
 export const Call = ()=> {
@@ -24,10 +24,10 @@ export const Call = ()=> {
     const {socket,user,set_chats} = useContext(User_context);
 
     const {
-        active_chat,
-        set_active_chat,
-        set_messages
-    } = useContext(Chat_window_context);
+        activeChat,
+        setActiveChat,
+        setMessages
+    } = useContext(ChatsContext);
 
     const [local_video,set_local_video] = useState(null);
     const [remote_video,set_remote_video] = useState(null);
@@ -65,9 +65,9 @@ export const Call = ()=> {
 
            await handle_send_message({message,
                 set_chats,
-                active_chat,
-                set_active_chat,
-                set_messages,
+                active_chat: activeChat,
+                set_active_chat: setActiveChat,
+                set_messages: setMessages,
                 socket}
             );
 

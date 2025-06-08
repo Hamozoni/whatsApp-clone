@@ -2,7 +2,7 @@ import { ChatsContext } from "../../contexts/chats.context";
 import { useContext} from "react"
 import{ ChatMessages} from "./chatMessages";
 import { ChatHeader } from "./chatHeader";
-import { Chat_footer } from "./chat_footer";
+import { ChatFooter } from "./chatFooter";
 import { FilesPreview } from "./filesPreview";
 import { MediaGallery } from "./mediaGallery";
 import { MediaCapture } from "./mediaCapture";
@@ -32,7 +32,7 @@ export const ChatWindow = ()=> {
                    }
                    {
                     isCamera ? '' :
-                   <Chat_footer />
+                   <ChatFooter />
                    }
                 </div>
                 {
