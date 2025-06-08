@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Media_message_card } from './media_message_card'
-import { Call_card } from "../chat/call_card";
+import { Call_card } from "../chats/call_card";
 
 export const Message_card = ({user_id,message})=> {
 

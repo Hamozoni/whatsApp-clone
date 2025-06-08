@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { Avatar } from "../ui/avatar";
 import { User_context } from "../../contexts/user.context";
-import { Chat_window_context } from "../../contexts/chat_window.context";
+import { ChatsContext } from "../../contexts/chats.context";
 
 export const Contact_card = ({_id,about,profile_picture,name,set_is_contact})=> {
 
     const {user,chats} = useContext(User_context);
-    const {set_active_chat} = useContext(Chat_window_context);
+    const {set_active_chat} = useContext(ChatsContext);
 
     const handle_open_chat = () => {
 

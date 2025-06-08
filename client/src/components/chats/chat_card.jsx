@@ -1,7 +1,7 @@
 import { useContext, useEffect,useState } from "react";
-import { User_context } from "../../contexts/user.context";
+import { User_context } from "../../contexts/user.context.jsx";
 import update_message_status from "../../utils/update_mesages_status.js";
-import { Chat_window_context } from "../../contexts/chat_window.context";
+import { ChatsContext } from "../../contexts/chats.context.jsx";
 import { FaRegImage,FaMicrophone ,FaVideo } from "react-icons/fa6";
 import { BsFillFileEarmarkPdfFill } from "react-icons/bs";
 import { Call_card } from "./call_card.jsx";
@@ -9,7 +9,7 @@ import { Call_card } from "./call_card.jsx";
 export const Chat_card = ({chat})=> {
     
     const {user,socket} = useContext(User_context);
-    const {active_chat,set_active_chat} = useContext(Chat_window_context);
+    const {active_chat,set_active_chat} = useContext(ChatsContext);
     const [text_time,set_text_time] = useState(null);
     const [unread,set_unread] = useState(0);
     const [loading,set_loading] = useState(false);
