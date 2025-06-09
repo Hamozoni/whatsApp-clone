@@ -1,15 +1,15 @@
 import { useState } from "react";
 
 import {IoSettingsOutline } from "react-icons/io5";
-import { Account } from './account';
-import { Privacy } from './privacy';
-import { MainSetting } from './mainSetting';
-import { Chats } from './chats';
-import { Notifications } from "./notifications";
-import { Help } from "./help";
-import { KeyboardShorts } from "./keyboardShorts";
-import { Close_model } from "../ui/close_model";
-import { Profile } from "../profile/profile";
+import { Account } from '../components/settings/account';
+import { Privacy } from '../components/settings/privacy';
+import { MainSetting } from '../components/settings/mainSetting';
+import { Chats } from '../components/settings/chats';
+import { Notifications } from "../components/settings/notifications";
+import { Help } from "../components/settings/help";
+import { KeyboardShorts } from "../components/settings/keyboardShorts";
+import { Close_model } from "../components/ui/close_model";
+import { Profile } from "./profile";
 
 
 export const Settings = ()=> {

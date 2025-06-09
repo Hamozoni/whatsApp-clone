@@ -3,9 +3,9 @@ import { User_context } from "../../contexts/user.context.jsx";
 import { ChatsContext } from "../../contexts/chats.context.jsx";
 import { FaRegImage,FaMicrophone ,FaVideo } from "react-icons/fa6";
 import { BsFillFileEarmarkPdfFill } from "react-icons/bs";
-import { CallNotificationCard } from "../ui/callNotificationCard.jsx";
+import { CallNotificationCard } from "../../components/ui/callNotificationCard.jsx";
 import { timeFormat } from "../../lib/timeFormat.js";
-import { Avatar } from "../ui/avatar.jsx";
+import { Avatar } from "../../components/ui/avatar.jsx";
 
 export const ChatCard = ({chat})=> {
     

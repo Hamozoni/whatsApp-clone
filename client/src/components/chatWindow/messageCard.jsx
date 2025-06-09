@@ -18,7 +18,7 @@ export const MessageCard = ({userId,message})=> {
             <div
                 className={`max-w-[65%] rounded-lg p-1 relative hide_model ${
                     isMyMessage
-                    ? 'bg-emerald-800  ml-12'
+                    ? 'bg-emerald-900  ml-12'
                     : 'bg-[#222e35] mr-12'
                 }`}
                 style={{

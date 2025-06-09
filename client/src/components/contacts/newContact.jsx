@@ -7,7 +7,7 @@ import { ContactCard } from "./contactCard";
 import { fetch_data } from "../../lib/fetch_data";
 import { post_data } from "../../lib/post_data";
 
-export const NewContact = ({set_is_new_contact})=> {
+export const NewContact = ({setIsNewContact})=> {
 
     const {user,contacts,set_contacts} = useContext(User_context);
 
@@ -78,16 +78,29 @@ export const NewContact = ({set_is_new_contact})=> {
         <div className="hide_model">
             <ContactHeader 
                 title='new contact' 
-                set_backword={set_is_new_contact} 
+                setIsContcatPage={setIsNewContact} 
                 />
-            <form onSubmit={handleContact} className="p-3 hide_model">
-                <Input label='Contact Email' type='email' value={email} set_value={setEmail} placeholder='exable@gmail.com'/>
+            <form 
+                onSubmit={handleContact} 
+                className="p-3 hide_model"
+                >
+                <Input 
+                    label='Contact Email' 
+                    type='email' value={email} 
+                    set_value={setEmail} 
+                    placeholder='exable@gmail.com'
+                    />
                 {(!contact && error) && (
-                        <p className="text-red-500 text-sm text-center mb-3 hide_model">{error}</p>
+                    <p className="text-red-500 text-sm text-center mb-3">
+                        {error}
+                    </p>
                 )}
                 {
                     contact?.email !== email &&
-                   <Submit_btn text='find contact' is_loading={is_loading} />
+                   <Submit_btn 
+                        text='find contact' 
+                        is_loading={is_loading} 
+                      />
                 }
             </form>
 
@@ -99,7 +112,7 @@ export const NewContact = ({set_is_new_contact})=> {
                         </h6>
                         <ContactCard contact={contact} />
                            {(contact && error) && (
-                                    <p className="text-red-500 text-sm text-center mb-3">{error}</p>
+                                <p className="text-red-500 text-sm text-center mb-3">{error}</p>
                             )}
                             { 
                             !contacts?.find(e=> e.email === contact?.email) &&
