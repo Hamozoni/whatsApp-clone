@@ -34,11 +34,17 @@ export const Calls =  ()=> {
                         />
                 </header>
                 <div className="p-3">
-                    <h6 className="text-gray-400 font-medium mb-5">Recent</h6>
+                    <h6 className="text-gray-400 font-medium mb-5">
+                        Recent
+                    </h6>
                     <div className="">
                         {
                             calls?.map((call)=> (
-                                <CallCard key={call?._id} call={call} userId={user?._id} />
+                                <CallCard 
+                                    key={call?._id} 
+                                    call={call} 
+                                    userId={user?._id} 
+                                    />
                             ))
                         }
                     </div>

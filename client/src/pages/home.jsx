@@ -8,7 +8,6 @@ import { Status } from '../components/status/status';
 import { User_context } from '../contexts/user.context';
 import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Contacts } from '../components/contacts/contacts';
 
 export default function Home() {
 
@@ -31,10 +30,7 @@ export default function Home() {
         <div className="w-full bg-[#111b21] text-[#f7f8fa] md:max-h-[calc(100dvh - 68px)]">
           {
             active_navbar === 'chats' ? 
-            <Chats />: 
-            active_navbar === 'contacts' ? 
-            <Contacts /> :
-
+            <Chats />:
             active_navbar === 'calls' ? 
               <Calls /> : 
             active_navbar === 'status' ? 

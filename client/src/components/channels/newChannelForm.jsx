@@ -100,7 +100,9 @@ export const NewChannelForm = ({setIsNewChannel})=> {
                         <EmojiBtn setText={setName} />
                     </div>
                     <section className=" bg-gray-800 p-3">
-                        <h4 className="text-xs font-medium mb-1">channel description</h4>
+                        <h4 className="text-xs font-medium mb-1">
+                            channel description
+                        </h4>
                         <div className="flex items-start gap-1">
                             <textarea 
                                 value={description}
