@@ -4,7 +4,7 @@ export const ChannelCard = ({channel})=> {
 
     return (
 
-        <div className=" flex items-center gap-3 cursor-pointer rounded-md hover:bg-gray-700 my-1 p-3">
+        <div className=" flex items-center gap-3 cursor-pointer rounded-md hover:bg-[#213036] my-1 p-3">
             <Avatar size='lg' user_photo={channel.avatar.url}/>
             <div className="flex-1">
                 <div className="flex items-center justify-between">

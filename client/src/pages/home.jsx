@@ -1,9 +1,9 @@
 import { Chats } from '../components/chats/chats';
-import {Calls} from '../components/call/calls'
-import {Channels } from '../components/channel/channels';
+import {Calls} from '../components/calls/calls'
+import {Channels } from '../components/channels/channels';
 import { Navbar } from '../components/navbar/navbar';
 import { Profile } from '../components/profile/profile';
-import { Setting } from '../components/setting/setting';
+import { Settings } from '../components/settings/settings';
 import { Status } from '../components/status/status';
 import { User_context } from '../contexts/user.context';
 import { useContext, useEffect } from 'react';
@@ -42,7 +42,7 @@ export default function Home() {
             active_navbar === 'channels' ?
                <Channels /> : 
             active_navbar === 'settings' ?
-               <Setting /> : 
+               <Settings /> : 
             active_navbar === 'profile' &&
                <Profile />
           }

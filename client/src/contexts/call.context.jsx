@@ -1,4 +1,4 @@
-import { Call } from "../components/call/call";
+import { Call } from "../components/calls/call";
 import { createContext, useContext, useEffect, useState } from "react";
 import { User_context } from "./user.context";
 

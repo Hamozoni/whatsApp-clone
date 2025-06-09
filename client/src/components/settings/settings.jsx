@@ -12,7 +12,7 @@ import { Close_model } from "../ui/close_model";
 import { Profile } from "../profile/profile";
 
 
-export const Setting = ()=> {
+export const Settings = ()=> {
 
     const [activePage,setActivePage] = useState('main')
 
@@ -25,7 +25,7 @@ export const Setting = ()=> {
                  <Close_model set_model={setActivePage} />
                  </>
              }
-            <div className="p-3 flex-1 flex flex-col border-r border-r-gray-700 w-[350px] min-w-[350px] max-w-full ">
+            <div className="p-3 flex-1 flex flex-col border-r border-r-[#213036] w-full min-w-[350px] md:w-[350px] max-w-full ">
                 {
                     activePage === 'profile' ?
                     <Profile setActivePage={setActivePage} /> :

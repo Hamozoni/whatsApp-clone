@@ -17,7 +17,7 @@ export const Chats = ()=> {
 
     return (
         <div className="flex">
-            <div className="flex flex-col border-r border-r-[#213036] max-h-dvh h-dvh w-[350px] min-w-[350px] max-w-full">
+            <div className="flex flex-col border-r border-r-[#213036] max-h-dvh h-dvh w-full md:w-[350px] max-w-full">
                 <header className="p-3 mb-2">
                     <div className="flex items-center justify-between mb-3">
                         <h3 className="text-xl font-bold">

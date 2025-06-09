@@ -21,7 +21,7 @@ export const Calls =  ()=> {
 
     return (
         <div className="h-dvh flex">
-            <div className="flex-1 border-r border-r-gray-700 w-[350px] min-w-[350px] max-w-full">
+            <div className="flex-1 border-r border-r-[#213036] min-w-[350px] w-full md:w-[350px] max-w-full">
                 <header className="p-3">
                     <div className="flex items-center justify-between mb-3">
                         <h4 className="text-xl font-bold">Calls</h4>
@@ -40,7 +40,7 @@ export const Calls =  ()=> {
                     <div className="">
                         {
                             calls?.map((call)=> (
-                                <div key={call?._id} className="flex gap-2 my-1 cursor-pointer rounded-md p-2 hover:bg-[#48505e] w-full">
+                                <div key={call?._id} className="flex gap-2 my-1 cursor-pointer rounded-md p-2 hover:bg-[#213036] w-full">
                                     <Avatar size="lg" user_photo={call?.profile_picture}/>
                                     <div className=" flex-1">
                                         <div className="flex items-center justify-between">

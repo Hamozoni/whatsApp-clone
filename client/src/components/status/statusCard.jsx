@@ -9,7 +9,7 @@ export const StatusCard = ({status,length})=> {
     return (
         <div 
             onClick={()=> setIsStatus(true)} 
-            className="flex items-center gap-2 cursor-pointer hover:bg-cyan-950 p-2 rounded-md">
+            className="flex items-center gap-2 cursor-pointer hover:bg-[#213036] p-2 rounded-md">
                 <StatusAvatarRing 
                     status={status}  
                     statusCount={length} 

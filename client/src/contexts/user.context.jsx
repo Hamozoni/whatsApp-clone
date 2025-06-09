@@ -42,7 +42,6 @@ export const  User_context_provider =  ({children})=> {
                  set_chats(data?.chats);
                  set_contacts(data?.user?.contacts);
                  setChannels(data?.channels);
-                 console.log(data?.channels)
   
                const socket = await io.connect(import.meta.env.VITE_SOCKET_URL,{
                   reconnection: true,
@@ -59,7 +58,7 @@ export const  User_context_provider =  ({children})=> {
 
           }
           catch (error){
-            console.log(error)
+            console.log(error.message)
             set_error(error.message);
           }
           finally {
@@ -77,7 +76,8 @@ export const  User_context_provider =  ({children})=> {
       return (
         <Loading_component />
       )
-    }else {
+    }
+    
       return (
           <User_context.Provider 
               value={
@@ -102,8 +102,6 @@ export const  User_context_provider =  ({children})=> {
               {children}
           </User_context.Provider>
       )
-
-    }
 
 };
 

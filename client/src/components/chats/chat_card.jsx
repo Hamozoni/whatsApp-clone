@@ -31,7 +31,7 @@ export const Chat_card = ({chat})=> {
     return (
         <div
             onClick={handle_active_chat}
-            className={`flex items-center cursor-pointer px-3 hover:bg-[#31414b] ${
+            className={`flex items-center cursor-pointer px-3 hover:bg-[#213036] ${
                 active_chat?._id === chat._id ? 'bg-[#222e35]' : '' }`}
             >
             <div className="relative">
