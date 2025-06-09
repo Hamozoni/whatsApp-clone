@@ -1,12 +1,10 @@
 import { MdAddIcCall } from "react-icons/md";
 import { useContext, useState } from "react";
 import { User_context } from "../../contexts/user.context";
-import { Call_card } from "../chats/call_card";
 import { IoVideocam,IoKeypad } from "react-icons/io5";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
-import { Avatar } from "../ui/avatar";
 import { SearchInput } from "../ui/searchInput";
-import { timeFormat } from "../../lib/timeFormat";
+import { CallCard } from "./callCard";
 
 export const Calls =  ()=> {
 
@@ -36,22 +34,11 @@ export const Calls =  ()=> {
                         />
                 </header>
                 <div className="p-3">
-                    <h6>Recent</h6>
+                    <h6 className="text-gray-400 font-medium mb-5">Recent</h6>
                     <div className="">
                         {
                             calls?.map((call)=> (
-                                <div key={call?._id} className="flex gap-2 my-1 cursor-pointer rounded-md p-2 hover:bg-[#213036] w-full">
-                                    <Avatar size="lg" user_photo={call?.profile_picture}/>
-                                    <div className=" flex-1">
-                                        <div className="flex items-center justify-between">
-                                           <h6>{call?.caller?._id === user?._id ?  call?.callee?.name : call?.caller?.name}</h6>
-                                           <span className="text-xs text-[#667781]">
-                                               {timeFormat(call?.createdAt || call?.updatedAt)}
-                                            </span>
-                                        </div>
-                                        <Call_card call={call} />
-                                    </div>
-                                </div>
+                                <CallCard key={call?._id} call={call} userId={user?._id} />
                             ))
                         }
                     </div>

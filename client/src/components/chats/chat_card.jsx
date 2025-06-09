@@ -1,55 +1,41 @@
 import { useContext, useEffect,useState } from "react";
 import { User_context } from "../../contexts/user.context.jsx";
-import update_message_status from "../../utils/update_mesages_status.js";
 import { ChatsContext } from "../../contexts/chats.context.jsx";
 import { FaRegImage,FaMicrophone ,FaVideo } from "react-icons/fa6";
 import { BsFillFileEarmarkPdfFill } from "react-icons/bs";
 import { Call_card } from "./call_card.jsx";
+import { timeFormat } from "../../lib/timeFormat.js";
+import { Avatar } from "../ui/avatar.jsx";
 
 export const Chat_card = ({chat})=> {
     
-    const {user,socket} = useContext(User_context);
-    const {active_chat,set_active_chat} = useContext(ChatsContext);
-    const [text_time,set_text_time] = useState(null);
+    const {user} = useContext(User_context);
+    const {activeChat,setActiveChat} = useContext(ChatsContext);
     const [unread,set_unread] = useState(0);
     const [loading,set_loading] = useState(false);
     const [error,set_error] = useState(null);
 
-    useEffect(()=> {
-        const text_time = new Date(chat?.last_message?.createdAt || chat?.last_message?.updatedAt)
-        .toLocaleTimeString([],{hour: '2-digit', minute: '2-digit'});
-        set_text_time(text_time);
-    },[]);
 
-
-    const handle_active_chat = ()=> {
-       if( chat?._id === active_chat?._id) return
-        set_active_chat(chat)
+    const handleActiveChat = ()=> {
+       if( chat?._id === activeChat?._id) return
+        setActiveChat(chat)
     }
 
 
     return (
         <div
-            onClick={handle_active_chat}
+            onClick={handleActiveChat}
             className={`flex items-center cursor-pointer px-3 hover:bg-[#213036] ${
-                active_chat?._id === chat._id ? 'bg-[#222e35]' : '' }`}
+                activeChat?._id === chat._id ? 'bg-[#222e35]' : '' }`}
             >
-            <div className="relative">
-                <div className="w-12 h-12 rounded-full overflow-hidden">
-                    <img 
-                        src={chat?.contact?.profile_picture}
-                        alt={chat?.contact?.name} 
-                        className="w-12 h-12 rounded-full object-cover"
-                     />
-                </div>
-            </div>
+            <Avatar size="lg" user_photo={chat?.contact?.profile_picture} />
             <div className="ml-4 flex-1 py-3 min-w-0 border-b-1 border-[#222e35] text-[#f7f8fa]">
                 <div className="flex justify-between items-center">
                     <h2 className="font-semibold truncate">
                         {chat?.contact?.name}
                     </h2>
                     <span className="text-xs text-[#667781]">
-                        {text_time}
+                        {timeFormat(chat?.last_message?.createdAt || chat?.last_message?.updatedAt)}
                     </span>
                 </div>
                 <div className="flex justify-between items-center">
