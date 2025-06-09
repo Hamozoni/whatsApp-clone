@@ -1,10 +1,10 @@
-import { Chats } from '../components/chats/chats';
-import {Calls} from '../components/calls/calls'
-import {Channels } from '../components/channels/channels';
+import { Chats } from './chats';
+import {Calls} from './calls'
+import {Channels } from './channels';
 import { Navbar } from '../components/navbar/navbar';
 import { Profile } from './profile';
 import { Settings } from './settings';
-import { Status } from '../components/status/status';
+import { Status } from './status';
 import { User_context } from '../contexts/user.context';
 import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';

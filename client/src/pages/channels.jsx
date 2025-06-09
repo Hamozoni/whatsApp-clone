@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { GrChannel } from "react-icons/gr";
-import {SearchInput} from '../ui/searchInput';
-import {RoundedBtn} from "../ui/roundedBtn";
+import {SearchInput} from '../components/ui/searchInput';
+import {RoundedBtn} from "../components/ui/roundedBtn";
 import { IoMdAdd } from "react-icons/io";
-import { CreateChannelAlert } from "./createChannelAlert";
-import { Close_model } from "../ui/close_model";
-import { NewChannelForm } from "./newChannelForm";
-import { ChannelCard } from "./channelCard";
+import { CreateChannelAlert } from "../components/channels/createChannelAlert";
+import { Close_model } from "../components/ui/close_model";
+import { NewChannelForm } from "../components/channels//newChannelForm";
+import { ChannelCard } from "../components/channels//channelCard";
 import { useContext } from "react";
-import { User_context } from "../../contexts/user.context";
+import { User_context } from "../contexts/user.context";
 
 export const Channels = () => {
 

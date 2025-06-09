@@ -1,13 +1,13 @@
 import { useContext, useState } from "react"
-import { User_context } from "../../contexts/user.context";
+import { User_context } from "../contexts/user.context";
 import { GrFormAdd } from "react-icons/gr";
-import { StatusMenuModel } from "./statusMenuModel";
-import { Close_model } from "../ui/close_model";
-import { PostTextStatus } from "./postTextStatus";
-import { StatusCard } from "./statusCard";
-import { Avatar } from "../ui/avatar";
-import {PostImageStatus } from "./postImageStatus";
-import{ VideoTrimmer }from "./postVideoStatus";
+import { StatusMenuModel } from "../components/status/statusMenuModel";
+import { Close_model } from "../components/ui/close_model";
+import { PostTextStatus } from "../components/status/postTextStatus";
+import { StatusCard } from "../components/status/statusCard";
+import { Avatar } from "../components/ui/avatar";
+import {PostImageStatus } from "../components/status/postImageStatus";
+import{ VideoTrimmer }from "../components/status/postVideoStatus";
 
 import { SiGradleplaypublisher } from "react-icons/si";
 import { MdLockOutline } from "react-icons/md";

@@ -1,10 +1,10 @@
 import { MdAddIcCall } from "react-icons/md";
 import { useContext, useState } from "react";
-import { User_context } from "../../contexts/user.context";
+import { User_context } from "../contexts/user.context";
 import { IoVideocam,IoKeypad } from "react-icons/io5";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
-import { SearchInput } from "../ui/searchInput";
-import { CallCard } from "./callCard";
+import { SearchInput } from "../components/ui/searchInput";
+import { CallCard } from "../components/calls/callCard";
 
 export const Calls =  ()=> {
 

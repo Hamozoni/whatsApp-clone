@@ -1,11 +1,11 @@
-import { ChatCard } from "./chatCard";
+import { ChatCard } from "../components/chats/chatCard";
 import { useContext, useState } from "react";
-import { User_context } from "../../contexts/user.context";
-import { ChatsContext } from "../../contexts/chats.context";
-import { NoActiveChat } from "./NoActiveChat";
-import { ChatWindow } from "../../components/chatWindow/chatWindow";
-import { Contacts } from "../contacts/contacts";
-import { ChatHeader } from "./chatHeader";
+import { User_context } from "../contexts/user.context";
+import { ChatsContext } from "../contexts/chats.context";
+import { NoActiveChat } from "../components/chats/NoActiveChat";
+import { ChatWindow } from "../components/chatWindow/chatWindow";
+import { Contacts } from "./contacts";
+import { ChatHeader } from "../components/chats/chatHeader";
 
 
 export const Chats = ()=> {
