@@ -8,9 +8,9 @@ export const ChannelCard = ({channel})=> {
             <Avatar size='lg' user_photo={channel.avatar.url}/>
             <div className="flex-1">
                 <div className="flex items-center justify-between">
-                    <h4 className=" text-gray-100 text-lg font-medium">
+                    <h6 >
                         {channel?.name}
-                    </h4>
+                    </h6>
                     <span className="text-gray-400 text-sm">
                          {
                             channel?.last_message ? (
@@ -22,7 +22,7 @@ export const ChannelCard = ({channel})=> {
                     </span>
                 </div>
                 <div className="flex items-center justify-between">
-                    <p className=" line-clamp-1 text-gray-400 text-sm font-medium">
+                    <p className=" line-clamp-1 text-gray-400 text-sm font-light">
                         {
                             channel?.last_message ? (
                                 'last message'

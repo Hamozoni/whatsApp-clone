@@ -5,13 +5,13 @@ import { RiVideoDownloadLine } from "react-icons/ri";
 import { useContext, useEffect, useState } from "react";
 import { User_context } from "../../contexts/user.context";
 
-export const Call_card = ({call})=> {
+export const CallNotificationCard = ({call})=> {
 
     const {user} = useContext(User_context);
-    const [is_missed_call,set_is_missed_call] = useState(false);
+    const [isMissedCall,setIsMissedCall] = useState(false);
 
     useEffect(()=> {
-        set_is_missed_call(call?.call_status === 'MISSED' && user?._id === call?.callee?._id)
+        setIsMissedCall(call?.call_status === 'MISSED' && user?._id === call?.callee?._id)
     },[]);
 
     return (
@@ -23,8 +23,8 @@ export const Call_card = ({call})=> {
                 user?._id === call?.caller ? 
                    <> <SlCallOut size={12} /> <span className="text-[#667781]">outgoing audio call</span>  </>
                     :
-                   <> <SlCallIn size={12} className={is_missed_call && 'text-red-400'} />  
-                      <span className="text-[#667781]">{is_missed_call ? 'missed audio call' : 'incoming audio call'} </span>
+                   <> <SlCallIn size={12} className={isMissedCall && 'text-red-400'} />  
+                      <span className="text-[#667781]">{isMissedCall ? 'missed audio call' : 'incoming audio call'} </span>
                    </>
                 } 
             </>
@@ -35,8 +35,8 @@ export const Call_card = ({call})=> {
                    <> <RiVideoUploadLine size={20} /> <span className="text-[#667781]">outgoing video call</span>   </>
                     : 
                     <>
-                        <RiVideoDownloadLine size={20} className={is_missed_call && 'text-red-400'} /> 
-                         <span className="text-[#667781]">{is_missed_call ? 'missed video call' : 'incoming video call'} </span>
+                        <RiVideoDownloadLine size={20} className={isMissedCall && 'text-red-400'} /> 
+                         <span className="text-[#667781]">{isMissedCall ? 'missed video call' : 'incoming video call'} </span>
                     </>
               } 
             </>

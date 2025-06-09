@@ -1,6 +1,6 @@
 import { RiChatNewLine } from "react-icons/ri";
 import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
-import { Chat_card } from "./chat_card";
+import { ChatCard } from "./chatCard";
 import { useContext, useState } from "react";
 import { SearchInput } from "../ui/searchInput";
 import { User_context } from "../../contexts/user.context";
@@ -34,11 +34,11 @@ export const Chats = ()=> {
                     </div>
                     <SearchInput text={searchText} setText={setSearchText} handle_search={()=> ''} />
                 </header>
-                <div className="flex-1 max-h-full overflow-y-auto">
+                <div className="flex-1 max-h-full overflow-y-auto p-3">
                     {
                         chats?.map(chat => (
                             chat.last_message &&
-                            <Chat_card 
+                            <ChatCard 
                                 key={chat?._id} 
                                 chat={chat} 
                             />

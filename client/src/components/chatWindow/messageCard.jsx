@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { MediaMessageCard } from './mediaMessageCard'
-import { Call_card } from "../chats/call_card";
+import { CallNotificationCard } from "../ui/callNotificationCard";
 import { timeFormat } from "../../lib/timeFormat";
 
 export const MessageCard = ({userId,message})=> {
@@ -30,7 +30,7 @@ export const MessageCard = ({userId,message})=> {
               <MediaMessageCard file={message?.file}/>
               : message.type === 'CALL' && 
                <div className="p-2 ">
-                   <Call_card call={message?.call} />
+                   <CallNotificationCard call={message?.call} />
                 </div>
             }
             {

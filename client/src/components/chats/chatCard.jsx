@@ -1,13 +1,13 @@
-import { useContext, useEffect,useState } from "react";
+import { useContext,useState } from "react";
 import { User_context } from "../../contexts/user.context.jsx";
 import { ChatsContext } from "../../contexts/chats.context.jsx";
 import { FaRegImage,FaMicrophone ,FaVideo } from "react-icons/fa6";
 import { BsFillFileEarmarkPdfFill } from "react-icons/bs";
-import { Call_card } from "./call_card.jsx";
+import { CallNotificationCard } from "../ui/callNotificationCard.jsx";
 import { timeFormat } from "../../lib/timeFormat.js";
 import { Avatar } from "../ui/avatar.jsx";
 
-export const Chat_card = ({chat})=> {
+export const ChatCard = ({chat})=> {
     
     const {user} = useContext(User_context);
     const {activeChat,setActiveChat} = useContext(ChatsContext);
@@ -25,11 +25,11 @@ export const Chat_card = ({chat})=> {
     return (
         <div
             onClick={handleActiveChat}
-            className={`flex items-center cursor-pointer px-3 hover:bg-[#213036] ${
+            className={`flex items-center mb-1 gap-3 cursor-pointer rounded-md px-3 hover:bg-[#213036] ${
                 activeChat?._id === chat._id ? 'bg-[#222e35]' : '' }`}
             >
             <Avatar size="lg" user_photo={chat?.contact?.profile_picture} />
-            <div className="ml-4 flex-1 py-3 min-w-0 border-b-1 border-[#222e35] text-[#f7f8fa]">
+            <div className="flex-1 py-3 min-w-0 border-b-1 border-[#222e35] text-[#f7f8fa]">
                 <div className="flex justify-between items-center">
                     <h2 className="font-semibold truncate">
                         {chat?.contact?.name}
@@ -59,7 +59,7 @@ export const Chat_card = ({chat})=> {
                                <> <BsFillFileEarmarkPdfFill /> {chat.last_message.file.name.slice(0,28)}  </> 
                             ) : 
                             chat?.last_message.type === 'CALL' &&
-                            <Call_card call={chat?.last_message?.call} />
+                            <CallNotificationCard call={chat?.last_message?.call} />
                         }
                         { 
                             chat?.last_message?.text?.length > 29 ? 
