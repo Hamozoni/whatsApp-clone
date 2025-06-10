@@ -48,7 +48,7 @@ export const MainSetting = ({setActivePage})=> {
                 <div className="border-b border-b-[#213036]">
                     <button 
                         onClick={()=> setActivePage('profile')} 
-                        className="flex items-center w-full gap-2 my-4 cursor-pointer p-3 rounded-md  hover:bg-gray-800"
+                        className="flex items-center w-full gap-2 my-4 cursor-pointer p-3 rounded-lg border border-transparent hover:border-[#3b535c] hover:bg-[#1d2c31]"
                         >
                         <Avatar size='lg' user_photo={user.profile_picture} />
                         <div className="flex-1 text-start">
@@ -65,9 +65,9 @@ export const MainSetting = ({setActivePage})=> {
                         <button 
                             onClick={()=> setActivePage(name)}
                             key={name} 
-                            className='flex gap-3 items-center my-3 p-3 rounded-md  hover:bg-gray-800 w-full'>
+                            className='flex gap-3 items-center my-3 px-3 rounded-lg border border-transparent hover:border-[#3b535c] hover:bg-[#1d2c31] w-full'>
                             <Icon size={24}/>
-                            <div className="flex-1 text-start">
+                            <div className="flex-1 text-start py-3 border-b border-b-[#3b535c]">
                                 <h6 className='capitalize'>{name}</h6>
                                 <span className='text-xs line-clamp-1 text-gray-400'>{info}</span>
                             </div>
@@ -76,7 +76,7 @@ export const MainSetting = ({setActivePage})=> {
                 }
                 <button 
                     onClick={logOut} 
-                    className='flex text-red-400 gap-3 items-center my-3 p-3 rounded-md  hover:bg-gray-800 w-full'>
+                    className='flex text-red-400 gap-3 items-center my-3 p-3 rounded-lg border border-transparent hover:border-[#3b535c] hover:bg-[#1d2c31] w-full'>
                     <PiSignOutLight size={24} />
                     <h6>Log out</h6>
                 </button>

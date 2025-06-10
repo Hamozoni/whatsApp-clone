@@ -12,7 +12,7 @@ export const SearchInput = ({text,setText,handleSearch})=> {
 
     }
     return (
-        <form onSubmit={handleSubmit} className="flex items-center bg-[#222e35] p-2 rounded-md">
+        <form onSubmit={handleSubmit} className="flex items-center border border-[#33424b] bg-[#222e35] p-2 rounded-lg">
             <button className="cursor-pointer px-2">
                 <BiSearchAlt2 size={20} />
             </button>
