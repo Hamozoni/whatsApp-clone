@@ -3,9 +3,9 @@ import { ContactHeader } from "./contactHeader"
 import { Input } from "../ui/input"
 import { Submit_btn } from "../ui/submit_btn";
 import { User_context } from "../../contexts/user.context";
-import { ContactCard } from "./contactCard";
 import { fetch_data } from "../../lib/fetch_data";
 import { post_data } from "../../lib/post_data";
+import { MainCard } from "../shared/mainCard";
 
 export const NewContact = ({setIsNewContact})=> {
 
@@ -110,7 +110,14 @@ export const NewContact = ({setIsNewContact})=> {
                         <h6 className="p-3">
                             search result : 
                         </h6>
-                        <ContactCard contact={contact} />
+                        <MainCard 
+                            avatarUrl={contact?.profile_picture}
+                            name={contact?.name}
+                        >
+                            <span className="text-xs text-gray-400">
+                                {contact?.about}
+                            </span>
+                        </MainCard> 
                            {(contact && error) && (
                                 <p className="text-red-500 text-sm text-center mb-3">{error}</p>
                             )}

@@ -18,9 +18,13 @@ export const MainCard = ({
             <div className=" flex-1 py-3 border-b border-b-[#213036]">
                 <div className="flex items-center justify-between">
                     <h6>{name}</h6>
-                    <span className="text-xs text-[#667781]">
-                        {timeFormat(time)}
-                    </span>
+                    {
+                        time && (
+                            <span className="text-xs text-[#667781]">
+                                {timeFormat(time)}
+                            </span>
+                        )
+                    }
                 </div>
                 {children}
             </div>

@@ -6,7 +6,6 @@ import { IoMdAdd } from "react-icons/io";
 import { CreateChannelAlert } from "../components/channels/createChannelAlert";
 import { Close_model } from "../components/ui/close_model";
 import { NewChannelForm } from "../components/channels//newChannelForm";
-import { ChannelCard } from "../components/channels//channelCard";
 import { useContext } from "react";
 import { User_context } from "../contexts/user.context";
 import { MainCard } from "../components/shared/mainCard";

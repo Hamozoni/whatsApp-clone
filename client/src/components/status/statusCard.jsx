@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { StatusAvatarRing } from "./statusAvatarRing"
 import { StatusPreview } from "./statusPreview"
+import { timeFormat } from "../../lib/timeFormat";
 
 export const StatusCard = ({status,length})=> {
 
@@ -9,7 +10,7 @@ export const StatusCard = ({status,length})=> {
     return (
         <div 
             onClick={()=> setIsStatus(true)} 
-            className="flex items-center gap-2 cursor-pointer hover:bg-[#213036] p-2 rounded-md">
+            className="flex items-center gap-3 cursor-pointer border border-transparent hover:border-[#3b535c] hover:bg-[#1d2c31] p-2 rounded-lg">
                 <StatusAvatarRing 
                     status={status}  
                     statusCount={length} 
@@ -17,7 +18,7 @@ export const StatusCard = ({status,length})=> {
                 
                 <div className="">
                     <h6>{status[0]?.user?.name}</h6>
-                    <p className="text-xs text-gray-400"> Today at {new Date(status[length - 1]?.createdAt).toLocaleTimeString([],{hour: '2-digit',minute: '2-digit'}) }</p>
+                    <p className="text-xs text-gray-400"> Today at {timeFormat(status[length - 1]?.createdAt)}</p>
                 </div>
                 {
                     isStatus && 

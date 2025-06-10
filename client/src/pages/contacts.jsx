@@ -2,9 +2,9 @@ import { SearchInput } from "../components/ui/searchInput";
 import { GrGroup,GrUserAdd } from "react-icons/gr";
 import { ContactHeader } from "../components/contacts/contactHeader";
 import { NewContact } from "../components/contacts/newContact";
-import { ContactCard } from "../components/contacts/contactCard";
 import { useContext, useState } from "react";
 import { User_context } from "../contexts/user.context";
+import { MainCard } from "../components/shared/mainCard";
 
 const Button = ({Icon,text,handle_cleck})=> {
     return (
@@ -34,7 +34,7 @@ export const Contacts = ({setIsContcatPage})=> {
                 isNewContact ? 
                 <NewContact setIsNewContact={setIsNewContact}/>
                 :
-                <div>
+                <div className=" flex flex-col max-h-dvh">
                     <ContactHeader 
                         title='new chat' 
                         setIsContcatPage={setIsContcatPage}
@@ -42,13 +42,13 @@ export const Contacts = ({setIsContcatPage})=> {
                         set_search_value={setSearchText}
                         handle_search={()=> ''}
                         >
-                    <SearchInput  
-                        value={searchText} 
-                        set_value={setSearchText} 
-                        handle_search={()=> ''}
-                    />
+                        <SearchInput  
+                            value={searchText} 
+                            set_value={setSearchText} 
+                            handle_search={()=> ''}
+                        />
                     </ContactHeader>
-                    <div className="p-3">
+                    <div className="p-3 flex-1 overflow-y-auto max-h-full">
                         <Button 
                             Icon={GrGroup} 
                             text='new group' 
@@ -66,11 +66,16 @@ export const Contacts = ({setIsContcatPage})=> {
                         </h6>
                         <div >
                             {
-                                contacts?.map((contact)=> (
-                                    <ContactCard 
-                                        key={contact?._id}
-                                        contact={contact}
-                                        />
+                                contacts?.map(({_id,profile_picture,name,about})=> (
+                                    <MainCard 
+                                       key={_id}
+                                       avatarUrl={profile_picture}
+                                       name={name}
+                                    >
+                                        <span className="text-xs text-gray-400">
+                                            {about}
+                                        </span>
+                                    </MainCard> 
                                         
                                 ))
                             }
