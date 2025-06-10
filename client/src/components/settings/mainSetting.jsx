@@ -39,13 +39,13 @@ export const MainSetting = ({setActivePage})=> {
     return (
         <>
             {/* Header */}
-            <header className=''>
+            <header className='p-3'>
                 <h5 className="text-lg font-bold mb-4">Settings</h5>
                 <SearchInput handleSearch={()=> ''} text={text} setText={setText} />
             </header>
             {/* buttons */}
-            <div className="flex-1 max-h-full overflow-y-auto">
-                <div className="border-b border-b-[#213036]">
+            <div className="flex-1 max-h-full overflow-y-auto p-3">
+                <div className="border-b border-b-[#213036] mb-3">
                     <button 
                         onClick={()=> setActivePage('profile')} 
                         className="flex items-center w-full gap-2 my-4 cursor-pointer p-3 rounded-lg border border-transparent hover:border-[#3b535c] hover:bg-[#1d2c31]"
@@ -65,7 +65,7 @@ export const MainSetting = ({setActivePage})=> {
                         <button 
                             onClick={()=> setActivePage(name)}
                             key={name} 
-                            className='flex gap-3 items-center my-3 px-3 rounded-lg border border-transparent hover:border-[#3b535c] hover:bg-[#1d2c31] w-full'>
+                            className='flex gap-3 items-center px-3 rounded-lg border border-transparent hover:border-[#3b535c] hover:bg-[#1d2c31] w-full'>
                             <Icon size={24}/>
                             <div className="flex-1 text-start py-3 border-b border-b-[#3b535c]">
                                 <h6 className='capitalize'>{name}</h6>

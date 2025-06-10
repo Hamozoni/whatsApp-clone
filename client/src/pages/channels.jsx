@@ -44,7 +44,7 @@ export const Channels = () => {
                                         name={name}
                                         time={createdAt}
                                         >
-                                    <span>You ctreated this channel</span>
+                                    <span className="text-gray-400 text-sm">You ctreated this channel</span>
                                     </MainCard>
                                 ))
                             }

@@ -21,7 +21,7 @@ export const Help = ({setActivePage})=> {
             title='Help' 
             setActivePage={()=> setActivePage('main')} 
             />
-            <div className="mb-5 pb-4 border-b border-b-gray-800">
+            <div className="mb-5 p-3 pb-6 border-b border-b-gray-800">
                 {
                     helpOptions?.map(({id,title,Icon})=> (
                         <IconTextBtn 
@@ -33,7 +33,7 @@ export const Help = ({setActivePage})=> {
                     ))
                 }
             </div>
-            <div className="my-5 pb-5 border-b border-b-gray-800">
+            <div className="my-5 p-6 pt-3 border-b border-b-gray-800">
                 <Switch 
                     title='Join the beta' 
                     desc="Get new features before they released. Report bugs using the contact us form above."

@@ -6,7 +6,7 @@ export const Chats = ({setActivePage})=> {
     return (
         <>
            <Header title='Chats' setActivePage={()=> setActivePage('main')} />
-            <div className="flex-1 max-h-full overflow-y-auto p-3 flex flex-col gap-8">
+            <div className="flex-1 max-h-full overflow-y-auto p-6 flex flex-col gap-8">
                 <section>
                     <h6 className="text-md text-gray-400 font-medium">
                         Display

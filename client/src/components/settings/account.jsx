@@ -9,7 +9,7 @@ export const Account = ({setActivePage})=> {
     return (
         <>
             <Header title='Account' setActivePage={()=> setActivePage('main')} />
-            <div className="">
+            <div className="p-3">
                 <IconTextBtn 
                     Icon={MdSecurity} 
                     text='Security notification' 
