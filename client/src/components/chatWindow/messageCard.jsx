@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { MediaMessageCard } from './mediaMessageCard'
-import { CallNotificationCard } from "../ui/callNotificationCard";
+import { CallNotificationCard } from "../shared/callNotificationCard";
 import { timeFormat } from "../../lib/timeFormat";
 
 export const MessageCard = ({userId,message})=> {

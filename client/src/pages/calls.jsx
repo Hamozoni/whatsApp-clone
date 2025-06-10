@@ -4,8 +4,8 @@ import { User_context } from "../contexts/user.context";
 import { IoVideocam,IoKeypad } from "react-icons/io5";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 import { SearchInput } from "../components/ui/searchInput";
-import { CallCard } from "../components/calls/callCard";
 import { MainCard } from "../components/shared/mainCard";
+import { CallNotificationCard } from "../components/shared/callNotificationCard";
 
 export const Calls =  ()=> {
 
@@ -40,13 +40,16 @@ export const Calls =  ()=> {
                     </h6>
                     <div className="">
                         {
-                            calls?.map(({_id,caller,callee,profile_picture})=> (
+                            calls?.map(({_id,caller,callee,profile_picture,createdAt})=> (
                                 <MainCard 
                                     key={_id} 
                                     avatarUrl={profile_picture}
                                     name={caller?._id === user._id ?  callee?.name : caller?.name}
+                                    time={createdAt}
                                 >
-                                
+                                    <CallNotificationCard 
+                                        call={{_id,caller,callee,profile_picture,createdAt}}
+                                        />
                                 </MainCard>
                             ))
                         }

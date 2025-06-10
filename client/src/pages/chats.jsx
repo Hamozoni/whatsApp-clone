@@ -1,4 +1,3 @@
-import { ChatCard } from "../components/chats/chatCard";
 import { useContext, useState } from "react";
 import { User_context } from "../contexts/user.context";
 import { ChatsContext } from "../contexts/chats.context";
@@ -6,12 +5,14 @@ import { NoActiveChat } from "../components/chats/NoActiveChat";
 import { ChatWindow } from "../components/chatWindow/chatWindow";
 import { Contacts } from "./contacts";
 import { ChatHeader } from "../components/chats/chatHeader";
+import { MainCard } from "../components/shared/mainCard";
+import { ChatCardLastMessage } from "../components/chats/chatCardLastMessage";
 
 
 export const Chats = ()=> {
 
     const {activeChat} = useContext(ChatsContext);
-    const {chats} = useContext(User_context);
+    const {chats,user} = useContext(User_context);
     const [searchText,setSearchText] = useState('');
     const [isContactPage,setIsContcatPage] = useState(false)
 
@@ -31,10 +32,14 @@ export const Chats = ()=> {
                                 {
                                     chats?.map(chat => (
                                         chat.last_message &&
-                                        <ChatCard 
+                                        <MainCard 
                                             key={chat?._id} 
-                                            chat={chat} 
-                                        />
+                                            avatarUrl={chat?.contact?.profile_picture} 
+                                            name={chat?.contact?.name}
+                                            time={chat?.last_message?.createdAt}
+                                        >
+                                             <ChatCardLastMessage chat={chat} user={user} />
+                                        </MainCard>
                                     ))
                                 }
                             </div>
