@@ -9,6 +9,7 @@ import { NewChannelForm } from "../components/channels//newChannelForm";
 import { ChannelCard } from "../components/channels//channelCard";
 import { useContext } from "react";
 import { User_context } from "../contexts/user.context";
+import { MainCard } from "../components/shared/mainCard";
 
 export const Channels = () => {
 
@@ -37,8 +38,15 @@ export const Channels = () => {
 
                        <div className="py-3 flex-1 max-w-full overflow-y-auto">
                             {
-                                channels?.map((channel)=> (
-                                    <ChannelCard channel={channel}/>
+                                channels?.map(({_id,name,avatar,createdAt})=> (
+                                    <MainCard 
+                                        avatarUrl={avatar.url}
+                                        key={_id}
+                                        name={name}
+                                        time={createdAt}
+                                        >
+                                    <span>You ctreated this channel</span>
+                                    </MainCard>
                                 ))
                             }
                         </div>
