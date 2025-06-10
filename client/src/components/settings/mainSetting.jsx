@@ -39,24 +39,27 @@ export const MainSetting = ({setActivePage})=> {
     return (
         <>
             {/* Header */}
-            <header className='border-b border-b-black'>
+            <header className=''>
                 <h5 className="text-lg font-bold mb-4">Settings</h5>
                 <SearchInput handleSearch={()=> ''} text={text} setText={setText} />
-                <div 
-                    onClick={()=> setActivePage('profile')} 
-                    className="flex gap-2 my-4 cursor-pointer p-3 rounded-md  hover:bg-gray-800"
-                    >
-                    <Avatar size='lg' user_photo={user.profile_picture} />
-                    <div className="">
-                        <h5>{user?.name}</h5>
-                        <span className='text-sm line-clamp-1 text-gray-400'>
-                            {user?.about || 'active'}
-                        </span>
-                    </div>
-                </div>
             </header>
             {/* buttons */}
             <div className="flex-1 max-h-full overflow-y-auto">
+                <div className="border-b border-b-[#213036]">
+                    <button 
+                        onClick={()=> setActivePage('profile')} 
+                        className="flex items-center w-full gap-2 my-4 cursor-pointer p-3 rounded-md  hover:bg-gray-800"
+                        >
+                        <Avatar size='lg' user_photo={user.profile_picture} />
+                        <div className="flex-1 text-start">
+                            <h6 className='capitalize'>{user?.name}</h6>
+                            <span  className='text-xs line-clamp-1 text-gray-400'>
+                                {user?.about || 'active'}
+                            </span>
+                        </div>
+                    </button>
+
+                </div>
                 {
                     settingButtons?.map(({name,info,Icon})=> (
                         <button 

@@ -21,10 +21,10 @@ export const CallNotificationCard = ({call})=> {
             <>
               {
                 user?._id === call?.caller ? 
-                   <> <SlCallOut size={12} /> <span className="text-[#667781]">outgoing audio call</span>  </>
+                   <> <SlCallOut size={12} /> <span className="text-[#667781] capitalize text-sm font-medium">outgoing audio call</span>  </>
                     :
                    <> <SlCallIn size={12} className={isMissedCall && 'text-red-400'} />  
-                      <span className="text-[#667781]">{isMissedCall ? 'missed audio call' : 'incoming audio call'} </span>
+                      <span className="text-[#667781] capitalize text-sm font-medium">{isMissedCall ? 'missed audio call' : 'incoming audio call'} </span>
                    </>
                 } 
             </>
@@ -32,11 +32,11 @@ export const CallNotificationCard = ({call})=> {
             <>
               { 
                 user?._id === call?.caller ? 
-                   <> <RiVideoUploadLine size={20} /> <span className="text-[#667781]">outgoing video call</span>   </>
+                   <> <RiVideoUploadLine size={20} /> <span className="text-[#667781] capitalize text-sm font-medium">outgoing video call</span>   </>
                     : 
                     <>
                         <RiVideoDownloadLine size={20} className={isMissedCall && 'text-red-400'} /> 
-                         <span className="text-[#667781]">{isMissedCall ? 'missed video call' : 'incoming video call'} </span>
+                         <span className="text-[#667781] capitalize text-sm font-medium">{isMissedCall ? 'missed video call' : 'incoming video call'} </span>
                     </>
               } 
             </>
