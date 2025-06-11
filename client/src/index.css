@@ -5,9 +5,18 @@
   --bg-color-secondary: #05171b;
   --text-color-primaray: #ffff;
   --text-color-secondary: #e2e2e2;
-  
+  --border-color-primaray: #092329;
+  --border-color-secondary: #092025;
 }
 
+.dark {
+  --bg-color-primaray: #e2e2e2;
+  --bg-color-secondary: #fdfdfd;
+  --text-color-primaray: #04161b;
+  --text-color-secondary: #05171b;
+  --border-color-primaray: #e2e2e2;
+  --border-color-secondary: #fdfdfd;
+}
 
 button {
   cursor: pointer;
