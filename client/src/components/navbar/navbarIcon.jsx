@@ -9,7 +9,7 @@ export const NavbarIcon = ({text,Icon})=> {
     return (
         <button 
             onClick={()=> set_active_navbar(text)} 
-            className={`relative flex justify-center items-center px-3 py-2 rounded-md hover:opacity-85 cursor-pointer`}>
+            className={`relative flex justify-center items-center p-1 rounded-md hover:opacity-85 cursor-pointer`}>
             <Icon 
                 size={24} 
                 className={`${active_navbar === text ? 'text-emerald-400' :'text-[#f7f8fa]'}`}/>

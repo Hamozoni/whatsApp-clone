@@ -19,7 +19,7 @@ export const Navbar = ()=>  {
     const {user,active_navbar,set_active_navbar} = useContext(User_context);
 
     return (
-        <nav className=" flex md:flex-col justify-between items-center md:px-2 md:py-4 py-2 px-3 bg-[#162127]" >
+        <nav className=" flex md:flex-col justify-between items-center md:px-2 md:py-4 p-1 bg-[#162127] m-1 rounded-lg" >
             <section className="flex md:flex-col gap-2">
                 {
                     options?.map(({Icon,text})=> (
