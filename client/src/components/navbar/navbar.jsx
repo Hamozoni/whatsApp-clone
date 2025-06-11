@@ -36,7 +36,7 @@ export const Navbar = ()=>  {
                 <section className="flex md:flex-col gap-3 justify-center items-center" >
                     <NavbarIcon Icon={IoSettingsOutline} text='settings' />
                     <button 
-                        className={active_navbar === 'profile' && 'border-2 border-emerald-400 rounded-full'}
+                        className={`border-2 rounded-full ${active_navbar === 'profile' ? 'border-emerald-400' : 'border-transparent'}`}
                         onClick={()=> set_active_navbar('profile')}>
                         <Avatar  user_photo={user?.profile_picture} />
                     </button>
