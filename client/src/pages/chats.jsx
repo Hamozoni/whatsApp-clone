@@ -18,7 +18,7 @@ export const Chats = ()=> {
 
     return (
         <div className="flex">
-            <div className="flex flex-col border-r border-r-[#213036] max-h-dvh h-dvh w-full md:w-[350px] max-w-full">
+            <div className="flex flex-col border-r border-r-[#213036] max-h-dvh h-dvh w-full md:w-[380px] max-w-full">
                 {
                     isContactPage ? 
                        <Contacts setIsContcatPage={setIsContcatPage} /> : (

@@ -22,7 +22,7 @@ export const Status = ()=> {
 
     return (
         <div className="flex h-dvh">
-            <div className=" p-3 flex-1 border-r border-r-[#213036] w-full md:w-[350px] min-w-[350px] max-w-full">
+            <div className=" p-3 flex-1 border-r border-r-[#213036] w-full md:w-[380px] min-w-[380px] max-w-full">
                  {
                     statusType === 'text' ?
                     <PostTextStatus setStatusType={setStatusType} />

@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+:root {
+  --bg-color-primaray: #04161b;
+  --bg-color-secondary: #05171b;
+  --text-color-primaray: #ffff;
+  --text-color-secondary: #e2e2e2;
+  
+}
+
+
 button {
   cursor: pointer;
   text-transform: capitalize;
