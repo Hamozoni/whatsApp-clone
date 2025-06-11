@@ -47,7 +47,7 @@ export const Chats = ()=> {
                     )
                 }
             </div>
-            <div className={`${activeChat ? 'flex absolute z-20 left-0 top-0 w-full h-full max-w-full md:static md:left-auto md:top-auto' : 'hidden md:flex'} max-w-dvw flex-2`}>
+            <div className={`${activeChat ? 'flex absolute z-20 left-0 top-0 w-full max-w-full md:static md:left-auto md:top-auto' : 'hidden md:flex'} max-w-dvw flex-2`}>
                 {
                     activeChat ? 
                     <ChatWindow /> :
