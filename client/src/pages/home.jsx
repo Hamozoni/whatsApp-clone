@@ -27,7 +27,7 @@ export default function Home() {
 
       <div className="md:flex h-dvh max-h-svh w-dvw max-w-dvw">
           <Navbar />
-          <div className="w-full bg-[#111b21] text-[#f7f8fa] max-h-dvh rounded-lg m-1 ml-0">
+          <div className="w-full text-[#f7f8fa] max-h-dvh rounded-lg m-1 ml-0">
             {
               active_navbar === 'chats' ? 
                 <Chats />:

@@ -17,8 +17,8 @@ export const Chats = ()=> {
     const [isContactPage,setIsContcatPage] = useState(false)
 
     return (
-        <div className="flex">
-            <div className="flex flex-col border-r border-r-[#213036] max-h-full h-full w-full md:w-[380px] max-w-full">
+        <div className="flex h-full">
+            <div className="flex flex-col rounded-lg mr-1 border-r bg-[#111b21] border-r-[#213036] max-h-full h-full w-full md:w-[380px] max-w-full">
                 {
                     isContactPage ? 
                        <Contacts setIsContcatPage={setIsContcatPage} /> : (
