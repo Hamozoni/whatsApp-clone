@@ -28,7 +28,7 @@ export const Chats = ()=> {
                                 setSearchText={setSearchText}
                                 searchText={searchText}
                                 />
-                            <div className="flex-1 max-h-full overflow-y-auto p-3">
+                            <div className="flex-1 max-h-full overflow-y-auto p-3 pt-0">
                                 {
                                     chats?.map(chat => (
                                         chat.last_message &&

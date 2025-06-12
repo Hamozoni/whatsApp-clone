@@ -5,7 +5,7 @@ import { SearchInput } from "../../components/ui/searchInput"
 
 export const ChatHeader = ({setIsContcatPage,searchText,setSearchText})=> {
     return (
-        <header className="p-3 mb-2">
+        <header className="p-3">
             <div className="flex items-center justify-between mb-3">
                 <h3 className="text-xl font-bold">
                     Chats
@@ -30,6 +30,7 @@ export const ChatHeader = ({setIsContcatPage,searchText,setSearchText})=> {
                 setText={setSearchText} 
                 handle_search={()=> ''} 
                 />
+                <hr className="my-5 text-[#213036]" />
         </header>
     )
 }

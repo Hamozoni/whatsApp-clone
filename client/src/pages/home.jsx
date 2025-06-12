@@ -25,25 +25,25 @@ export default function Home() {
 
   return (
 
-      <div className="md:flex h-dvh max-h-dvh w-dvw max-w-dvw">
-        <Navbar />
-        <div className="w-full bg-[#111b21] text-[#f7f8fa] max-h-dvh my-1 rounded-lg">
-          {
-            active_navbar === 'chats' ? 
-            <Chats />:
-            active_navbar === 'calls' ? 
-              <Calls /> : 
-            active_navbar === 'status' ? 
-               <Status /> :
-            active_navbar === 'channels' ?
-               <Channels /> : 
-            active_navbar === 'settings' ?
-               <Settings /> : 
-            active_navbar === 'profile' &&
-               <Profile />
-          }
+      <div className="md:flex h-dvh max-h-svh w-dvw max-w-dvw">
+          <Navbar />
+          <div className="w-full bg-[#111b21] text-[#f7f8fa] max-h-dvh rounded-lg">
+            {
+              active_navbar === 'chats' ? 
+                <Chats />:
+              active_navbar === 'calls' ? 
+                <Calls /> : 
+              active_navbar === 'status' ? 
+                <Status /> :
+              active_navbar === 'channels' ?
+                <Channels /> : 
+              active_navbar === 'settings' ?
+                <Settings /> : 
+              active_navbar === 'profile' &&
+                <Profile />
+            }
 
-        </div>
+          </div>
       </div>
   );
 }
