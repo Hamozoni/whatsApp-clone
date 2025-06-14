@@ -11,10 +11,15 @@ import { ChatCardLastMessage } from "../components/chats/chatCardLastMessage";
 
 export const Chats = ()=> {
 
-    const {activeChat} = useContext(ChatsContext);
+    const {activeChat,setActiveChat} = useContext(ChatsContext);
     const {chats,user} = useContext(User_context);
     const [searchText,setSearchText] = useState('');
-    const [isContactPage,setIsContcatPage] = useState(false)
+    const [isContactPage,setIsContcatPage] = useState(false);
+
+
+    const handleActiveChat = (chat)=> {
+        setActiveChat(chat)
+    }
 
     return (
         <div className="flex h-full">
@@ -37,6 +42,7 @@ export const Chats = ()=> {
                                             avatarUrl={chat?.contact?.profile_picture} 
                                             name={chat?.contact?.name}
                                             time={chat?.last_message?.createdAt}
+                                            onClick={() => handleActiveChat(chat)}
                                         >
                                              <ChatCardLastMessage chat={chat} user={user} />
                                         </MainCard>
