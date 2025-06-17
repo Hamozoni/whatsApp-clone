@@ -39,11 +39,15 @@ export const Chats = ()=> {
                                         <MainCard 
                                             key={chat?._id} 
                                             avatarUrl={chat?.contact?.profile_picture} 
+                                            isActive={chat?._id === activeChat?._id}
                                             name={chat?.contact?.name}
                                             time={chat?.last_message?.createdAt}
                                             onClick={() => handleActiveChat(chat)}
                                         >
-                                             <ChatCardLastMessage chat={chat} user={user} />
+                                             <ChatCardLastMessage 
+                                                chat={chat} 
+                                                user={user} 
+                                                />
                                         </MainCard>
                                     ))
                                 }

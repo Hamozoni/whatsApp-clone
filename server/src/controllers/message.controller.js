@@ -132,15 +132,19 @@ export const get_message_controller = async (req,res,next) => {
                         path:'reply_to',
                         populate: {
                             path: 'file',
-                            elect: 'url _id type name size'
+                            select: 'url _id type name size'
                         }
                     },
                     {
                         path: 'file',
-                        elect: 'url _id type name size'
+                        select: 'url _id type name size'
                     },
                     {
                         path: 'call',
+                    },
+                                        {
+                        path: 'sender',
+                        select: '_id name profile_picture'
                     },
                 ]
 

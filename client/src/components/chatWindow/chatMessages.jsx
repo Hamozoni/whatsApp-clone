@@ -53,12 +53,16 @@ export const ChatMessages = () => {
   return (
               
       <div className={className}>
-            <audio ref={chatSoundRef} src="./new_message_sound_2.mp3" className=" hidden"></audio>
+            <audio 
+                ref={chatSoundRef} 
+                src="./new_message_sound_2.mp3" 
+                className=" hidden"
+                >
+              </audio>
             {
                 loading ? 
                 <div className={className}>
                   <Loading_component />
-
                 </div>
                   : messages?.map(message => (
                     <MessageCard 
