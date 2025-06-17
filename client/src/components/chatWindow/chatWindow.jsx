@@ -19,7 +19,7 @@ export const ChatWindow = ()=> {
 
     return (
 
-            <div className="text-[#f7f8fa] flex-1 h-dvh max-h-dvh">
+            <div className="text-[#f7f8fa] flex-1">
                 <div className=" h-screen flex flex-col max-h-full">
                    <ChatHeader receiver={activeChat?.contact}/>
                    {

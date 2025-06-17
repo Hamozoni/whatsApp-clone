@@ -6,7 +6,7 @@ import { Loading_component } from '../ui/loading_component';
 import {ChatsContext } from '../../contexts/chats.context';
 import { AiOutlineWechatWork } from "react-icons/ai";
 
-const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-60 bg-chat-pattern hide_model';
+const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#111b21] bg-opacity-60 rounded-lg';
 
 export const ChatMessages = () => {
 

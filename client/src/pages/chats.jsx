@@ -8,7 +8,6 @@ import { ChatHeader } from "../components/chats/chatHeader";
 import { MainCard } from "../components/shared/mainCard";
 import { ChatCardLastMessage } from "../components/chats/chatCardLastMessage";
 
-
 export const Chats = ()=> {
 
     const {activeChat,setActiveChat} = useContext(ChatsContext);
@@ -16,10 +15,10 @@ export const Chats = ()=> {
     const [searchText,setSearchText] = useState('');
     const [isContactPage,setIsContcatPage] = useState(false);
 
-
     const handleActiveChat = (chat)=> {
+        if(activeChat?._id === chat?._id) return;
         setActiveChat(chat)
-    }
+    };
 
     return (
         <div className="flex h-full">
