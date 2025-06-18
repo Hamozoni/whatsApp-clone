@@ -21,12 +21,13 @@ export const MediaGalleryFile = ({fileData,isBlob = false})=> {
             <div className="">
                 {
                     file?.type === 'IMAGE' ?
-                    <img src={file?.url}  alt={file?.type} />
+                    <img className=" rounded-lg" src={file?.url}  alt={file?.type} />
                     : file?.type === 'VIDEO' ?
-                    <video  src={file?.url} controls  />
+                    <video className=" rounded-lg" src={file?.url} controls  />
                     : file?.type === 'APPLICATION' &&
                     <div >
                         <iframe
+                            className=" rounded-lg" 
                             src={
                                 file?.url?.startsWith('https://res.cloudinary.com') ?  
                                 `https://docs.google.com/viewer?url=${encodeURIComponent( file?.url )}&embedded=true` 

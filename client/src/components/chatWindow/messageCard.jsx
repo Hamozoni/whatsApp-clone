@@ -9,26 +9,27 @@ export const MessageCard = ({userId,message})=> {
     return (
         <div className={`flex ${isMyMessage ? 'justify-end' : 'justify-start'}`}>
             <div className='max-w-[70%] mb-3' >
-                <div className={`rounded-lg min-w-12  ${
+                <div className={`rounded-lg min-w-12 border-2  ${
                         isMyMessage
-                        ? 'bg-emerald-800'
-                        : 'bg-[#222e35]'
+                        ? 'bg-emerald-800 border-emerald-700'
+                        : 'bg-[#222e35] border-gray-700 '
                     }`}
                    >
                     {
                         message.type === 'MEDIA' ?
-                            <div className="p-1">
-                                <MediaMessageCard sender={message?.sender} file={message?.file}/>
-                            </div>
+                            <MediaMessageCard 
+                                sender={message?.sender} 
+                                file={message?.file}
+                                />
                         : message.type === 'CALL' && 
-                            <div className="p-3 border-2 rounded-lg border-gray-500 cursor-pointer">
+                            <div className="p-3 rounded-lg cursor-pointer">
                                 <CallNotificationCard call={message?.call} />
                             </div>
                     }
                     {
                         (message.type === 'MEDIA' || message?.file?.type === 'AUDIO' || message.type === 'CALL') ? '':
                         <p className="text-sm p-2">
-                                { message?.file?.type === 'APPLICATION' ? message?.file?.name : message?.text}
+                            { message?.file?.type === 'APPLICATION' ? message?.file?.name : message?.text}
                         </p>
                     }
 
