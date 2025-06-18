@@ -19,7 +19,7 @@ export const CallNotificationCard = ({call})=> {
                 user?._id === call?.caller ? 
                    <> 
                       <SlCallOut size={18} /> 
-                      <h6 className="text-gray-400 capitalize text-sm font-medium">
+                      <h6 className="text-gray-300 capitalize text-sm font-medium">
                         outgoing audio call
                       </h6> 
                     </>
@@ -29,7 +29,7 @@ export const CallNotificationCard = ({call})=> {
                         size={18} 
                         className={isMissedCall && 'text-red-400'}
                         />  
-                      <h6 className="text-gray-400 capitalize text-sm font-medium">
+                      <h6 className="text-gray-300 capitalize text-sm font-medium">
                         {isMissedCall ? 'missed audio call' : 'incoming audio call'} 
                       </h6>
                    </>
@@ -41,7 +41,7 @@ export const CallNotificationCard = ({call})=> {
                 user?._id === call?.caller ? 
                    <> 
                       <RiVideoUploadLine size={20} /> 
-                      <h6 className="text-gray-400 capitalize text-sm font-medium">
+                      <h6 className="text-gray-300 capitalize text-sm font-medium">
                         outgoing video call
                       </h6>   
                     </>
@@ -51,7 +51,7 @@ export const CallNotificationCard = ({call})=> {
                           size={20} 
                           className={isMissedCall && 'text-red-400'} 
                       /> 
-                      <h6 className="text-gray-400 capitalize text-sm font-medium">
+                      <h6 className="text-gray-300 capitalize text-sm font-medium">
                         {isMissedCall ? 'missed video call' : 'incoming video call'} 
                       </h6>
                     </>
