@@ -34,12 +34,12 @@ export const MessageCard = ({userId,message})=> {
                     }
 
                 </div>
-                <div className={`flex items-center justify-end mt-1 ${isMyMessage ? 'justify-end' : 'justify-start'}`}>
-                    <span className="text-[10px] text-gray-300 font-[100]">
+                <div className={`flex items-center justify-end gap-1 mt-1 ${isMyMessage ? 'justify-end' : 'justify-start'}`}>
+                    <span className="text-[0.7rem] text-gray-400">
                         {timeFormat(message?.createdAt)}
                     </span>
                     {(isMyMessage && message.type !== 'CALL') &&(
-                    <span className={`${message?.status === 'READ' ? 'text-emerald-300' :''} text-[10px]`}>
+                    <span className={`${message?.status === 'READ' ? 'text-emerald-300' :'text-gray-400'} text-sm`}>
                         {message?.status === 'SENT' ? '✓' : '✓✓'}
                     </span>
                     )}
