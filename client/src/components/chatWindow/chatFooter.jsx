@@ -22,13 +22,13 @@ export const ChatFooter = ()=> {
     },[text]);
 
     return (
-        <footer className="p-3 bg-[#222e35] relative">
+        <footer className="p-3 bg-[#111b21] relative rounded-lg">
             <div className="flex items-center gap-2"> 
                 {
                     !isPreview &&
                     <AiOutlinePaperClip 
                         onClick={()=> setIsDocument(!isDocument)} 
-                        className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#00a884] rotate-90 hide_model"  
+                        className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#00a884] rotate-90"  
                     />
                 }
                 <TextEmojiInput placeholder='Type a message' text={text} setText={setText} />
@@ -39,7 +39,7 @@ export const ChatFooter = ()=> {
                        :
                         <button
                             onClick={()=> setIsRecorder(true)}
-                            className="px-2 py-3 rounded-md text-white transition-colors hide_model"
+                            className="px-2 py-3 rounded-md text-white transition-colors"
                         >
                             <SlMicrophone className="h-6 w-6 text-[#f7f8fa] cursor-pointer" />
                         </button>

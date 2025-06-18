@@ -1,7 +1,7 @@
 
 export const NoActiveChat = ()=> {
     return (
-        <div className="text-[#f7f8fa] flex-1 rounded-lg mr-1 bg-[#111b21]">
+        <div className="text-[#f7f8fa] flex-1 rounded-lg mr-1 bg-[#162127]">
             <div className="flex flex-col justify-center items-center h-full max-h-full">
                 <img 
                     src={'/chat_window.png'} 

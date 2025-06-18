@@ -29,7 +29,7 @@ export const Contacts = ({setIsContcatPage})=> {
     const [isNewContact,setIsNewContact] = useState(false);
 
     return (
-        <div className="">
+        <div className="rounded-lg overflow-hidden">
             {
                 isNewContact ? 
                 <NewContact setIsNewContact={setIsNewContact}/>
