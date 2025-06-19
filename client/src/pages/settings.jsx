@@ -43,7 +43,7 @@ export const Settings = ()=> {
 
                 }
             </div>
-            <div className="hidden md:flex flex-2 items-center justify-center flex-col gap-5 bg-[#162127] rounded-lg">
+            <div className="hidden md:flex text-gray-400 flex-2 items-center justify-center flex-col gap-5 bg-[#162127] rounded-lg">
                 <IoSettingsOutline size={48} />
                 <h6 className='text-3xl'>Settings</h6>
             </div>

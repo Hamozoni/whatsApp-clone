@@ -39,4 +39,17 @@ body {
   background-color: #213036;
 }
 
+/* Dark scrollbar */
+* {
+  scrollbar-color: #111b21 #162127;
+}
+
+::-webkit-scrollbar-track {
+  background: #162127;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #111b21;
+  border-color: #162127;
+}
 

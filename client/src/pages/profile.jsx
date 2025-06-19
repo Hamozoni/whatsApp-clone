@@ -21,7 +21,7 @@ export const Profile = ({setActivePage = null})=> {
             </div>
             {
                 !setActivePage && (
-                    <div className="hidden md:flex flex-2 flex-col p-4 justify-center items-center gap-5 text-center bg-[#162127] rounded-lg">
+                    <div className="hidden text-gray-400 md:flex flex-2 flex-col p-4 justify-center items-center gap-5 text-center bg-[#162127] rounded-lg">
                         <PiUserCircleFill size={60} />
                         <h6 className="text-4xl">Profile</h6>
                     </div>
