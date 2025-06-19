@@ -17,7 +17,7 @@ export const Settings = ()=> {
     const [activePage,setActivePage] = useState('main')
 
     return (
-        <div className="flex h-dvh">
+        <div className="flex gap-1 h-full">
              {
                  activePage === 'keyboard shortcuts' &&
                  <>
@@ -25,7 +25,7 @@ export const Settings = ()=> {
                  <Close_model set_model={setActivePage} />
                  </>
              }
-            <div className="flex-1 flex flex-col border-r border-r-[#213036] w-full min-w-[380px] md:w-[380px] max-w-full ">
+            <div className="flex-1 flex flex-col w-full min-w-[380px] md:w-[380px] max-w-full rounded-lg bg-[#111b21] ">
                 {
                     activePage === 'profile' ?
                     <Profile setActivePage={setActivePage} /> :
@@ -43,7 +43,7 @@ export const Settings = ()=> {
 
                 }
             </div>
-            <div className="hidden md:flex flex-2 items-center justify-center flex-col gap-5">
+            <div className="hidden md:flex flex-2 items-center justify-center flex-col gap-5 bg-[#162127] rounded-lg">
                 <IoSettingsOutline size={48} />
                 <h6 className='text-3xl'>Settings</h6>
             </div>
