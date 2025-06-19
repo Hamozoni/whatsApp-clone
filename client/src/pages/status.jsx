@@ -21,8 +21,8 @@ export const Status = ()=> {
     const [file,setFile] = useState(null);
 
     return (
-        <div className="flex h-dvh">
-            <div className=" p-3 flex-1 border-r border-r-[#213036] w-full md:w-[380px] min-w-[380px] max-w-full">
+        <div className="flex h-full gap-1">
+            <div className=" p-3 flex-1 w-full md:w-[380px] min-w-[380px] max-w-full rounded-lg bg-[#111b21]">
                  {
                     statusType === 'text' ?
                     <PostTextStatus setStatusType={setStatusType} />
@@ -80,16 +80,18 @@ export const Status = ()=> {
                     </div>
                 </div>
             </div>
-            <div className="hidden md:flex flex-2 flex-col p-4 justify-center">
+            <div className="hidden bg-[#162127] rounded-lg md:flex flex-2 flex-col p-4 justify-center">
                 <div className="flex-1 flex flex-col justify-center items-center gap-4 text-center">
                     <SiGradleplaypublisher size={40} />
                     <div className="">
                         <h6 className="text-2xl">Share status updates</h6>
-                        <p>Share photos, videos and text that disappear after 24 hours.</p>
+                        <p className="text-gray-400">Share photos, videos and text that disappear after 24 hours.</p>
                     </div>
 
                 </div>
-                <h6 className="w-full flex justify-center items-center "><MdLockOutline /> Your status updates are end-to-end encrypted</h6>
+                <h6 className="w-full flex justify-center items-center text-gray-400">
+                    <MdLockOutline /> Your status updates are end-to-end encrypted
+                </h6>
             </div>
         </div>
     )
