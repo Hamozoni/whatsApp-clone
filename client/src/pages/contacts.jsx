@@ -5,6 +5,7 @@ import { NewContact } from "../components/contacts/newContact";
 import { useContext, useState } from "react";
 import { User_context } from "../contexts/user.context";
 import { MainCard } from "../components/shared/mainCard";
+import { ChatsContext } from "../contexts/chats.context";
 
 const Button = ({Icon,text,handle_cleck})=> {
     return (
@@ -24,9 +25,26 @@ const Button = ({Icon,text,handle_cleck})=> {
 
 export const Contacts = ({setIsContcatPage})=> {
 
-    const {contacts} = useContext(User_context)
+    const {contacts,chats,user} = useContext(User_context)
+    const {setActiveChat} = useContext(ChatsContext);
     const [searchText,setSearchText] = useState('');
     const [isNewContact,setIsNewContact] = useState(false);
+
+    const handleActiveChat = (_id)=> {
+        const isChatExist = chats.find(e=> e?.contact?._id === _id);
+        if(isChatExist){
+            setActiveChat(isChatExist)
+        }else {
+            setActiveChat({
+                contact: _id,
+                chat_id: null,
+                sender: user?._id,
+                text:'',
+                type:'TEXT',
+                status: 'SENT',
+            })
+        }
+    }
 
     return (
         <div className="rounded-lg overflow-hidden">
@@ -71,6 +89,7 @@ export const Contacts = ({setIsContcatPage})=> {
                                        key={_id}
                                        avatarUrl={profile_picture}
                                        name={name}
+                                       onClick={()=> handleActiveChat(_id)}
                                     >
                                         <span className="text-xs text-gray-400">
                                             {about}
