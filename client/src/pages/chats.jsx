@@ -22,7 +22,7 @@ export const Chats = ()=> {
 
     return (
         <div className="flex h-full gap-1">
-            <div className="flex flex-col rounded-lg bg-[#111b21]  max-h-full h-full w-full md:w-[380px] max-w-full">
+            <div className="flex flex-col rounded-lg bg-[#111b21]  max-h-full h-full min-w-[380px] md:w-[380px] max-w-full">
                 {
                     isContactPage ? 
                        <Contacts setIsContcatPage={setIsContcatPage} /> : (
