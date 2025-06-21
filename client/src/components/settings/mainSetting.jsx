@@ -21,7 +21,6 @@ import {
 const settingButtons = [
     {name: 'account', Icon: BsKey, info: 'Security notifications, acount info' },
     {name: 'privacy', Icon: MdOutlinePrivacyTip, info: 'Blocked contacts, disappearing messages' },
-    {name: 'theme', Icon: MdOutlineWbSunny, info: 'Dark' },
     {name: 'chats', Icon: MdOutlineChat, info: 'Theme, wallpaper, chat settings' },
     {name: 'notifications', Icon: MdNotificationsNone, info: 'Messages notifications' },
     {name: 'keyboard shortcuts', Icon: MdOutlineKeyboard, info: 'Quick actions' },
