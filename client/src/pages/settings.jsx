@@ -10,11 +10,12 @@ import { Help } from "../components/settings/help";
 import { KeyboardShorts } from "../components/settings/keyboardShorts";
 import { Close_model } from "../components/ui/close_model";
 import { Profile } from "./profile";
+import { Theme } from "../components/settings/theme";
 
 
 export const Settings = ()=> {
 
-    const [activePage,setActivePage] = useState('main')
+    const [activePage,setActivePage] = useState('main');
 
     return (
         <div className="flex gap-1 h-full">
@@ -39,6 +40,8 @@ export const Settings = ()=> {
                     <Notifications setActivePage={setActivePage}/> :
                      activePage === 'help' ?
                     <Help setActivePage={setActivePage} />:
+                    activePage === 'theme'?
+                    <Theme setActivePage={setActivePage}/>:
                     <MainSetting setActivePage={setActivePage}/>
 
                 }

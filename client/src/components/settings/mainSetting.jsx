@@ -8,17 +8,20 @@ import { Avatar } from "../ui/avatar";
 
 import { BsKey } from "react-icons/bs";
 import { PiSignOutLight } from "react-icons/pi";
+
 import { 
         MdOutlinePrivacyTip,
         MdOutlineChat,
         MdNotificationsNone,
         MdOutlineKeyboard,
-        MdOutlineHelpOutline
+        MdOutlineHelpOutline,
+        MdOutlineWbSunny
      } from "react-icons/md";
 
 const settingButtons = [
     {name: 'account', Icon: BsKey, info: 'Security notifications, acount info' },
     {name: 'privacy', Icon: MdOutlinePrivacyTip, info: 'Blocked contacts, disappearing messages' },
+    {name: 'theme', Icon: MdOutlineWbSunny, info: 'Dark' },
     {name: 'chats', Icon: MdOutlineChat, info: 'Theme, wallpaper, chat settings' },
     {name: 'notifications', Icon: MdNotificationsNone, info: 'Messages notifications' },
     {name: 'keyboard shortcuts', Icon: MdOutlineKeyboard, info: 'Quick actions' },
