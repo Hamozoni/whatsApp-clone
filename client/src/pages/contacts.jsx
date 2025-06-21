@@ -30,13 +30,13 @@ export const Contacts = ({setIsContcatPage})=> {
     const [searchText,setSearchText] = useState('');
     const [isNewContact,setIsNewContact] = useState(false);
 
-    const handleActiveChat = (_id)=> {
+    const handleActiveChat = ({_id,profile_picture,name,about})=> {
         const isChatExist = chats.find(e=> e?.contact?._id === _id);
         if(isChatExist){
             setActiveChat(isChatExist)
         }else {
             setActiveChat({
-                contact: _id,
+                contact: {_id,profile_picture,name,about},
                 chat_id: null,
                 sender: user?._id,
                 text:'',
@@ -89,7 +89,7 @@ export const Contacts = ({setIsContcatPage})=> {
                                        key={_id}
                                        avatarUrl={profile_picture}
                                        name={name}
-                                       onClick={()=> handleActiveChat(_id)}
+                                       onClick={()=> handleActiveChat({_id,profile_picture,name,about})}
                                     >
                                         <span className="text-xs text-gray-400">
                                             {about}
