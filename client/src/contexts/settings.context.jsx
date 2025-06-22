@@ -10,14 +10,11 @@ export const SettingsContextProvider = ({children})=> {
             document.documentElement.classList.toggle('dark',theme === 'dark')
         },[theme]);
     
-        const toggleTheme = ()=> {
-            setTheme(prev=> prev === 'dark' ? 'light' : 'dark');
-        };
     return (
         <SettingsContext.Provider
             value={{
                 theme,
-                toggleTheme,
+                setTheme,
             }}
             >
             {children}
