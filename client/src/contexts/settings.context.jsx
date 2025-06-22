@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react"
 
 export const SettingsContext = createContext(null);
 
-export const settingsContextProvider = ({children})=> {
+export const SettingsContextProvider = ({children})=> {
 
         const [theme,setTheme] = useState('dark');
     
