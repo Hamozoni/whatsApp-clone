@@ -1,8 +1,13 @@
+import { useState } from "react"
 import { Header } from "./header"
 import { OptionBtn } from "./optionBtn"
 import { Switch } from "./switch"
+import { Theme } from "../modal/theme"
+import { Close_model } from "../ui/close_model"
 
 export const Chats = ({setActivePage})=> {
+
+    const [isTheme,setIsTheme] = useState(false)
     return (
         <>
            <Header title='Chats' setActivePage={()=> setActivePage('main')} />
@@ -13,8 +18,9 @@ export const Chats = ({setActivePage})=> {
                     </h6>
                     <br />
                     <OptionBtn 
-                         privacyName='Theme'
+                        privacyName='Theme'
                         selectedOption='Dark mode' 
+                        onClick={()=> setIsTheme(true)}
                       />
                     <OptionBtn 
                          privacyName='Wallpaper'
@@ -48,7 +54,14 @@ export const Chats = ({setActivePage})=> {
                         />
                 </section>
             </div>
-
+            {
+                isTheme && (
+                    <>
+                      <Close_model set_model={setIsTheme} />
+                       <Theme />
+                    </>
+                )
+            }
         </>
     )
 }
