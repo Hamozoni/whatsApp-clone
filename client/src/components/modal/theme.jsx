@@ -13,8 +13,8 @@ export const Theme = ()=> {
             </header>
             <div className="">
                 <div className="">
-                    <button className="">
-
+                    <button className="rounded-full border-2 border-emerald-500 ">
+                        <span className="w-6 h-6 full border-2 border-gray-500 bg-emerald-500"></span>
                     </button>
                     <h6>light</h6>
                 </div>
