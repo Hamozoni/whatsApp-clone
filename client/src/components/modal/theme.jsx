@@ -1,10 +1,9 @@
-import { useContext } from "react"
-import { SettingsContext } from "../../contexts/settings.context"
+import { useContext } from "react";
+import { SettingsContext } from "../../contexts/settings.context";
 
-export const Theme = ()=> {
+export const Theme = ({setIsTheme})=> {
 
     const {theme,setTheme} = useContext(SettingsContext);
-
 
     const ThemeBtn = ({name})=> {
         return (
@@ -23,7 +22,8 @@ export const Theme = ()=> {
                 </span>
             </div>
         )
-    }
+    };
+
     return (
         <div className="fixed z-50 left-1/2 top-1/2 w-[380px] max-w-screen -translate-1/2 rounded-lg bg-neutral-900 p-5">
             <header >
@@ -35,7 +35,12 @@ export const Theme = ()=> {
                  <ThemeBtn name='system default' />
             </div>
             <footer className="flex items-center justify-end gap-5">
-                <button className="text-gray-400 font-light">cancel</button>
+                <button 
+                    onClick={()=> setIsTheme(false)}
+                    className="text-gray-400 font-light"
+                    >
+                    cancel
+                </button>
                 <button className="bg-emerald-500 rounded-lg px-4 py-1">ok</button>
             </footer>
         </div>

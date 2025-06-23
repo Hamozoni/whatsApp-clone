@@ -58,7 +58,7 @@ export const Chats = ({setActivePage})=> {
                 isTheme && (
                     <>
                       <Close_model set_model={setIsTheme} />
-                       <Theme />
+                       <Theme  setIsTheme={setIsTheme}/>
                     </>
                 )
             }
