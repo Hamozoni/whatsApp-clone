@@ -22,8 +22,8 @@ export const Settings = ()=> {
              {
                  activePage === 'keyboard shortcuts' &&
                  <>
-                 <KeyboardShorts setActivePage={setActivePage} />
-                 <Close_model set_model={setActivePage} />
+                    <KeyboardShorts setActivePage={setActivePage} />
+                    <Close_model set_model={setActivePage} />
                  </>
              }
             <div className="flex-1 flex flex-col w-full min-w-[380px] md:w-[380px] max-w-full rounded-lg bg-[#111b21] ">

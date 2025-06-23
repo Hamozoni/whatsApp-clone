@@ -4,6 +4,8 @@ import { SettingsContext } from "../../contexts/settings.context"
 export const Theme = ()=> {
 
     const {theme,setTheme} = useContext(SettingsContext);
+
+
     return (
         <div className="">
             <header>
@@ -11,7 +13,9 @@ export const Theme = ()=> {
             </header>
             <div className="">
                 <div className="">
-                    <button></button>
+                    <button className="">
+
+                    </button>
                     <h6>light</h6>
                 </div>
                 <div className="">
