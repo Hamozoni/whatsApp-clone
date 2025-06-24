@@ -11,23 +11,23 @@ export const UserContext = createContext();
 
 export const  UserContextProvider =  ({children})=> {
   
-    const [user,set_user] = useState(null);
-    const [loading,set_loading] = useState(true);
-    const [error,set_error] = useState(false);
-    const [contacts,set_contacts] = useState([]);
-    const [chats,set_chats] = useState([]);
-    const [status,set_status] =  useState([]);
-    const [calls,set_calls] = useState([]);
+    const [user,setUser] = useState(null);
+    const [loading,setLoading] = useState(true);
+    const [error,setError] = useState(false);
+    const [contacts,setContacts] = useState([]);
+    const [chats,setChats] = useState([]);
+    const [status,setStatus] =  useState([]);
+    const [calls,setCalls] = useState([]);
     const [channels,setChannels] = useState([]);
-    const [socket,set_socket] = useState(null);
-    const [active_navbar,set_active_navbar] = useState('chats');
+    const [socket,setSocket] = useState(null);
+    const [activeNavbar,setActiveNavbar] = useState('chats');
 
     // const navigate = useNavigate();
 
     useEffect(() => {
         const initializeAuth = async () => {
-          set_loading(true);
-          set_error(null);
+          setLoading(true);
+          setError(null);
 
           try{
             await setPersistence(firebase_auth, browserLocalPersistence);
@@ -36,11 +36,11 @@ export const  UserContextProvider =  ({children})=> {
                const data = await fetch_data(`user?user_email=${user?.email}`);
                const {statuses} = await fetch_data(`status?user_id=${data?.user?._id}`);
                const st = Object.values(Object.groupBy(statuses,status=> status.user._id));
-                 set_status(st)
-                 set_user(data?.user);
-                 set_calls(data?.user?.calls)
-                 set_chats(data?.chats);
-                 set_contacts(data?.user?.contacts);
+                 setStatus(st)
+                 setUser(data?.user);
+                 setCalls(data?.user?.calls)
+                 setChats(data?.chats);
+                 setContacts(data?.user?.contacts);
                  setChannels(data?.channels);
   
                const socket = await io.connect(import.meta.env.VITE_SOCKET_URL,{
@@ -52,17 +52,17 @@ export const  UserContextProvider =  ({children})=> {
                   }
               });
   
-              set_socket(socket);
+              setSocket(socket);
   
             });
 
           }
           catch (error){
             console.log(error.message)
-            set_error(error.message);
+            setError(error.message);
           }
           finally {
-            set_loading(false);
+            setLoading(false);
           }
 
         };
@@ -83,19 +83,19 @@ export const  UserContextProvider =  ({children})=> {
               value={
                 {
                   user,
-                  set_user,
+                  set_user: setUser,
                   socket,
                   contacts,
-                  set_contacts,
+                  set_contacts: setContacts,
                   loading,
                   chats,
-                  set_chats,
-                  active_navbar,
-                  set_active_navbar,
+                  set_chats: setChats,
+                  active_navbar: activeNavbar,
+                  set_active_navbar: setActiveNavbar,
                   calls,
-                  set_calls,
+                  set_calls: setCalls,
                   status,
-                  set_status,
+                  set_status: setStatus,
                   channels
                 }
               }>
