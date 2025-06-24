@@ -9,7 +9,7 @@ import { io } from "socket.io-client";
 export const User_context = createContext();
 
 
-export const  User_context_provider =  ({children})=> {
+export const  UserContextProvider =  ({children})=> {
   
     const [user,set_user] = useState(null);
     const [loading,set_loading] = useState(true);
@@ -101,7 +101,7 @@ export const  User_context_provider =  ({children})=> {
               }>
               {children}
           </User_context.Provider>
-      )
+      );
 
 };
 
