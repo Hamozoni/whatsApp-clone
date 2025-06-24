@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { User_context } from "../contexts/user.context";
+import { UserContext } from "../contexts/user.context";
 import { GrFormAdd } from "react-icons/gr";
 import { StatusMenuModel } from "../components/status/statusMenuModel";
 import { Close_model } from "../components/ui/close_model";
@@ -15,7 +15,7 @@ import { MdLockOutline } from "react-icons/md";
 
 export const Status = ()=> {
 
-    const {user,status} = useContext(User_context);
+    const {user,status} = useContext(UserContext);
     const [isUpdate,setIsUpdate] = useState(false);
     const [statusType,setStatusType] = useState(null);
     const [file,setFile] = useState(null);

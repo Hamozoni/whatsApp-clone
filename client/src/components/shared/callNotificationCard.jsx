@@ -3,11 +3,11 @@ import { SlCallIn } from "react-icons/sl";
 import { RiVideoUploadLine } from "react-icons/ri";
 import { RiVideoDownloadLine } from "react-icons/ri";
 import { useContext} from "react";
-import { User_context } from "../../contexts/user.context";
+import { UserContext } from "../../contexts/user.context";
 
 export const CallNotificationCard = ({call})=> {
 
-    const {user} = useContext(User_context);
+    const {user} = useContext(UserContext);
     const isMissedCall = call?.call_status === 'MISSED' && user?._id === call?.callee?._id;
 
     return (

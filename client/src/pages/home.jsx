@@ -5,13 +5,13 @@ import { Navbar } from '../components/navbar/navbar';
 import { Profile } from './profile';
 import { Settings } from './settings';
 import { Status } from './status';
-import { User_context } from '../contexts/user.context';
+import { UserContext } from '../contexts/user.context';
 import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
 
-  const {user,active_navbar} = useContext(User_context);
+  const {user,active_navbar} = useContext(UserContext);
 
 
   const navigate = useNavigate();

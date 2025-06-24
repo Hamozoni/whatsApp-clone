@@ -1,6 +1,6 @@
 import { MdAddIcCall } from "react-icons/md";
 import { useContext, useState } from "react";
-import { User_context } from "../contexts/user.context";
+import { UserContext } from "../contexts/user.context";
 import { IoVideocam,IoKeypad } from "react-icons/io5";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 import { SearchInput } from "../components/ui/searchInput";
@@ -9,7 +9,7 @@ import { CallNotificationCard } from "../components/shared/callNotificationCard"
 
 export const Calls =  ()=> {
 
-    const {calls,user} = useContext(User_context);
+    const {calls,user} = useContext(UserContext);
 
     const [searchText,setSearchText] = useState('');
 

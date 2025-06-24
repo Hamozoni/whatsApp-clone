@@ -5,12 +5,12 @@ import { EmojiBtn } from "../ui/emojiBtn";
 import { ImFilePicture } from "react-icons/im";
 import {Avatar} from "../ui/avatar"
 import { post_data } from "../../lib/post_data";
-import { User_context } from "../../contexts/user.context";
+import { UserContext } from "../../contexts/user.context";
 import { TransparantLoader } from "../ui/transparantLoader";
 
 export const NewChannelForm = ({setIsNewChannel})=> {
 
-    const {user} = useContext(User_context)
+    const {user} = useContext(UserContext)
 
     const [photo,setPhoto] = useState('/channelAvatar.jpg');
     const [file,setFile] = useState(null);

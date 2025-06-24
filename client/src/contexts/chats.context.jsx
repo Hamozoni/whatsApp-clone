@@ -1,6 +1,6 @@
 
 import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { User_context } from "./user.context";
+import { UserContext } from "./user.context";
 import { fetch_data } from "../lib/fetch_data";
  
 
@@ -8,7 +8,7 @@ export const ChatsContext = createContext(null);
 
 export const ChatsContextProvider = ({children})=> {
 
-    const {user,socket,set_chats} = useContext(User_context);
+    const {user,socket,set_chats} = useContext(UserContext);
 
     const [activeChat,setActiveChat] = useState(null);
     const [isPreview,setIsPreview] = useState(false);

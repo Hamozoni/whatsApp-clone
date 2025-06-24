@@ -7,10 +7,10 @@ import {createUserWithEmailAndPassword,updateProfile } from 'firebase/auth'
 import { firebase_auth } from "../lib/firebase_config";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { User_context } from "../contexts/user.context";
+import { UserContext } from "../contexts/user.context";
 
 export default function Signup() {
-  const {user} = useContext(User_context)
+  const {user} = useContext(UserContext)
   const [name, set_name] = useState("");
   const [email, set_email] = useState("");
   const [password, set_password] = useState("");

@@ -3,7 +3,7 @@ import { IoCallOutline,IoSettingsOutline } from "react-icons/io5";
 import { SiGradleplaypublisher } from "react-icons/si";
 import { GrChannel } from "react-icons/gr";
 import { useContext } from "react";
-import { User_context } from "../../contexts/user.context";
+import { UserContext } from "../../contexts/user.context";
 import { NavbarIcon } from "./navbarIcon";
 import { Avatar } from "../ui/avatar";
 
@@ -16,7 +16,7 @@ const options = [
 
 export const Navbar = ()=>  {
 
-    const {user,active_navbar,set_active_navbar} = useContext(User_context);
+    const {user,active_navbar,set_active_navbar} = useContext(UserContext);
 
     return (
         <nav className=" flex md:flex-col justify-between items-center md:px-2 md:py-4 p-1 bg-[#162127] m-1 rounded-lg" >

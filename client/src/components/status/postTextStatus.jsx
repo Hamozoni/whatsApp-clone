@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { IoCloseSharp, IoColorPaletteSharp } from "react-icons/io5";
 
 import { Close_model } from "../ui/close_model";
-import { User_context } from "../../contexts/user.context";
+import { UserContext } from "../../contexts/user.context";
 import { post_data } from "../../lib/post_data";
 import { PostStatusFooter } from "./postStatusFooter";
 import { EmojiBtn } from "../ui/emojiBtn";
@@ -31,7 +31,7 @@ const ColorPicker = ({ selectedColor, onSelect }) => (
 );
 
 export const PostTextStatus = ({ setStatusType }) => {
-  const { user } = useContext(User_context);
+  const { user } = useContext(UserContext);
 
   const [bgColor, setBgColor] = useState(bgColors[0]);
   const [fontIndex, setFontIndex] = useState(0);

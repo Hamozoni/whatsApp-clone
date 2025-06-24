@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { User_context } from "../../contexts/user.context";
+import { UserContext } from "../../contexts/user.context";
 
 
 export const StatusAvatarRing = ({status,statusCount,size = 56,ring_width: ringWidth = 3})=> {
 
-    const {user} = useContext(User_context)
+    const {user} = useContext(UserContext)
     const radius = (size - ringWidth) / 2;
     const circumference = 2 * Math.PI * radius;
     const gapAngle = 4;

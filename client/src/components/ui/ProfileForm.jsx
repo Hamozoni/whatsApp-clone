@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { User_context } from "../../contexts/user.context";
+import { UserContext } from "../../contexts/user.context";
 import { ImFilePicture } from "react-icons/im";
 import { MdOutlineEdit,MdCheck } from "react-icons/md";
 import { Avatar } from "./avatar";
@@ -7,7 +7,7 @@ import { Avatar } from "./avatar";
 
 export const ProfileForm = ()=> {
 
-        const { user } = useContext(User_context);
+        const { user } = useContext(UserContext);
         const [userAvatarURL, setUserAvatarURL] = useState(user?.profile_picture);
         const [name, setName] = useState(user?.name);
         const [isEditName, setIsEditName] = useState(false);

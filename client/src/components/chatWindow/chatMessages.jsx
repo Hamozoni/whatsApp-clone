@@ -1,6 +1,6 @@
 
 import { useContext, useEffect, useRef } from 'react';
-import { User_context } from '../../contexts/user.context';
+import { UserContext } from '../../contexts/user.context';
 import { MessageCard } from './messageCard';
 import { Loading_component } from '../ui/loading_component';
 import {ChatsContext } from '../../contexts/chats.context';
@@ -10,7 +10,7 @@ const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#162127] rounded-lg 
 
 export const ChatMessages = () => {
 
-  const {user,socket} = useContext(User_context);
+  const {user,socket} = useContext(UserContext);
   const {messages,activeChat,loading,error,setMessages} = useContext(ChatsContext);
 
   const chatSoundRef = useRef(null);

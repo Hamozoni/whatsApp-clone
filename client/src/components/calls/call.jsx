@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { Outgoing_call } from "./outgoing_call";
 import { Ringing_call } from "./ringing_call";
 import { Connected_call } from "./connected_call";
-import { User_context } from "../../contexts/user.context";
+import { UserContext } from "../../contexts/user.context";
 import { post_data } from "../../lib/post_data";
 import { handle_send_message } from "../../lib/handle_send_message";
 import {ChatsContext } from "../../contexts/chats.context";
@@ -21,7 +21,7 @@ export const Call = ()=> {
         set_call_id
     } = useContext(Call_context);
 
-    const {socket,user,set_chats} = useContext(User_context);
+    const {socket,user,set_chats} = useContext(UserContext);
 
     const {
         activeChat,

@@ -6,12 +6,12 @@ import { post_data } from '../../lib/post_data';
 import { TransparantLoader } from '../ui/transparantLoader';
 import { RoundedBtn } from '../ui/roundedBtn';
 import { MdArrowBackIosNew } from "react-icons/md";
-import { User_context } from '../../contexts/user.context';
+import { UserContext } from '../../contexts/user.context';
 import { useContext } from 'react';
 
 export function VideoTrimmer({ videoFile,setStatusType }) {
 
-  const {user} = useContext(User_context);
+  const {user} = useContext(UserContext);
   const videoRef = useRef(null);
   const containerRef = useRef(null);
   const contentRef = useRef(null);

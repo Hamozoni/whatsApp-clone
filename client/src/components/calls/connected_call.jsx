@@ -1,5 +1,5 @@
 import { Call_context } from "../../contexts/call.context";
-import { User_context } from "../../contexts/user.context";
+import { UserContext } from "../../contexts/user.context";
 import { useContext, useEffect, useRef, useState } from "react";
 import { MdCallEnd } from "react-icons/md";
 import { RiCameraSwitchLine } from "react-icons/ri";
@@ -26,7 +26,7 @@ export const Connected_call = ({
         call_type
     } = useContext(Call_context);
 
-    const {user} = useContext(User_context);
+    const {user} = useContext(UserContext);
 
     const [is_local_video_full_screen,set_is_local_video_full_screen] = useState(false);
     const local_video_ref = useRef(null);

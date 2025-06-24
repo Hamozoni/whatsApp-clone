@@ -7,13 +7,13 @@ import { CreateChannelAlert } from "../components/channels/createChannelAlert";
 import { Close_model } from "../components/ui/close_model";
 import { NewChannelForm } from "../components/channels//newChannelForm";
 import { useContext } from "react";
-import { User_context } from "../contexts/user.context";
+import { UserContext } from "../contexts/user.context";
 import { MainCard } from "../components/shared/mainCard";
 
 export const Channels = () => {
 
     const [text,setText] = useState('');
-    const {channels} = useContext(User_context);
+    const {channels} = useContext(UserContext);
 
     const [isCreateChannel,setIsCreateChannel] = useState(false);
     const [isNewChannel,setIsNewChannel] = useState(false);

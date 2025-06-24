@@ -6,7 +6,7 @@ import { fetch_data } from "../lib/fetch_data";
 import { io } from "socket.io-client";
 // import { useNavigate } from "react-router-dom";
 
-export const User_context = createContext();
+export const UserContext = createContext();
 
 
 export const  UserContextProvider =  ({children})=> {
@@ -35,7 +35,7 @@ export const  UserContextProvider =  ({children})=> {
             firebase_auth.onAuthStateChanged(async user => {
                const data = await fetch_data(`user?user_email=${user?.email}`);
                const {statuses} = await fetch_data(`status?user_id=${data?.user?._id}`);
-                  const st = Object.values(Object.groupBy(statuses,status=> status.user._id));
+               const st = Object.values(Object.groupBy(statuses,status=> status.user._id));
                  set_status(st)
                  set_user(data?.user);
                  set_calls(data?.user?.calls)
@@ -79,7 +79,7 @@ export const  UserContextProvider =  ({children})=> {
     }
     
       return (
-          <User_context.Provider 
+          <UserContext.Provider 
               value={
                 {
                   user,
@@ -100,7 +100,7 @@ export const  UserContextProvider =  ({children})=> {
                 }
               }>
               {children}
-          </User_context.Provider>
+          </UserContext.Provider>
       );
 
 };

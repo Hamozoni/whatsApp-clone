@@ -6,13 +6,13 @@ import { FaPencilAlt } from "react-icons/fa";
 import { RiText } from "react-icons/ri";
 import { RoundedBtn } from "../ui/roundedBtn";
 import { post_data } from "../../lib/post_data";
-import { User_context } from "../../contexts/user.context";
+import { UserContext } from "../../contexts/user.context";
 import { TransparantLoader } from "../ui/transparantLoader";
 
 
 export const PostImageStatus = ({setStatusType,file})=> {
 
-    const {user} = useContext(User_context);
+    const {user} = useContext(UserContext);
     const canvasRef = useRef();
     const [isLoading,setIsLoading] = useState(true);
     const [isError,setIsError] = useState(null);

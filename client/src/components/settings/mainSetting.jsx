@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import {firebase_auth} from '../../lib/firebase_config'
 import { signOut } from 'firebase/auth';
-import { User_context } from '../../contexts/user.context';
+import { UserContext } from '../../contexts/user.context';
 import { useState } from "react";
 import { SearchInput } from "../ui/searchInput";
 import { Avatar } from "../ui/avatar";
@@ -31,7 +31,7 @@ export const MainSetting = ({setActivePage})=> {
 
     const [text,setText] = useState('')
 
-    const {user,set_user} = useContext(User_context);
+    const {user,set_user} = useContext(UserContext);
 
     const logOut = async ()=> {
        await signOut(firebase_auth);

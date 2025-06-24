@@ -4,7 +4,7 @@
 import { IoCallOutline,IoVideocamOutline  } from "react-icons/io5";
 import { useContext } from "react";
 import { Call_context } from "../../contexts/call.context";
-import { User_context } from "../../contexts/user.context";
+import { UserContext } from "../../contexts/user.context";
 import { MdArrowBackIos } from "react-icons/md";
 import { ChatsContext } from "../../contexts/chats.context";
 
@@ -13,7 +13,7 @@ export const ChatHeader = ({receiver})=> {
 
     const {set_call_status,set_callee,set_caller,set_call_type} = useContext(Call_context);
     const {setActiveChat} = useContext(ChatsContext)
-    const {user} = useContext(User_context)
+    const {user} = useContext(UserContext)
 
     const startCall = (type)=> {
         set_call_status('call');

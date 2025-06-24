@@ -2,14 +2,14 @@ import { useContext, useState } from "react"
 import { ContactHeader } from "./contactHeader"
 import { Input } from "../ui/input"
 import { Submit_btn } from "../ui/submit_btn";
-import { User_context } from "../../contexts/user.context";
+import { UserContext } from "../../contexts/user.context";
 import { fetch_data } from "../../lib/fetch_data";
 import { post_data } from "../../lib/post_data";
 import { MainCard } from "../shared/mainCard";
 
 export const NewContact = ({setIsNewContact})=> {
 
-    const {user,contacts,set_contacts} = useContext(User_context);
+    const {user,contacts,set_contacts} = useContext(UserContext);
 
     const [email,setEmail] = useState('');
     const [is_loading,setIsLoading] = useState(false);

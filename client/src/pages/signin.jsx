@@ -6,7 +6,7 @@ import { Submit_btn } from "../components/ui/submit_btn";
 import {signInWithEmailAndPassword} from 'firebase/auth'
 import { firebase_auth } from "../lib/firebase_config";
 import {useNavigate } from "react-router-dom";
-import { User_context } from "../contexts/user.context";
+import { UserContext } from "../contexts/user.context";
 
 export default function Signin() {
   const [email, set_email] = useState("");
@@ -14,7 +14,7 @@ export default function Signin() {
   const [is_loading, set_is_loading] = useState(false);
   const [error, set_error] = useState("");
 
-  const {user} = useContext(User_context)
+  const {user} = useContext(UserContext)
 
   const navigate = useNavigate();
 

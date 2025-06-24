@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { User_context } from "../contexts/user.context";
+import { UserContext } from "../contexts/user.context";
 import { ChatsContext } from "../contexts/chats.context";
 import { NoActiveChat } from "../components/chats/NoActiveChat";
 import { ChatWindow } from "../components/chatWindow/chatWindow";
@@ -11,7 +11,7 @@ import { ChatCardLastMessage } from "../components/chats/chatCardLastMessage";
 export const Chats = ()=> {
 
     const {activeChat,setActiveChat} = useContext(ChatsContext);
-    const {chats,user} = useContext(User_context);
+    const {chats,user} = useContext(UserContext);
     const [searchText,setSearchText] = useState('');
     const [isContactPage,setIsContcatPage] = useState(false);
 

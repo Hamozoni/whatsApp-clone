@@ -3,7 +3,7 @@ import { GrGroup,GrUserAdd } from "react-icons/gr";
 import { ContactHeader } from "../components/contacts/contactHeader";
 import { NewContact } from "../components/contacts/newContact";
 import { useContext, useState } from "react";
-import { User_context } from "../contexts/user.context";
+import { UserContext } from "../contexts/user.context";
 import { MainCard } from "../components/shared/mainCard";
 import { ChatsContext } from "../contexts/chats.context";
 
@@ -25,7 +25,7 @@ const Button = ({Icon,text,handle_cleck})=> {
 
 export const Contacts = ({setIsContcatPage})=> {
 
-    const {contacts,chats,user} = useContext(User_context)
+    const {contacts,chats,user} = useContext(UserContext)
     const {setActiveChat} = useContext(ChatsContext);
     const [searchText,setSearchText] = useState('');
     const [isNewContact,setIsNewContact] = useState(false);

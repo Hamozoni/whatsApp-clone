@@ -1,10 +1,10 @@
-import { User_context } from "../../contexts/user.context";
+import { UserContext } from "../../contexts/user.context";
 import { useContext } from "react";
 
  
 export const NavbarIcon = ({text,Icon})=> {
 
-    const {active_navbar,set_active_navbar} = useContext(User_context);
+    const {active_navbar,set_active_navbar} = useContext(UserContext);
 
     return (
         <button 

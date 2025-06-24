@@ -1,6 +1,6 @@
 import { Call } from "../components/calls/call";
 import { createContext, useContext, useEffect, useState } from "react";
-import { User_context } from "./user.context";
+import { UserContext } from "./user.context";
 
 
 export const Call_context = createContext(null);
@@ -8,7 +8,7 @@ export const Call_context = createContext(null);
 
 export const Call_context_provider = ({children})=> {
 
-    const {socket} = useContext(User_context);
+    const {socket} = useContext(UserContext);
 
     const [call_status,set_call_status] = useState('idle');
     const [call_type,set_call_type] = useState('video');
