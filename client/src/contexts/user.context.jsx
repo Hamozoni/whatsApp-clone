@@ -83,19 +83,19 @@ export const  UserContextProvider =  ({children})=> {
               value={
                 {
                   user,
-                  set_user: setUser,
+                  setUser,
                   socket,
                   contacts,
-                  set_contacts: setContacts,
+                  setContacts,
                   loading,
                   chats,
-                  set_chats: setChats,
-                  active_navbar: activeNavbar,
-                  set_active_navbar: setActiveNavbar,
+                  setChats,
+                  activeNavbar,
+                  setActiveNavbar,
                   calls,
-                  set_calls: setCalls,
+                  setCalls,
                   status,
-                  set_status: setStatus,
+                  setStatus,
                   channels
                 }
               }>
