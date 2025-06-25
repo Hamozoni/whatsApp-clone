@@ -1,8 +1,8 @@
 import { CallContext } from "../../contexts/call.context";
 import { useContext, useEffect, useRef, useState } from "react";
-import { Outgoing_call } from "./outgoing_call";
-import { Ringing_call } from "./ringing_call";
-import { Connected_call } from "./connected_call";
+import { OutgoingCall } from "./outgoingCall";
+import { RingingCall } from "./ringingCall";
+import { Connected_call } from "./connectedCall";
 import { UserContext } from "../../contexts/user.context";
 import { post_data } from "../../lib/post_data";
 import { handleSendMessage } from "../../lib/handleSendMessage";
@@ -252,7 +252,7 @@ export const Call = ()=> {
         <div className="fixed top-0 left-0 w-[100dvw] h-[100dvh] z-30 bg-gray-900">
             {
                 call_status === 'call' ? 
-                <Outgoing_call 
+                <OutgoingCall 
                    local_video={local_video}
                    on_end_call={call_end}
                    on_toggle_mute={toggle_mute}
@@ -260,7 +260,7 @@ export const Call = ()=> {
                    call_end= {call_end}
                 /> :
                 call_status === 'ringing'  ? 
-                <Ringing_call
+                <RingingCall
                    on_answer_call={answer_call}
                    on_end_call={call_end}
                  /> :

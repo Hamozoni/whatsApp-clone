@@ -4,24 +4,26 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { firebaseAuth } from "../../lib/firebaseConfig";
 import { useState } from "react";
-import axios from "axios";
+import { postData } from "../../lib/postData";
 
 
-export function Sigin_sith_prvider ({link_to}) {
+export function SiginWithPrvider ({link_to}) {
 
     const [isLoading,setIsLoading] = useState(false);
+
     const navigate = useNavigate();
-    const handle_sigin = async (provider)=> {
+
+    const handleSigin = async (provider)=> {
 
       setIsLoading(true);
-      const auth_provider = provider === 'GitHub' ? new GithubAuthProvider() : new GoogleAuthProvider();
+      const authProvider = provider === 'GitHub' ? new GithubAuthProvider() : new GoogleAuthProvider();
 
-         await signInWithPopup(firebaseAuth,auth_provider)
+         await signInWithPopup(firebaseAuth,authProvider)
          .then(async({user})=> {
 
           const {email,displayName,photoURL,phoneNumber,emailVerified,uid} = user;
 
-          const user_data = {
+          const userData = {
             uid,
             email,
             displayName,
@@ -30,8 +32,9 @@ export function Sigin_sith_prvider ({link_to}) {
             emailVerified,
           }
 
-          const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user`,user_data);
-          const {is_new } = data;
+          const data = await postData('user',userData);
+
+          const { is_new } = data;
 
           if(is_new) {
             navigate('/onboarding');
@@ -70,7 +73,7 @@ export function Sigin_sith_prvider ({link_to}) {
             <div>
               <button
                 disabled={isLoading}
-                onClick={()=> handle_sigin('Google')}
+                onClick={()=> handleSigin('Google')}
                 className="w-full cursor-pointer flex justify-center items-center gap-3 py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
               >
                 <FcGoogle size={20} />
@@ -81,7 +84,7 @@ export function Sigin_sith_prvider ({link_to}) {
             <div>
               <button
                  disabled={isLoading}
-                 onClick={()=> handle_sigin('GitHub')}
+                 onClick={()=> handleSigin('GitHub')}
                 className="w-full cursor-pointer flex justify-center items-center gap-3 py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
               >
                 <FaGithub size={20} />
