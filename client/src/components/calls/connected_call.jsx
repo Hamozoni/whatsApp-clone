@@ -1,4 +1,4 @@
-import { Call_context } from "../../contexts/call.context";
+import { CallContext } from "../../contexts/call.context";
 import { UserContext } from "../../contexts/user.context";
 import { useContext, useEffect, useRef, useState } from "react";
 import { MdCallEnd } from "react-icons/md";
@@ -24,7 +24,7 @@ export const Connected_call = ({
         callee,
         caller,
         call_type
-    } = useContext(Call_context);
+    } = useContext(CallContext);
 
     const {user} = useContext(UserContext);
 

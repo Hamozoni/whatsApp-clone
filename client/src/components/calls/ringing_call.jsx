@@ -1,5 +1,5 @@
 
-import { Call_context } from "../../contexts/call.context";
+import { CallContext } from "../../contexts/call.context";
 import { useContext} from "react";
 import { MdCallEnd } from "react-icons/md";
 
@@ -8,7 +8,7 @@ export const Ringing_call = ({
     on_end_call,
 })=> {
 
-    const {caller,call_type} = useContext(Call_context);
+    const {caller,call_type} = useContext(CallContext);
 
 
     return (

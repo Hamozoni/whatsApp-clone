@@ -1,4 +1,4 @@
-import { Call_context } from "../../contexts/call.context";
+import { CallContext } from "../../contexts/call.context";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Outgoing_call } from "./outgoing_call";
 import { Ringing_call } from "./ringing_call";
@@ -19,7 +19,7 @@ export const Call = ()=> {
         call_type,
         call_id,
         set_call_id
-    } = useContext(Call_context);
+    } = useContext(CallContext);
 
     const {socket,user,set_chats} = useContext(UserContext);
 

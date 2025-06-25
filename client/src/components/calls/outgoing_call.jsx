@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState} from "react";
 import { MdCallEnd } from "react-icons/md";
-import { Call_context } from "../../contexts/call.context";
+import { CallContext } from "../../contexts/call.context";
 import { FaMicrophoneSlash, FaVideo } from "react-icons/fa";
 import { HiSpeakerWave } from "react-icons/hi2";
 import { UserContext } from "../../contexts/user.context";
@@ -14,7 +14,7 @@ export const Outgoing_call = ({
   })=> {
 
     const interval_ref = useRef(null);
-    const {callee} = useContext(Call_context);
+    const {callee} = useContext(CallContext);
     const {socket} = useContext(UserContext);
     const [is_call_received,set_is_call_received] = useState(false)
     const local_video_ref = useRef(null)
