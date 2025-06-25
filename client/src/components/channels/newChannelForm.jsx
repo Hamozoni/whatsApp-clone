@@ -4,9 +4,9 @@ import { useContext, useState } from "react"
 import { EmojiBtn } from "../ui/emojiBtn";
 import { ImFilePicture } from "react-icons/im";
 import {Avatar} from "../ui/avatar"
-import { post_data } from "../../lib/post_data";
 import { UserContext } from "../../contexts/user.context";
-import { TransparantLoader } from "../ui/transparantLoader";
+import { TransparantLoader } from "../modal/transparantLoader";
+import {postData} from "../../lib/postData";
 
 export const NewChannelForm = ({setIsNewChannel})=> {
 
@@ -48,7 +48,7 @@ export const NewChannelForm = ({setIsNewChannel})=> {
             formData.append('description',description);
             formData.append('admin',user?._id);
             
-           const channel = await post_data('channel',formData);
+           const channel = await postData('channel',formData);
 
            console.table(channel);
           setIsNewChannel(false);
@@ -76,7 +76,7 @@ export const NewChannelForm = ({setIsNewChannel})=> {
                     {/* Avatar Upload */}
                     <div className="flex flex-col items-center">
                         <div className="relative inline-block">
-                            <Avatar size="2xl" user_photo={photo} />
+                            <Avatar size="2xl" userPhoto={photo} />
                             <label className="absolute opacity-0 hover:opacity-100 bottom-0 right-0 text-white rounded-full w-full h-full p-2 cursor-pointer flex flex-col items-center justify-center bg-[#00000059]">
                             <ImFilePicture size={24}/>
                             <span className="text-xs">change Avatar</span>

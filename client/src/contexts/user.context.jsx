@@ -1,7 +1,7 @@
 import { firebaseAuth } from "../lib/firebaseConfig";
 import { createContext, useEffect, useState } from "react";
 import { setPersistence, browserLocalPersistence } from 'firebase/auth';
-import { Loading_component } from "../components/ui/loading_component";
+import { Loading } from "../components/modal/loading";
 import { fetch_data } from "../lib/fetchData";
 import { io } from "socket.io-client";
 // import { useNavigate } from "react-router-dom";
@@ -74,7 +74,7 @@ export const  UserContextProvider =  ({children})=> {
     
     if(loading) {
       return (
-        <Loading_component />
+        <Loading />
       )
     }
     

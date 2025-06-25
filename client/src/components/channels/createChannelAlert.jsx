@@ -1,4 +1,3 @@
-import { GrChannel } from "react-icons/gr";
 import { GiWorld } from "react-icons/gi";
 import { FaEyeSlash } from "react-icons/fa6";
 import { SiSpringsecurity } from "react-icons/si";
@@ -15,7 +14,7 @@ export const CreateChannelAlert = ( {setIsCreateChannel,setIsNewChannel} )=> {
 
             <header className="mb-5">
                 <div className="mx-auto mb-5 w-fit rounded-full bg-emerald-900 p-4">
-                   <Avatar size="2xl" user_photo={'/channelAvatar.jpg'} />
+                   <Avatar size="2xl" userPhoto={'/channelAvatar.jpg'} />
                 </div>
                 <h4 className=" capitalize text-xl text-center font-bold">create a channel to reach unlimted followers</h4>
             </header>

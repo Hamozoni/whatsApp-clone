@@ -1,7 +1,7 @@
 import EmojiPicker from "emoji-picker-react";
 import { useState } from "react";
 import { HiOutlineEmojiHappy } from "react-icons/hi"
-import { Close_model } from "./close_model";
+import { CloseModel } from "../modal/closeModel";
 
 
 export const EmojiBtn = ({size = 'lg',setText})=> {
@@ -24,7 +24,7 @@ export const EmojiBtn = ({size = 'lg',setText})=> {
                 <div className=" fixed top-1/2 left-1/2 -translate-1/2 z-50">
                     <EmojiPicker onEmojiClick={handleEmoji} />
                 </div>
-                <Close_model  set_model={setIsEmoji}/>
+                <CloseModel  setCloseModel={setIsEmoji}/>
             </>
             }
         </div>
