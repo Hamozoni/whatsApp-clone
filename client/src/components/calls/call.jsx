@@ -5,9 +5,9 @@ import { Ringing_call } from "./ringing_call";
 import { Connected_call } from "./connected_call";
 import { UserContext } from "../../contexts/user.context";
 import { post_data } from "../../lib/post_data";
-import { handle_send_message } from "../../lib/handle_send_message";
+import { handleSendMessage } from "../../lib/handleSendMessage";
 import {ChatsContext } from "../../contexts/chats.context";
-import { update_data } from "../../lib/update_data";
+import { updateData } from "../../lib/updateData";
 
 export const Call = ()=> {
 
@@ -40,7 +40,7 @@ export const Call = ()=> {
 
     const call_end = async(call_status,duration = 0)=> {
         socket?.emit('call_end',{to:user?._id === caller?._id ? callee?._id : caller?._id})
-        await update_data('call',{call_status,call_id,duration});
+        await updateData('call',{call_status,call_id,duration});
         close_peer_conecction();
     };
 
@@ -63,7 +63,7 @@ export const Call = ()=> {
             set_call_id(call?._id);
             const message = {sender: user?._id,contact: callee?._id,call: call?._id,type: 'CALL'};
 
-           await handle_send_message({message,
+           await handleSendMessage({message,
                 set_chats,
                 active_chat: activeChat,
                 set_active_chat: setActiveChat,

@@ -2,7 +2,7 @@ import {Link, useNavigate } from "react-router-dom";
 import {GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import { firebase_auth } from "../../lib/firebase_config";
+import { firebaseAuth } from "../../lib/firebaseConfig";
 import { useState } from "react";
 import axios from "axios";
 
@@ -16,7 +16,7 @@ export function Sigin_sith_prvider ({link_to}) {
       setIsLoading(true);
       const auth_provider = provider === 'GitHub' ? new GithubAuthProvider() : new GoogleAuthProvider();
 
-         await signInWithPopup(firebase_auth,auth_provider)
+         await signInWithPopup(firebaseAuth,auth_provider)
          .then(async({user})=> {
 
           const {email,displayName,photoURL,phoneNumber,emailVerified,uid} = user;

@@ -1,7 +1,7 @@
 
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "./user.context";
-import { fetch_data } from "../lib/fetch_data";
+import { fetch_data } from "../lib/fetchData";
  
 
 export const ChatsContext = createContext(null);

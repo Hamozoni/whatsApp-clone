@@ -1,8 +1,8 @@
-import { firebase_auth } from "../lib/firebase_config";
+import { firebaseAuth } from "../lib/firebaseConfig";
 import { createContext, useEffect, useState } from "react";
 import { setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { Loading_component } from "../components/ui/loading_component";
-import { fetch_data } from "../lib/fetch_data";
+import { fetch_data } from "../lib/fetchData";
 import { io } from "socket.io-client";
 // import { useNavigate } from "react-router-dom";
 
@@ -30,9 +30,9 @@ export const  UserContextProvider =  ({children})=> {
           setError(null);
 
           try{
-            await setPersistence(firebase_auth, browserLocalPersistence);
+            await setPersistence(firebaseAuth, browserLocalPersistence);
   
-            firebase_auth.onAuthStateChanged(async user => {
+            firebaseAuth.onAuthStateChanged(async user => {
                const data = await fetch_data(`user?user_email=${user?.email}`);
                const {statuses} = await fetch_data(`status?user_id=${data?.user?._id}`);
                const st = Object.values(Object.groupBy(statuses,status=> status.user._id));
@@ -69,7 +69,7 @@ export const  UserContextProvider =  ({children})=> {
     
         initializeAuth();
         return ()=> socket?.disconnect()
-      }, [firebase_auth]);
+      }, [firebaseAuth]);
 
     
     if(loading) {

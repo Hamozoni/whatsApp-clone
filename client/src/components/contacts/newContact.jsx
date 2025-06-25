@@ -3,8 +3,8 @@ import { ContactHeader } from "./contactHeader"
 import { Input } from "../ui/input"
 import { Submit_btn } from "../ui/submit_btn";
 import { UserContext } from "../../contexts/user.context";
-import { fetch_data } from "../../lib/fetch_data";
-import { post_data } from "../../lib/post_data";
+import { fetch_data } from "../../lib/fetchData";
+import { postData } from "../../lib/postData";
 import { MainCard } from "../shared/mainCard";
 
 export const NewContact = ({setIsNewContact})=> {
@@ -61,7 +61,7 @@ export const NewContact = ({setIsNewContact})=> {
         }
 
         try {
-            const {data} = await post_data(`contact`,body);
+            const {data} = await postData(`contact`,body);
             if(data?.status) {
                 set_contacts(data?.user?.contacts)
             }

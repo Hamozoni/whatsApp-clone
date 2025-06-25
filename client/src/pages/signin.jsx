@@ -4,7 +4,7 @@ import { Sigin_sith_prvider } from "../components/auth/signin_with_prodider";
 import { Input } from "../components/ui/input";
 import { Submit_btn } from "../components/ui/submit_btn";
 import {signInWithEmailAndPassword} from 'firebase/auth'
-import { firebase_auth } from "../lib/firebase_config";
+import { firebaseAuth } from "../lib/firebaseConfig";
 import {useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/user.context";
 
@@ -22,7 +22,7 @@ export default function Signin() {
     e.preventDefault();
     set_is_loading(true);
     try {
-      await signInWithEmailAndPassword(firebase_auth,email,password)
+      await signInWithEmailAndPassword(firebaseAuth,email,password)
       .then(_=> {
         set_is_loading(false);
         navigate('/');

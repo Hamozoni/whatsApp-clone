@@ -4,7 +4,7 @@ import { Sigin_sith_prvider } from "../components/auth/signin_with_prodider";
 import { Input } from "../components/ui/input";
 import { Submit_btn } from "../components/ui/submit_btn";
 import {createUserWithEmailAndPassword,updateProfile } from 'firebase/auth'
-import { firebase_auth } from "../lib/firebase_config";
+import { firebaseAuth } from "../lib/firebaseConfig";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/user.context";
@@ -44,7 +44,7 @@ export default function Signup() {
 
     try {
      
-        await createUserWithEmailAndPassword(firebase_auth, email, password)
+        await createUserWithEmailAndPassword(firebaseAuth, email, password)
         .then(async({user})=> {
 
           const {email,photoURL,phoneNumber,emailVerified,uid} = user;
