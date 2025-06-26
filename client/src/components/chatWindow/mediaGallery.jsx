@@ -13,7 +13,6 @@ export const MediaGallery = ()=> {
     } = useContext(ChatsContext);
 
     const handleCloseMedia = (e)=> {
-        console.log(e.target.classList.contains('parent'))
         if(e.target.classList.contains('parent')){
             setIsSelectedGalleryFile(false)
         }

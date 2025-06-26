@@ -2,9 +2,9 @@
 import { useContext, useEffect, useRef } from 'react';
 import { UserContext } from '../../contexts/user.context';
 import { MessageCard } from './messageCard';
-import { Loading_component } from '../ui/loading_component';
 import {ChatsContext } from '../../contexts/chats.context';
 import { AiOutlineWechatWork } from "react-icons/ai";
+import { Loading } from '../modal/loading';
 
 const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#162127] rounded-lg my-1';
 
@@ -21,7 +21,6 @@ export const ChatMessages = () => {
       if(activeChat?._id === data?._id) {
           setMessages(prev=> [...prev,data?.last_message]);
           chatSoundRef?.current?.play()
-      }else {
       }
     })
 
@@ -62,7 +61,7 @@ export const ChatMessages = () => {
             {
                 loading ? 
                 <div className={className}>
-                  <Loading_component />
+                  <Loading />
                 </div>
                   : messages?.map(message => (
                     <MessageCard 

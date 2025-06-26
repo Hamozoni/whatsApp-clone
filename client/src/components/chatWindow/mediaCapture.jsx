@@ -36,7 +36,7 @@ export const MediaCapture = ()=> {
                 }
             }
             catch (error) {
-
+                console.log(error.message);
             }
         };
         initializeCamera();

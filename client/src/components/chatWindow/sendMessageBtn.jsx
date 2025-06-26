@@ -1,8 +1,8 @@
 import {ChatsContext } from "../../contexts/chats.context";
 import { UserContext } from "../../contexts/user.context";
-import { handle_send_message } from "../../lib/handle_send_message";
 import { useContext, useState } from "react";
 import { LuSendHorizontal } from "react-icons/lu"
+import { handleSendMessage } from "../../lib/handleSendMessage";
 
 
 export const SendMessageBtn = ()=> {
@@ -22,17 +22,17 @@ export const SendMessageBtn = ()=> {
         setMessages
     } = useContext(ChatsContext);
 
-    const {socket,set_chats} = useContext(UserContext);
+    const {socket,setChats} = useContext(UserContext);
 
     return (
         <button
             onClick={()=>{
-                handle_send_message({
+                handleSendMessage({
                     message,
-                    set_chats,
-                    active_chat: activeChat,
-                    set_active_chat: setActiveChat,
-                    set_messages: setMessages,
+                    setChats,
+                    activeChat,
+                    setActiveChat,
+                   setMessages,
                     socket
                 });
                 if(!error) {

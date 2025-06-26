@@ -1,8 +1,8 @@
-import Audio_player from "../ui/audio_player";
 import { useContext } from "react";
 import {ChatsContext } from "../../contexts/chats.context";
 import { MediaGalleryFile } from "./mediaGalleryFile";
 import { Avatar } from "../ui/avatar";
+import AudioPlayer from "../ui/audioPlayer";
 
 export const MediaMessageCard = ({file,sender})=> {
 
@@ -21,10 +21,10 @@ export const MediaMessageCard = ({file,sender})=> {
                     <div className="min-w-fit">
                         <Avatar 
                             size="sm" 
-                            user_photo={sender?.profile_picture} 
+                            userPhoto={sender?.profile_picture} 
                         />
                     </div>
-                    <Audio_player audio_url={file?.url} />
+                    <AudioPlayer audioUrl={file?.url} />
                 </div>
                 : <div onClick={handleSelectFile} > 
                         <MediaGalleryFile fileData={file} /> 
