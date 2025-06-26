@@ -3,7 +3,7 @@
 // import { HiOutlineDotsVertical } from "react-icons/hi"
 import { IoCallOutline,IoVideocamOutline  } from "react-icons/io5";
 import { useContext } from "react";
-import { Call_context } from "../../contexts/call.context";
+import { CallContext } from "../../contexts/call.context";
 import { UserContext } from "../../contexts/user.context";
 import { MdArrowBackIos } from "react-icons/md";
 import { ChatsContext } from "../../contexts/chats.context";
@@ -11,20 +11,20 @@ import { ChatsContext } from "../../contexts/chats.context";
 
 export const ChatHeader = ({receiver})=> {
 
-    const {set_call_status,set_callee,set_caller,set_call_type} = useContext(Call_context);
-    const {setActiveChat} = useContext(ChatsContext)
+    const {setCallStatus,setCallee,setCaller,setCallType} = useContext(CallContext);
+    const {setActiveChat} = useContext(ChatsContext);
     const {user} = useContext(UserContext)
 
     const startCall = (type)=> {
-        set_call_status('call');
-        set_callee(receiver);
-        const user_info = {
+        setCallStatus('call');
+        setCallee(receiver);
+        const userInfo = {
             _id: user?._id,
             name: user?.name,
             profile_picture: user?.profile_picture
         }
-        set_caller(user_info);
-        set_call_type(type);
+        setCaller(userInfo);
+        setCallType(type);
     };
 
 
@@ -32,7 +32,10 @@ export const ChatHeader = ({receiver})=> {
         <div className="p-3 bg-[#111b21] text-[#f7f8fa] flex items-center rounded-lg">
             <div className="flex items-center gap-2 pr-2">
                 {/* <GoSearch className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#afb3b9] hide_model " /> */}
-                <MdArrowBackIos onClick={()=> setActiveChat(null)} className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#bcc0c7]" />
+                <MdArrowBackIos 
+                    onClick={()=> setActiveChat(null)} 
+                    className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#bcc0c7]"
+                    />
             </div>
             <div className="w-10 h-10 rounded-full overflow-hidden">
                 <img src={receiver?.profile_picture} alt="Profile" className="w-10 h-10 object-cover" />

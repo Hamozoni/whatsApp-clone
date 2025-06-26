@@ -5,9 +5,8 @@ import { MdDelete } from "react-icons/md";
 import {ChatsContext } from '../../contexts/chats.context';
 import { SendMessageBtn } from './sendMessageBtn';
 
-import { time_formater } from '../../utils/time_formater';
-
-import Audio_player from '../ui/audio_player'
+import AudioPlayer from '../ui/audioPlayer'
+import { callTimeFormater } from '../../lib/callTimeFormater';
 
 
 const AudioRecorder = () => {
@@ -174,12 +173,12 @@ const AudioRecorder = () => {
               width={250} 
               height={30} 
             />
-          <p className='text-xs'>{time_formater(recordedTime)}</p>
+          <p className='text-xs'>{callTimeFormater(recordedTime)}</p>
         </div>
 
         
         {(audioUrl && !recording) && (
-          <Audio_player audio_url={audioUrl}/>
+          <AudioPlayer audioUrl={audioUrl}/>
         )}
         <button className='text-red-400' onClick={()=> setIsRecorder(false)}>
             <MdDelete  size={30}/>
@@ -189,4 +188,4 @@ const AudioRecorder = () => {
   );
 };
 
-export default AudioRecorder
+export default AudioRecorder;

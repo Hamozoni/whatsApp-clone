@@ -3,13 +3,14 @@ import { SlMicrophone } from "react-icons/sl"
 import { useContext, useState } from "react";
 import { SelectMessageFile } from "./selectMessageFile";
 import {ChatsContext } from "../../contexts/chats.context";
-import { Close_model } from "../ui/close_model";
+
 
 import {useEffect} from 'react'
 import AudioRecorder from './audioRecorder'
 
 import { SendMessageBtn } from "./sendMessageBtn";
 import { TextEmojiInput } from "../ui/textEmojiInput";
+import { CloseModel } from "../modal/closeModel";
 
 export const ChatFooter = ()=> {
 
@@ -54,8 +55,8 @@ export const ChatFooter = ()=> {
             {
                 isDocument && 
                 <>
-                    <Close_model set_model={setIsDocument} />
-                    <SelectMessageFile set_is_document={setIsDocument} />
+                    <CloseModel setCloseModel={setIsDocument} />
+                    <SelectMessageFile setIsDocument={setIsDocument} />
                 </>
             }
 
