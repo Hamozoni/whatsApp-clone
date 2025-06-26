@@ -1,18 +1,18 @@
 import { useContext, useState } from "react"
 import { ContactHeader } from "./contactHeader"
 import { Input } from "../ui/input"
-import { Submit_btn } from "../ui/submit_btn";
 import { UserContext } from "../../contexts/user.context";
-import { fetch_data } from "../../lib/fetchData";
 import { postData } from "../../lib/postData";
 import { MainCard } from "../shared/mainCard";
+import { fetchData } from "../../lib/fetchData";
+import {SubmitBtn} from "../ui/submitBtn"
 
 export const NewContact = ({setIsNewContact})=> {
 
-    const {user,contacts,set_contacts} = useContext(UserContext);
+    const {user,contacts, setContacts} = useContext(UserContext);
 
     const [email,setEmail] = useState('');
-    const [is_loading,setIsLoading] = useState(false);
+    const [isLoading,setIsLoading] = useState(false);
     const [error,setError] = useState(null);
     const [contact,setContact] = useState(null);
 
@@ -28,7 +28,7 @@ export const NewContact = ({setIsNewContact})=> {
         }
         try {
 
-            const data = await fetch_data(`contact?user_email=${user?.email}&contact_email=${email}`);
+            const data = await fetchData(`contact?user_email=${user?.email}&contact_email=${email}`);
             if(!data?.status) {
                 setError(data?.message)
             }else {
@@ -63,7 +63,7 @@ export const NewContact = ({setIsNewContact})=> {
         try {
             const {data} = await postData(`contact`,body);
             if(data?.status) {
-                set_contacts(data?.user?.contacts)
+                setContacts(data?.user?.contacts)
             }
         }
         catch (error) {
@@ -97,9 +97,9 @@ export const NewContact = ({setIsNewContact})=> {
                 )}
                 {
                     contact?.email !== email &&
-                   <Submit_btn 
+                   <SubmitBtn
                         text='find contact' 
-                        is_loading={is_loading} 
+                        isLoading={isLoading} 
                       />
                 }
             </form>
@@ -124,7 +124,7 @@ export const NewContact = ({setIsNewContact})=> {
                             { 
                             !contacts?.find(e=> e.email === contact?.email) &&
                             <form onSubmit={handleAddingContact} className="p-3">
-                                <Submit_btn text='Add To Your Contact ' is_loading={is_loading} />
+                                <SubmitBtn text='Add To Your Contact ' isLoading={isLoading} />
                             </form>
 
                             }
