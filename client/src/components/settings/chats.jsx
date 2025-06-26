@@ -3,7 +3,7 @@ import { Header } from "./header"
 import { OptionBtn } from "./optionBtn"
 import { Switch } from "./switch"
 import { Theme } from "../modal/theme"
-import { Close_model } from "../ui/close_model"
+import { CloseModel } from "../modal/closeModel"
 
 export const Chats = ({setActivePage})=> {
 
@@ -57,7 +57,7 @@ export const Chats = ({setActivePage})=> {
             {
                 isTheme && (
                     <>
-                      <Close_model set_model={setIsTheme} />
+                      <CloseModel setCloseModel={setIsTheme} />
                        <Theme  setIsTheme={setIsTheme}/>
                     </>
                 )
