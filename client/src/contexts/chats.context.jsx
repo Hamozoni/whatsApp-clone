@@ -1,7 +1,7 @@
 
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "./user.context";
-import { fetch_data } from "../lib/fetchData";
+import { fetchData } from "../lib/fetchData";
  
 
 export const ChatsContext = createContext(null);
@@ -44,7 +44,7 @@ export const ChatsContextProvider = ({children})=> {
             setLoading(true);
             setError(null);
             try{
-                const data = await fetch_data(`/message?chat_id=${activeChat?._id}`);
+                const data = await fetchData(`/message?chat_id=${activeChat?._id}`);
                 setMessages(data?.messages);
                 console.log(data?.messages)
             }

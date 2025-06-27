@@ -2,7 +2,6 @@ import { useContext, useState } from "react"
 import { UserContext } from "../contexts/user.context";
 import { GrFormAdd } from "react-icons/gr";
 import { StatusMenuModel } from "../components/status/statusMenuModel";
-import { Close_model } from "../components/ui/close_model";
 import { PostTextStatus } from "../components/status/postTextStatus";
 import { StatusCard } from "../components/status/statusCard";
 import { Avatar } from "../components/ui/avatar";
@@ -11,6 +10,7 @@ import{ VideoTrimmer }from "../components/status/postVideoStatus";
 
 import { SiGradleplaypublisher } from "react-icons/si";
 import { MdLockOutline } from "react-icons/md";
+import { CloseModel } from "../components/modal/closeModel";
 
 
 export const Status = ()=> {
@@ -56,7 +56,7 @@ export const Status = ()=> {
                     {
                         isUpdate && 
                         <>
-                            <Close_model set_model={setIsUpdate} />
+                            <CloseModel setCloseModel={setIsUpdate} />
                             <StatusMenuModel setFile={setFile} setStatusType={setStatusType}/>
 
                         </>

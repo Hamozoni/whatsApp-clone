@@ -3,12 +3,12 @@ import { GrChannel } from "react-icons/gr";
 import {SearchInput} from '../components/ui/searchInput';
 import {RoundedBtn} from "../components/ui/roundedBtn";
 import { IoMdAdd } from "react-icons/io";
-import { CreateChannelAlert } from "../components/channels/createChannelAlert";
-import { Close_model } from "../components/ui/close_model";
 import { NewChannelForm } from "../components/channels//newChannelForm";
 import { useContext } from "react";
 import { UserContext } from "../contexts/user.context";
 import { MainCard } from "../components/shared/mainCard";
+import { CloseModel } from "../components/modal/closeModel";
+import { CreateChannelAlert } from "../components/modal/createChannelAlert";
 
 export const Channels = () => {
 
@@ -68,7 +68,7 @@ export const Channels = () => {
             {
                isCreateChannel && (
                 <>
-                 <Close_model set_model={setIsCreateChannel} />
+                 <CloseModel setCloseModel={setIsCreateChannel} />
                  <CreateChannelAlert 
                     setIsCreateChannel={setIsCreateChannel}
                     setIsNewChannel={setIsNewChannel}

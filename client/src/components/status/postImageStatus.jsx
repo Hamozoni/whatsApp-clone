@@ -6,7 +6,7 @@ import { FaPencilAlt } from "react-icons/fa";
 import { RiText } from "react-icons/ri";
 import { RoundedBtn } from "../ui/roundedBtn";
 import { UserContext } from "../../contexts/user.context";
-import { TransparantLoader } from "../ui/transparantLoader";
+import { TransparantLoader } from "../modal/transparantLoader";
 import { postData } from "../../lib/postData";
 
 

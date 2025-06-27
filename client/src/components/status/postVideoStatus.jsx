@@ -2,16 +2,17 @@ import { useRef, useState, useEffect } from 'react';
 import { FaPause, FaPlay } from "react-icons/fa";
 import { MdArrowLeft ,MdArrowRight} from "react-icons/md";
 import { PostStatusFooter } from './postStatusFooter';
-import { post_data } from '../../lib/post_data';
-import { TransparantLoader } from '../ui/transparantLoader';
+import { TransparantLoader } from '../modal/transparantLoader';
 import { RoundedBtn } from '../ui/roundedBtn';
 import { MdArrowBackIosNew } from "react-icons/md";
 import { UserContext } from '../../contexts/user.context';
 import { useContext } from 'react';
+import { postData } from '../../lib/postData';
 
 export function VideoTrimmer({ videoFile,setStatusType }) {
 
   const {user} = useContext(UserContext);
+
   const videoRef = useRef(null);
   const containerRef = useRef(null);
   const contentRef = useRef(null);
@@ -92,7 +93,7 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
     formData.append('type','MEDIA');
 
     // 3. Send to your Express endpoint
-     const st =  await post_data('status',formData);
+     const st =  await postData('status',formData);
 
      console.log(st);
   

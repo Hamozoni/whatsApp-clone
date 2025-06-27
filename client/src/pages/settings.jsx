@@ -8,9 +8,9 @@ import { Chats } from '../components/settings/chats';
 import { Notifications } from "../components/settings/notifications";
 import { Help } from "../components/settings/help";
 import { KeyboardShorts } from "../components/settings/keyboardShorts";
-import { Close_model } from "../components/ui/close_model";
 import { Profile } from "./profile";
 import { Theme } from "../components/settings/theme";
+import { CloseModel } from "../components/modal/closeModel";
 
 
 export const Settings = ()=> {
@@ -23,7 +23,7 @@ export const Settings = ()=> {
                  activePage === 'keyboard shortcuts' &&
                  <>
                     <KeyboardShorts setActivePage={setActivePage} />
-                    <Close_model set_model={setActivePage} />
+                    <CloseModel setCloseModel={setActivePage} />
                  </>
              }
             <div className="flex-1 flex flex-col w-full min-w-[380px] md:w-[380px] max-w-full rounded-lg bg-[#111b21] ">

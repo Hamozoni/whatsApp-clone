@@ -1,36 +1,37 @@
 import { useContext, useEffect, useState } from "react";
 
-import { Sigin_sith_prvider } from "../components/auth/signin_with_prodider";
 import { Input } from "../components/ui/input";
-import { Submit_btn } from "../components/ui/submit_btn";
 import {signInWithEmailAndPassword} from 'firebase/auth'
 import { firebaseAuth } from "../lib/firebaseConfig";
 import {useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/user.context";
+import { SubmitBtn } from "../components/ui/submitBtn";
+import {SiginWithPrvider} from "../components/auth/signinWithProdider"
 
 export default function Signin() {
+
   const [email, set_email] = useState("");
   const [password, set_password] = useState("");
-  const [is_loading, set_is_loading] = useState(false);
-  const [error, set_error] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const {user} = useContext(UserContext)
 
   const navigate = useNavigate();
 
-  const handle_submit = async(e)=> {
+  const handleSubmit = async(e)=> {
     e.preventDefault();
-    set_is_loading(true);
+    setIsLoading(true);
     try {
       await signInWithEmailAndPassword(firebaseAuth,email,password)
-      .then(_=> {
-        set_is_loading(false);
+      .then(()=> {
+        setIsLoading(false);
         navigate('/');
       })
     }
     catch (error) {
-      set_error(error?.message);
-      set_is_loading(false);
+      setError(error?.message);
+      setIsLoading(false);
     }
   };
 
@@ -51,7 +52,7 @@ export default function Signin() {
             Sign in to your account
           </h2>
         </div>
-        <form onSubmit={handle_submit} className="mt-8 space-y-5" >
+        <form onSubmit={handleSubmit} className="mt-8 space-y-5" >
             <Input 
                 label='Email address' 
                 type='email' 
@@ -72,9 +73,9 @@ export default function Signin() {
           {error && (
             <p className="text-red-500 text-sm text-center">{error}</p>
           )}
-          <Submit_btn text='sign in' is_loading={is_loading} />
+          <SubmitBtn text='sign in' isLoading={isLoading} />
         </form>
-        <Sigin_sith_prvider link_to='signup' />
+        <SiginWithPrvider link_to='signup' />
       </div>
     </div>
   );

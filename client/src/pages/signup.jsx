@@ -1,35 +1,37 @@
 
 import { useContext, useEffect, useState } from "react";
-import { Sigin_sith_prvider } from "../components/auth/signin_with_prodider";
+import { SiginWithPrvider } from "../components/auth/signinWithProdider";
 import { Input } from "../components/ui/input";
-import { Submit_btn } from "../components/ui/submit_btn";
-import {createUserWithEmailAndPassword,updateProfile } from 'firebase/auth'
+import {createUserWithEmailAndPassword } from 'firebase/auth'
 import { firebaseAuth } from "../lib/firebaseConfig";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/user.context";
+import { SubmitBtn } from "../components/ui/submitBtn";
 
 export default function Signup() {
-  const {user} = useContext(UserContext)
-  const [name, set_name] = useState("");
-  const [email, set_email] = useState("");
-  const [password, set_password] = useState("");
-  const [confirm_password, set_confirm_password] = useState("");
-  const [error, set_error] = useState("");
-  const [loading, set_loading] = useState(false);
+
+  const {user} = useContext(UserContext);
   const navigate = useNavigate();
 
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const validateForm = () => {
-    if (!name || !email || !password || !confirm_password) {
-      set_error("All fields are required");
+    if (!name || !email || !password || !confirmPassword) {
+      setError("All fields are required");
       return false;
     }
-    if (password !== confirm_password) {
-      set_error("Passwords do not match");
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
       return false;
     }
     if (password.length < 6) {
-      set_error("Password must be at least 6 characters");
+      setError("Password must be at least 6 characters");
       return false;
     }
     return true;
@@ -39,8 +41,8 @@ export default function Signup() {
     e.preventDefault();
     if (!validateForm()) return;
 
-    set_loading(true);
-    set_error(null);
+    setLoading(true);
+    setError(null);
 
     try {
      
@@ -49,7 +51,7 @@ export default function Signup() {
 
           const {email,photoURL,phoneNumber,emailVerified,uid} = user;
 
-          const user_data = {
+          const userIfno = {
             uid,
             email,
             displayName: name,
@@ -58,7 +60,7 @@ export default function Signup() {
             emailVerified,
           }
 
-         await axios.post(`${import.meta.VITE_API_URL}/user`,user_data);
+         await axios.post(`${import.meta.VITE_API_URL}/user`,userIfno);
 
           navigate('/onboarding')
 
@@ -68,10 +70,10 @@ export default function Signup() {
         })
       
       } catch (err) {
-        set_error(err.message);
+        setError(err.message);
         console.log(error)
       } finally {
-        set_loading(false);
+        setLoading(false);
       }
   };
 
@@ -94,7 +96,7 @@ export default function Signup() {
                 label='Full Name' 
                 type='text' 
                 value={name} 
-                set_value={set_name} 
+                set_value={setName} 
                 placeholder="Full Name" 
                 required={true}
               />
@@ -103,7 +105,7 @@ export default function Signup() {
                 label='Email address' 
                 type='email' 
                 value={email} 
-                set_value={set_email} 
+                set_value={setEmail} 
                 placeholder="Email address" 
                 required={true}
               />
@@ -111,15 +113,15 @@ export default function Signup() {
                 label='Password' 
                 type='password' 
                 value={password} 
-                set_value={set_password} 
+                set_value={setPassword} 
                 placeholder="Password" 
                 required={true}
               />
             <Input 
                 label='Confirm Password' 
                 type='password' 
-                value={confirm_password}
-                set_value={set_confirm_password} 
+                value={confirmPassword}
+                set_value={setConfirmPassword} 
                 placeholder=" Confirm Password" 
                 required={true}
               />
@@ -127,9 +129,9 @@ export default function Signup() {
           {error && (
             <p className="text-red-500 text-sm text-center">{error}</p>
           )}
-           <Submit_btn text='sign up' is_loading={loading} /> 
+           <SubmitBtn text='sign up' isLoading={loading} /> 
         </form>
-        <Sigin_sith_prvider link_to='signin'/>
+        <SiginWithPrvider link_to='signin'/>
       </div>
     </div>
   );

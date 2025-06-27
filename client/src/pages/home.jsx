@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
 
-  const {user,active_navbar} = useContext(UserContext);
+  const {user,activeNavbar} = useContext(UserContext);
 
 
   const navigate = useNavigate();
@@ -29,17 +29,17 @@ export default function Home() {
           <Navbar />
           <div className="w-full text-[#f7f8fa] max-h-dvh rounded-lg m-1 ml-0">
             {
-              active_navbar === 'chats' ? 
+              activeNavbar === 'chats' ? 
                 <Chats />:
-              active_navbar === 'calls' ? 
+              activeNavbar === 'calls' ? 
                 <Calls /> : 
-              active_navbar === 'status' ? 
+              activeNavbar === 'status' ? 
                 <Status /> :
-              active_navbar === 'channels' ?
+              activeNavbar === 'channels' ?
                 <Channels /> : 
-              active_navbar === 'settings' ?
+              activeNavbar === 'settings' ?
                 <Settings /> : 
-              active_navbar === 'profile' &&
+              activeNavbar === 'profile' &&
                 <Profile />
             }
 
