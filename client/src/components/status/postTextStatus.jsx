@@ -1,12 +1,11 @@
 import { useContext, useState } from "react";
 import { IoCloseSharp, IoColorPaletteSharp } from "react-icons/io5";
-
-import { Close_model } from "../ui/close_model";
 import { UserContext } from "../../contexts/user.context";
-import { post_data } from "../../lib/post_data";
 import { PostStatusFooter } from "./postStatusFooter";
 import { EmojiBtn } from "../ui/emojiBtn";
-import { TransparantLoader } from "../ui/transparantLoader";
+import { postData } from "../../lib/postData";
+import { CloseModel } from "../modal/closeModel";
+import {TransparantLoader} from "../modal/transparantLoader"
 
 const bgColors = ['#f44336','#e91e63','#9c27b0','#673ab7','#3f51b5','#2196f3','#009688','#4caf50','#8bc34a','#cddc39','#ffeb3b','#795548','#607d8b'];
 const fontFamilies = [
@@ -60,7 +59,7 @@ export const PostTextStatus = ({ setStatusType }) => {
     };
 
     try {
-      const data = await post_data('status', formData);
+      const data = await postData('status', formData);
       if (data) setStatusType(null);
     } catch (error) {
       setError(error.message);
@@ -103,7 +102,7 @@ export const PostTextStatus = ({ setStatusType }) => {
               {showColorPicker && (
                 <>
                   <ColorPicker selectedColor={bgColor} onSelect={setBgColor} />
-                  <Close_model set_model={setShowColorPicker} />
+                  <CloseModel setCloseModel={setShowColorPicker} />
                 </>
               )}
             </div>

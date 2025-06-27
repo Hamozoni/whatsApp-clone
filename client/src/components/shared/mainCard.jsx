@@ -16,7 +16,7 @@ export const MainCard = ({
                 border border-transparent 
                 ${isActive ? 'border-[#3b535c] bg-[#1d2c31]':'hover:border-[#3b535c] hover:bg-[#1d2c31]'} w-full`}
             >
-            <Avatar size="lg" user_photo={avatarUrl}/>
+            <Avatar size="lg" userPhoto={avatarUrl}/>
             <div className=" flex-1 py-3 border-b border-b-[#213036]">
                 <div className="flex items-center justify-between">
                     <h6>{name}</h6>

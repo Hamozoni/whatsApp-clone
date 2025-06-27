@@ -5,9 +5,9 @@ import { MdOutlineDone } from "react-icons/md";
 import { FaPencilAlt } from "react-icons/fa";
 import { RiText } from "react-icons/ri";
 import { RoundedBtn } from "../ui/roundedBtn";
-import { post_data } from "../../lib/post_data";
 import { UserContext } from "../../contexts/user.context";
 import { TransparantLoader } from "../ui/transparantLoader";
+import { postData } from "../../lib/postData";
 
 
 export const PostImageStatus = ({setStatusType,file})=> {
@@ -16,7 +16,7 @@ export const PostImageStatus = ({setStatusType,file})=> {
     const canvasRef = useRef();
     const [isLoading,setIsLoading] = useState(true);
     const [isError,setIsError] = useState(null);
-    const [textOnImage,setTextOnImage] = useState('');
+    // const [textOnImage,setTextOnImage] = useState('');
     const [text,setText] = useState('')
     const [activeModifier,setActiveModifier] = useState(null);
     const [image,setImage] = useState(null);
@@ -69,7 +69,7 @@ const handleSubmitStatus = async()=> {
         formData.append('user',user._id);
         formData.append('type','MEDIA');
 
-     const st = await post_data('status',formData);
+     const st = await postData('status',formData);
 
      console.log(st);
      setStatusType(null);
