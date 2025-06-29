@@ -22,7 +22,7 @@ export const Chats = ()=> {
 
     return (
         <div className="flex h-full gap-1">
-            <div className="flex flex-col rounded-lg bg-[#111b21]  max-h-full h-full w-[380px] min-w-[380px] md:w-[380px] max-w-full">
+            <div className="flex flex-col rounded-lg bg-[#111b21] max-h-full h-full w-full md:min-w-[380px] md:w-[380px] max-w-full">
                 {
                     isContactPage ? 
                        <Contacts setIsContcatPage={setIsContcatPage} /> : (
@@ -32,7 +32,7 @@ export const Chats = ()=> {
                                 setSearchText={setSearchText}
                                 searchText={searchText}
                                 />
-                            <div className="flex-1 max-h-full overflow-y-auto p-3 pt-0">
+                            <div className="flex-1 h-full max-h-full overflow-y-auto p-3 pt-0">
                                 {
                                     chats?.map(chat => (
                                         chat.last_message &&
