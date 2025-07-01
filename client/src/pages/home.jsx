@@ -25,9 +25,9 @@ export default function Home() {
 
   return (
 
-      <div className="flex flex-col md:flex-row h-dvh max-h-svh w-dvw max-w-dvw">
+      <div className="flex flex-col md:flex-row h-screen max-h-screen w-dvw max-w-dvw">
           <Navbar />
-          <div className="flex-1 w-full text-[#f7f8fa] h-full max-h-full rounded-lg">
+          <div className="flex-1 w-full text-[#f7f8fa] container-h rounded-lg">
             {
               activeNavbar === 'chats' ? 
                 <Chats />:

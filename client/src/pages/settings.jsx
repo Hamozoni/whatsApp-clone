@@ -18,7 +18,7 @@ export const Settings = ()=> {
     const [activePage,setActivePage] = useState('main');
 
     return (
-        <div className="flex gap-1 h-full">
+        <div  className="flex gap-1 h-full">
              {
                  activePage === 'keyboard shortcuts' &&
                  <>

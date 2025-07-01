@@ -23,6 +23,15 @@ button {
   text-transform: capitalize;
   font-weight: 700;
 }
+
+.container-h {
+  height: calc(100% - 67px);
+}
+@media (min-width: 768px) {
+  .container-h {
+  height: 100%;
+}
+}
 button:hover {
   opacity: 80%;
 }
