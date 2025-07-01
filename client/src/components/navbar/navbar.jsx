@@ -24,23 +24,21 @@ export const Navbar = ()=>  {
             <section className="flex md:flex-col gap-2">
                 {
                     options?.map(({Icon,text})=> (
-                            <NavbarIcon 
-                                key={text} 
-                                Icon={Icon} 
-                                text={text} 
-                                 />
+                        <NavbarIcon 
+                            key={text} 
+                            Icon={Icon} 
+                            text={text} 
+                                />
                     ))
                 }
             </section >
             <section>
                 <hr className="text-[#394b55] my-5 hidden md:visible" />
                 <section className="flex md:flex-col gap-3 justify-center items-center" >
-                    <NavBtnContainer text='settings'>
-                        <NavbarIcon 
-                            Icon={IoSettingsOutline} 
-                            text='settings' 
-                            />
-                    </NavBtnContainer>
+                    <NavbarIcon 
+                        Icon={IoSettingsOutline} 
+                        text='settings' 
+                        />
                     <div className="flex flex-col items-center justify-center">
                         <button 
                             className={`border-2 rounded-full ${activeNavbar === 'profile' ? 'border-emerald-400' : 'border-transparent'}`}

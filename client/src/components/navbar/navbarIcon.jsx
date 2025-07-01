@@ -9,21 +9,20 @@ export const NavbarIcon = ({text,Icon})=> {
 
     return (
 
-       <div className="flex flex-col items-center justify-center">
-            <button 
-                onClick={()=> setActiveNavbar(text)} 
+       <button onClick={()=> setActiveNavbar(text)} className={`${activeNavbar === text ? 'text-emerald-400' :'text-[#f7f8fa]'} flex flex-col items-center justify-center`}>
+            <div
                 className={`relative flex justify-center items-center p-1 rounded-md hover:opacity-85 cursor-pointer`}>
                 <Icon 
                     size={24} 
-                    className={`${activeNavbar === text ? 'text-emerald-400' :'text-[#f7f8fa]'}`}/>
+                    />
                 {
                     activeNavbar === text && 
                     <div className="absolute  bottom-[-2px] left-[25%] w-[50%] h-[2px] bg-emerald-400 rounded-full"></div>
                 }
-            </button>
-            <span className=" md:hidden text-gray-300 capitalize">
+            </div>
+            <span className=" md:hidden">
                 {text}
             </span>
-        </div>
+        </button>
     )
     };
