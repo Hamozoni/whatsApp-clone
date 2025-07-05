@@ -20,8 +20,8 @@ export const Navbar = ()=>  {
 
 
     return (
-        <nav className="flex md:flex-col justify-between items-center md:px-2 md:py-4 p-1 bg-[#162127] m-1 rounded-lg" >
-            <div className="flex md:flex-col gap-2">
+        <nav className="flex md:flex-col gap-3 justify-between items-center p-1 bg-[#162127] m-1 rounded-lg" >
+            <div className="flex md:flex-col gap-3">
                 {
                     options?.map(({Icon,text})=> (
                         <NavbarIcon 
