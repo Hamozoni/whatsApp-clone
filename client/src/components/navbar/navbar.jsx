@@ -21,7 +21,7 @@ export const Navbar = ()=>  {
 
     return (
         <nav className="flex md:flex-col justify-between items-center md:px-2 md:py-4 p-1 bg-[#162127] m-1 rounded-lg" >
-            <section className="flex md:flex-col gap-2">
+            <div className="flex md:flex-col gap-2">
                 {
                     options?.map(({Icon,text})=> (
                         <NavbarIcon 
@@ -31,24 +31,20 @@ export const Navbar = ()=>  {
                                 />
                     ))
                 }
-            </section >
-            <section>
-                <hr className="text-[#394b55] my-5 hidden md:visible" />
-                <section className="flex md:flex-col gap-3 justify-center items-center" >
-                    <NavbarIcon 
-                        Icon={IoSettingsOutline} 
-                        text='settings' 
-                        />
-                    <div className="flex flex-col items-center justify-center">
-                        <button 
-                            className={`border-2 rounded-full ${activeNavbar === 'profile' ? 'border-emerald-400' : 'border-transparent'}`}
-                            onClick={()=> setActiveNavbar('profile')}>
-                            <Avatar  userPhoto={user?.profile_picture} />
-                        </button>
-                        <span className=" md:hidden text-gray-300 capitalize">profile</span>
+            </div >
+            <div className="flex md:flex-col gap-3 justify-center items-center" >
+                <button   className={` ${activeNavbar === 'profile' ?  'text-emerald-400' :'text-[#f7f8fa]'} flex flex-col items-center justify-center`}>
+                    <div 
+                        onClick={()=> setActiveNavbar('profile')}>
+                        <Avatar  userPhoto={user?.profile_picture} />
                     </div>
-                </section>
-            </section>
+                    <span className=" md:hidden">profile</span>
+                </button>
+                <NavbarIcon 
+                    Icon={IoSettingsOutline} 
+                    text='settings' 
+                    />
+            </div>
         </nav>
     )
 }
