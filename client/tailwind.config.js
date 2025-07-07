@@ -8,8 +8,10 @@ export default {
   theme : {
     extends : {
       colors: {
-        primaray : 'var(--bg-color-primaray)',
-        secondary: 'var(--bg-color-secondary)',
+        bg_primaray : 'var(--bg-color-primaray)',
+        bg_secondary: 'var(--bg-color-secondary)',
+        text_primaray : 'var(--text-color-primaray)',
+        text_secondary: 'var(--text-color-secondary)',
         
       }
     }
