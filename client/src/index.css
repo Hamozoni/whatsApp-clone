@@ -1,6 +1,14 @@
 @import "tailwindcss";
 
 :root {
+  --bg-color-primaray: #e2e2e2;
+  --bg-color-secondary: #fdfdfd;
+  --text-color-primaray: #04161b;
+  --text-color-secondary: #05171b;
+  --border-color-primaray: #e2e2e2;
+  --border-color-secondary: #fdfdfd;
+}
+ .dark {
   --bg-color-primaray: #04161b;
   --bg-color-secondary: #111b21;
   --text-color-primaray: #ffff;
@@ -9,13 +17,18 @@
   --border-color-secondary: #092025;
 }
 
-.dark {
-  --bg-color-primaray: #e2e2e2;
-  --bg-color-secondary: #fdfdfd;
-  --text-color-primaray: #04161b;
-  --text-color-secondary: #05171b;
-  --border-color-primaray: #e2e2e2;
-  --border-color-secondary: #fdfdfd;
+.bg-p {
+  background-color: var(--bg-color-primaray);
+}
+.bg-s {
+  background-color: var(--bg-color-secondary);
+}
+
+.text-p {
+  background-color: var(--text-color-primaray);
+}
+.tex-s {
+  background-color: var(--text-color-secondary);
 }
 
 button {
