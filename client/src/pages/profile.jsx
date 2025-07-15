@@ -7,7 +7,7 @@ import { MdArrowBack } from "react-icons/md";
 export const Profile = ({setActivePage = null})=> {
     return (
         <div className="flex gap-1 h-full flex-1">
-            <div className="p-3 w-full min-w-[380px] md:w-[380px] max-w-full rounded-lg bg-[#111b21]">
+            <div className="p-3 w-full min-w-[380px] md:w-[380px] max-w-full rounded-lg bg-p">
                 <div className="flex gap-3 items-center mb-3">
                     {
                         setActivePage && 
@@ -21,7 +21,7 @@ export const Profile = ({setActivePage = null})=> {
             </div>
             {
                 !setActivePage && (
-                    <div className="hidden text-gray-400 md:flex flex-2 flex-col p-4 justify-center items-center gap-5 text-center bg-[#162127] rounded-lg">
+                    <div className="hidden text-gray-400 md:flex flex-2 flex-col p-4 justify-center items-center gap-5 text-center bg-s rounded-lg">
                         <PiUserCircleFill size={60} />
                         <h6 className="text-4xl">Profile</h6>
                     </div>

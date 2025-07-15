@@ -22,7 +22,7 @@ export const Status = ()=> {
 
     return (
         <div className="flex h-full gap-1">
-            <div className=" p-3 flex-1 w-full md:w-[380px] min-w-[380px] max-w-full rounded-lg bg-[#111b21]">
+            <div className=" p-3 flex-1 w-full md:w-[380px] min-w-[380px] max-w-full rounded-lg bg-p">
                  {
                     statusType === 'text' ?
                     <PostTextStatus setStatusType={setStatusType} />
@@ -80,7 +80,7 @@ export const Status = ()=> {
                     </div>
                 </div>
             </div>
-            <div className="hidden bg-[#162127] rounded-lg md:flex flex-2 flex-col p-4 justify-center">
+            <div className="hidden bg-s rounded-lg md:flex flex-2 flex-col p-4 justify-center">
                 <div className="flex-1 flex flex-col justify-center items-center gap-4 text-center">
                     <SiGradleplaypublisher size={40} />
                     <div className="">
