@@ -26,7 +26,7 @@ export const Channels = () => {
                  isNewChannel ? (
                      <NewChannelForm setIsNewChannel={setIsNewChannel} />
                  ) : (
-                    <div className="p-3 flex-1 min-w-[380px] w-full md:w-[380px] max-w-full flex flex-col  max-h-full rounded-lg bg-[#111b21]">
+                    <div className="p-3 flex-1 min-w-[380px] w-full md:w-[380px] max-w-full flex flex-col  max-h-full rounded-lg bg-p">
                         <header className='border-b border-b-gray-800 pb-3'>
                             <div className="flex items-center justify-between mb-4">
                                 <h5 className="text-lg font-bold">Channels</h5>
@@ -55,7 +55,7 @@ export const Channels = () => {
                  )
             }
             
-            <div className="hidden bg-[#162127] rounded-lg md:flex flex-2 items-center justify-center flex-col gap-5">
+            <div className="hidden bg-s  rounded-lg md:flex flex-2 items-center justify-center flex-col gap-5">
                 <GrChannel size={48} className="text-gray-400" />
                 <h3 className='text-3xl'>
                     Discover channels

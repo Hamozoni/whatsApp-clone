@@ -20,7 +20,7 @@ export const Calls =  ()=> {
 
     return (
         <div className="h-full flex gap-1">
-            <div className="flex-1 bg-[#111b21] rounded-lg min-w-[380px] w-full md:w-[380px] max-w-full">
+            <div className="flex-1 bg-p rounded-lg min-w-[380px] w-full md:w-[380px] max-w-full">
                 <header className="p-3">
                     <div className="flex items-center justify-between mb-3">
                         <h4 className="text-xl font-bold">Calls</h4>
@@ -56,7 +56,7 @@ export const Calls =  ()=> {
                     </div>
                 </div>
             </div>
-            <div className="flex-2 hidden md:flex items-center bg-[#162127] rounded-lg justify-center">
+            <div className="flex-2 hidden md:flex items-center bg-s rounded-lg justify-center">
                 <div className="flex items-center justify-center gap-5">
                     <button className="p-4 rounded-xl border border-cyan-950">
                         <IoVideocam size={40}/>

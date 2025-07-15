@@ -19,7 +19,7 @@ export const Chats = ()=> {
         if(activeChat?._id === chat?._id) return;
         setActiveChat(chat)
     };
-// bg-[#111b21]
+
     return (
         <div className="flex h-full gap-1">
             <div className="flex flex-col rounded-lg  bg-p max-h-full h-full w-full md:min-w-[380px] md:w-[380px] max-w-full">

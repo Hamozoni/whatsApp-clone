@@ -26,7 +26,7 @@ export const Settings = ()=> {
                     <CloseModel setCloseModel={setActivePage} />
                  </>
              }
-            <div className="flex-1 flex flex-col w-full min-w-[380px] md:w-[380px] max-w-full rounded-lg bg-[#111b21] ">
+            <div className="flex-1 flex flex-col w-full min-w-[380px] md:w-[380px] max-w-full rounded-lg bg-p ">
                 {
                     activePage === 'profile' ?
                     <Profile setActivePage={setActivePage} /> :
@@ -46,7 +46,7 @@ export const Settings = ()=> {
 
                 }
             </div>
-            <div className="hidden md:flex text-gray-400 flex-2 items-center justify-center flex-col gap-5 bg-[#162127] rounded-lg">
+            <div className="hidden md:flex text-gray-400 flex-2 items-center justify-center flex-col gap-5 bg-s rounded-lg">
                 <IoSettingsOutline size={48} />
                 <h6 className='text-3xl'>Settings</h6>
             </div>
