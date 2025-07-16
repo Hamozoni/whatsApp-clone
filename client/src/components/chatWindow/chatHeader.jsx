@@ -29,7 +29,7 @@ export const ChatHeader = ({receiver})=> {
 
 
     return (
-        <div className="p-3 bg-[#111b21] text-[#f7f8fa] flex items-center rounded-lg">
+        <div className="p-3 bg-p text-[#f7f8fa] flex items-center rounded-lg">
             <div className="flex items-center gap-2 pr-2">
                 {/* <GoSearch className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#afb3b9] hide_model " /> */}
                 <MdArrowBackIos 
@@ -49,7 +49,7 @@ export const ChatHeader = ({receiver})=> {
                 </p>
             </div>
             <div className="flex gap-5 items-center">
-                <div className="flex items-center bg-[#394b55] rounded-md">
+                <div className="flex items-center bg-s rounded-md">
                     <button onClick={()=> startCall('AUDIO')}  className="flex justify-center items-center p-2 rounded-md hover:bg-[#00a884] cursor-pointer ">
                         <IoCallOutline size={18} className='text-[#f7f8fa]'/>
                     </button>
