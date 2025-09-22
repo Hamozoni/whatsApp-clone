@@ -4,7 +4,6 @@ import File from "../models/file.model.js";
 
 export const upload_file = async(file,folder,duration = 0)=> {
 
-
           const type = file.mimetype.split('/')[0];
           const resource_type = type === 'image' ? 'image' : type === 'application' ? 'raw' : 'video';
 

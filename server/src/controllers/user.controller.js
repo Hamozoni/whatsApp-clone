@@ -82,7 +82,13 @@ export const post_user_controller = async (req,res,next)=> {
     
     res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
     
-    const {email,displayName : name,photoURL:profile_picture,phoneNumber:phone_number,emailVerified:email_verified,uid} = req.body;
+    const {
+        email,
+        displayName : name,
+        photoURL:profile_picture,
+        phoneNumber:phone_number,
+        emailVerified:email_verified,uid
+    } = req.body;
 
     if(!email) {
        return res.json({message: 'email is reqiured', status: false});

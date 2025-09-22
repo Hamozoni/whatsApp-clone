@@ -48,8 +48,6 @@ export const post_message_controller = async (req,res,next) => {
         }
     ];
 
-    
-    
     try {
         const {sender,contact} = req.body;
         
