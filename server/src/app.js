@@ -3,11 +3,11 @@ import cors from 'cors';
 import routes from './routes/index.js';
 import { config } from 'dotenv';
 
-config()
+config();
+
 const app = express();
 
 app.use(express.json()); 
-
 
 app.use(cors({
   origin: process.env.CLIENT_URL,
