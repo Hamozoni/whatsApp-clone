@@ -10,10 +10,7 @@ import { CallNotificationCard } from "../components/shared/callNotificationCard"
 export const Calls =  ()=> {
 
     const {calls,user} = useContext(UserContext);
-
     const [searchText,setSearchText] = useState('');
-
-
     const handle_search =()=> {
 
     };

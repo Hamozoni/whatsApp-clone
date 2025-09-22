@@ -3,7 +3,13 @@ import { RiChatNewLine } from "react-icons/ri"
 import { SearchInput } from "../../components/ui/searchInput"
 
 
-export const ChatHeader = ({setIsContcatPage,searchText,setSearchText})=> {
+export const ChatHeader = (
+    {
+        setIsContcatPage,
+        searchText,
+        setSearchText
+    })=> {
+        
     return (
         <header className="p-3">
             <div className="flex items-center justify-between mb-3">

@@ -17,7 +17,10 @@ const keyboardShorts = [
 export const KeyboardShorts = ({setActivePage})=> {
     return (
         <div className="bg-gray-800 flex flex-col fixed z-50 p-5 rounded-md top-[50px] left-1/2 -translate-x-1/2 max-w-dvw w-[550px] max-h-5/6">
-            <Header title='keyboard shortcuts' setActivePage={()=> setActivePage('main')}/>
+            <Header 
+                title='keyboard shortcuts' 
+                setActivePage={()=> setActivePage('main')}
+            />
             <div className="flex-1 max-h-full overflow-y-auto flex flex-col p-3">
                 {
                     keyboardShorts?.map(({id,shortName,key})=> (
