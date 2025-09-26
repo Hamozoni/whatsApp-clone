@@ -27,7 +27,7 @@ export default function Home() {
 
       <div className="flex flex-col gap-1 md:flex-row h-screen max-h-screen w-screen max-w-screen">
           <Navbar />
-          <div className="flex-1 text-[#f7f8fa]">
+          <div className="flex-1 overflow-y-auto text-[#f7f8fa]">
             {
               activeNavbar === 'chats' ? 
                 <Chats />:

@@ -30,11 +30,11 @@ export const Calls =  ()=> {
                          text={setSearchText} 
                         handleSearch={handle_search}
                         />
-                </header>
-                <div className="p-3 flex-1 max-h-full overflow-y-auto">
-                    <h6 className="text-gray-400 font-medium mb-5">
+                    <h6 className="text-gray-400 font-medium mt-5">
                         Recent
                     </h6>
+                </header>
+                <div className="p-3 flex-1 max-h-full overflow-y-auto">
                     <div className=" ">
                         {
                             calls?.map(({_id,caller,callee,profile_picture,createdAt})=> (
