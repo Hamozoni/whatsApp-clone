@@ -17,8 +17,8 @@ export const Calls =  ()=> {
 
     return (
         <div className="h-full flex gap-1">
-            <div className="flex-1 bg-p rounded-lg min-w-[380px] w-full md:w-[380px] max-w-full">
-                <header className="p-3">
+            <div className="flex-1 flex flex-col bg-p rounded-lg min-w-[380px] w-full md:w-[380px] max-w-full">
+                <header className="p-3 h-fit">
                     <div className="flex items-center justify-between mb-3">
                         <h4 className="text-xl font-bold">Calls</h4>
                         <button>
@@ -31,11 +31,11 @@ export const Calls =  ()=> {
                         handleSearch={handle_search}
                         />
                 </header>
-                <div className="p-3">
+                <div className="p-3 flex-1 max-h-full overflow-y-auto">
                     <h6 className="text-gray-400 font-medium mb-5">
                         Recent
                     </h6>
-                    <div className="">
+                    <div className=" ">
                         {
                             calls?.map(({_id,caller,callee,profile_picture,createdAt})=> (
                                 <MainCard 
