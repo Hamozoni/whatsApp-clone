@@ -20,9 +20,9 @@ export const NavbarIcon = ({text,Icon})=> {
                     <div className="absolute  bottom-[-2px] left-[25%] w-[50%] h-[2px] bg-emerald-400 rounded-full"></div>
                 }
             </div>
-            <span className=" md:hidden">
+            <h6 className=" md:hidden text-xs mt-1">
                 {text}
-            </span>
+            </h6>
         </button>
     )
     };
