@@ -17,10 +17,10 @@ export const NavbarIcon = ({text,Icon})=> {
                     />
                 {
                     activeNavbar === text && 
-                    <div className="absolute  bottom-[-2px] left-[25%] w-[50%] h-[2px] bg-emerald-400 rounded-full"></div>
+                    <div className="absolute hidden md:flex bottom-[-2px] left-[25%] w-[50%] h-[2px] bg-emerald-400 rounded-full"></div>
                 }
             </div>
-            <h6 className=" md:hidden text-xs mt-1">
+            <h6 className=" md:hidden text-xs">
                 {text}
             </h6>
         </button>

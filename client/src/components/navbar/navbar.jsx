@@ -20,7 +20,7 @@ export const Navbar = ()=>  {
 
 
     return (
-        <nav className="flex md:flex-col gap-3 justify-between items-center p-1 bg-[#162127] m-1 rounded-lg" >
+        <nav className="flex md:flex-col gap-3 h-fit md:h-screen justify-between items-center p-2 bg-[#162127] rounded-lg" >
             <div className="flex md:flex-col gap-3">
                 {
                     options?.map(({Icon,text})=> (
@@ -33,17 +33,17 @@ export const Navbar = ()=>  {
                 }
             </div >
             <div className="flex md:flex-col gap-3 justify-center items-center" >
+                <NavbarIcon 
+                    Icon={IoSettingsOutline} 
+                    text='settings' 
+                    />
                 <button   className={` ${activeNavbar === 'profile' ?  'text-emerald-400' :'text-[#f7f8fa]'} flex flex-col items-center justify-center`}>
                     <div 
                         onClick={()=> setActiveNavbar('profile')}>
                         <Avatar  userPhoto={user?.profile_picture} />
                     </div>
-                    <span className=" md:hidden">profile</span>
+                    <span className=" md:hidden text-xs">profile</span>
                 </button>
-                <NavbarIcon 
-                    Icon={IoSettingsOutline} 
-                    text='settings' 
-                    />
             </div>
         </nav>
     )
