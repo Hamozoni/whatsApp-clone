@@ -7,6 +7,7 @@ import { Contacts } from "./contacts";
 import { ChatHeader } from "../components/chats/chatHeader";
 import { MainCard } from "../components/shared/mainCard";
 import { ChatCardLastMessage } from "../components/chats/chatCardLastMessage";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const Chats = ()=> {
 
@@ -15,9 +16,14 @@ export const Chats = ()=> {
     const [searchText,setSearchText] = useState('');
     const [isContactPage,setIsContcatPage] = useState(false);
 
+    const {id} = useParams();
+
+    const navigate = useNavigate()
+
     const handleActiveChat = (chat)=> {
-        if(activeChat?._id === chat?._id) return;
-        setActiveChat(chat)
+        if(id === chat?._id) return;
+        setActiveChat(chat);
+        navigate(`/chats/${chat?._id}`)
     };
 
     return (
@@ -56,7 +62,7 @@ export const Chats = ()=> {
                     )
                 }
             </div>
-            <div className={`${activeChat ? 'flex absolute z-20 left-0 top-0 w-full max-w-full md:static md:left-auto md:top-auto' : 'hidden md:flex'} max-w-dvw flex-2`}>
+            <div className={`${id ? 'flex absolute z-20 bg-cyan-950 left-0 top-0 w-full max-w-full md:static md:left-auto md:top-auto' : 'hidden md:flex'} max-w-dvw flex-2`}>
                 {
                     activeChat ? 
                     <ChatWindow /> :
