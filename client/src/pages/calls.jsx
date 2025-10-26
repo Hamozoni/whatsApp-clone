@@ -16,7 +16,7 @@ export const Calls =  ()=> {
     };
 
     return (
-        <div className="h-full flex gap-1">
+        <div className="h-full flex gap-1 flex-1 overflow-y-auto">
             <div className="flex-1 flex flex-col bg-p rounded-lg min-w-[380px] w-full md:w-[380px] max-w-full">
                 <header className="p-3 h-fit">
                     <div className="flex items-center justify-between mb-3">
@@ -27,7 +27,7 @@ export const Calls =  ()=> {
                     </div>
                     <SearchInput 
                         setText={searchText}
-                         text={setSearchText} 
+                        text={setSearchText} 
                         handleSearch={handle_search}
                         />
                     <h6 className="text-gray-400 font-medium mt-5">

@@ -10,7 +10,6 @@ export const NavbarIcon = ({text,Icon})=> {
 
 
     return (
-
        <button 
             onClick={()=> navigate(text)} 
             className={`${pathname.replace('/','') === text || text === 'chats' && pathname === '/' ? 'text-emerald-400' :'text-[#f7f8fa]'} flex flex-col items-center justify-center`}>
@@ -28,5 +27,5 @@ export const NavbarIcon = ({text,Icon})=> {
                 {text}
             </h6>
         </button>
-    )
-    };
+    );
+};

@@ -47,7 +47,7 @@ export const Contacts = ({setIsContcatPage})=> {
     }
 
     return (
-        <div className="rounded-lg overflow-hidden">
+        <div className="rounded-lg overflow-hidden flex-1 overflow-y-auto">
             {
                 isNewContact ? 
                 <NewContact setIsNewContact={setIsNewContact}/>

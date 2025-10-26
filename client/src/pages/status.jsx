@@ -21,7 +21,7 @@ export const Status = ()=> {
     const [file,setFile] = useState(null);
 
     return (
-        <div className="flex h-full gap-1">
+        <div className="flex h-full gap-1 flex-1 overflow-y-auto">
             <div className=" p-3 flex-1 w-full md:w-[380px] min-w-[380px] max-w-full rounded-lg bg-p">
                  {
                     statusType === 'text' ?

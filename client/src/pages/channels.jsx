@@ -21,11 +21,11 @@ export const Channels = () => {
 
 
     return (
-        <div className="flex gap-1 h-full">
+        <div className="flex gap-1 h-full flex-1 overflow-y-auto">
             {
-                 isNewChannel ? (
-                     <NewChannelForm setIsNewChannel={setIsNewChannel} />
-                 ) : (
+                isNewChannel ? (
+                    <NewChannelForm setIsNewChannel={setIsNewChannel} />
+                ) : (
                     <div className="p-3 flex-1 min-w-[380px] w-full md:w-[380px] max-w-full flex flex-col  max-h-full rounded-lg bg-p">
                         <header className='border-b border-b-gray-800 pb-3'>
                             <div className="flex items-center justify-between mb-4">
@@ -35,7 +35,7 @@ export const Channels = () => {
                             <SearchInput handleSearch={()=> ''} text={text} setText={setText} />
                         </header>
 
-                       <div className="py-3 flex-1 max-w-full overflow-y-auto">
+                    <div className="py-3 flex-1 max-w-full overflow-y-auto">
                             {
                                 channels?.map(({_id,name,avatar,createdAt})=> (
                                     <MainCard 
@@ -53,7 +53,7 @@ export const Channels = () => {
 
 
                     </div>
-                 )
+                )
             }
             
             <div className="hidden bg-s  rounded-lg md:flex flex-2 items-center justify-center flex-col gap-5">
@@ -67,15 +67,15 @@ export const Channels = () => {
             </div>
 
             {
-               isCreateChannel && (
+            isCreateChannel && (
                 <>
-                 <CloseModel setCloseModel={setIsCreateChannel} />
-                 <CreateChannelAlert 
+                <CloseModel setCloseModel={setIsCreateChannel} />
+                <CreateChannelAlert 
                     setIsCreateChannel={setIsCreateChannel}
                     setIsNewChannel={setIsNewChannel}
-                     />
+                    />
                 </>
-               ) 
+            ) 
             }
         </div>
     )
