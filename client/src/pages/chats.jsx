@@ -28,7 +28,7 @@ export const Chats = ()=> {
 
     return (
         <div className="flex h-full gap-1 flex-1 overflow-y-auto">
-            <div className="flex flex-col rounded-lg  bg-p max-h-full h-full w-full md:min-w-[380px] md:w-[380px] max-w-full">
+            <div className="flex flex-col rounded-lg  bg-p max-h-full h-full w-full  min-w-[380px] md:w-[380px] max-w-full">
                 {
                     isContactPage ? 
                        <Contacts setIsContcatPage={setIsContcatPage} /> : (
@@ -62,7 +62,7 @@ export const Chats = ()=> {
                     )
                 }
             </div>
-            <div className={`${id ? 'flex absolute z-20 bg-cyan-950 left-0 top-0 w-full max-w-full md:static md:left-auto md:top-auto' : 'hidden md:flex'} max-w-dvw flex-2`}>
+            <div className={`${activeChat ? 'flex absolute z-20 bg-cyan-950 left-0 top-0 w-full max-w-full md:static md:left-auto md:top-auto' : 'hidden md:flex'} max-w-dvw flex-2`}>
                 {
                     activeChat ? 
                     <ChatWindow /> :
