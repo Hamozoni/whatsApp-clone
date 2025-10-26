@@ -11,7 +11,9 @@ export const NavbarIcon = ({text,Icon})=> {
 
     return (
 
-       <button onClick={()=> navigate(text)} className={`${pathname === text ? 'text-emerald-400' :'text-[#f7f8fa]'} flex flex-col items-center justify-center`}>
+       <button 
+            onClick={()=> navigate(text)} 
+            className={`${pathname.replace('/','') === text || text === 'chats' && pathname === '/' ? 'text-emerald-400' :'text-[#f7f8fa]'} flex flex-col items-center justify-center`}>
             <div
                 className={`relative flex justify-center items-center p-1 rounded-md hover:opacity-85 cursor-pointer`}>
                 <Icon 

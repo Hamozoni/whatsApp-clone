@@ -17,10 +17,10 @@ const options = [
 
 export const Navbar = ()=>  {
 
-    const {user,setActiveNavbar} = useContext(UserContext);
+    const {user} = useContext(UserContext);
 
     const {pathname} = useLocation();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
 
     return (
@@ -41,7 +41,7 @@ export const Navbar = ()=>  {
                     Icon={IoSettingsOutline} 
                     text='settings' 
                     />
-                <button   className={` ${pathname === 'profile' ?  'text-emerald-400' :'text-[#f7f8fa]'} flex flex-col items-center justify-center`}>
+                <button   className={` ${pathname === '/profile' ?  'text-emerald-400' :'text-[#f7f8fa]'} flex flex-col items-center justify-center`}>
                     <div 
                         onClick={()=> navigate('profile')}>
                         <Avatar  userPhoto={user?.profile_picture} />
