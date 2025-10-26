@@ -1,22 +1,24 @@
-import { UserContext } from "../../contexts/user.context";
-import { useContext } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
  
 export const NavbarIcon = ({text,Icon})=> {
 
-    const {activeNavbar,setActiveNavbar} = useContext(UserContext);
+
+    const {pathname} = useLocation();
+
+    const navigate  = useNavigate()
 
 
     return (
 
-       <button onClick={()=> setActiveNavbar(text)} className={`${activeNavbar === text ? 'text-emerald-400' :'text-[#f7f8fa]'} flex flex-col items-center justify-center`}>
+       <button onClick={()=> navigate(text)} className={`${pathname === text ? 'text-emerald-400' :'text-[#f7f8fa]'} flex flex-col items-center justify-center`}>
             <div
                 className={`relative flex justify-center items-center p-1 rounded-md hover:opacity-85 cursor-pointer`}>
                 <Icon 
                     size={24} 
                     />
                 {
-                    activeNavbar === text && 
+                    pathname === text && 
                     <div className="absolute hidden md:flex bottom-[-2px] left-[25%] w-[50%] h-[2px] bg-emerald-400 rounded-full"></div>
                 }
             </div>

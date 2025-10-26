@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { UserContext } from "../../contexts/user.context";
 import { NavbarIcon } from "./navbarIcon";
 import { Avatar } from "../ui/avatar";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const options = [
     {Icon: BsChatText,text: 'chats'},
@@ -16,7 +17,10 @@ const options = [
 
 export const Navbar = ()=>  {
 
-    const {user,activeNavbar,setActiveNavbar} = useContext(UserContext);
+    const {user,setActiveNavbar} = useContext(UserContext);
+
+    const {pathname} = useLocation();
+    const navigate = useNavigate()
 
 
     return (
@@ -37,9 +41,9 @@ export const Navbar = ()=>  {
                     Icon={IoSettingsOutline} 
                     text='settings' 
                     />
-                <button   className={` ${activeNavbar === 'profile' ?  'text-emerald-400' :'text-[#f7f8fa]'} flex flex-col items-center justify-center`}>
+                <button   className={` ${pathname === 'profile' ?  'text-emerald-400' :'text-[#f7f8fa]'} flex flex-col items-center justify-center`}>
                     <div 
-                        onClick={()=> setActiveNavbar('profile')}>
+                        onClick={()=> navigate('profile')}>
                         <Avatar  userPhoto={user?.profile_picture} />
                     </div>
                     <span className=" md:hidden text-xs">profile</span>
