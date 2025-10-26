@@ -45,7 +45,7 @@ export default function Signin() {
     <div className="min-h-screen flex items-center justify-center bg-[#111b21] text-[#f7f8fa] p-3">
       <div className="max-w-md w-full space-y-8 shadow-lg shadow-[#29343b77] p-3 bg-[#131e25] h-fit rounded-md md:p-8">
         <div>
-          <h1 className="text-center text-5xl font-extrabold">
+          <h1 className="text-center text-5xl font-extrabold text-emerald-500">
              WhatsApp
           </h1>
           <h2 className="mt-6 text-center text-3xl font-extrabold">
