@@ -6,6 +6,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "../contexts/user.context";
 import { MainCard } from "../components/shared/mainCard";
 import { ChatsContext } from "../contexts/chats.context";
+import { useNavigate } from "react-router-dom";
 
 const Button = ({Icon,text,handle_cleck})=> {
     return (
@@ -29,9 +30,12 @@ export const Contacts = ({setIsContcatPage})=> {
     const {setActiveChat} = useContext(ChatsContext);
     const [searchText,setSearchText] = useState('');
     const [isNewContact,setIsNewContact] = useState(false);
+    const navigate = useNavigate()
 
     const handleActiveChat = ({_id,profile_picture,name,about})=> {
+
         const isChatExist = chats.find(e=> e?.contact?._id === _id);
+        navigate(`/chats/${_id}`)
         if(isChatExist){
             setActiveChat(isChatExist)
         }else {

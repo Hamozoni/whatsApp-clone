@@ -113,7 +113,7 @@ export const NewContact = ({setIsNewContact})=> {
                         <MainCard 
                             avatarUrl={contact?.profile_picture}
                             name={contact?.name}
-                        >
+                            >
                             <span className="text-xs text-gray-400">
                                 {contact?.about}
                             </span>
