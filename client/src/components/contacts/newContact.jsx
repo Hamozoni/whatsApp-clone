@@ -119,7 +119,9 @@ export const NewContact = ({setIsNewContact})=> {
                             </span>
                         </MainCard> 
                            {(contact && error) && (
-                                <p className="text-red-500 text-sm text-center mb-3">{error}</p>
+                                <p className="text-red-500 text-sm text-center mb-3">
+                                    {error}
+                                </p>
                             )}
                             { 
                             !contacts?.find(e=> e.email === contact?.email) &&

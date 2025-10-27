@@ -6,14 +6,21 @@ import { useContext } from "react";
 import { CallContext } from "../../contexts/call.context";
 import { UserContext } from "../../contexts/user.context";
 import { MdArrowBackIos } from "react-icons/md";
-import { ChatsContext } from "../../contexts/chats.context";
+import { useNavigate } from "react-router-dom";
 
 
 export const ChatHeader = ({receiver})=> {
 
-    const {setCallStatus,setCallee,setCaller,setCallType} = useContext(CallContext);
-    const {setActiveChat} = useContext(ChatsContext);
-    const {user} = useContext(UserContext)
+    const {
+        setCallStatus,
+        setCallee,
+        setCaller,
+        setCallType
+    } = useContext(CallContext);
+    
+    const {user} = useContext(UserContext);
+
+    const navigate = useNavigate()
 
     const startCall = (type)=> {
         setCallStatus('call');
@@ -33,7 +40,7 @@ export const ChatHeader = ({receiver})=> {
             <div className="flex items-center gap-2 pr-2">
                 {/* <GoSearch className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#afb3b9] hide_model " /> */}
                 <MdArrowBackIos 
-                    onClick={()=> setActiveChat(null)} 
+                    onClick={()=> navigate('/chats')} 
                     className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#bcc0c7]"
                     />
             </div>

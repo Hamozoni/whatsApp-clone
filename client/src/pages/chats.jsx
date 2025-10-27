@@ -21,9 +21,11 @@ export const Chats = ()=> {
     const navigate = useNavigate()
 
     const handleActiveChat = (chat)=> {
-        if(id === chat?._id) return;
+        if(id === chat?.contact?._id) return;
+
+        console.log(chat)
         setActiveChat(chat);
-        navigate(`/chats/${chat?._id}`)
+        navigate(`/chats/${chat?.contact?._id}`)
     };
 
     return (
@@ -45,7 +47,7 @@ export const Chats = ()=> {
                                         <MainCard 
                                             key={chat?._id} 
                                             avatarUrl={chat?.contact?.profile_picture} 
-                                            isActive={chat?._id === activeChat?._id}
+                                            isActive={chat?.contact?._id === id}
                                             name={chat?.contact?.name}
                                             time={chat?.last_message?.createdAt}
                                             onClick={() => handleActiveChat(chat)}
@@ -62,9 +64,9 @@ export const Chats = ()=> {
                     )
                 }
             </div>
-            <div className={`${activeChat ? 'flex absolute z-20 bg-cyan-950 left-0 top-0 w-full max-w-full md:static md:left-auto md:top-auto' : 'hidden md:flex'} max-w-dvw flex-2`}>
+            <div className={`${id ? 'flex absolute z-20 bg-cyan-950 left-0 top-0 w-full max-w-full md:static md:left-auto md:top-auto' : 'hidden md:flex'} max-w-dvw flex-2`}>
                 {
-                    activeChat ? 
+                    id ? 
                     <ChatWindow /> :
                     <NoActiveChat />
                 }

@@ -18,7 +18,7 @@ export const ChatHeader = (
                 </h3>
                 <div className="flex items-center">
                     <button
-                    onClick={()=> setIsContcatPage(true)} 
+                        onClick={()=> setIsContcatPage(true)} 
                         className="flex justify-center items-center p-2 rounded-md hover:bg-[#394b55] cursor-pointer"
                         >
                         <RiChatNewLine size={18} className='text-[#f7f8fa]'/>
