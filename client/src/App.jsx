@@ -30,7 +30,8 @@ function App() {
             <div className="flex flex-col gap-1 md:flex-row h-screen max-h-screen w-screen max-w-screen text-amber-50">
                 <Navbar />
                 <Routes>
-                      <Route path='/:id'  element={<Chats />} />
+                      <Route path='/'  element={<Chats />} />
+                      <Route path='/chats'  element={<Chats />} />
                       <Route path='/chats/:id'  element={<Chats />} />
                       <Route path='/calls' element={<Calls />} />
                       <Route path='/status' element={<Status />} />
