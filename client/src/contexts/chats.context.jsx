@@ -8,7 +8,7 @@ export const ChatsContext = createContext(null);
 
 export const ChatsContextProvider = ({children})=> {
 
-    const {user,socket,set_chats} = useContext(UserContext);
+    const {user,socket,setChats} = useContext(UserContext);
 
     const [activeChat,setActiveChat] = useState(null);
     const [isPreview,setIsPreview] = useState(false);
@@ -46,7 +46,6 @@ export const ChatsContextProvider = ({children})=> {
             try{
                 const data = await fetchData(`/message?chat_id=${activeChat?._id}`);
                 setMessages(data?.messages);
-                console.log(data?.messages)
             }
             catch (error){
                 setError(error.message)
@@ -66,7 +65,7 @@ export const ChatsContextProvider = ({children})=> {
 
     useEffect(()=> {
         socket?.on('message_sent',data=> {
-            set_chats(prev=> {
+            setChats(prev=> {
                 const chats = prev?.filter(e=> e?._id !== data?._id);
                 return [data,...chats]
             });
@@ -79,7 +78,7 @@ export const ChatsContextProvider = ({children})=> {
         return ()=> {
             socket?.off('message_sent');
         }
-    },[])
+    },[socket]);
     
 
 

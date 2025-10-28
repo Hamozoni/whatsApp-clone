@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/user.context";
 import { ChatsContext } from "../contexts/chats.context";
 import { NoActiveChat } from "../components/chats/NoActiveChat";
@@ -11,22 +11,27 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export const Chats = ()=> {
 
-    const {activeChat,setActiveChat} = useContext(ChatsContext);
+    const {setActiveChat} = useContext(ChatsContext);
     const {chats,user} = useContext(UserContext);
     const [searchText,setSearchText] = useState('');
     const [isContactPage,setIsContcatPage] = useState(false);
 
-    const {id} = useParams();
+
+    console.log(chats); 
+
+    const {contactId} = useParams();
 
     const navigate = useNavigate()
 
     const handleActiveChat = (chat)=> {
-        if(id === chat?.contact?._id) return;
-
-        console.log(chat)
+        if(contactId === chat?.contact?._id) return;
         setActiveChat(chat);
         navigate(`/chats/${chat?.contact?._id}`)
     };
+
+    useEffect(()=> {
+
+    },[]);
 
     return (
         <div className="flex h-full gap-1 flex-1 overflow-y-auto">
@@ -47,7 +52,7 @@ export const Chats = ()=> {
                                         <MainCard 
                                             key={chat?._id} 
                                             avatarUrl={chat?.contact?.profile_picture} 
-                                            isActive={chat?.contact?._id === id}
+                                            isActive={chat?.contact?._id === contactId}
                                             name={chat?.contact?.name}
                                             time={chat?.last_message?.createdAt}
                                             onClick={() => handleActiveChat(chat)}
@@ -64,9 +69,9 @@ export const Chats = ()=> {
                     )
                 }
             </div>
-            <div className={`${id ? 'flex absolute z-20 bg-cyan-950 left-0 top-0 w-full max-w-full md:static md:left-auto md:top-auto' : 'hidden md:flex'} max-w-dvw flex-2`}>
+            <div className={`${contactId ? 'flex absolute z-20 bg-cyan-950 left-0 top-0 w-full max-w-full md:static md:left-auto md:top-auto' : 'hidden md:flex'} max-w-dvw flex-2`}>
                 {
-                    id ? 
+                    contactId ? 
                     <ChatWindow /> :
                     <NoActiveChat />
                 }

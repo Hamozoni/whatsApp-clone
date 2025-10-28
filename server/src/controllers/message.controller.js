@@ -115,14 +115,16 @@ export const post_message_controller = async (req,res,next) => {
 
 export const get_message_controller = async (req,res,next) => {
 
-    const {chat_id} = req.query;
+    const {user_id,contact_id} = req.query;
 
-    if(!chat_id) {
-        return res.status(400).json({message: 'chat id is reqiure'})
+    console.log({user_id,contact_id} )
+
+    if(!user_id || !contact_id) {
+        return res.status(400).json({message: 'user id and contact id is reqiure'})
     }
 
     try {
-        const messages = await Chat.findById(chat_id).populate(
+        const messages = await Chat.findOne({user:user_id,contact: contact_id}).populate(
             {
                 path: 'messages',
                 populate :[

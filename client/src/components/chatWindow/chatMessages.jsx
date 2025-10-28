@@ -1,19 +1,36 @@
 
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from '../../contexts/user.context';
 import { MessageCard } from './messageCard';
 import {ChatsContext } from '../../contexts/chats.context';
 import { AiOutlineWechatWork } from "react-icons/ai";
 import { Loading } from '../modal/loading';
+import { useParams } from 'react-router-dom';
+import { handleFetchData } from '../../lib/fetchData';
 
 const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#162127] rounded-lg my-1';
 
 export const ChatMessages = () => {
 
   const {user,socket} = useContext(UserContext);
-  const {messages,activeChat,loading,error,setMessages} = useContext(ChatsContext);
+  const {activeChat} = useContext(ChatsContext);
+
+  const [messages,setMessages] = useState([]);
+  const [loading,setLoading] = useState(true);
+  const [error,setError] = useState(null);
 
   const chatSoundRef = useRef(null);
+  const {contactId} = useParams();
+
+
+  useEffect(()=> {
+    handleFetchData(
+      `message?user_id=${user?._id}&contact_id=${contactId}`,
+      setMessages,
+      setLoading,
+      setError
+    );
+  },[contactId]);
 
   useEffect(()=> {
     if(!activeChat._id) return
@@ -63,7 +80,7 @@ export const ChatMessages = () => {
                 <div className={className}>
                   <Loading />
                 </div>
-                  : messages?.map(message => (
+                  : messages?.messages?.map(message => (
                     <MessageCard 
                       key={message?._id} 
                       message={message} 

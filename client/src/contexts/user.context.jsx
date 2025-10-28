@@ -20,7 +20,6 @@ export const  UserContextProvider =  ({children})=> {
     const [calls,setCalls] = useState([]);
     const [channels,setChannels] = useState([]);
     const [socket,setSocket] = useState(null);
-    const [activeNavbar,setActiveNavbar] = useState('chats');
 
     // const navigate = useNavigate();
 
@@ -62,7 +61,7 @@ export const  UserContextProvider =  ({children})=> {
             setError(error.message);
           }
           finally {
-            setLoading(false);
+            setLoading(false); 
           }
 
         };
@@ -90,8 +89,6 @@ export const  UserContextProvider =  ({children})=> {
                   loading,
                   chats,
                   setChats,
-                  activeNavbar,
-                  setActiveNavbar,
                   calls,
                   setCalls,
                   status,
