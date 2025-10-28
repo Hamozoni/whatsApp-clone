@@ -20,8 +20,6 @@ export const ChatsContextProvider = ({children})=> {
     const [message,setMessage] = useState({});
     const [text,setText] = useState('');
     const [unreadMessage,setUnreadMessage] = useState([]);
-    const [loading,setLoading] = useState(true);
-    const [error,setError] = useState(null);
     const [selectedGalleryFile,setSelectedGalleryFile] = useState(null);
     const [isSelectedGalleryFile,setIsSelectedGalleryFile] = useState(false);
     const messageSoundRef = useRef(null);
@@ -39,26 +37,6 @@ export const ChatsContextProvider = ({children})=> {
           type:'TEXT',
           status: 'SENT',
         });
-
-        const fetchMessages = async ()=> {
-            setLoading(true);
-            setError(null);
-            try{
-                const data = await fetchData(`/message?chat_id=${activeChat?._id}`);
-                setMessages(data?.messages);
-            }
-            catch (error){
-                setError(error.message)
-            }
-            finally {
-                setLoading(false);
-            }
-          };
-      
-
-          if(activeChat?._id) {
-              fetchMessages();
-          }
 
     },[activeChat]);
 
