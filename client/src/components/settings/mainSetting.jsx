@@ -29,13 +29,25 @@ const settingButtons = [
 
 export const MainSetting = ({setActivePage})=> {
 
-    const [text,setText] = useState('')
+    const [text,setText] = useState('');
+    const [Loading,setLoading] = useState(false);
+    const [error,setError] = useState(null);
 
-    const {user,set_user} = useContext(UserContext);
+    const {user,setUser} = useContext(UserContext);
 
     const logOut = async ()=> {
-       await signOut(firebaseAuth);
-       set_user(null)
+        setLoading(true);
+        setError(null);
+        try {
+            await signOut(firebaseAuth);
+            setUser(null)
+        }
+        catch (err) {
+           setError(err)
+        }
+        finally {
+            setLoading(false)
+        }
     };
 
     return (
@@ -80,7 +92,7 @@ export const MainSetting = ({setActivePage})=> {
                     onClick={logOut} 
                     className='flex text-red-400 gap-3 items-center my-3 p-3 rounded-lg border border-transparent hover:border-[#3b535c] hover:bg-[#1d2c31] w-full'>
                     <PiSignOutLight size={24} />
-                    <h6>Log out</h6>
+                    <h6>{Loading ? 'logging out...' : 'Log out'}</h6>
                 </button>
             </div>
         </>

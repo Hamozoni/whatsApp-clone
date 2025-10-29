@@ -22,6 +22,10 @@ export const Navbar = ()=>  {
     const {pathname} = useLocation();
     const navigate = useNavigate();
 
+    if(!user){
+        return;
+    }
+
 
     return (
         <nav className="flex md:flex-col gap-3 h-fit md:h-screen justify-between items-center p-2 bg-[#162127] rounded-lg" >

@@ -4,12 +4,13 @@ import { setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { Loading } from "../components/modal/loading";
 import { io } from "socket.io-client";
 import { fetchData } from "../lib/fetchData";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const UserContext = createContext();
 
 
 export const  UserContextProvider =  ({children})=> {
+    const navigate = useNavigate();
   
     const [user,setUser] = useState(null);
     const [loading,setLoading] = useState(true);
@@ -21,7 +22,6 @@ export const  UserContextProvider =  ({children})=> {
     const [channels,setChannels] = useState([]);
     const [socket,setSocket] = useState(null);
 
-    // const navigate = useNavigate();
 
     useEffect(() => {
         const initializeAuth = async () => {
@@ -56,6 +56,9 @@ export const  UserContextProvider =  ({children})=> {
                 setSocket(socket);
 
                }
+               else {
+                navigate('/signin')
+               }
   
             });
 
@@ -72,7 +75,7 @@ export const  UserContextProvider =  ({children})=> {
     
         initializeAuth();
         return ()=> socket?.disconnect()
-      }, [firebaseAuth]);
+      }, [firebaseAuth,user]);
 
     
     if(loading) {

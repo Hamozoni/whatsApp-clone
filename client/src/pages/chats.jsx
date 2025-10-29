@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../contexts/user.context";
 import { ChatsContext } from "../contexts/chats.context";
 import { NoActiveChat } from "../components/chats/NoActiveChat";
@@ -28,10 +28,6 @@ export const Chats = ()=> {
         setActiveChat(chat);
         navigate(`/chats/${chat?.contact?._id}`)
     };
-
-    useEffect(()=> {
-
-    },[]);
 
     return (
         <div className="flex h-full gap-1 flex-1 overflow-y-auto">
