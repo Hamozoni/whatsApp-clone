@@ -75,7 +75,7 @@ export const  UserContextProvider =  ({children})=> {
     
         initializeAuth();
         return ()=> socket?.disconnect()
-      }, [firebaseAuth,user]);
+      }, [firebaseAuth]);
 
     
     if(loading) {
