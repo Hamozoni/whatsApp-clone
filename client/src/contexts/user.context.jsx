@@ -32,26 +32,30 @@ export const  UserContextProvider =  ({children})=> {
             await setPersistence(firebaseAuth, browserLocalPersistence);
   
             firebaseAuth.onAuthStateChanged(async user => {
-               const data = await fetchData(`user?user_email=${user?.email}`);
-               const {statuses} = await fetchData(`status?user_id=${data?.user?._id}`);
-               const st = Object.values(Object.groupBy(statuses,status=> status.user._id));
-                 setStatus(st)
-                 setUser(data?.user);
-                 setCalls(data?.user?.calls)
-                 setChats(data?.chats);
-                 setContacts(data?.user?.contacts);
-                 setChannels(data?.channels);
-  
-               const socket = await io.connect(import.meta.env.VITE_SOCKET_URL,{
-                  reconnection: true,
-                  reconnectionAttempts: 5,
-                  transports: ['websocket'],
-                  query : {
-                      user_id: data?.user?._id
-                  }
-              });
-  
-              setSocket(socket);
+
+               if(user) {
+                 const data = await fetchData(`user?user_email=${user?.email}`);
+                 const {statuses} = await fetchData(`status?user_id=${data?.user?._id}`);
+                 const st = Object.values(Object.groupBy(statuses,status=> status.user._id));
+                   setStatus(st)
+                   setUser(data?.user);
+                   setCalls(data?.user?.calls)
+                   setChats(data?.chats);
+                   setContacts(data?.user?.contacts);
+                   setChannels(data?.channels);
+    
+                 const socket = await io.connect(import.meta.env.VITE_SOCKET_URL,{
+                    reconnection: true,
+                    reconnectionAttempts: 5,
+                    transports: ['websocket'],
+                    query : {
+                        user_id: data?.user?._id
+                    }
+                });
+    
+                setSocket(socket);
+
+               }
   
             });
 

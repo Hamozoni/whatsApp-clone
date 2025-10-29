@@ -1,9 +1,7 @@
 
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "./user.context";
-import { fetchData } from "../lib/fetchData";
  
-
 export const ChatsContext = createContext(null);
 
 export const ChatsContextProvider = ({children})=> {
@@ -15,8 +13,6 @@ export const ChatsContextProvider = ({children})=> {
     const [isRecorder,setIsRecorder] = useState(false);
     const [isCamera,setIsCamera] = useState(false);
 
-
-    const [messages, setMessages] = useState([]);
     const [message,setMessage] = useState({});
     const [text,setText] = useState('');
     const [unreadMessage,setUnreadMessage] = useState([]);
@@ -27,7 +23,6 @@ export const ChatsContextProvider = ({children})=> {
   
 
     useEffect(() => {
-        setMessages([]);
         setText('')
         setMessage({
           chat_id: activeChat?._id ?  activeChat?._id : null,
@@ -66,14 +61,10 @@ export const ChatsContextProvider = ({children})=> {
                 {
                     isPreview,
                     setIsPreview,
-                    messages,
-                    setMessages,
                     message,
                     setMessage,
                     activeChat,
                     setActiveChat,
-                    loading,
-                    error,
                     unreadMessage,
                     setUnreadMessage,
                     text,
