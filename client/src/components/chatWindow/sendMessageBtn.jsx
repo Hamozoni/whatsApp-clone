@@ -15,11 +15,9 @@ export const SendMessageBtn = ()=> {
         message,
         setActiveChat,
         setText,
-        activeChat,
         setIsRecorder,
         setMessage,
         setIsPreview,
-        setMessages
     } = useContext(ChatsContext);
 
     const {socket,setChats} = useContext(UserContext);
@@ -28,12 +26,10 @@ export const SendMessageBtn = ()=> {
         <button
             onClick={()=>{
                 handleSendMessage({
-                    message,
-                    setChats,
-                    activeChat,
-                    setActiveChat,
-                   setMessages,
-                    socket
+                            message,
+                            setChats,
+                            setActiveChat,
+                            socket
                 });
                 if(!error) {
                     setText('');

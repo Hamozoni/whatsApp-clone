@@ -10,7 +10,6 @@ import { Profile } from './pages/profile';
 import { Navbar } from './components/navbar/navbar';
 import { UserContextProvider } from './contexts/user.context';
 import { SettingsContextProvider } from './contexts/settings.context';
-import { ChatsContextProvider } from './contexts/chats.context';
 import { CallContextProvider } from './contexts/call.context';
 
 function App() {
@@ -19,25 +18,23 @@ function App() {
         <BrowserRouter >
             <UserContextProvider >
                 <SettingsContextProvider>
-                    <ChatsContextProvider >
                         <CallContextProvider >
                             <div className="flex flex-col gap-1 md:flex-row h-screen max-h-screen w-screen max-w-screen text-amber-50">
                                 <Navbar />
                                 <Routes>
-                                      <Route path='/'  element={<Chats />} />
-                                      <Route path='/chats'  element={<Chats />} />
-                                      <Route path='/chats/:contactId'  element={<Chats />} />
-                                      <Route path='/calls' element={<Calls />} />
-                                      <Route path='/status' element={<Status />} />
-                                      <Route path='/channels' element={<Channels />} />
-                                      <Route path='/settings' element={<Settings />} />
-                                      <Route path='/profile' element={<Profile />} />
+                                    <Route path='/'  element={<Chats />} />
+                                    <Route path='/chats'  element={<Chats />} />
+                                    <Route path='/chats/:contactId'  element={<Chats />} />
+                                    <Route path='/calls' element={<Calls />} />
+                                    <Route path='/status' element={<Status />} />
+                                    <Route path='/channels' element={<Channels />} />
+                                    <Route path='/settings' element={<Settings />} />
+                                    <Route path='/profile' element={<Profile />} />
                                     <Route path='/signin' element={<Signin />} />
                                     <Route path='/signup' element={<Signup />} />
                                 </Routes>
                             </div>
                           </CallContextProvider>
-                      </ChatsContextProvider>
                   </SettingsContextProvider>
               </UserContextProvider>
         </BrowserRouter>

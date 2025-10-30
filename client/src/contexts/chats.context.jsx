@@ -6,7 +6,7 @@ export const ChatsContext = createContext(null);
 
 export const ChatsContextProvider = ({children})=> {
 
-    // const {socket,setChats} = useContext(UserContext);
+    const {socket,setChats,user} = useContext(UserContext);
 
     const [activeChat,setActiveChat] = useState(null);
     const [isPreview,setIsPreview] = useState(false);
@@ -23,18 +23,18 @@ export const ChatsContextProvider = ({children})=> {
 
   
 
-    // useEffect(() => {
-    //     setText('')
-    //     setMessage({
-    //       chat_id: activeChat?._id ?  activeChat?._id : null,
-    //       sender: user?._id,
-    //       contact: activeChat?.contact?._id,
-    //       text:'',
-    //       type:'TEXT',
-    //       status: 'SENT',
-    //     });
+    useEffect(() => {
+        setText('')
+        setMessage({
+          chat_id: activeChat?._id ?  activeChat?._id : null,
+          sender: user?._id,
+          contact: activeChat?.contact?._id,
+          text:'',
+          type:'TEXT',
+          status: 'SENT',
+        });
 
-    // },[activeChat]);
+    },[activeChat]);
 
 
     // useEffect(()=> {

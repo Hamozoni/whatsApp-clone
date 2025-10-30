@@ -4,9 +4,7 @@ export const handleSendMessage = async (
     {   
         message,
         setChats,
-        activeChat,
         setActiveChat,
-        setMessages,
         socket
     }
     )=> {
@@ -21,6 +19,8 @@ export const handleSendMessage = async (
                 'Content-Type': 'multipart/form-data'
             }
     });
+
+    console.log(data)
     
     socket?.emit('message_sent',data?.contact_chat);
 
@@ -29,10 +29,11 @@ export const handleSendMessage = async (
         return [data?.sender_chat,...chats]
     });
 
-    if(activeChat?._id === data?.sender_chat?._id) {
-        setMessages(prev=> [...prev, data?.sender_chat?.last_message])
-    }else {
-        setActiveChat(data?.sender_chat);
-    };
+    setActiveChat(prev=> {
+
+       return {...prev,chat : {...prev?.chat,messages: [...prev?.chat?.messages,data?.sender_chat?.last_message]}}
+    }
+)
+
 
 };

@@ -3,11 +3,8 @@ import { SlMicrophone } from "react-icons/sl"
 import { useContext, useState } from "react";
 import { SelectMessageFile } from "./selectMessageFile";
 import {ChatsContext } from "../../contexts/chats.context";
-
-
 import {useEffect} from 'react'
 import AudioRecorder from './audioRecorder'
-
 import { SendMessageBtn } from "./sendMessageBtn";
 import { TextEmojiInput } from "../ui/textEmojiInput";
 import { CloseModel } from "../modal/closeModel";
@@ -32,7 +29,10 @@ export const ChatFooter = ()=> {
                         className="h-6 w-6 text-[#f7f8fa] cursor-pointer hover:text-[#00a884] rotate-90"  
                     />
                 }
-                <TextEmojiInput placeholder='Type a message' text={text} setText={setText} />
+                <TextEmojiInput 
+                    placeholder='Type a message' 
+                    text={text} setText={setText} 
+                />
                 <div >
                     {
                        ( text?.length > 0 || isPreview ) ? 
