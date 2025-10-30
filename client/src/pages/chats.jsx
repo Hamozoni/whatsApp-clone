@@ -16,13 +16,10 @@ export const Chats = ()=> {
     const [searchText,setSearchText] = useState('');
     const [isContactPage,setIsContcatPage] = useState(false);
 
-
-    console.log(chats); 
-
     const {contactId} = useParams();
 
-    const navigate = useNavigate()
-
+    const navigate = useNavigate();
+    
     const handleActiveChat = (chat)=> {
         if(contactId === chat?.contact?._id) return;
         setActiveChat(chat);

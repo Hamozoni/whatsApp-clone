@@ -7,7 +7,8 @@ import { CloseModel } from "../modal/closeModel"
 
 export const Chats = ({setActivePage})=> {
 
-    const [isTheme,setIsTheme] = useState(false)
+    const [isTheme,setIsTheme] = useState(false);
+    
     return (
         <>
            <Header title='Chats' setActivePage={()=> setActivePage('main')} />

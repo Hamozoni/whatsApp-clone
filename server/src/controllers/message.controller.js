@@ -124,7 +124,7 @@ export const get_message_controller = async (req,res,next) => {
     }
 
     try {
-        const messages = await Chat.findOne({user:user_id,contact: contact_id}).populate(
+        const chat = await Chat.findOne({user:user_id,contact: contact_id}).populate(
             {
                 path: 'messages',
                 populate :[
@@ -149,8 +149,9 @@ export const get_message_controller = async (req,res,next) => {
                 ]
 
            }
-        )
-        return res.status(200).json({messages: messages?.messages})
+        );
+
+        return res.status(200).json({chat})
     }
     catch(error) {
         next(error)

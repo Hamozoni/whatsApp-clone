@@ -14,10 +14,12 @@ export const ChatsContextProvider = ({children})=> {
     const [isCamera,setIsCamera] = useState(false);
 
     const [message,setMessage] = useState({});
+    const [messages,setMessages] = useState([]);
     const [text,setText] = useState('');
     const [unreadMessage,setUnreadMessage] = useState([]);
     const [selectedGalleryFile,setSelectedGalleryFile] = useState(null);
     const [isSelectedGalleryFile,setIsSelectedGalleryFile] = useState(false);
+
     const messageSoundRef = useRef(null);
 
   
@@ -77,6 +79,8 @@ export const ChatsContextProvider = ({children})=> {
                     setIsSelectedGalleryFile,
                     isCamera,
                     setIsCamera,
+                    messages,
+                    setMessages
                 }
                 }
         >
