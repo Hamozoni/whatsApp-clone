@@ -26,29 +26,11 @@ const Button = ({Icon,text,handle_cleck})=> {
 
 export const Contacts = ({setIsContcatPage})=> {
 
-    const {contacts,chats,user} = useContext(UserContext)
-    const {setActiveChat} = useContext(ChatsContext);
+    const {contacts} = useContext(UserContext)
     const [searchText,setSearchText] = useState('');
     const [isNewContact,setIsNewContact] = useState(false);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const handleActiveChat = ({_id,profile_picture,name,about})=> {
-
-        const isChatExist = chats.find(e=> e?.contact?._id === _id);
-        navigate(`/chats/${_id}`)
-        if(isChatExist){
-            setActiveChat(isChatExist)
-        }else {
-            setActiveChat({
-                contact: {_id,profile_picture,name,about},
-                chat_id: null,
-                sender: user?._id,
-                text:'',
-                type:'TEXT',
-                status: 'SENT',
-            })
-        }
-    }
 
     return (
         <div className="rounded-lg overflow-hidden flex-1 overflow-y-auto">
@@ -93,7 +75,7 @@ export const Contacts = ({setIsContcatPage})=> {
                                        key={_id}
                                        avatarUrl={profile_picture}
                                        name={name}
-                                       onClick={()=> handleActiveChat({_id,profile_picture,name,about})}
+                                       onClick={()=> navigate(`/chats/${_id}`)}
                                     >
                                         <span className="text-xs text-gray-400">
                                             {about}

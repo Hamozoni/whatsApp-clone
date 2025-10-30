@@ -15,6 +15,7 @@ export const fetchData = async (endPoint) => {
       }
       catch (err) {
         setError(err.message);
+        console.log(err)
       }
       finally {
         setLoading(false);

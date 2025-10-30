@@ -23,9 +23,6 @@ export const NavbarIcon = ({text,Icon})=> {
                     <div className="absolute hidden md:flex bottom-[-2px] left-[25%] w-[50%] h-[2px] bg-emerald-400 rounded-full"></div>
                 }
             </div>
-            <h6 className=" md:hidden text-xs">
-                {text}
-            </h6>
         </button>
     );
 };

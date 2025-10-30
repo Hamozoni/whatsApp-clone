@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../contexts/user.context";
-import { ChatsContext } from "../contexts/chats.context";
 import { NoActiveChat } from "../components/chats/NoActiveChat";
 import { ChatWindow } from "../components/chatWindow/chatWindow";
 import { Contacts } from "./contacts";
@@ -11,7 +10,6 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export const Chats = ()=> {
 
-    const {setActiveChat} = useContext(ChatsContext);
     const {chats,user} = useContext(UserContext);
     const [searchText,setSearchText] = useState('');
     const [isContactPage,setIsContcatPage] = useState(false);
@@ -19,10 +17,9 @@ export const Chats = ()=> {
     const {contactId} = useParams();
 
     const navigate = useNavigate();
-    
+
     const handleActiveChat = (chat)=> {
         if(contactId === chat?.contact?._id) return;
-        setActiveChat(chat);
         navigate(`/chats/${chat?.contact?._id}`)
     };
 

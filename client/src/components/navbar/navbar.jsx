@@ -50,7 +50,6 @@ export const Navbar = ()=>  {
                         onClick={()=> navigate('/profile')}>
                         <Avatar  userPhoto={user?.profile_picture} />
                     </div>
-                    <span className=" md:hidden text-xs">profile</span>
                 </button>
             </div>
         </nav>

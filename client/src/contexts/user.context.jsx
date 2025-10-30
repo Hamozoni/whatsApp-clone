@@ -39,7 +39,8 @@ export const  UserContextProvider =  ({children})=> {
                  const st = Object.values(Object.groupBy(statuses,status=> status.user._id));
                    setStatus(st)
                    setUser(data?.user);
-                   setCalls(data?.user?.calls)
+                   setCalls(data?.user?.calls);
+                   console.log(data?.chats)
                    setChats(data?.chats);
                    setContacts(data?.user?.contacts);
                    setChannels(data?.channels);

@@ -3,6 +3,7 @@ import Chat from "../models/chat.model.js";
 import Message from "../models/message.model.js";
 import cloudinary from "../config.js/cloudinary.js";
 import { upload_file } from "../utils/upload_file.js";
+import User from "../models/user.model.js";
 
 const messages_populate = {
                 path: 'messages',
@@ -149,11 +150,18 @@ export const get_message_controller = async (req,res,next) => {
     }
 
     try {
+        const contact = await User.findById(contact_id).select('name _id about profile_picture')
+        if(!contact) {
+            return res.status(400).json({message : 'contact is not found'});
+        };
+
         const chat = await Chat.findOne({user:user_id,contact: contact_id}).populate(messages_populate);
-        return res.status(200).json({chat})
+
+        console.log(contact)
+        return res.status(200).json({chat,contact})
     }
     catch(error) {
-        next(error)
+        next(error);
     }
 
 }

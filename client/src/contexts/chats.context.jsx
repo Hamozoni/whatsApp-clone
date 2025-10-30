@@ -6,7 +6,7 @@ export const ChatsContext = createContext(null);
 
 export const ChatsContextProvider = ({children})=> {
 
-    const {user,socket,setChats} = useContext(UserContext);
+    // const {socket,setChats} = useContext(UserContext);
 
     const [activeChat,setActiveChat] = useState(null);
     const [isPreview,setIsPreview] = useState(false);
@@ -14,7 +14,6 @@ export const ChatsContextProvider = ({children})=> {
     const [isCamera,setIsCamera] = useState(false);
 
     const [message,setMessage] = useState({});
-    const [messages,setMessages] = useState([]);
     const [text,setText] = useState('');
     const [unreadMessage,setUnreadMessage] = useState([]);
     const [selectedGalleryFile,setSelectedGalleryFile] = useState(null);
@@ -24,36 +23,36 @@ export const ChatsContextProvider = ({children})=> {
 
   
 
-    useEffect(() => {
-        setText('')
-        setMessage({
-          chat_id: activeChat?._id ?  activeChat?._id : null,
-          sender: user?._id,
-          contact: activeChat?.contact?._id,
-          text:'',
-          type:'TEXT',
-          status: 'SENT',
-        });
+    // useEffect(() => {
+    //     setText('')
+    //     setMessage({
+    //       chat_id: activeChat?._id ?  activeChat?._id : null,
+    //       sender: user?._id,
+    //       contact: activeChat?.contact?._id,
+    //       text:'',
+    //       type:'TEXT',
+    //       status: 'SENT',
+    //     });
 
-    },[activeChat]);
+    // },[activeChat]);
 
 
-    useEffect(()=> {
-        socket?.on('message_sent',data=> {
-            setChats(prev=> {
-                const chats = prev?.filter(e=> e?._id !== data?._id);
-                return [data,...chats]
-            });
+    // useEffect(()=> {
+    //     socket?.on('message_sent',data=> {
+    //         setChats(prev=> {
+    //             const chats = prev?.filter(e=> e?._id !== data?._id);
+    //             return [data,...chats]
+    //         });
 
-            if(data?._id !== activeChat?._id) {
-                messageSoundRef?.current?.play();
-            }
-        });
+    //         if(data?._id !== activeChat?._id) {
+    //             messageSoundRef?.current?.play();
+    //         }
+    //     });
         
-        return ()=> {
-            socket?.off('message_sent');
-        }
-    },[socket]);
+    //     return ()=> {
+    //         socket?.off('message_sent');
+    //     }
+    // },[socket]);
     
 
 
@@ -79,8 +78,6 @@ export const ChatsContextProvider = ({children})=> {
                     setIsSelectedGalleryFile,
                     isCamera,
                     setIsCamera,
-                    messages,
-                    setMessages
                 }
                 }
         >

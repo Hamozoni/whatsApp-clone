@@ -1,37 +1,20 @@
 
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useRef } from 'react';
 import { UserContext } from '../../contexts/user.context';
 import { MessageCard } from './messageCard';
 import {ChatsContext } from '../../contexts/chats.context';
 import { AiOutlineWechatWork } from "react-icons/ai";
-import { Loading } from '../modal/loading';
-import { useParams } from 'react-router-dom';
-import { handleFetchData } from '../../lib/fetchData';
 
 const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#162127] rounded-lg my-1';
 
 export const ChatMessages = () => {
 
   const {user,socket} = useContext(UserContext);
-  const {activeChat,messages,setMessages} = useContext(ChatsContext);
+  const {activeChat} = useContext(ChatsContext);
 
-  
-  const {contactId} = useParams();
-  const [loading,setLoading] = useState(true);
-  const [error,setError] = useState(null);
-      
-  useEffect(()=> {
-      handleFetchData(
-        `message?user_id=${user?._id}&contact_id=${contactId}`,
-        setMessages,
-        setLoading,
-        setError
-      );
-    },[contactId]);
+
 
   const chatSoundRef = useRef(null);
-
-  console.log(messages)
 
 
   // useEffect(()=> {
@@ -48,7 +31,8 @@ export const ChatMessages = () => {
   //    }
   // },[socket])
 
-  if(!messages.chat) {
+
+  if(!activeChat?.chat) {
     return (
       <div className={className}>
         <div className="flex flex-col w-full h-full justify-center items-center">
@@ -60,14 +44,6 @@ export const ChatMessages = () => {
   };
 
 
-  if(error){
-    return (
-      <div className={className}>
-        <h3>{error}</h3>
-      </div>
-    )
-  }
-
   return (
               
       <div className={className}>
@@ -77,12 +53,8 @@ export const ChatMessages = () => {
                 className=" hidden"
                 >
               </audio>
-            {
-                loading ? 
-                <div className={className}>
-                  <Loading />
-                </div>
-                  : messages?.chat?.messages?.map(message => (
+              {
+                  activeChat?.chat?.messages?.map(message => (
                     <MessageCard 
                       key={message?._id} 
                       message={message} 
