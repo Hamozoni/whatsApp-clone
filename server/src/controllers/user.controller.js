@@ -49,7 +49,7 @@ export const get_user_controller = async (req,res,next) => {
             },
             {
                 path: 'last_message',
-                select: '_id sender status text type createdAt user',
+                select: '_id status text type createdAt user',
                 populate: [
                     {
                         path: 'file',
@@ -58,6 +58,10 @@ export const get_user_controller = async (req,res,next) => {
                     {
                         path: 'call',
                         populate : call_populate
+                    },
+                    {
+                        path: 'sender',
+                        select : 'name _id about profile_picture'
                     }
                 ],
                 

@@ -4,13 +4,11 @@ import { timeFormat } from "../../lib/timeFormat";
 
 export const MessageCard = ({userId,message})=> {
 
-    const isMyMessage = message?.sender?._id === userId
-
     return (
-        <div className={`flex ${isMyMessage ? 'justify-end' : 'justify-start'}`}>
+        <div className={`flex ${message?.sender?._id === userId ? 'justify-end' : 'justify-start'}`}>
             <div className='max-w-[70%] mb-3' >
                 <div className={`rounded-lg min-w-12 border-2  ${
-                        isMyMessage
+                        message?.sender?._id === userId 
                         ? 'bg-emerald-800 border-emerald-700'
                         : 'bg-[#222e35] border-gray-700 '
                     }`}
@@ -34,11 +32,11 @@ export const MessageCard = ({userId,message})=> {
                     }
 
                 </div>
-                <div className={`flex items-center justify-end gap-1 mt-1 ${isMyMessage ? 'justify-end' : 'justify-start'}`}>
+                <div className={`flex items-center justify-end gap-1 mt-1 ${message?.sender?._id === userId  ? 'justify-end' : 'justify-start'}`}>
                     <span className="text-[0.7rem] text-gray-400">
                         {timeFormat(message?.createdAt)}
                     </span>
-                    {(isMyMessage && message.type !== 'CALL') &&(
+                    {(message?.sender?._id === userId  && message.type !== 'CALL') &&(
                     <span className={`${message?.status === 'READ' ? 'text-emerald-300' :'text-gray-400'} text-sm`}>
                         {message?.status === 'SENT' ? '✓' : '✓✓'}
                     </span>

@@ -31,7 +31,15 @@ export const handleSendMessage = async (
 
     setActiveChat(prev=> {
 
-       return {...prev,chat : {...prev?.chat,messages: [...prev?.chat?.messages,data?.sender_chat?.last_message]}}
+        
+        if(!prev?.chat?._id){
+            prev.chat = data?.sender_chat
+            prev.chat.messages = [data.sender_chat.last_message]
+        }else {
+            prev.chat.messages.push(data?.sender_chat?.last_message)
+        }
+
+       return {...prev}
     }
 )
 

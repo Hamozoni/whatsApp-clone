@@ -7,7 +7,7 @@ export const ChatCardLastMessage = ({chat,user}) => {
         <div className="flex justify-between items-center">
                 <div className="text-sm text-[#667781] truncate flex items-center gap-2">
                 {
-                    (user?._id === chat?.last_message?.sender && chat?.last_message.type !== 'CALL') && 
+                    (user?._id === chat?.last_message?.sender?._id && chat?.last_message.type !== 'CALL') && 
                     (
                         <span className={chat?.last_message?.status === 'READ' ? 'text-emerald-400' : ''}>
                             {chat?.last_message?.status === 'SENT' ? '✓ ' :  '✓✓ ' }

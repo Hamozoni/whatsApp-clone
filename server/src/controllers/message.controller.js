@@ -42,7 +42,7 @@ const call_populate = [
     },
 ]
 
-const populate = [
+const posted_message_populate = [
     {
         path: 'last_message',
         populate :[{
@@ -53,7 +53,11 @@ const populate = [
             path: 'call',
             populate : call_populate
         },
-            {
+        {
+            path: 'sender',
+            select : 'name _id about profile_picture'
+        },
+        {
             path: 'reply_to',
             populate: {
                 path: 'file',
@@ -64,7 +68,7 @@ const populate = [
     {
         path: 'contact',
         select: 'name _id about profile_picture',
-    }
+     }
 ];
 
 export const post_message_controller = async (req,res,next) => {
@@ -101,13 +105,13 @@ export const post_message_controller = async (req,res,next) => {
         if(sender_chat_id) {
              sender_chat = await Chat.findByIdAndUpdate(sender_chat_id?._id,
                 {last_message: message?._id, $addToSet :{messages: message?._id}},{new: true}
-                ).populate(populate)
+                ).populate(posted_message_populate)
                 .select('-messages')
 
         }else {
            const chat = await Chat.create({user: sender,contact,last_message: message?._id,messages: message?._id});
             sender_chat  = await Chat.findById(chat?._id,{new: true})
-            .populate(populate)
+            .populate(posted_message_populate)
             .select('-messages')
 
         }
@@ -115,12 +119,12 @@ export const post_message_controller = async (req,res,next) => {
         if(contact_chat_id) {
              contact_chat = await Chat.findByIdAndUpdate(contact_chat_id?._id,
                 {last_message: message?._id, $addToSet :{messages: message?._id}},{new: true}
-           ).populate(populate)
+           ).populate(posted_message_populate)
            .select('-messages')
         }else {
            const chat = await Chat.create({user: contact,contact: sender,last_message: message?._id,messages: message?._id});
             contact_chat = await Chat.findById(chat?._id,{new: true})
-            .populate(populate)
+            .populate(posted_message_populate)
            .select('-messages')
         };
 
