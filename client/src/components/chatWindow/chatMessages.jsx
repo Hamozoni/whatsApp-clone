@@ -48,7 +48,7 @@ export const ChatMessages = () => {
   //    }
   // },[socket])
 
-  if(!messages.messages) {
+  if(!messages.chat) {
     return (
       <div className={className}>
         <div className="flex flex-col w-full h-full justify-center items-center">
@@ -82,7 +82,7 @@ export const ChatMessages = () => {
                 <div className={className}>
                   <Loading />
                 </div>
-                  : messages?.messages?.map(message => (
+                  : messages?.chat?.messages?.map(message => (
                     <MessageCard 
                       key={message?._id} 
                       message={message} 

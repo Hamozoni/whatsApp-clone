@@ -4,49 +4,74 @@ import Message from "../models/message.model.js";
 import cloudinary from "../config.js/cloudinary.js";
 import { upload_file } from "../utils/upload_file.js";
 
+const messages_populate = {
+                path: 'messages',
+                populate :[
+                    {
+                        path:'reply_to',
+                        populate: {
+                            path: 'file',
+                            select: 'url _id type name size'
+                        }
+                    },
+                    {
+                        path: 'file',
+                        select: 'url _id type name size'
+                    },
+                    {
+                        path: 'call',
+                    },
+                                        {
+                        path: 'sender',
+                        select: '_id name profile_picture'
+                    },
+                ]
+
+    };
+
+const call_populate = [
+    {
+        path: 'callee',
+        select: 'name _id about profile_picture',
+
+    },
+    {
+        path: 'caller',
+        select: 'name _id about profile_picture',
+    },
+]
+
+const populate = [
+    {
+        path: 'last_message',
+        populate :[{
+            path: 'file',
+            select: 'url _id type name size'
+        },
+        {
+            path: 'call',
+            populate : call_populate
+        },
+            {
+            path: 'reply_to',
+            populate: {
+                path: 'file',
+                elect: 'url _id type name size'
+            }
+        }]
+    },
+    {
+        path: 'contact',
+        select: 'name _id about profile_picture',
+    }
+];
+
 export const post_message_controller = async (req,res,next) => {
 
     let sender_chat = null;
     let contact_chat = null;
     let message = null;
     let file_result = null
-
-    const call_populate = [
-        {
-            path: 'callee',
-            select: 'name _id about profile_picture',
-
-        },
-        {
-            path: 'caller',
-            select: 'name _id about profile_picture',
-        },
-    ]
-
-    const populate = [
-        {
-            path: 'last_message',
-            populate :[{
-                path: 'file',
-                select: 'url _id type name size'
-            },
-            {
-                path: 'call',
-                populate : call_populate
-            },
-             {
-                path: 'reply_to',
-                populate: {
-                    path: 'file',
-                    elect: 'url _id type name size'
-               }
-            }]
-        },
-        {
-            path: 'contact',
-            select: 'name _id about profile_picture',
-        }
-    ];
 
     try {
         const {sender,contact} = req.body;
@@ -124,33 +149,7 @@ export const get_message_controller = async (req,res,next) => {
     }
 
     try {
-        const chat = await Chat.findOne({user:user_id,contact: contact_id}).populate(
-            {
-                path: 'messages',
-                populate :[
-                    {
-                        path:'reply_to',
-                        populate: {
-                            path: 'file',
-                            select: 'url _id type name size'
-                        }
-                    },
-                    {
-                        path: 'file',
-                        select: 'url _id type name size'
-                    },
-                    {
-                        path: 'call',
-                    },
-                                        {
-                        path: 'sender',
-                        select: '_id name profile_picture'
-                    },
-                ]
-
-           }
-        );
-
+        const chat = await Chat.findOne({user:user_id,contact: contact_id}).populate(messages_populate);
         return res.status(200).json({chat})
     }
     catch(error) {
