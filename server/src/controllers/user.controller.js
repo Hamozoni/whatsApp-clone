@@ -4,8 +4,6 @@ import User from '../models/user.model.js';
 
 export const get_user_controller = async (req,res,next) => {  
 
-    const {user_email} = req.query;
-
     const call_populate = [
             {
                 path: 'callee',
@@ -16,7 +14,10 @@ export const get_user_controller = async (req,res,next) => {
                 path: 'caller',
                 select: 'name _id about profile_picture',
             },
-        ]
+    ]
+
+    const {user_email} = req.query;
+
 
     if(!user_email) {
         return res.status(404).json({message: 'user email is reqiured'});
