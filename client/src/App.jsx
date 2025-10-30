@@ -11,6 +11,7 @@ import { Navbar } from './components/navbar/navbar';
 import { UserContextProvider } from './contexts/user.context';
 import { SettingsContextProvider } from './contexts/settings.context';
 import { CallContextProvider } from './contexts/call.context';
+import { ChatsContextProvider } from './contexts/chats.context';
 
 function App() {
   
@@ -18,6 +19,7 @@ function App() {
         <BrowserRouter >
             <UserContextProvider >
                 <SettingsContextProvider>
+                     <ChatsContextProvider>
                         <CallContextProvider >
                             <div className="flex flex-col gap-1 md:flex-row h-screen max-h-screen w-screen max-w-screen text-amber-50">
                                 <Navbar />
@@ -35,6 +37,7 @@ function App() {
                                 </Routes>
                             </div>
                           </CallContextProvider>
+                     </ChatsContextProvider>
                   </SettingsContextProvider>
               </UserContextProvider>
         </BrowserRouter>

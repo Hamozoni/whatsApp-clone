@@ -24,9 +24,7 @@ export const Call = ()=> {
     const {socket,user,setChats} = useContext(UserContext);
 
     const {
-        activeChat,
         setActiveChat,
-        setMessages
     } = useContext(ChatsContext);
 
     const [localVideo,setLocalVideo] = useState(null);
@@ -65,13 +63,11 @@ export const Call = ()=> {
             const message = {sender: user?._id,contact: callee?._id,call: call?._id,type: 'CALL'};
 
            await handleSendMessage({
-                message,
-                setChats,
-                activeChat,
-                setActiveChat,
-                setMessages,
-                socket}
-            );
+                    message,
+                    setChats,
+                    setActiveChat,
+                    socket
+                 })
 
             socket?.emit('call',{
                 to: callee?._id,
