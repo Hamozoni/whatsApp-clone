@@ -31,14 +31,15 @@ export const ChatWindow = ()=> {
   const [error,setError] = useState(null);
       
   useEffect(()=> {
-      handleFetchData(
-        `message?user_id=${user?._id}&contact_id=${contactId}`,
-        setActiveChat,
-        setLoading,
-        setError
-    );
-
-    },[contactId]);
+     if(user?._id && contactId) {
+         handleFetchData(
+           `message?user_id=${user?._id}&contact_id=${contactId}`,
+           setActiveChat,
+           setLoading,
+           setError
+       );
+     }
+    },[contactId,user]);
 
 
     if(error){

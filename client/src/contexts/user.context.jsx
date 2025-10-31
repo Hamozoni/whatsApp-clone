@@ -83,8 +83,7 @@ export const  UserContextProvider =  ({children})=> {
       return (
         <Loading />
       )
-    }
-    
+    } else {
       return (
           <UserContext.Provider 
               value={
@@ -107,6 +106,8 @@ export const  UserContextProvider =  ({children})=> {
               {children}
           </UserContext.Provider>
       );
+
+    }
 
 };
 
