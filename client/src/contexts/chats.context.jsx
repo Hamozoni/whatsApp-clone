@@ -1,5 +1,5 @@
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState,useRef } from "react";
 import { UserContext } from "./user.context";
  
 export const ChatsContext = createContext(null);
@@ -12,16 +12,14 @@ export const ChatsContextProvider = ({children})=> {
     const [isPreview,setIsPreview] = useState(false);
     const [isRecorder,setIsRecorder] = useState(false);
     const [isCamera,setIsCamera] = useState(false);
-
+    const [isNewMessage,setIsNewMessage] = useState(null);
     const [message,setMessage] = useState({});
     const [text,setText] = useState('');
     const [unreadMessage,setUnreadMessage] = useState([]);
     const [selectedGalleryFile,setSelectedGalleryFile] = useState(null);
     const [isSelectedGalleryFile,setIsSelectedGalleryFile] = useState(false);
 
-    // const messageSoundRef = useRef(null);
-
-  
+    const newSessageSoundRef = useRef(null)
 
     useEffect(() => {
         setText('')
@@ -45,23 +43,34 @@ export const ChatsContextProvider = ({children})=> {
             });
 
             setActiveChat(prev=> {
-                    if(!prev?.chat?._id){
-                        prev.chat = data
-                        prev.chat.messages = [data.last_message]
-                    } 
                     if (data._id === prev.chat._id){
-                        prev.chat.messages.push(data?.last_message)
-                    }
-
+                        prev.chat.messages.push(data?.last_message);
+                        setIsNewMessage('openChat')
+                    }else {
+                        setIsNewMessage('closeChat')
+                    };
                 return {...prev}
                 }
             );
         });
+
+        console.log(isNewMessage)
         
         return ()=> {
             socket?.off('message_sent');
+            setIsNewMessage(null)
         }
     },[socket]);
+
+    useEffect(()=> {
+        newSessageSoundRef.current = setTimeout(()=> {
+            setIsNewMessage(null);
+        },1800);
+
+        return ()=> {
+            clearTimeout(newSessageSoundRef.current)
+        }
+    },[isNewMessage])
     
 
 
@@ -88,9 +97,14 @@ export const ChatsContextProvider = ({children})=> {
                     isCamera,
                     setIsCamera,
                 }
-                }
-        >
-           {/* <audio ref={messageSoundRef} src="./new_message_sound.mp3" className=" hidden"></audio> */}
+            }
+        >  
+            {
+               isNewMessage === 'openChat' ?
+                <audio  src="/new_message_sound_2.mp3" autoPlay className=" hidden" />
+                :  isNewMessage === 'closeChat' ?
+                <audio  src="/new_message_sound.mp3" autoPlay className=" hidden" />:''
+            }
             {children}
         </ChatsContext.Provider>
     )

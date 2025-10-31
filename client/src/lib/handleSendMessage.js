@@ -30,12 +30,11 @@ export const handleSendMessage = async (
     });
 
     setActiveChat(prev=> {
-
-        
         if(!prev?.chat?._id){
             prev.chat = data?.sender_chat
             prev.chat.messages = [data.sender_chat.last_message]
-        }else {
+        }
+        if(data?.sender_chat._id === prev.chat._id ){
             prev.chat.messages.push(data?.sender_chat?.last_message)
         }
 
