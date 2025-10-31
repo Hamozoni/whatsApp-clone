@@ -44,18 +44,18 @@ export const ChatsContextProvider = ({children})=> {
                 return [data,...chats]
             });
 
-            if(data?._id !== activeChat?.chat?._id) {
-                setActiveChat(prev=> {
-                    if(prev.contact) {
-                        if(prev?.messages?.length > 0) {
-                            return {...prev,messages:[...prev.messages,data?.last_message]}
-                        }
-                        else {
-                             return {...prev,messages:[data?.last_message]}
-                        }
+            setActiveChat(prev=> {
+                    if(!prev?.chat?._id){
+                        prev.chat = data
+                        prev.chat.messages = [data.last_message]
+                    } 
+                    if (data._id === prev.chat._id){
+                        prev.chat.messages.push(data?.last_message)
                     }
-                } )
-            }
+
+                return {...prev}
+                }
+            );
         });
         
         return ()=> {
