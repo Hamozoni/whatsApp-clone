@@ -1,5 +1,5 @@
 
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { UserContext } from "./user.context";
  
 export const ChatsContext = createContext(null);
@@ -19,7 +19,7 @@ export const ChatsContextProvider = ({children})=> {
     const [selectedGalleryFile,setSelectedGalleryFile] = useState(null);
     const [isSelectedGalleryFile,setIsSelectedGalleryFile] = useState(false);
 
-    const messageSoundRef = useRef(null);
+    // const messageSoundRef = useRef(null);
 
   
 
@@ -37,22 +37,31 @@ export const ChatsContextProvider = ({children})=> {
     },[activeChat]);
 
 
-    // useEffect(()=> {
-    //     socket?.on('message_sent',data=> {
-    //         setChats(prev=> {
-    //             const chats = prev?.filter(e=> e?._id !== data?._id);
-    //             return [data,...chats]
-    //         });
+    useEffect(()=> {
+        socket?.on('message_sent',data=> {
+            setChats(prev=> {
+                const chats = prev?.filter(e=> e?._id !== data?._id);
+                return [data,...chats]
+            });
 
-    //         if(data?._id !== activeChat?._id) {
-    //             messageSoundRef?.current?.play();
-    //         }
-    //     });
+            if(data?._id !== activeChat?.chat?._id) {
+                setActiveChat(prev=> {
+                    if(prev.contact) {
+                        if(prev?.messages?.length > 0) {
+                            return {...prev,messages:[...prev.messages,data?.last_message]}
+                        }
+                        else {
+                             return {...prev,messages:[data?.last_message]}
+                        }
+                    }
+                } )
+            }
+        });
         
-    //     return ()=> {
-    //         socket?.off('message_sent');
-    //     }
-    // },[socket]);
+        return ()=> {
+            socket?.off('message_sent');
+        }
+    },[socket]);
     
 
 
@@ -81,7 +90,7 @@ export const ChatsContextProvider = ({children})=> {
                 }
                 }
         >
-           <audio ref={messageSoundRef} src="./new_message_sound.mp3" className=" hidden"></audio>
+           {/* <audio ref={messageSoundRef} src="./new_message_sound.mp3" className=" hidden"></audio> */}
             {children}
         </ChatsContext.Provider>
     )

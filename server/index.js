@@ -55,7 +55,7 @@ socket_io.on('connection',socket => {
 
   socket.on('message_sent',(data) => {
     const socket_id = online_users.get(data?.user);
-    console.log(socket_id)
+    console.log({user: data?.user,socket_id})
     socket.to(socket_id).emit('message_sent',data);
   });
 

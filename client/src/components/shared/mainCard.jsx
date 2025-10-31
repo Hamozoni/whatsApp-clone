@@ -12,7 +12,7 @@ export const MainCard = ({
     return (
         <div 
             onClick={onClick}
-            className={`flex items-center gap-3 cursor-pointer rounded-lg px-3 
+            className={`flex overflow-hidden max-w-full items-center gap-3 cursor-pointer rounded-lg px-3 
                 border border-transparent 
                 ${isActive ? 'border-[#3b535c] bg-[#1d2c31]':'hover:border-[#3b535c] hover:bg-[#1d2c31]'} w-full`}
             >

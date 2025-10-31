@@ -1,7 +1,7 @@
 
 export const Avatar = ({size = 'sm',userPhoto})=> {
     return (
-    <div className="cursor-pointer">
+    <div className="cursor-pointer min-w-fit max-w-fit">
         <img 
             src={userPhoto || '/placeholder_avatar.jpg'} 
             alt="user photo" 

@@ -22,7 +22,7 @@ export const handleSendMessage = async (
 
     console.log(data)
     
-    socket?.emit('message_sent',data?.contact_chat);
+    socket.emit('message_sent',data?.contact_chat);
 
     setChats(prev=> {
         const chats =  prev.filter(e=> e?._id !== data?.sender_chat?._id);
@@ -41,7 +41,5 @@ export const handleSendMessage = async (
 
        return {...prev}
     }
-)
-
-
+  )
 };
