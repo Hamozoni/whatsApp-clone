@@ -6,13 +6,13 @@ export const MessageCard = ({userId,message})=> {
 
     return (
         <div className={`flex ${message?.sender?._id === userId ? 'justify-end' : 'justify-start'}`}>
-            <div className='max-w-[70%] mb-3' >
-                <div className={`rounded-lg min-w-12 border-2  ${
-                        message?.sender?._id === userId 
-                        ? 'bg-emerald-800 border-emerald-700'
-                        : 'bg-[#222e35] border-gray-700 '
+            <div className={`flex flex-col rounded-lg py-2 px-3 min-w-12 border-2 max-w-[85%] mb-3  ${
+                    message?.sender?._id === userId 
+                    ? 'bg-emerald-700 border-emerald-800'
+                    : 'bg-[#222e35] border-gray-700 '
                     }`}
-                   >
+                >
+                <div >
                     {
                         message.type === 'MEDIA' ?
                             <MediaMessageCard 
@@ -20,7 +20,7 @@ export const MessageCard = ({userId,message})=> {
                                 file={message?.file}
                                 />
                         : message.type === 'CALL' && 
-                            <div className="p-3 rounded-lg cursor-pointer">
+                            <div className="rounded-lg cursor-pointer">
                                 <CallNotificationCard call={message?.call} />
                             </div>
                     }
@@ -32,8 +32,8 @@ export const MessageCard = ({userId,message})=> {
                     }
 
                 </div>
-                <div className={`flex items-center justify-end gap-1 mt-1 ${message?.sender?._id === userId  ? 'justify-end' : 'justify-start'}`}>
-                    <span className="text-[0.7rem] text-gray-400">
+                <div className={`flex flex-1  gap-1 mt-1 justify-end`}>
+                    <span className="text-[0.6rem] text-gray-200 font-bold">
                         {timeFormat(message?.createdAt)}
                     </span>
                     {(message?.sender?._id === userId  && message.type !== 'CALL') &&(
