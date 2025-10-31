@@ -26,11 +26,12 @@ export const SendMessageBtn = ()=> {
         <button
             onClick={()=>{
                 handleSendMessage({
-                            message,
-                            setChats,
-                            setActiveChat,
-                            socket
+                    message,
+                    setChats,
+                    setActiveChat,
+                    socket
                 });
+                
                 if(!error) {
                     setText('');
                     setIsRecorder(false);
