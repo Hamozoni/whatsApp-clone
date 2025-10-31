@@ -8,7 +8,7 @@ export const ChatsContextProvider = ({children})=> {
 
     const {socket,setChats,user} = useContext(UserContext);
 
-    const [activeChat,setActiveChat] = useState(null);
+    const [activeChat,setActiveChat] = useState({contact: {}, chat:{messages:[]}});
     const [isPreview,setIsPreview] = useState(false);
     const [isRecorder,setIsRecorder] = useState(false);
     const [isCamera,setIsCamera] = useState(false);
