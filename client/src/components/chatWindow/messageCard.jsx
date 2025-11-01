@@ -26,7 +26,7 @@ export const MessageCard = ({userId,message})=> {
                     }
                     {
                         (message.type === 'MEDIA' || message?.file?.type === 'AUDIO' || message.type === 'CALL') ? '':
-                        <p className="text-sm p-2">
+                        <p className="text-sl p-2 font-medium">
                             { message?.file?.type === 'APPLICATION' ? message?.file?.name : message?.text}
                         </p>
                     }
@@ -37,7 +37,7 @@ export const MessageCard = ({userId,message})=> {
                         {timeFormat(message?.createdAt)}
                     </span>
                     {(message?.sender?._id === userId  && message.type !== 'CALL') &&(
-                    <span className={`${message?.status === 'READ' ? 'text-emerald-300' :'text-gray-400'} text-sm`}>
+                    <span className={`${message?.status === 'READ' ? 'text-emerald-300' :'text-gray-200'} text-xs`}>
                         {message?.status === 'SENT' ? '✓' : '✓✓'}
                     </span>
                     )}
