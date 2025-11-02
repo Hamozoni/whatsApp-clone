@@ -33,11 +33,11 @@ export const MessageCard = ({userId,message})=> {
 
                 </div>
                 <div className={`flex flex-1  gap-1 mt-1 justify-end`}>
-                    <span className="text-[0.6rem] text-gray-200 font-bold">
+                    <span className="text-[0.6rem] text-gray-300 font-bold">
                         {timeFormat(message?.createdAt)}
                     </span>
                     {(message?.sender?._id === userId  && message.type !== 'CALL') &&(
-                    <span className={`${message?.status === 'READ' ? 'text-emerald-300' :'text-gray-200'} text-xs`}>
+                    <span className={`${message?.status === 'READ' ? 'text-emerald-300' :'text-gray-300'} text-xs`}>
                         {message?.status === 'SENT' ? '✓' : '✓✓'}
                     </span>
                     )}
