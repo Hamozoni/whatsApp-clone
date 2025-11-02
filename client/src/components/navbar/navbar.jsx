@@ -28,7 +28,7 @@ export const Navbar = ()=>  {
 
 
     return (
-        <nav className="flex md:flex-col gap-3 h-fit md:h-screen justify-between items-center p-2 bg-s rounded-lg" >
+        <nav className="flex md:flex-col gap-3 h-fit md:h-screen justify-between items-center p-2 bg-[#162127] rounded-lg" >
             <div className="flex md:flex-col gap-3">
                 {
                     options?.map(({Icon,text})=> (
@@ -45,10 +45,10 @@ export const Navbar = ()=>  {
                     Icon={IoSettingsOutline} 
                     text='settings' 
                     />
-                <button   className={` ${pathname === '/profile' ?  'text-emerald-400' :'text-p'} flex flex-col items-center justify-center`}>
+                <button   className={` ${pathname === '/profile' ?  'text-emerald-400' :'text-[#f7f8fa]'} flex flex-col items-center justify-center`}>
                     <div 
                         onClick={()=> navigate('/profile')}>
-                        <Avatar  userPhoto={user?.profile_picture} className='text-p' />
+                        <Avatar  userPhoto={user?.profile_picture} />
                     </div>
                 </button>
             </div>
