@@ -1,5 +1,5 @@
 
-import { useContext, useRef } from 'react';
+import { useContext, useLayoutEffect, useRef } from 'react';
 import { UserContext } from '../../contexts/user.context';
 import { MessageCard } from './messageCard';
 import {ChatsContext } from '../../contexts/chats.context';
@@ -9,28 +9,19 @@ const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#162127] rounded-lg 
 
 export const ChatMessages = () => {
 
-  const {user,socket} = useContext(UserContext);
+  const {user} = useContext(UserContext);
   const {activeChat} = useContext(ChatsContext);
 
+    const messagesContainerRef = useRef(null);
 
+  useLayoutEffect(()=>{
 
-  const chatSoundRef = useRef(null);
+    const messagesContainer = messagesContainerRef.current
 
-
-  // useEffect(()=> {
-  //   if(!activeChat._id) return
-  //   socket?.on('message_sent',data=> {
-  //     if(activeChat?._id === data?._id) {
-  //         setMessages(prev=> [...prev,data?.last_message]);
-  //         chatSoundRef?.current?.play()
-  //     }
-  //   })
-
-  // return ()=> {
-  //     socket?.off('message_sent');
-  //    }
-  // },[socket])
-
+    if(messagesContainer) {
+      messagesContainer.scrollTop = messagesContainer.scrollHeight
+    }
+  },[activeChat]);
 
   if(!activeChat?.chat) {
     return (
@@ -46,13 +37,7 @@ export const ChatMessages = () => {
 
   return (
               
-      <div className={className}>
-            <audio 
-                ref={chatSoundRef} 
-                src="./new_message_sound_2.mp3" 
-                className=" hidden"
-                >
-              </audio>
+      <div className={className} ref={messagesContainerRef}>
               {
                   activeChat?.chat?.messages?.map(message => (
                     <MessageCard 

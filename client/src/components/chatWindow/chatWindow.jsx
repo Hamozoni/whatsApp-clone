@@ -61,19 +61,19 @@ export const ChatWindow = ()=> {
                     </div> :
                     <>
                         <div className=" h-screen flex flex-col max-h-full">
-                        <ChatHeader contact={activeChat?.contact} />
-                        {
-                            isPreview ?
-                            <FilesPreview />
-                            
-                        : isCamera ?
-                            <MediaCapture />
-                            : <ChatMessages />
-                        }
-                        {
-                            isCamera ? '' :
-                        <ChatFooter />
-                        }
+                            <ChatHeader contact={activeChat?.contact} />
+                            {
+                                isPreview ?
+                                <FilesPreview />
+                                
+                            : isCamera ?
+                                <MediaCapture />
+                                : <ChatMessages />
+                            }
+                            {
+                                isCamera ? '' :
+                            <ChatFooter />
+                            }
                         </div>
                         {
                             isSelectedGalleryFile && (
