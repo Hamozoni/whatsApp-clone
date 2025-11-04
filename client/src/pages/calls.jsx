@@ -17,7 +17,7 @@ export const Calls =  ()=> {
 
     return (
         <div className="h-full flex gap-1 flex-1 overflow-y-auto">
-            <div className="flex-1 flex flex-col bg-p rounded-lg min-w-[380px] w-full md:w-[380px] max-w-full">
+            <section className="flex-1 flex flex-col bg-p rounded-lg min-w-[380px] w-full md:w-[380px] max-w-full">
                 <header className="p-3 h-fit">
                     <div className="flex items-center justify-between mb-3">
                         <h4 className="text-xl font-bold">Calls</h4>
@@ -52,7 +52,7 @@ export const Calls =  ()=> {
                         }
                     </div>
                 </div>
-            </div>
+            </section>
             <div className="flex-2 hidden md:flex items-center bg-s rounded-lg justify-center">
                 <div className="flex items-center justify-center gap-5">
                     <button className="p-4 rounded-xl border border-cyan-950">

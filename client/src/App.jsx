@@ -21,7 +21,7 @@ function App() {
                 <SettingsContextProvider>
                      <ChatsContextProvider>
                         <CallContextProvider >
-                            <div className="flex flex-col gap-1 md:flex-row h-screen max-h-screen w-screen max-w-screen text-amber-50">
+                            <main className="flex flex-col gap-1 md:flex-row h-screen max-h-screen w-screen max-w-screen text-amber-50">
                                 <Navbar />
                                 <Routes>
                                     <Route path='/'  element={<Chats />} />
@@ -35,7 +35,7 @@ function App() {
                                     <Route path='/signin' element={<Signin />} />
                                     <Route path='/signup' element={<Signup />} />
                                 </Routes>
-                            </div>
+                            </main>
                           </CallContextProvider>
                      </ChatsContextProvider>
                   </SettingsContextProvider>

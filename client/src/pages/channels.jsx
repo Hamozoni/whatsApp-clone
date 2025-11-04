@@ -56,7 +56,7 @@ export const Channels = () => {
                 )
             }
             
-            <div className="hidden bg-s  rounded-lg md:flex flex-2 items-center justify-center flex-col gap-5">
+            <section className="hidden bg-s  rounded-lg md:flex flex-2 items-center justify-center flex-col gap-5">
                 <GrChannel size={48} className="text-gray-400" />
                 <h3 className='text-3xl'>
                     Discover channels
@@ -64,7 +64,7 @@ export const Channels = () => {
                 <p className="text-center max-w-[400px] text-gray-400">
                     Entertainment, sports, news, lifestyle, people and more. Follow the channels that interest you
                 </p>
-            </div>
+            </section>
 
             {
             isCreateChannel && (
