@@ -12,12 +12,10 @@ export const ChatMessages = () => {
   const {user} = useContext(UserContext);
   const {activeChat} = useContext(ChatsContext);
 
-    const messagesContainerRef = useRef(null);
+  const messagesContainerRef = useRef(null);
 
   useLayoutEffect(()=>{
-
     const messagesContainer = messagesContainerRef.current
-
     if(messagesContainer) {
       messagesContainer.scrollTop = messagesContainer.scrollHeight
     }
