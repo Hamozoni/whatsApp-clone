@@ -17,7 +17,7 @@ export const TextEmojiInput = ({text,setText,placeholder,isEmojiBtn = true})=> {
                 value={text}
                 onChange={(e) => handleTyping(e)}
                 placeholder={placeholder}
-                className="w-full focus:outline-none text-[#f7f8fa] px-2 py-1 hide_model"
+                className="w-full focus:outline-none text-[#f7f8fa] px-2 py-1"
             />
         </div>
     )
