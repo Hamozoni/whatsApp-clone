@@ -49,7 +49,7 @@ export const SendMessageBtn = ()=> {
                 }
 
             }}
-            className="px-2 py-3 rounded-md text-white transition-colors hide_model"
+            className="px-2 py-3 rounded-md text-white transition-colors"
             >
             <LuSendHorizontal className="h-6 w-6 text-[#f7f8fa] cursor-pointer " />
         </button>
