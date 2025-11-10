@@ -8,7 +8,7 @@ const MESSAGE_SCHEMA = new mongoose.Schema({
     type: {type: String,enum: ['TEXT', 'MEDIA','CALL'],default: 'TEXT'},
     status: { 
         type: String, 
-        enum: ['SENT', 'DELIVERED', 'READ'], 
+        enum: ['SENT', 'DELIVERED', 'READ','PENDING'], 
         default: 'SENT' 
       },
     reply_to: {type: mongoose.Schema.Types.ObjectId, ref: 'Message', require: false},

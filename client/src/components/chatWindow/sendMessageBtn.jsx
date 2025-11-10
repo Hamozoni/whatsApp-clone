@@ -14,6 +14,7 @@ export const SendMessageBtn = ()=> {
     const {
         message,
         setActiveChat,
+        activeChat,
         setText,
         setIsRecorder,
         setMessage,
@@ -29,6 +30,7 @@ export const SendMessageBtn = ()=> {
                     message,
                     setChats,
                     setActiveChat,
+                    activeChat,
                     socket
                 });
                 
@@ -42,7 +44,7 @@ export const SendMessageBtn = ()=> {
                           contact: prev?.contact,
                           text:'',
                           type:'TEXT',
-                          status: 'SENT',
+                          status: 'PENDING',
                         }
                       } );
                     setIsPreview(false);
