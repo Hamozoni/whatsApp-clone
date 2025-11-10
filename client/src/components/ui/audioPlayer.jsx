@@ -42,23 +42,22 @@ const AudioPlayer = ({audioUrl})=> {
 
 
     return (
-        <div className='flex items-center gap-2 flex-1 rounded-sm'>
-        {
-            isPlaying ?
-            <button onClick={onPlayPause}>
-                <FaPause size={22}/>
-            </button> 
-            :
-             <button onClick={onPlayPause}>
-                <IoPlay size={22}/>
-            </button>
-            
-        }
+        <div className='flex items-center justify-center gap-1 flex-1 rounded-sm p-1 bg-[#00000017]'>
+            {
+                isPlaying ?
+                <button onClick={onPlayPause}>
+                    <FaPause size={22}/>
+                </button> 
+                :
+                <button onClick={onPlayPause}>
+                    <IoPlay size={22}/>
+                </button>
+                
+            }
 
-         <span className="text-xs">{callTimeFormater(currentTime)}</span>
-        <div className="min-w-[200px] " ref={audioContainerRef} >
-        </div>
-        <span className="text-xs">{callTimeFormater(duration)}</span>
+            <span className="text-xs w-fit">{callTimeFormater(currentTime)}</span>
+            <div className="flex-1 min-w-[120px]" ref={audioContainerRef} ></div>
+            <span className="text-xs w-fit">{callTimeFormater(duration)}</span>
       </div>
     )
 };
