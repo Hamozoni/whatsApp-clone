@@ -29,7 +29,7 @@ export const ChatsContextProvider = ({children})=> {
           contact: activeChat?.contact?._id,
           text:'',
           type:'TEXT',
-          status: 'SENT',
+          status: 'PENDING',
         });
 
     },[activeChat]);
