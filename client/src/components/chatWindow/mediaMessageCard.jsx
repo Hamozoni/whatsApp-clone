@@ -6,11 +6,11 @@ import AudioPlayer from "../ui/audioPlayer";
 
 export const MediaMessageCard = ({file,sender})=> {
 
-    const {setSetSelectedGalleryFile,setSelectedGalleryFile} = useContext(ChatsContext);
+    const {setIsSelectedGalleryFile,setSelectedGalleryFile} = useContext(ChatsContext);
 
     const handleSelectFile = ()=> {
         setSelectedGalleryFile(file);
-        setSetSelectedGalleryFile(true);
+        setIsSelectedGalleryFile(true);
     }
 
     return (
@@ -26,8 +26,8 @@ export const MediaMessageCard = ({file,sender})=> {
                     </div>
                     <AudioPlayer audioUrl={file?.url} />
                 </div>
-                : <div onClick={handleSelectFile} > 
-                        <MediaGalleryFile fileData={file} /> 
+                : <div onClick={handleSelectFile} >
+                       <MediaGalleryFile fileData={file} /> 
                    </div > 
             }
         </div>

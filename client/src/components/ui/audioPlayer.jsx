@@ -27,7 +27,6 @@ const AudioPlayer = ({audioUrl})=> {
         wavesurfer && wavesurfer.playPause()
     }, [wavesurfer]);
 
-
     useEffect(()=> {
         if(!wavesurfer)return;
 
