@@ -1,10 +1,10 @@
 import { Header } from "../components/header";
 import { Switch } from "../components/switch";
 
-export const Notifications = ({setActivePage})=> {
+const Notifications = ()=> {
     return (
         <>
-           <Header title='Notifications' setActivePage={()=> setActivePage('main')} />
+           <Header title='Notifications' />
             <div className="flex-1 max-h-full overflow-y-auto p-6 flex flex-col gap-8">
                 <section>
                      <h6 className="text-md text-gray-400 font-medium">
@@ -42,4 +42,6 @@ export const Notifications = ({setActivePage})=> {
             </div>
         </>
     )
-}
+};
+
+export default Notifications;

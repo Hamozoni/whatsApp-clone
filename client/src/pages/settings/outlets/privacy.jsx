@@ -15,13 +15,12 @@ const advancedPersonalInfo = [
     {id: 3, privacyName: 'App lock',selectedOption:'Require password to unlock Whatsapp'},
 ];
 
-export const Privacy = ({setActivePage})=> {
+const Privacy = ()=> {
 
     return (
         <>
             <Header 
                 title='Privacy' 
-                setActivePage={()=> setActivePage('main')} 
                 />
             <div className="flex-1 max-h-full overflow-y-auto p-5 flex flex-col gap-8">
                 <section >
@@ -93,4 +92,6 @@ export const Privacy = ({setActivePage})=> {
             </div>
         </>
     )
-}
+};
+
+export default Privacy;

@@ -5,10 +5,10 @@ import { FaRegCircleQuestion } from "react-icons/fa6";
 import { Header } from "../components/header";
 
 
-export const Account = ({setActivePage})=> {
+const Account = ()=> {
     return (
         <>
-            <Header title='Account' setActivePage={()=> setActivePage('main')} />
+            <Header title='Account' />
             <div className="p-3">
                 <IconTextBtn 
                     Icon={MdSecurity} 
@@ -28,4 +28,6 @@ export const Account = ({setActivePage})=> {
             </div>
         </>
     )
-}
+};
+
+export default Account;

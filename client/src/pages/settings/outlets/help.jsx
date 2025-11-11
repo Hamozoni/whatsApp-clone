@@ -14,13 +14,10 @@ let helpOptions = [
     {id: 4, title: 'Channels reports', Icon : FaRegFileAlt},
 ]
 
-export const Help = ({setActivePage})=> {
+const Help = ()=> {
     return (
         <>
-         <Header 
-            title='Help' 
-            setActivePage={()=> setActivePage('main')} 
-            />
+         <Header title='Help' />
             <div className="mb-5 p-3 pb-6 border-b border-b-gray-800">
                 {
                     helpOptions?.map(({id,title,Icon})=> (
@@ -42,4 +39,6 @@ export const Help = ({setActivePage})=> {
             
         </>
     )
-}
+};
+
+export default Help;

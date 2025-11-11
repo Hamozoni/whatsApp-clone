@@ -1,15 +1,8 @@
 import { useState } from "react";
+import { Outlet } from "react-router-dom";
 
 import {IoSettingsOutline } from "react-icons/io5";
-import { Account } from './components/account';
-import { Privacy } from './components/privacy';
-import { MainSetting } from './outlets/mainSetting';
-import { Chats } from './components/chats';
-import { Notifications } from "./components/notifications";
-import { Help } from "./components/help";
 import { KeyboardShorts } from "./components/keyboardShorts";
-import { Profile } from "./profile";
-import { Theme } from "./outlets/theme";
 import { CloseModel } from "../../components/modal/closeModel";
 
 
@@ -27,24 +20,7 @@ const Settings = ()=> {
                  </>
              }
             <div className="flex-1 flex flex-col w-full min-w-[380px] md:w-[380px] max-w-full rounded-lg bg-p ">
-                {
-                    activePage === 'profile' ?
-                    <Profile setActivePage={setActivePage} /> :
-                    activePage === 'account' ?
-                    <Account setActivePage={setActivePage} /> : 
-                    activePage === 'privacy' ?
-                    <Privacy setActivePage={setActivePage} /> :
-                    activePage === 'chats' ?
-                    <Chats setActivePage={setActivePage}/> :
-                     activePage === 'notifications' ?
-                    <Notifications setActivePage={setActivePage}/> :
-                     activePage === 'help' ?
-                    <Help setActivePage={setActivePage} />:
-                    activePage === 'theme'?
-                    <Theme setActivePage={setActivePage}/>:
-                    <MainSetting setActivePage={setActivePage}/>
-
-                }
+               <Outlet />
             </div>
             <section className="hidden md:flex text-gray-400 flex-2 items-center justify-center flex-col gap-5 bg-s rounded-lg">
                 <IoSettingsOutline size={48} />

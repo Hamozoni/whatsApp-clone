@@ -1,14 +1,15 @@
 import { Header } from "../components/header"
 
-export const Theme = ({setActivePage})=> {
+const Theme = ()=> {
 
     return (
         <div className="">
             <Header 
                 title='theme' 
-                setActivePage={() => setActivePage('main')}
                 />
             
         </div>
     )
-}
+};
+
+export default Theme;

@@ -1,5 +1,14 @@
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
-import {Signin,Signup,Chats,Calls,Status,Channels,Settings,Profile } from './pages/index';
+import {
+    Signin,
+    Signup,
+    Chats,
+    Calls,
+    Status,
+    Channels,
+    Settings,
+    Profile 
+} from './pages/index';
 
 import { Navbar } from './components/navbar/navbar';
 import { 
@@ -8,6 +17,16 @@ import {
     CallContextProvider,
     ChatsContextProvider 
 } from './contexts/index';
+
+import {
+    Account,
+    Chats as ChatSetting,
+    Help ,
+    MainSetting,
+    Notifications,
+    Privacy,
+    Theme
+} from "./pages/settings/outlets/index";
 
 function App() {
   
@@ -20,13 +39,20 @@ function App() {
                             <main className="flex flex-col gap-1 md:flex-row h-screen max-h-screen w-screen max-w-screen text-amber-50">
                                 <Navbar />
                                 <Routes>
-                                    <Route path='/'  element={<Chats />} />
-                                    <Route path='/chats'  element={<Chats />} />
+                                    <Route path='/chats' index  element={<Chats />} />
                                     <Route path='/chats/:contactId'  element={<Chats />} />
                                     <Route path='/calls' element={<Calls />} />
                                     <Route path='/status' element={<Status />} />
                                     <Route path='/channels' element={<Channels />} />
-                                    <Route path='/settings' element={<Settings />} />
+                                    <Route path='/settings' element={<Settings />} >
+                                        <Route index element={MainSetting} />
+                                        <Route path='acount' element={Account} />
+                                        <Route path='chat' element={ChatSetting} />
+                                        <Route path='help' element={Help} />
+                                        <Route path='notification' element={Notifications} />
+                                        <Route path='privacy' element={Privacy} />
+                                        <Route path='theme' element={Theme} />
+                                    </Route>
                                     <Route path='/profile' element={<Profile />} />
                                     <Route path='/signin' element={<Signin />} />
                                     <Route path='/signup' element={<Signup />} />

@@ -5,13 +5,13 @@ import { Switch } from "../components/switch"
 import { Theme } from "../modal/theme"
 import { CloseModel } from "../modal/closeModel"
 
-export const Chats = ({setActivePage})=> {
+const Chats = ()=> {
 
     const [isTheme,setIsTheme] = useState(false);
     
     return (
         <>
-           <Header title='Chats' setActivePage={()=> setActivePage('main')} />
+           <Header title='Chats' />
             <div className="flex-1 max-h-full overflow-y-auto p-6 flex flex-col gap-8">
                 <section>
                     <h6 className="text-md text-gray-400 font-medium">
@@ -65,4 +65,6 @@ export const Chats = ({setActivePage})=> {
             }
         </>
     )
-}
+};
+
+export default Chats;

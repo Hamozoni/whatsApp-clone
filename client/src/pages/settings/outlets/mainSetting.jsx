@@ -17,6 +17,7 @@ import {
         MdOutlineHelpOutline,
         MdOutlineWbSunny
      } from "react-icons/md";
+import { useNavigation } from 'react-router-dom';
 
 const settingButtons = [
     {name: 'account', Icon: BsKey, info: 'Security notifications, acount info' },
@@ -27,11 +28,13 @@ const settingButtons = [
     {name: 'help', Icon: MdOutlineHelpOutline, info: 'Help center, contact us, privacy policy' },
 ]
 
-export const MainSetting = ({setActivePage})=> {
+const MainSetting = ()=> {
 
     const [text,setText] = useState('');
     const [Loading,setLoading] = useState(false);
     const [error,setError] = useState(null);
+
+    const navigate = useNavigation()
 
     const {user,setUser} = useContext(UserContext);
 
@@ -50,6 +53,7 @@ export const MainSetting = ({setActivePage})=> {
         }
     };
 
+
     return (
         <>
             {/* Header */}
@@ -61,7 +65,7 @@ export const MainSetting = ({setActivePage})=> {
             <div className="flex-1 max-h-full overflow-y-auto p-3">
                 <div className="border-b border-b-[#213036] mb-3">
                     <button 
-                        onClick={()=> setActivePage('profile')} 
+                        onClick={()=> navigate('profile')}
                         className="flex items-center w-full gap-2 my-4 cursor-pointer p-3 rounded-lg border border-transparent hover:border-[#3b535c] hover:bg-[#1d2c31]"
                         >
                         <Avatar size='lg' user_photo={user.profile_picture} />
@@ -77,7 +81,7 @@ export const MainSetting = ({setActivePage})=> {
                 {
                     settingButtons?.map(({name,info,Icon})=> (
                         <button 
-                            onClick={()=> setActivePage(name)}
+                            onClick={()=> navigate(name)}
                             key={name} 
                             className='flex gap-3 items-center px-3 rounded-lg border border-transparent hover:border-[#3b535c] hover:bg-[#1d2c31] w-full'>
                             <Icon size={24}/>
@@ -97,4 +101,6 @@ export const MainSetting = ({setActivePage})=> {
             </div>
         </>
     )
-}
+};
+
+export default MainSetting;
