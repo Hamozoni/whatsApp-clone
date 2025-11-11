@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 export const UserContext = createContext();
 
 
-export const  UserContextProvider =  ({children})=> {
+const  UserContextProvider =  ({children})=> {
     const navigate = useNavigate();
   
     const [user,setUser] = useState(null);
@@ -110,6 +110,8 @@ export const  UserContextProvider =  ({children})=> {
     }
 
 };
+
+export default UserContextProvider;
 
 
 

@@ -1,8 +1,8 @@
 
 import { createContext, useContext, useEffect, useState,useRef } from "react";
 import { UserContext } from "./user.context";
- 
-export const ChatsContext = createContext(null);
+
+const ChatsContext = createContext(null);
 
 export const ChatsContextProvider = ({children})=> {
 
@@ -108,4 +108,6 @@ export const ChatsContextProvider = ({children})=> {
             {children}
         </ChatsContext.Provider>
     )
-}
+};
+
+export default ChatsContextProvider;

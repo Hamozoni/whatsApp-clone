@@ -5,7 +5,7 @@ import { NewContact } from "../components/contacts/newContact";
 import { useContext, useState } from "react";
 import { UserContext } from "../contexts/user.context";
 import { MainCard } from "../components/shared/mainCard";
-import { ChatsContext } from "../contexts/chats.context";
+// import { ChatsContext } from "../contexts/chats.context";
 import { useNavigate } from "react-router-dom";
 
 const Button = ({Icon,text,handle_cleck})=> {
@@ -24,7 +24,7 @@ const Button = ({Icon,text,handle_cleck})=> {
     )
 };
 
-export const Contacts = ({setIsContcatPage})=> {
+const Contacts = ({setIsContcatPage})=> {
 
     const {contacts} = useContext(UserContext)
     const [searchText,setSearchText] = useState('');
@@ -92,3 +92,5 @@ export const Contacts = ({setIsContcatPage})=> {
         </div>
     )
 }
+
+export default Contacts;

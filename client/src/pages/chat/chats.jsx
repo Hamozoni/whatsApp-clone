@@ -8,7 +8,7 @@ import { MainCard } from "../../components/shared/mainCard";
 import { ChatCardLastMessage } from "../../components/components/chatCardLastMessage";
 import { useNavigate, useParams } from "react-router-dom";
 
-export const Chats = ()=> {
+const Chats = ()=> {
 
     const {chats,user} = useContext(UserContext);
     const [searchText,setSearchText] = useState('');
@@ -69,3 +69,5 @@ export const Chats = ()=> {
         </div>
     )
 };
+
+export default Chats;

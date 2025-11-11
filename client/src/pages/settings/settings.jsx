@@ -13,7 +13,7 @@ import { Theme } from "./outlets/theme";
 import { CloseModel } from "../../components/modal/closeModel";
 
 
-export const Settings = ()=> {
+const Settings = ()=> {
 
     const [activePage,setActivePage] = useState('main');
 
@@ -52,4 +52,6 @@ export const Settings = ()=> {
             </section>
         </div>
     )
-}
+};
+
+export default Settings;

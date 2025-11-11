@@ -7,7 +7,7 @@ import { SearchInput } from "../../components/ui/searchInput";
 import { MainCard } from "../../components/shared/mainCard";
 import { CallNotificationCard } from "../../components/shared/callNotificationCard";
 
-export const Calls =  ()=> {
+const Calls =  ()=> {
 
     const {calls,user} = useContext(UserContext);
     const [searchText,setSearchText] = useState('');
@@ -68,4 +68,6 @@ export const Calls =  ()=> {
             </div>
         </div>
     )
-}
+};
+
+export default Calls;

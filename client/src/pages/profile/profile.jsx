@@ -3,8 +3,7 @@ import { PiUserCircleFill } from "react-icons/pi";
 import { RoundedBtn } from "../../components/ui/roundedBtn";
 import { MdArrowBack } from "react-icons/md";
 
-
-export const Profile = ({setActivePage = null})=> {
+const Profile = ({setActivePage = null})=> {
     return (
         <div className="flex gap-1 h-full flex-1 overflow-y-auto">
             <div className="p-3 w-full min-w-[380px] md:w-[380px] max-w-full rounded-lg bg-p overflow-y-auto">
@@ -29,4 +28,6 @@ export const Profile = ({setActivePage = null})=> {
             }
         </div>
     )
-}
+};
+
+export default Profile;

@@ -5,7 +5,7 @@ import { ChatHeader } from "./components/chatHeader/chatHeader";
 import { ChatFooter } from "./components/chatFooter/chatFooter";
 import { FilesPreview } from "../../chatWindow/components/filesPreview";
 import { MediaGallery } from "../../chatWindow/components/mediaGallery";
-import { MediaCapture } from "../../chatWindow/components/mediaCapture";
+import { MediaCapture } from "../../components/mediaCapture";
 import { handleFetchData } from "../../lib/fetchData";
 import { UserContext } from "../../contexts/user.context";
 import { useParams } from "react-router-dom";

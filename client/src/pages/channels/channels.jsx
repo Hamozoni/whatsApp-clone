@@ -10,7 +10,7 @@ import { MainCard } from "../../components/shared/mainCard";
 import { CloseModel } from "../../components/modal/closeModel";
 import { CreateChannelAlert } from "../../components/modal/createChannelAlert";
 
-export const Channels = () => {
+const Channels = () => {
 
     const [text,setText] = useState('');
     const {channels} = useContext(UserContext);
@@ -79,4 +79,6 @@ export const Channels = () => {
             }
         </div>
     )
-}
+};
+
+export default Channels;

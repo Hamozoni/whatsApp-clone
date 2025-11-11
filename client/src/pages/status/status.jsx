@@ -13,7 +13,7 @@ import { MdLockOutline } from "react-icons/md";
 import { CloseModel } from "../../components/modal/closeModel";
 
 
-export const Status = ()=> {
+const Status = ()=> {
 
     const {user,status} = useContext(UserContext);
     const [isUpdate,setIsUpdate] = useState(false);
@@ -96,3 +96,5 @@ export const Status = ()=> {
         </div>
     )
 };
+
+export default Status;

@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react"
 
 export const SettingsContext = createContext(null);
 
-export const SettingsContextProvider = ({children})=> {
+const SettingsContextProvider = ({children})=> {
 
     const [theme,setTheme] = useState('dark');
 
@@ -20,4 +20,6 @@ export const SettingsContextProvider = ({children})=> {
             {children}
         </SettingsContext.Provider>
     )
-}
+};
+
+export default SettingsContextProvider;

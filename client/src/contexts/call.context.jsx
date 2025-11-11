@@ -6,7 +6,7 @@ import { UserContext } from "./user.context";
 export const CallContext = createContext(null);
 
 
-export const CallContextProvider = ({children})=> {
+const CallContextProvider = ({children})=> {
 
     const {socket} = useContext(UserContext);
 
@@ -51,5 +51,7 @@ export const CallContextProvider = ({children})=> {
             }
         </CallContext.Provider>
     )
-}
+};
+
+export default CallContextProvider;
 

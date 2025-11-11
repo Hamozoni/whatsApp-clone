@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import {ChatsContext } from "../../../contexts/chats.context";
-import { MediaGalleryFile } from "../../../../../chatWindow/components/mediaGalleryFile";
+import { MediaGalleryFile } from "../../../../../components/mediaGalleryFile";
 import { Avatar } from "../../../components/ui/avatar";
 import AudioPlayer from "../../../components/ui/audioPlayer";
 

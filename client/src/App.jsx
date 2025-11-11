@@ -1,17 +1,13 @@
-import {BrowserRouter,Routes,Route} from 'react-router-dom'
-import Signin from './pages/signin';
-import Signup from './pages/signup';
-import { Chats } from './pages/chats';
-import { Calls } from './pages/calls';
-import { Status } from './pages/status';
-import { Channels } from './pages/channels';
-import { Settings } from './pages/settings';
-import { Profile } from './pages/profile';
+import {BrowserRouter,Routes,Route} from 'react-router-dom';
+import {Signin,Signup,Chats,Calls,Status,Channels,Settings,Profile } from './pages/index';
+
 import { Navbar } from './components/navbar/navbar';
-import { UserContextProvider } from './contexts/user.context';
-import { SettingsContextProvider } from './contexts/settings.context';
-import { CallContextProvider } from './contexts/call.context';
-import { ChatsContextProvider } from './contexts/chats.context';
+import { 
+    UserContextProvider,
+    SettingsContextProvider,
+    CallContextProvider,
+    ChatsContextProvider 
+} from './contexts/index';
 
 function App() {
   
