@@ -1,5 +1,5 @@
-import { Header } from "./header";
-import { Switch } from "./switch";
+import { Header } from "../components/header";
+import { Switch } from "../components/switch";
 
 export const Notifications = ({setActivePage})=> {
     return (

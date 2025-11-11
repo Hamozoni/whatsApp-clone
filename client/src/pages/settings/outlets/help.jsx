@@ -1,11 +1,11 @@
-import { Header } from "./header";
+import { Header } from "../components/header";
 
 import { TbHelpTriangle } from "react-icons/tb";
 import { MdOutlineContactSupport } from "react-icons/md";
 import { FaRegFileAlt } from "react-icons/fa";
 import { GrHelpBook } from "react-icons/gr";
 import { IconTextBtn } from "../ui/iconTextBtn";
-import { Switch } from "./switch";
+import { Switch } from "../components/switch";
 
 let helpOptions = [
     {id: 1, title: 'help center', Icon : TbHelpTriangle},

@@ -2,7 +2,7 @@ import { IconTextBtn } from "../ui/iconTextBtn";
 import {IoDocumentTextOutline } from "react-icons/io5";
 import { MdSecurity } from "react-icons/md";
 import { FaRegCircleQuestion } from "react-icons/fa6";
-import { Header } from "./header";
+import { Header } from "../components/header";
 
 
 export const Account = ({setActivePage})=> {

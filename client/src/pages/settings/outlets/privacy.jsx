@@ -1,6 +1,6 @@
-import { Header } from "./header";
-import { Switch } from "./switch";
-import { OptionBtn } from "./optionBtn";
+import { Header } from "../components/header";
+import { Switch } from "../components/switch";
+import { OptionBtn } from "../components/optionBtn";
 
 const personalInfo = [
     {id: 1, privacyName: 'Last seen and online', selectedOption: 'Everyone'},

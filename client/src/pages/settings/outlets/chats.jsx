@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { Header } from "./header"
-import { OptionBtn } from "./optionBtn"
-import { Switch } from "./switch"
+import { Header } from "../components/header"
+import { OptionBtn } from "../components/optionBtn"
+import { Switch } from "../components/switch"
 import { Theme } from "../modal/theme"
 import { CloseModel } from "../modal/closeModel"
 

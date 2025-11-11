@@ -3,13 +3,13 @@ import { useState } from "react";
 import {IoSettingsOutline } from "react-icons/io5";
 import { Account } from './components/account';
 import { Privacy } from './components/privacy';
-import { MainSetting } from './components/mainSetting';
+import { MainSetting } from './outlets/mainSetting';
 import { Chats } from './components/chats';
 import { Notifications } from "./components/notifications";
 import { Help } from "./components/help";
 import { KeyboardShorts } from "./components/keyboardShorts";
 import { Profile } from "./profile";
-import { Theme } from "./components/theme";
+import { Theme } from "./outlets/theme";
 import { CloseModel } from "../../components/modal/closeModel";
 
 
