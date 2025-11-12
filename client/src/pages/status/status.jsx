@@ -2,11 +2,11 @@ import { useContext, useState } from "react"
 import { UserContext } from "../../contexts/user.context";
 import { GrFormAdd } from "react-icons/gr";
 import { StatusMenuModel } from "./components/statusMenuModel";
-import { PostTextStatus } from "./postStatus/postTextStatus";
+import { PostTextStatus } from "./post/postTextStatus";
 import { StatusCard } from "./components/statusCard";
 import { Avatar } from "../../components/ui/avatar";
 import {PostImageStatus } from "./components/postImageStatus";
-import{ VideoTrimmer }from "./postStatus/postVideoStatus";
+import{ VideoTrimmer }from "./post/postVideoStatus";
 
 import { SiGradleplaypublisher } from "react-icons/si";
 import { MdLockOutline } from "react-icons/md";

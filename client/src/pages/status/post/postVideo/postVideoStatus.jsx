@@ -9,7 +9,7 @@ import { UserContext } from '../../contexts/user.context';
 import { useContext } from 'react';
 import { postData } from '../../lib/postData';
 
-export function VideoTrimmer({ videoFile,setStatusType }) {
+const  StatusPostVideo = ({ videoFile,setStatusType })=> {
 
   const {user} = useContext(UserContext);
 
@@ -474,4 +474,6 @@ export function VideoTrimmer({ videoFile,setStatusType }) {
           }
     </div>
   );
-}
+};
+
+export default StatusPostVideo;

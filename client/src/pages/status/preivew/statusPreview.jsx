@@ -16,7 +16,7 @@ import { useEffect, useRef, useState } from "react";
 import { TextEmojiInput } from "../ui/textEmojiInput";
 import { VideoPlayer } from "../ui/videoPlayer";
 
-export const StatusPreview = ({ status, setIsStatus }) => {
+const StatusPreview = ({ status, setIsStatus }) => {
 
   const [text,setText] = useState('')
   const [playingIndex, setPlayingIndex] = useState(0);
@@ -199,3 +199,5 @@ export const StatusPreview = ({ status, setIsStatus }) => {
     </div>
   );
 };
+
+export default StatusPreview;

@@ -28,8 +28,7 @@ const ColorPicker = ({ selectedColor, onSelect }) => (
     ))}
   </div>
 );
-
-export const PostTextStatus = ({ setStatusType }) => {
+const StatusPostText = ({ setStatusType }) => {
   const { user } = useContext(UserContext);
 
   const [bgColor, setBgColor] = useState(bgColors[0]);
@@ -137,3 +136,5 @@ export const PostTextStatus = ({ setStatusType }) => {
     </div>
   );
 };
+
+export default StatusPostText;

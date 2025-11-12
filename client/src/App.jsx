@@ -1,4 +1,5 @@
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
+
 import {
     Signin,
     Signup,
@@ -9,6 +10,12 @@ import {
     Settings,
     Profile 
 } from './pages/index';
+
+import {
+    StatusPostImage,
+    StatusPostText,
+    StatusPostVideo
+} from "./pages/status/post/index";
 
 import { Navbar } from './components/navbar/navbar';
 import { 
@@ -27,6 +34,7 @@ import {
     Privacy,
     Theme
 } from "./pages/settings/outlets/index";
+import StatusPreview from './pages/status/preivew/statusPreview';
 
 function App() {
   
@@ -42,6 +50,11 @@ function App() {
                                     <Route path='/chats' index  element={<Chats />} />
                                     <Route path='/chats/:contactId'  element={<Chats />} />
                                     <Route path='/calls' element={<Calls />} />
+                                    <Route path='/status' element={<Status />} />
+                                    <Route path='/status/postVideo' element={<StatusPostVideo />} />
+                                    <Route path='/status/postImage' element={<StatusPostImage />} />
+                                    <Route path='/status/postText' element={<StatusPostText />} />
+                                    <Route path='/status/preview' element={<StatusPreview />} />
                                     <Route path='/status' element={<Status />} />
                                     <Route path='/channels' element={<Channels />} />
                                     <Route path='/settings' element={<Settings />} >

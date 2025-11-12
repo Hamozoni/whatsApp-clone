@@ -1,5 +1,5 @@
 import {useContext, useEffect, useRef, useState } from "react";
-import { PostStatusFooter } from "./postStatusFooter";
+import { PostStatusFooter } from "../components/postStatusFooter";
 import { IoCrop,IoColorFilterOutline,IoChevronBackOutline } from "react-icons/io5";
 import { MdOutlineDone } from "react-icons/md";
 import { FaPencilAlt } from "react-icons/fa";
@@ -10,7 +10,7 @@ import { TransparantLoader } from "../modal/transparantLoader";
 import { postData } from "../../lib/postData";
 
 
-export const PostImageStatus = ({setStatusType,file})=> {
+const StatusPostImage = ({setStatusType,file})=> {
 
     const {user} = useContext(UserContext);
     const canvasRef = useRef();
@@ -190,4 +190,6 @@ const handleSubmitStatus = async()=> {
             
         </div>
     )
-}
+};
+
+export default StatusPostImage;
