@@ -3,7 +3,7 @@ import { Outlet, useNavigate, useParams } from "react-router-dom";
 
 import { UserContext } from "../../contexts/index";
 import Contacts  from "../contact/contacts";
-import { ChatHeader } from "./outlets/chatWindow/components/chatHeader/chatHeader";
+import { ChatsHeader } from "./components/chatsHeader";
 import { MainCard } from "../../components/shared/mainCard";
 import { ChatCardLastMessage } from "./components/chatCardLastMessage";
 
@@ -29,7 +29,7 @@ const Chats = ()=> {
                     isContactPage ? 
                     <Contacts setIsContcatPage={setIsContcatPage} /> : (
                         <>
-                            <ChatHeader 
+                            <ChatsHeader 
                                 setIsContcatPage={setIsContcatPage} 
                                 setSearchText={setSearchText}
                                 searchText={searchText}

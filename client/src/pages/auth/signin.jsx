@@ -6,7 +6,7 @@ import { firebaseAuth } from "../../lib/firebaseConfig";
 import {useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/user.context";
 import { SubmitBtn } from "../../components/ui/submitBtn";
-import {SiginWithPrvider} from "./components/signinWithProdider"
+import {SiginWithPrvider} from "./auth/signinWithProdider"
 
 export default function Signin() {
 
