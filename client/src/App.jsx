@@ -57,7 +57,7 @@ function App() {
                                     <Route path='/status/preview' element={<StatusPreview />} />
                                     <Route path='/status' element={<Status />} />
                                     <Route path='/channels' element={<Channels />} />
-                                    <Route path='/settings' element={<Settings />} >
+                                    <Route path='/settings' element={Settings} >
                                         <Route index element={MainSetting} />
                                         <Route path='acount' element={Account} />
                                         <Route path='chat' element={ChatSetting} />

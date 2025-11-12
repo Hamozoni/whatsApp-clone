@@ -1,10 +1,10 @@
 import { useContext } from 'react';
-import {firebaseAuth} from '../../lib/firebaseConfig'
+import {firebaseAuth} from '../../../lib/firebaseConfig.js'
 import { signOut } from 'firebase/auth';
-import { UserContext } from '../../contexts/user.context';
+import { UserContext } from '../../../contexts/index.js';
 import { useState } from "react";
-import { SearchInput } from "../ui/searchInput";
-import { Avatar } from "../ui/avatar";
+import { SearchInput } from "../../../components/ui/searchInput.jsx";
+import { Avatar } from "../../../components/ui/avatar";
 
 import { BsKey } from "react-icons/bs";
 import { PiSignOutLight } from "react-icons/pi";

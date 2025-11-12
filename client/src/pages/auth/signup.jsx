@@ -1,6 +1,7 @@
 
 import { useContext, useEffect, useState } from "react";
-import { SiginWithPrvider } from "./auth/signinWithProdider";
+
+import { SiginWithPrvider } from "./components/signinWithProdider";
 import { Input } from "../../components/ui/input";
 import {createUserWithEmailAndPassword } from 'firebase/auth'
 import { firebaseAuth } from "../../lib/firebaseConfig";

@@ -1,13 +1,12 @@
-import { CallContext } from "../../contexts/call.context";
+import { CallContext,UserContext,ChatsContext } from "../../../contexts/index";
 import { useContext, useEffect, useRef, useState } from "react";
 import { OutgoingCall } from "./outgoingCall";
 import { RingingCall } from "./ringingCall";
 import { ConnectedCall } from "./connectedCall";
-import { UserContext } from "../../contexts/user.context";
-import { postData } from "../../lib/postData";
-import { handleSendMessage } from "../../lib/handleSendMessage";
-import {ChatsContext } from "../../contexts/chats.context";
-import { updateData } from "../../lib/updateData";
+
+import { postData } from "../../../lib/postData";
+import { handleSendMessage } from "../../../lib/handleSendMessage";
+import { updateData } from "../../../lib/updateData";
 
 export const Call = ()=> {
 

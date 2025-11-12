@@ -1,10 +1,10 @@
-import { SearchInput } from "../components/ui/searchInput";
+import { SearchInput } from "../../components/ui/searchInput";
 import { GrGroup,GrUserAdd } from "react-icons/gr";
-import { ContactHeader } from "../components/contacts/contactHeader";
-import { NewContact } from "../components/contacts/newContact";
+import { ContactHeader } from "./components/contactHeader";
+import { NewContact } from "./components/newContact";
 import { useContext, useState } from "react";
-import { UserContext } from "../contexts/user.context";
-import { MainCard } from "../components/shared/mainCard";
+import { UserContext } from "../../contexts/index";
+import { MainCard } from "../../components/shared/mainCard";
 // import { ChatsContext } from "../contexts/chats.context";
 import { useNavigate } from "react-router-dom";
 

@@ -11,10 +11,10 @@ import {
 import { HiDotsVertical } from "react-icons/hi";
 import { MdSend } from "react-icons/md";
 
-import { Avatar } from "../ui/avatar";
+import { Avatar } from "../../../components/ui/avatar";
 import { useEffect, useRef, useState } from "react";
-import { TextEmojiInput } from "../ui/textEmojiInput";
-import { VideoPlayer } from "../ui/videoPlayer";
+import { TextEmojiInput } from "../../../components/ui/textEmojiInput";
+import { VideoPlayer } from "../../../components/ui/videoPlayer";
 
 const StatusPreview = ({ status, setIsStatus }) => {
 

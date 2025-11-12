@@ -1,13 +1,13 @@
 import { useRef, useState, useEffect } from 'react';
 import { FaPause, FaPlay } from "react-icons/fa";
 import { MdArrowLeft ,MdArrowRight} from "react-icons/md";
-import { PostStatusFooter } from './postStatusFooter';
-import { TransparantLoader } from '../modal/transparantLoader';
-import { RoundedBtn } from '../ui/roundedBtn';
+import { PostStatusFooter } from '../components/postStatusFooter';
+import { TransparantLoader } from '../../../../components/modal/transparantLoader';
+import { RoundedBtn } from '../../../../components/ui/roundedBtn';
 import { MdArrowBackIosNew } from "react-icons/md";
-import { UserContext } from '../../contexts/user.context';
+import { UserContext } from '../../../../contexts/index';
 import { useContext } from 'react';
-import { postData } from '../../lib/postData';
+import { postData } from '../../../../lib/postData';
 
 const  StatusPostVideo = ({ videoFile,setStatusType })=> {
 

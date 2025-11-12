@@ -1,6 +1,6 @@
 import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi"
 import { RiChatNewLine } from "react-icons/ri"
-import { SearchInput } from "../../components/ui/searchInput"
+import { SearchInput } from "../../../../../../components/ui/searchInput"
 
 
 export const ChatHeader = (

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { StatusAvatarRing } from "./statusAvatarRing"
-import { StatusPreview } from "../preivew/statusPreview"
-import { timeFormat } from "../../lib/timeFormat";
+import StatusPreview  from "../preivew/statusPreview"
+import { timeFormat } from "../../../lib/timeFormat";
 
 export const StatusCard = ({status,length})=> {
 

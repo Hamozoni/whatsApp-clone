@@ -4,7 +4,7 @@ import { TbHelpTriangle } from "react-icons/tb";
 import { MdOutlineContactSupport } from "react-icons/md";
 import { FaRegFileAlt } from "react-icons/fa";
 import { GrHelpBook } from "react-icons/gr";
-import { IconTextBtn } from "../ui/iconTextBtn";
+import { IconTextBtn } from "../../../components/ui/iconTextBtn";
 import { Switch } from "../components/switch";
 
 let helpOptions = [

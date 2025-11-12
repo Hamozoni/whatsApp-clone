@@ -4,10 +4,10 @@ import { IoCrop,IoColorFilterOutline,IoChevronBackOutline } from "react-icons/io
 import { MdOutlineDone } from "react-icons/md";
 import { FaPencilAlt } from "react-icons/fa";
 import { RiText } from "react-icons/ri";
-import { RoundedBtn } from "../ui/roundedBtn";
-import { UserContext } from "../../contexts/user.context";
-import { TransparantLoader } from "../modal/transparantLoader";
-import { postData } from "../../lib/postData";
+import { RoundedBtn } from "../../../../components/ui/roundedBtn";
+import { UserContext } from "../../../../contexts/user.context";
+import { TransparantLoader } from "../../../../components/modal/transparantLoader";
+import { postData } from "../../../../lib/postData";
 
 
 const StatusPostImage = ({setStatusType,file})=> {

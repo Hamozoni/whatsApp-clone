@@ -1,6 +1,6 @@
-import { Call } from "../components/calls/call";
+import { Call } from "../pages/calls/calls/call";
 import { createContext, useContext, useEffect, useState } from "react";
-import { UserContext } from "./user.context";
+import { UserContext } from "./index";
 
 
 export const CallContext = createContext(null);

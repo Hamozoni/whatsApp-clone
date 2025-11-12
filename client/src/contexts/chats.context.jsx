@@ -2,9 +2,9 @@
 import { createContext, useContext, useEffect, useState,useRef } from "react";
 import { UserContext } from "./user.context";
 
-const ChatsContext = createContext(null);
+export const ChatsContext = createContext(null);
 
-export const ChatsContextProvider = ({children})=> {
+const ChatsContextProvider = ({children})=> {
 
     const {socket,setChats,user} = useContext(UserContext);
 

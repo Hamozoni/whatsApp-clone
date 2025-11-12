@@ -1,6 +1,6 @@
 import { BsFillFileEarmarkPdfFill } from "react-icons/bs"
 import { FaMicrophone, FaRegImage, FaVideo } from "react-icons/fa6"
-import { CallNotificationCard } from "../shared/callNotificationCard"
+import { CallNotificationCard } from "../../../components/shared/callNotificationCard"
 
 export const ChatCardLastMessage = ({chat,user}) => {
     return (

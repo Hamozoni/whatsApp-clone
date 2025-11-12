@@ -1,4 +1,4 @@
-import { IconTextBtn } from "../ui/iconTextBtn";
+import { IconTextBtn } from "../../../components/ui/iconTextBtn";
 import {IoDocumentTextOutline } from "react-icons/io5";
 import { MdSecurity } from "react-icons/md";
 import { FaRegCircleQuestion } from "react-icons/fa6";

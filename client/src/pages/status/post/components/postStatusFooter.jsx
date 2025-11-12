@@ -1,6 +1,6 @@
 import { IoSend } from "react-icons/io5"
 import { SiGradleplaypublisher } from "react-icons/si"
-import { TextEmojiInput } from "../ui/textEmojiInput"
+import { TextEmojiInput } from "../../../../components/ui/textEmojiInput"
 
 
 export const PostStatusFooter = ({onClick,isInput = false,placeholder,text,setText}) => {

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { UserContext } from "../../contexts/user.context";
+import { UserContext } from "../../../contexts/index";
 
 
 export const StatusAvatarRing = ({status,statusCount,size = 56,ring_width: ringWidth = 3})=> {

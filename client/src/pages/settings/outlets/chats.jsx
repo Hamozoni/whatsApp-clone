@@ -2,8 +2,8 @@ import { useState } from "react"
 import { Header } from "../components/header"
 import { OptionBtn } from "../components/optionBtn"
 import { Switch } from "../components/switch"
-import { Theme } from "../modal/theme"
-import { CloseModel } from "../modal/closeModel"
+import { Theme } from "../../../components/modal/theme"
+import { CloseModel } from "../../../components/modal/closeModel"
 
 const Chats = ()=> {
 

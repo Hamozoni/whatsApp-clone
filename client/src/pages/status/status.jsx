@@ -1,12 +1,9 @@
 import { useContext, useState } from "react"
-import { UserContext } from "../../contexts/user.context";
+import { UserContext } from "../../contexts/index";
 import { GrFormAdd } from "react-icons/gr";
 import { StatusMenuModel } from "./components/statusMenuModel";
-import { PostTextStatus } from "./post/postTextStatus";
 import { StatusCard } from "./components/statusCard";
 import { Avatar } from "../../components/ui/avatar";
-import {PostImageStatus } from "./components/postImageStatus";
-import{ VideoTrimmer }from "./post/postVideoStatus";
 
 import { SiGradleplaypublisher } from "react-icons/si";
 import { MdLockOutline } from "react-icons/md";
@@ -17,20 +14,10 @@ const Status = ()=> {
 
     const {user,status} = useContext(UserContext);
     const [isUpdate,setIsUpdate] = useState(false);
-    const [statusType,setStatusType] = useState(null);
-    const [file,setFile] = useState(null);
 
     return (
         <div className="flex h-full gap-1 flex-1 overflow-y-auto">
             <div className=" p-3 flex-1 w-full md:w-[380px] min-w-[380px] max-w-full rounded-lg bg-p">
-                 {
-                    statusType === 'text' ?
-                    <PostTextStatus setStatusType={setStatusType} />
-                    : statusType === 'image' ? 
-                     <PostImageStatus setStatusType={setStatusType} file={file} />
-                    : statusType === 'video' && 
-                    <VideoTrimmer videoFile={file} setStatusType={setStatusType} />
-                }
                 <header className="relative h-fit">
                     <div className="flex items-center justify-between">
                         <h4 className="text-xl font-bold mb-3">Status</h4>
