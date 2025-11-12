@@ -1,13 +1,14 @@
+import { useContext, useState } from "react";
+
 import { AiOutlinePaperClip } from "react-icons/ai"
 import { SlMicrophone } from "react-icons/sl"
-import { useContext, useState } from "react";
-import { SelectMessageFile } from "../selectMessageFile";
-import {ChatsContext } from "../../contexts/chats.context";
+import { SelectMessageFile } from "./components/selectMessageFile";
+import {ChatsContext } from "../../../../../../contexts/chats.context";
 import {useEffect} from 'react'
 import AudioRecorder from './components/audioRecorder'
-import { SendMessageBtn } from "../sendMessageBtn";
-import { TextEmojiInput } from "../ui/textEmojiInput";
-import { CloseModel } from "../modal/closeModel";
+import { SendMessageBtn } from "./components/sendMessageBtn";
+import { TextEmojiInput } from "../../../../../../components/ui/textEmojiInput";
+import { CloseModel } from "../../../../../../components/modal/closeModel";
 
 export const ChatFooter = ()=> {
 

@@ -2,11 +2,11 @@ import {useContext, useEffect, useRef, useState } from 'react';
 import { IoMic ,IoPauseCircleOutline} from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 
-import {ChatsContext } from '../../contexts/chats.context';
+import {ChatsContext } from '../../../../../../../contexts/index';
 import { SendMessageBtn } from './sendMessageBtn';
 
-import AudioPlayer from '../ui/audioPlayer'
-import { callTimeFormater } from '../../lib/callTimeFormater';
+import AudioPlayer from '../../../../../../../components/ui/audioPlayer';
+import { callTimeFormater } from '../../../../../../../lib/callTimeFormater';
 
 
 const AudioRecorder = () => {

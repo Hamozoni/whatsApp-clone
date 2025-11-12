@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import {ChatsContext } from "../../../contexts/chats.context";
+import {ChatsContext } from "../../../../../../../contexts/index";
 import { MediaGalleryFile } from "../../../../../components/mediaGalleryFile";
-import { Avatar } from "../../../components/ui/avatar";
-import AudioPlayer from "../../../components/ui/audioPlayer";
+import { Avatar } from "../../../../../../../components/ui/avatar";
+import AudioPlayer from "../../../../../../../components/ui/audioPlayer";
 
 export const MediaMessageCard = ({file,sender})=> {
 

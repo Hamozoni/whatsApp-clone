@@ -1,8 +1,7 @@
-import {ChatsContext } from "../../../contexts/chats.context";
-import { UserContext } from "../../../contexts/user.context";
 import { useContext, useState } from "react";
+import {ChatsContext,UserContext } from "../../../../../../../contexts/index";
 import { LuSendHorizontal } from "react-icons/lu"
-import { handleSendMessage } from "../../../lib/handleSendMessage";
+import { handleSendMessage } from "../../../../../../../lib/handleSendMessage";
 
 
 export const SendMessageBtn = ()=> {

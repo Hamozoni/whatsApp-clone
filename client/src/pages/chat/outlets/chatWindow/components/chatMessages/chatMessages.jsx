@@ -1,8 +1,7 @@
 
 import { useContext, useLayoutEffect, useRef } from 'react';
-import { UserContext } from '../../contexts/user.context';
+import { UserContext,ChatsContext } from '../../../../../../contexts/index';
 import { MessageCard } from './components/messageCard';
-import {ChatsContext } from '../../contexts/chats.context';
 import { AiOutlineWechatWork } from "react-icons/ai";
 
 const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#162127] rounded-lg my-1';

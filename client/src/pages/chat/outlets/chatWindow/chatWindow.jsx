@@ -1,19 +1,18 @@
-import { ChatsContext } from "../../contexts/chats.context";
+import { ChatsContext,UserContext } from "../../../../contexts/index";
 import { useContext, useEffect, useState} from "react"
 import{ ChatMessages} from "./components/chatMessages/chatMessages";
 import { ChatHeader } from "./components/chatHeader/chatHeader";
 import { ChatFooter } from "./components/chatFooter/chatFooter";
-import { FilesPreview } from "../../chatWindow/components/filesPreview";
-import { MediaGallery } from "../../chatWindow/components/mediaGallery";
-import { MediaCapture } from "../../components/mediaCapture";
-import { handleFetchData } from "../../lib/fetchData";
-import { UserContext } from "../../contexts/user.context";
+import { FilesPreview } from "./../../components/filesPreview";
+import { MediaGallery } from "./../../components/mediaGallery";
+import { MediaCapture } from "./../../components/mediaCapture";
+import { handleFetchData } from "../../../../lib/fetchData";
 import { useParams } from "react-router-dom";
-import { Loading } from "../modal/loading";
+import { Loading } from "../../../../components/modal/loading";
 
 const className = 'flex-1 overflow-y-auto space-y-2 p-4 bg-[#162127] rounded-lg my-1';
 
-export const ChatWindow = ()=> {
+const ChatWindow = ()=> {
 
     const {
         isPreview, 
@@ -84,4 +83,6 @@ export const ChatWindow = ()=> {
                 }
             </div>
     )
-}
+};
+
+export default ChatWindow;

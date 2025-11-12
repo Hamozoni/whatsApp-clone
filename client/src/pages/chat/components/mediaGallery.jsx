@@ -1,4 +1,4 @@
-import {ChatsContext } from "../../contexts/chats.context";
+import {ChatsContext } from "../../../contexts/index";
 import { useContext } from "react";
 import { MediaGalleryFile } from "./mediaGalleryFile";
 

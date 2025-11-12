@@ -1,5 +1,5 @@
-import {ChatsContext } from "../../contexts/chats.context";
 import { useContext } from "react";
+import {ChatsContext } from "../../../../../../../contexts/index";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { 
     MdOutlineAddPhotoAlternate, 

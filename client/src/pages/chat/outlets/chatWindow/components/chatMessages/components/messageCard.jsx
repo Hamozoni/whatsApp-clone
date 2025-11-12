@@ -1,6 +1,6 @@
-import { MediaMessageCard } from '../mediaMessageCard'
-import { CallNotificationCard } from "../shared/callNotificationCard";
-import { timeFormat } from "../../lib/timeFormat";
+import { MediaMessageCard } from './mediaMessageCard'
+import { CallNotificationCard } from "../../../../../../../components/shared/callNotificationCard";
+import { timeFormat } from "../../../../../../../lib/timeFormat";
 
 export const MessageCard = ({userId,message})=> {
 

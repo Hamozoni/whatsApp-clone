@@ -1,4 +1,4 @@
-import { ChatsContext } from "../../contexts/chats.context";
+import { ChatsContext } from "../../../contexts/index";
 import { useContext, useEffect, useRef, useState } from "react";
 import { BsFillCameraFill } from "react-icons/bs";
 
