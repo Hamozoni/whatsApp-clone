@@ -16,30 +16,33 @@ const keyboardShorts = [
 ]
 const KeyboardShorts = ()=> {
     return (
-        <div className="flex flex-col rounded-md  max-w-dvw">
+        <div className="max-h-full flex flex-col">
             <Header title='keyboard shortcuts' />
-            <div className="flex-1 max-h-full overflow-y-auto flex flex-col p-3">
-                {
-                    keyboardShorts?.map(({id,shortName,key})=> (
-                        <div key={id} className="flex justify-between items-center mb-4">
-                            <h4 className="text-sm font-medium capitalize">
-                                {shortName}
-                            </h4>
-                            <div className="flex items-center gap-1">
-                                {
-                                    key.split('+').map((key)=> (
-                                        <div 
-                                            key={key} 
-                                            className="flex justify-center items-center p-1 text-xs font-medium capitalize rounded-md border border-gray-500"
-                                            >
-                                                {key}
-                                            </div>
-                                    ))
-                                }
+            <div className="overflow-y-auto flex-1 flex flex-col p-3">
+                <div className="">
+                    {
+                        keyboardShorts?.map(({id,shortName,key})=> (
+                            <div key={id} className="flex justify-between items-center mb-4">
+                                <h4 className="text-sm font-medium capitalize">
+                                    {shortName}
+                                </h4>
+                                <div className="flex items-center gap-1">
+                                    {
+                                        key.split('+').map((key)=> (
+                                            <div 
+                                                key={key} 
+                                                className="flex justify-center items-center p-1 text-xs font-medium capitalize rounded-md border border-gray-500"
+                                                >
+                                                    {key}
+                                                </div>
+                                        ))
+                                    }
+                                </div>
                             </div>
-                        </div>
-                    ))
-                }
+                        ))
+                    }
+
+                </div>
             </div>
              
         </div>
