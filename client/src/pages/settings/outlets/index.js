@@ -5,6 +5,7 @@ import MainSetting from "./mainSetting";
 import Notifications from "./notifications";
 import Privacy from "./privacy";
 import Theme from "./theme";
+import KeyboardShorts from "./keyboardShorts";
 
 
 export {
@@ -14,5 +15,6 @@ export {
     MainSetting,
     Notifications,
     Privacy,
-    Theme
+    Theme,
+    KeyboardShorts
 }

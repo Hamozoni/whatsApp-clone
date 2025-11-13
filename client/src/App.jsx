@@ -1,15 +1,18 @@
 import {RouterProvider,Outlet, createBrowserRouter} from 'react-router-dom';
 
 import {
-    Signin,
-    Signup,
     Chats,
     Calls,
     Status,
     Channels,
     Settings,
-    Profile 
-} from './pages/index';
+    Profile,
+    Auth,
+
+} from './pages';
+
+import Signin from './pages/auth/outlet/signin';
+import Signup from './pages/auth/outlet/signup';
 
 import ChatWindow from "./pages/chat/outlets/chatWindow/chatWindow";
 import NoActiveChat from "./pages/chat/outlets/NoActiveChat"
@@ -18,7 +21,7 @@ import {
     StatusPostImage,
     StatusPostText,
     StatusPostVideo
-} from "./pages/status/post/index";
+} from "./pages/status/post";
 
 import { Navbar } from './components/navbar/navbar';
 
@@ -30,16 +33,35 @@ import {
     MainSetting,
     Notifications,
     Privacy,
-    Theme
-} from "./pages/settings/outlets/index";
+    Theme,
+    KeyboardShorts
+} from "./pages/settings/outlets/";
+
 import StatusPreview from './pages/status/preivew/statusPreview';
+
+import { 
+  CallContextProvider, 
+  ChatsContextProvider, 
+  SettingsContextProvider, 
+  UserContextProvider 
+} from './contexts';
 
 
 const RootLayout = ()=> {
     return (
         <main className="flex flex-col gap-1 md:flex-row h-screen max-h-screen w-screen max-w-screen text-amber-50">
-            <Navbar />
-            <Outlet />
+                <UserContextProvider>
+                    <SettingsContextProvider>
+
+                        <ChatsContextProvider >
+                          <CallContextProvider >
+                              <Navbar />
+                              <Outlet />
+                          </CallContextProvider>
+
+                        </ChatsContextProvider>
+                    </SettingsContextProvider>
+                </UserContextProvider>
         </main>
     )
 };
@@ -85,13 +107,20 @@ const router = createBrowserRouter([
           { path: "notifications", element: <Notifications /> },
           { path: "privacy", element: <Privacy /> },
           { path: "theme", element: <Theme /> },
+          { path: "keyboard shortcuts", element: <KeyboardShorts /> },
         ],
       },
       { path: "/profile", element: <Profile /> },
     ],
   },
-  { path: "/signin", element: <Signin /> },
-  { path: "/signup", element: <Signup /> },
+  {
+    path: "/auth", 
+    element: <Auth /> ,
+    children: [
+      {index: true, path: "signup", element: <Signup/> },
+      { path: "signin", element: <Signin /> },
+    ]
+  },
 ]);
 
 /* ---------------- App Component ---------------- */

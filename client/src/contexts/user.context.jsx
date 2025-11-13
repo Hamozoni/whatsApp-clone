@@ -4,14 +4,14 @@ import { setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { Loading } from "../components/modal/loading";
 import { io } from "socket.io-client";
 import { fetchData } from "../lib/fetchData";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export const UserContext = createContext();
 
 
 const  UserContextProvider =  ({children})=> {
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate()
   
     const [user,setUser] = useState(null);
     const [loading,setLoading] = useState(true);
@@ -58,9 +58,9 @@ const  UserContextProvider =  ({children})=> {
                 setSocket(socket);
 
                }
-              //  else {
-              //   navigate('/signin')
-              //  }
+               else {
+                 navigate('/auth/signin')
+               }
   
             });
 

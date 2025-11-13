@@ -96,10 +96,10 @@ export function SiginWithPrvider ({link_to}) {
             <p className="text-sm text-[#f7f8fa]">
               { link_to === 'signup' ? 'do not': ''} have an account?{" "}
               <Link
-                to={`/${link_to}`}
+                to={link_to}
                 className="font-medium text-indigo-400 hover:text-indigo-300"
               >
-                {link_to === 'signin' ?  'Sign in here' : 'Sign up here'}
+                {link_to === '/auth/signin' ?  'Sign in here' : 'Sign up here'}
               </Link>
             </p>
           </div>

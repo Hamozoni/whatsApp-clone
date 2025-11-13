@@ -1,4 +1,4 @@
-import { Header } from "./header"
+import { Header } from "../components/header"
 
 const keyboardShorts = [
     {id: 1,shortName: 'Mark as unread', key: 'ctrl+alt+shift+u'},
@@ -14,13 +14,10 @@ const keyboardShorts = [
     {id: 11,shortName: 'new group', key: 'ctrl+alt+shift+n'},
     {id: 12,shortName: 'profile and about', key: 'ctrl+alt+p'},
 ]
-export const KeyboardShorts = ({setActivePage})=> {
+const KeyboardShorts = ()=> {
     return (
-        <div className="bg-gray-800 flex flex-col fixed z-50 p-5 rounded-md top-[50px] left-1/2 -translate-x-1/2 max-w-dvw w-[550px] max-h-5/6">
-            <Header 
-                title='keyboard shortcuts' 
-                setActivePage={()=> setActivePage('main')}
-            />
+        <div className="flex flex-col rounded-md  max-w-dvw">
+            <Header title='keyboard shortcuts' />
             <div className="flex-1 max-h-full overflow-y-auto flex flex-col p-3">
                 {
                     keyboardShorts?.map(({id,shortName,key})=> (
@@ -47,4 +44,6 @@ export const KeyboardShorts = ({setActivePage})=> {
              
         </div>
     )
-}
+};
+
+export default KeyboardShorts;

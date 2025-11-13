@@ -1,14 +1,14 @@
 
 import { useContext, useEffect, useState } from "react";
 
-import { SiginWithPrvider } from "./auth/signinWithProdider";
-import { Input } from "../../components/ui/input";
+import { SiginWithPrvider } from "../components/signinWithProdider";
+import { Input } from "../../../components/ui/input";
 import {createUserWithEmailAndPassword } from 'firebase/auth'
-import { firebaseAuth } from "../../lib/firebaseConfig";
+import { firebaseAuth } from "../../../lib/firebaseConfig";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../contexts/user.context";
-import { SubmitBtn } from "../../components/ui/submitBtn";
+import { UserContext } from "../../../contexts/user.context";
+import { SubmitBtn } from "../../../components/ui/submitBtn";
 
 
 export default function Signup() {
@@ -133,7 +133,7 @@ export default function Signup() {
           )}
            <SubmitBtn text='sign up' isLoading={loading} /> 
         </form>
-        <SiginWithPrvider link_to='signin'/>
+        <SiginWithPrvider link_to='/auth/signin'/>
       </div>
     </div>
   );
