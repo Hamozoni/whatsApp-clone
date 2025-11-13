@@ -15,9 +15,8 @@ import {
         MdNotificationsNone,
         MdOutlineKeyboard,
         MdOutlineHelpOutline,
-        MdOutlineWbSunny
      } from "react-icons/md";
-import { useNavigation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const settingButtons = [
     {name: 'account', Icon: BsKey, info: 'Security notifications, acount info' },
@@ -34,7 +33,7 @@ const MainSetting = ()=> {
     const [Loading,setLoading] = useState(false);
     const [error,setError] = useState(null);
 
-    const navigate = useNavigation()
+    const navigate = useNavigate()
 
     const {user,setUser} = useContext(UserContext);
 
@@ -64,24 +63,24 @@ const MainSetting = ()=> {
             {/* buttons */}
             <div className="flex-1 max-h-full overflow-y-auto p-3">
                 <div className="border-b border-b-[#213036] mb-3">
-                    <button 
-                        onClick={()=> navigate('profile')}
+                    <Link 
+                        to='profile'
                         className="flex items-center w-full gap-2 my-4 cursor-pointer p-3 rounded-lg border border-transparent hover:border-[#3b535c] hover:bg-[#1d2c31]"
                         >
-                        <Avatar size='lg' user_photo={user.profile_picture} />
+                        <Avatar size='lg' user_photo={user?.profile_picture} />
                         <div className="flex-1 text-start">
                             <h6 className='capitalize'>{user?.name}</h6>
                             <span  className='text-xs line-clamp-1 text-gray-400'>
                                 {user?.about || 'active'}
                             </span>
                         </div>
-                    </button>
+                    </Link>
 
                 </div>
                 {
                     settingButtons?.map(({name,info,Icon})=> (
-                        <button 
-                            onClick={()=> navigate(name)}
+                        <Link 
+                            to={name}
                             key={name} 
                             className='flex gap-3 items-center px-3 rounded-lg border border-transparent hover:border-[#3b535c] hover:bg-[#1d2c31] w-full'>
                             <Icon size={24}/>
@@ -89,7 +88,7 @@ const MainSetting = ()=> {
                                 <h6 className='capitalize'>{name}</h6>
                                 <span className='text-xs line-clamp-1 text-gray-400'>{info}</span>
                             </div>
-                        </button>
+                        </Link>
                     ))
                 }
                 <button 

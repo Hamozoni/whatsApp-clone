@@ -53,6 +53,10 @@ const router = createBrowserRouter([
      {
         path: '/',
         element: <Chats />,
+        children: [
+          { index: true, element: <NoActiveChat /> },
+          { path: ":contactId", element: <ChatWindow /> },
+        ],
       },
       {
         path: "/chats",
@@ -75,9 +79,10 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <MainSetting /> },
           { path: "account", element: <Account /> },
-          { path: "chat", element: <ChatSetting /> },
+          { path: "profile", element: <Profile isSettingPage={true}/> },
+          { path: "chats", element: <ChatSetting /> },
           { path: "help", element: <Help /> },
-          { path: "notification", element: <Notifications /> },
+          { path: "notifications", element: <Notifications /> },
           { path: "privacy", element: <Privacy /> },
           { path: "theme", element: <Theme /> },
         ],

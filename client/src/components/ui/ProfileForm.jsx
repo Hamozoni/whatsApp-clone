@@ -12,7 +12,7 @@ export const ProfileForm = ()=> {
         const [name, setName] = useState(user?.name);
         const [isEditName, setIsEditName] = useState(false);
         const [isEditAbout, setIsEditAbout] = useState(false);
-        const [about, setAbout] = useState(user.about);
+        const [about, setAbout] = useState(user?.about);
 
  const handleChangeAvatar = (e) => {
     const file = e.target.files?.[0];
