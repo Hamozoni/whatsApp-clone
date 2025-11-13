@@ -1,6 +1,3 @@
-
-// import { GoSearch } from "react-icons/go"
-// import { HiOutlineDotsVertical } from "react-icons/hi"
 import { IoCallOutline,IoVideocamOutline  } from "react-icons/io5";
 import { useContext } from "react";
 import { CallContext,ChatsContext,UserContext } from "../../../../../../contexts/index";

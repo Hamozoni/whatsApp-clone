@@ -12,12 +12,11 @@ createRoot(document.getElementById('root')).render(
 
     <UserContextProvider>
         <SettingsContextProvider>
+            <ChatsContextProvider >
              <CallContextProvider >
-                <ChatsContextProvider >
-
                     <App /> 
-                </ChatsContextProvider>
              </CallContextProvider>
+            </ChatsContextProvider>
         </SettingsContextProvider>
     </UserContextProvider>
 

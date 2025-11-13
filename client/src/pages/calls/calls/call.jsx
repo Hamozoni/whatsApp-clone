@@ -8,7 +8,7 @@ import { postData } from "../../../lib/postData";
 import { handleSendMessage } from "../../../lib/handleSendMessage";
 import { updateData } from "../../../lib/updateData";
 
-export const Call = ()=> {
+const Call = ()=> {
 
     const {
         callStatus,
@@ -22,9 +22,7 @@ export const Call = ()=> {
 
     const {socket,user,setChats} = useContext(UserContext);
 
-    const {
-        setActiveChat,
-    } = useContext(ChatsContext);
+    const {setActiveChat} = useContext(ChatsContext);
 
     const [localVideo,setLocalVideo] = useState(null);
     const [remoteVideo,setRemoteVideo] = useState(null);
@@ -271,3 +269,5 @@ export const Call = ()=> {
         </div>
     );
 };
+
+export default Call

@@ -1,10 +1,8 @@
-import { Call } from "../pages/calls/calls/call";
+import Call from "../pages/calls/calls/call";
 import { createContext, useContext, useEffect, useState } from "react";
 import { UserContext } from "./index";
 
-
 export const CallContext = createContext(null);
-
 
 const CallContextProvider = ({children})=> {
 
