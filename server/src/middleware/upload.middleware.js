@@ -1,6 +1,6 @@
 import multer from 'multer';
 const storage = multer.memoryStorage();
-const upload = multer({
+const upload_middleware = multer({
   storage,
   limits: { fileSize: 50 * 1024 * 1024 }, // 50MB limit
 //   fileFilter: (req, file, cb) => {
@@ -13,4 +13,4 @@ const upload = multer({
 });
 
 
-export default upload;
+export default upload_middleware;

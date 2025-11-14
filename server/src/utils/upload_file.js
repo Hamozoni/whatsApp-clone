@@ -1,4 +1,4 @@
-import cloudinary from "../config.js/cloudinary.js";
+import cloudinary from "../config/cloudinary.js";
 import File from "../models/file.model.js";
 
 

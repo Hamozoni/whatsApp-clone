@@ -1,7 +1,7 @@
 
 import Chat from "../models/chat.model.js";
 import Message from "../models/message.model.js";
-import cloudinary from "../config.js/cloudinary.js";
+import cloudinary from "../config/cloudinary.js";
 import { upload_file } from "../utils/upload_file.js";
 import User from "../models/user.model.js";
 

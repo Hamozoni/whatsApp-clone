@@ -5,13 +5,13 @@ import cron from 'node-cron'
 
 import app from "./src/app.js";
 import { Server } from "socket.io";
-import connect_db from "./src/config.js/db.js";
+import connect_db from "./src/config/db.js";
 
 // importing Status and file models for deleting expired status
 import Status from "./src/models/status.model.js";
 import File from "./src/models/file.model.js";
 
-import cloudinary from "./src/config.js/cloudinary.js";
+import cloudinary from "./src/config/cloudinary.js";
 
 
 
