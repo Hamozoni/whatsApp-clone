@@ -68,6 +68,9 @@ const  UserContextProvider =  ({children})=> {
             console.log(error.message)
             setError(error.message);
           }
+          finally {
+            setLoading(false)
+          }
 
         };
     

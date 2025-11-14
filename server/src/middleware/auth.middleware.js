@@ -4,21 +4,20 @@ const authenticate_and_sync_user = async (req,res,next)=> {
 
     try {
 
-        console.log('hi')
-
-        const auth_header = req.headers.Authorization;
+        
+        const auth_header = req.headers.authorization;
+        const id_token = auth_header.split('Bearer ')[1];
+        const decoded_token = await admin.auth().verifyIdToken(id_token);
+        console.log(decoded_token)
+        console.log(decoded_token);
         if(!auth_header || !auth_header.startsWith('Bearer ')) {
             return res.status(401).json({message: 'unauthorized'})
         };
         
         
-        const id_token = auth_header.split('Bearer ')[1];
-        const decoded_token = await admin.auth().verifyIdToken(id_token);
-        console.log(decoded_token);
 
 
-        next()
-
+        next();
 
     }
     catch (error){

@@ -25,15 +25,42 @@ const processQueue = (error,token = null)=> {
 };
 
 
-api.interceptors.request.use(async (config)=> {
+api.interceptors.request.use(
+    async (config)=> {
+        const auth = getAuth();
+        const user = auth.currentUser;
 
-    const auth = getAuth();
-    const user = auth.currentUser;
+        if(user){
+            const toket = await user.getIdToken();
+            config.headers.Authorization = `Bearer ${toket}`
+        };
 
-    if(user){
-        const toket = await user.getIdToken();
 
-        config.headers.Authorization
+        return config;
+
+    },
+    (error)=> Promise.reject(error)
+);
+
+api.interceptors.response.use(
+    (response)=> response,
+    async (error)=> {
+
+        const originalRequest = error.config;
+
+        if(error.response?.status === 401 && !originalRequest._retry){
+            if(isRefreshing){
+                return new Promise((resolve,reject)=> {
+                    faildQueue.push({resolve,reject});
+                }).then( token => {
+                    originalRequest.headers.Authorization = `Bearer ${token}`;
+                    return api(originalRequest)
+                }).catch(err =>  reject(err))
+            }
+        }
+
     }
-})
+)
+
+export default api;
 

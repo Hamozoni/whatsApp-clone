@@ -15,10 +15,11 @@ import {getAuth} from "firebase/auth"
       setError(null);
       setLoading(true);
 
-      const config = {
+      const {data} = await axios({
+        method: 'GET',
+        url: `${import.meta.env.VITE_API_URL}/${endPoint}`,
         headers :{'Authorization': `Bearer ${token}`}
-      }
-      const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/${endPoint}`,config);
+      });
       setData(data);
       console.log(data);
     }
