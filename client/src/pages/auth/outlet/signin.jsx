@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 
 import { Input } from "../../../components/ui/input";
-import {signInWithEmailAndPassword} from 'firebase/auth'
+import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
 import { firebaseAuth } from "../../../lib/firebaseConfig";
 import {useNavigate } from "react-router-dom";
-import { UserContext } from "../../../contexts/index";
 import { SubmitBtn } from "../../../components/ui/submitBtn";
 import {SiginWithPrvider} from "../components/signinWithProdider"
+
 
 export default function Signin() {
 
@@ -15,7 +15,8 @@ export default function Signin() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const {user} = useContext(UserContext)
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   const navigate = useNavigate();
 
@@ -34,7 +35,7 @@ export default function Signin() {
       setIsLoading(false);
     }
   };
-
+    
     useEffect(()=> {
       if(user){
         navigate('/');

@@ -12,17 +12,19 @@ const auth_middleware = async (req,res,next)=> {
         };
 
         const id_token = auth_header.split('Bearer ')[1];
-        const {decoded_token} = await admin.auth().verifyIdToken(id_token);
+        const decoded_token = await admin.auth().verifyIdToken(id_token);
+
+        console.log(decoded_token)
 
         let user = await User.findOne({firebaseUid: decoded_token?.uid});
 
         if(!user){
             user = await User.create({
-                displayName: decoded_token.displayName,
+                displayName: decoded_token.name,
                 email: decoded_token.email,
                 about: decoded_token?.about || 'Hey there! I am using WhatsApp.',
-                emailVerified: decoded_token,
-                photoURL: decoded_token?.photoURL,
+                emailVerified: decoded_token.email_verified,
+                photoURL: decoded_token?.picture,
                 photoURLId:decoded_token?.photoURLId || null ,
                 firebaseUid: decoded_token.uid,
                 lastLoginAt: Date.now()
@@ -30,7 +32,9 @@ const auth_middleware = async (req,res,next)=> {
         }else {
             user.lastLoginAt = Date.now();
             await user.save()
-        }
+        };
+
+        console.log(user);
 
         req.user = user;
 

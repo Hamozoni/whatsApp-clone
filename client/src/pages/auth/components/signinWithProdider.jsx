@@ -4,14 +4,13 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { firebaseAuth } from "../../../lib/firebaseConfig";
 import { useState } from "react";
-import { postData } from "../../../lib/postData";
 
 
 export function SiginWithPrvider ({link_to}) {
 
     const [isLoading,setIsLoading] = useState(false);
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const handleSigin = async (provider)=> {
 
@@ -19,34 +18,9 @@ export function SiginWithPrvider ({link_to}) {
       const authProvider = provider === 'GitHub' ? new GithubAuthProvider() : new GoogleAuthProvider();
 
          await signInWithPopup(firebaseAuth,authProvider)
-         .then(async({user})=> {
-
-          const {email,displayName,photoURL,phoneNumber,emailVerified,uid} = user;
-
-          const userData = {
-            uid,
-            email,
-            displayName,
-            photoURL,
-            phoneNumber,
-            emailVerified,
-          }
-
-          const data = await postData('user',userData);
-
-          const { is_new } = data;
-
-          if(is_new) {
-            navigate('/onboarding');
-
-          }else {
-            setIsLoading(false);
-            navigate('/');
-          }
-
+         .then(()=> {
+             navigate('/chats')
          })
-         .catch((error)=>{
-        })
         .finally (()=> {
            setIsLoading(false);
          })

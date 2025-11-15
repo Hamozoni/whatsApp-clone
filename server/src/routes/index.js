@@ -2,7 +2,6 @@ import { Router } from 'express';
 import message_route from './message.route.js';
 import contact_route from './contact.route.js';
 import user_route from './user.route.js';
-import notification_route from './notification.route.js'
 import chat_route from "./chat.route.js";
 import call_route from "./call.route.js";
 import status_route from './status.route.js';
@@ -13,7 +12,6 @@ const router = Router();
 
 router.use('/message',auth_middleware,message_route);
 router.use('/user',auth_middleware,user_route);
-router.use('/notification',auth_middleware,notification_route);
 router.use('/contact',auth_middleware,contact_route);
 router.use('/chat',auth_middleware,chat_route);
 router.use('/call',auth_middleware,call_route);

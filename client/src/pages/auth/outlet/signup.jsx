@@ -1,19 +1,20 @@
 
-import { useContext, useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 
 import { SiginWithPrvider } from "../components/signinWithProdider";
 import { Input } from "../../../components/ui/input";
-import {createUserWithEmailAndPassword } from 'firebase/auth'
+import {createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
 import { firebaseAuth } from "../../../lib/firebaseConfig";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../../contexts/user.context";
 import { SubmitBtn } from "../../../components/ui/submitBtn";
 
 
 export default function Signup() {
 
-  const {user} = useContext(UserContext);
+  const auth = getAuth();
+
+  const user = auth.currentUser
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
