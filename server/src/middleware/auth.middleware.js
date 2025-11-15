@@ -13,9 +13,8 @@ const authenticate_and_sync_user = async (req,res,next)=> {
         if(!auth_header || !auth_header.startsWith('Bearer ')) {
             return res.status(401).json({message: 'unauthorized'})
         };
-        
-        
 
+        
 
         next();
 

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const MESSAGE_SCHEMA = new mongoose.Schema({
-    sender: {type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    onwer: {type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     text: { type: String },
     file: { type: mongoose.Schema.Types.ObjectId,ref: 'File' },
     call:  { type: mongoose.Schema.Types.ObjectId,ref: 'Call'},
@@ -10,8 +10,9 @@ const MESSAGE_SCHEMA = new mongoose.Schema({
         type: String, 
         enum: ['SENT', 'DELIVERED', 'READ','PENDING'], 
         default: 'SENT' 
-      },
-    reply_to: {type: mongoose.Schema.Types.ObjectId, ref: 'Message', require: false},
+    },
+    deletedFor: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
+    
 },{timestamps: true});
 
 
