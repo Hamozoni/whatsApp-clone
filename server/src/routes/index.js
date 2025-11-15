@@ -7,17 +7,17 @@ import chat_route from "./chat.route.js";
 import call_route from "./call.route.js";
 import status_route from './status.route.js';
 import channel_route from "./channel.route.js"
-import authenticate_and_sync_user from '../middleware/auth.middleware.js';
+import auth_middleware from '../middleware/auth.middleware.js';
 
 const router = Router();
 
-router.use('/message',authenticate_and_sync_user,message_route);
-router.use('/user',authenticate_and_sync_user,user_route);
-router.use('/notification',authenticate_and_sync_user,notification_route);
-router.use('/contact',authenticate_and_sync_user,contact_route);
-router.use('/chat',authenticate_and_sync_user,chat_route);
-router.use('/call',authenticate_and_sync_user,call_route);
-router.use('/status',authenticate_and_sync_user,status_route);
-router.use('/channel',authenticate_and_sync_user,channel_route);
+router.use('/message',auth_middleware,message_route);
+router.use('/user',auth_middleware,user_route);
+router.use('/notification',auth_middleware,notification_route);
+router.use('/contact',auth_middleware,contact_route);
+router.use('/chat',auth_middleware,chat_route);
+router.use('/call',auth_middleware,call_route);
+router.use('/status',auth_middleware,status_route);
+router.use('/channel',auth_middleware,channel_route);
 
 export default router;

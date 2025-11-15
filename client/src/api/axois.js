@@ -55,11 +55,42 @@ api.interceptors.response.use(
                 }).then( token => {
                     originalRequest.headers.Authorization = `Bearer ${token}`;
                     return api(originalRequest)
-                }).catch(err =>  reject(err))
-            }
+                }).catch( (err) => Promise.reject(err));
+            };
+
+            originalRequest._retry = true;
+            isRefreshing = true;
+
+            return new Promise((resolve,reject)=> {
+                const auth = getAuth();
+                const user = auth.currentUser;
+
+                if(user) {
+                    user.getIdToken(true)
+                    .then(token=> {
+                        api.defaults.headers.common['Authorization'] = `Brearer ${token}`;
+                        originalRequest.headers.Authorization = `Brearer ${token}`;
+                        processQueue(null,token);
+                        resolve(api(originalRequest))
+                    })
+                    .catch( err =>{
+                        processQueue(err,null);
+                        reject(err)
+                        
+                    })
+                    .finally(()=>{
+                        isRefreshing = false
+                    })
+
+                }else {
+                    reject(error)
+                }
+            })
         }
 
+        return Promise.reject(error)
     }
+
 )
 
 export default api;
