@@ -9,21 +9,25 @@ const api = axios.create({
 
 
 
-api.interceptors.request.use(
-    async (config)=> {
+api.interceptors.request.use(async (config)=> {
         const auth = getAuth();
         const user = auth.currentUser;
 
         if(user){
-            const toket = await user.getIdToken();
-            config.headers.Authorization = `Bearer ${toket}`
+
+            try {
+                const toket = await user.getIdToken();
+                config.headers.Authorization = `Bearer ${toket}`
+            }
+            catch (error){
+                console.error('Error getting token:', error)
+            }
         };
 
 
         return config;
 
-    },
-    (error)=> Promise.reject(error)
+    }
 );
 
 
