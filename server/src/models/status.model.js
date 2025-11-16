@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const STATUS_SCHEMA = new mongoose.Schema({
-    onwer: {type: String, ref: 'User'},
+    onwer: {type: String,require: true},
     text: {type: String,require : false},
     file: {type: mongoose.Schema.Types.ObjectId, ref: 'File'},
     type: {type: String,enum: ['TEXT','MEDIA'],default: 'TEXT'},
