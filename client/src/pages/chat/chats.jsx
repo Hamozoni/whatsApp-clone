@@ -1,26 +1,32 @@
-import { useContext, useState } from "react";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { Outlet, useParams } from "react-router-dom";
 
-import { UserContext } from "../../contexts/index";
 import Contacts  from "../contact/contacts";
 import { ChatsHeader } from "./components/chatsHeader";
 import { MainCard } from "../../components/shared/mainCard";
 import { ChatCardLastMessage } from "./components/chatCardLastMessage";
+import { useChats } from "../../hooks/queries/useChatsApi";
+import { Loading } from "../../components/modal/loading";
 
 const Chats = ()=> {
 
-    const {chats,user} = useContext(UserContext);
     const [searchText,setSearchText] = useState('');
     const [isContactPage,setIsContcatPage] = useState(false);
 
+    const {data : chats, isLoading} = useChats();
+
     const {contactId} = useParams();
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    const handleActiveChat = (chat)=> {
-        if(contactId === chat?.contact?._id) return;
-        navigate(`/chats/${chat?.contact?._id}`)
-    };
+    // const handleActiveChat = (chat)=> {
+    //     if(contactId === chat?.contact?._id) return;
+    //     navigate(`/chats/${chat?.contact?._id}`)
+    // };
+
+    if(isLoading){
+        return <Loading />
+    }
 
     return (
         <div className="flex h-full gap-1 flex-1 overflow-y-auto">
@@ -44,12 +50,12 @@ const Chats = ()=> {
                                             isActive={chat?.contact?._id === contactId}
                                             name={chat?.contact?.name}
                                             time={chat?.last_message?.createdAt}
-                                            onClick={() => handleActiveChat(chat)}
+                                            onClick={() => ''}
                                         >
-                                            <ChatCardLastMessage 
+                                            {/* <ChatCardLastMessage 
                                                 chat={chat} 
                                                 user={user} 
-                                                />
+                                                /> */}
                                         </MainCard>
                                     ))
                                 }
