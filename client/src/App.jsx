@@ -60,7 +60,6 @@ const queryClient = new QueryClient({
 
 const RootLayout = ()=> {
     return (
-      <QueryClientProvider client={queryClient}>
         <main className="flex flex-col gap-1 md:flex-row h-screen max-h-screen w-screen max-w-screen text-amber-50">
                 <UserContextProvider>
                     <SettingsContextProvider>
@@ -75,7 +74,6 @@ const RootLayout = ()=> {
                     </SettingsContextProvider>
                 </UserContextProvider>
         </main>
-      </QueryClientProvider>
     )
 };
 
