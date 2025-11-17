@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const FILE_SCHEMA = new mongoose.Schema({
+const MEDIA_SCHEMA = new mongoose.Schema({
     name : {type: String,require:true},
     type: {type: String,enum: ['AUDIO', 'IMAGE','VIDEO','APPLICATION'],default: 'IMAGE'},
     fileURL: {type: String ,require : true},
@@ -9,6 +9,6 @@ const FILE_SCHEMA = new mongoose.Schema({
     duration: {type: Number}
   }, { timestamps: true});
 
-  const File = mongoose.model('File',FILE_SCHEMA);
+  const Media = mongoose.model('File',MEDIA_SCHEMA);
 
-  export default File;
+  export default Media;

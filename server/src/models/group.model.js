@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const GROUP_SCHEMA = new mongoose.Schema({
-    chat: {type: mongoose.Schema.Types.ObjectId,require:true},
+    chat: {type: mongoose.Schema.Types.ObjectId,ref: 'Chat'},
     groupName: {type: String, require: true},
     admins: [{type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     photoURL: {type: String},

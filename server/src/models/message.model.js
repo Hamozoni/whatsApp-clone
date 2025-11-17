@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const MESSAGE_SCHEMA = new mongoose.Schema({
     onwer: {type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     text: { type: String },
-    file: { type: mongoose.Schema.Types.ObjectId,ref: 'File' },
+    mediaMeta: { type: mongoose.Schema.Types.ObjectId,ref: 'File' },
     call:  { type: mongoose.Schema.Types.ObjectId,ref: 'Call'},
     type: {type: String,enum: ['TEXT', 'MEDIA','CALL'],default: 'TEXT'},
     status: { 

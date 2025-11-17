@@ -1,16 +1,16 @@
 import mongoose from "mongoose";
 
 const STATUS_SCHEMA = new mongoose.Schema({
-    onwer: {type: String,require: true},
+    onwer: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     text: {type: String,require : false},
-    file: {type: mongoose.Schema.Types.ObjectId, ref: 'File'},
+    mediaMeta: {type: mongoose.Schema.Types.ObjectId, ref: 'Media'},
     type: {type: String,enum: ['TEXT','MEDIA'],default: 'TEXT'},
     textBgColor: {type: String,require : false},
     fontFamily: {type: String,require : false},
-    seenBy: [{type: String, ref: 'User'}],
+    seenBy: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     whoCanSee: {type: String,enum: ['ALL','EXCEPT',"SELECTED"],default: 'ALL'},
-    selectedUsers : [{type: String, ref: 'User'}],
-    exceptedUsers : [{type: String, ref: 'User'}],
+    selectedUsers : [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    exceptedUsers : [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
 },{timestamps: true});
 
 
