@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const CHAT_SCHEMA = new mongoose.Schema({
-    participants: [{type: String}], 
+    participants: [{type: mongoose.Schema.Types.ObjectId,ref: 'User'}], 
     lastMssage: { type: mongoose.Schema.Types.ObjectId, ref: 'Message' },
     messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
     deleetedFor: [{type: String}],
