@@ -19,6 +19,7 @@ export const useStatus =() => {
 export const useStatusDetails = statusId => {
     return useQuery({
         queryKey: queryKeys.statusDetails(statusId),
-        queryFn: statusId => getStatusDetails(statusId)
+        queryFn: () => getStatusDetails(statusId),
+        enabled: !!statusId
     });
 };

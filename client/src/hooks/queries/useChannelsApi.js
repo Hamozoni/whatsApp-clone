@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import {getAllChannels} from "../../services/apiServices"
+import {getAllChannels,getChannelDetails} from "../../services/apiServices"
 
 
 const queryKeys = {
@@ -14,4 +14,12 @@ export const useChannels = ()=> {
         queryFn: getAllChannels
     });
 };
+
+export const useChannelDetails = channelId => {
+    return useQuery({
+        queryKey: queryKeys.channelDetails(channelId),
+        queryFn: ()=> getChannelDetails(channelId),
+        enabled: !!channelId
+    })
+}
 

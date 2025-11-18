@@ -17,7 +17,8 @@ export const useChats  = ()=> {
 export const useChatDetails = chatId => {
     return useQuery({
         queryKey: queryKeys.chatDetails(chatId),
-        queryFn: chatId => getChatDetails(chatId)
+        queryFn: () => getChatDetails(chatId),
+        enabled: !!chatId
     });
 };
 
