@@ -1,7 +1,7 @@
 import Call from "../models/call.model.js";
 import User from "../models/user.model.js";
 
-export const post_call = async (req,res,next)=> {
+export const postCall = async (req,res,next)=> {
     try {
         const {callee,caller,type,call_status,duration} = req.body;
         
@@ -20,11 +20,9 @@ export const post_call = async (req,res,next)=> {
     }
 };
 
-export const update_call =  async (req,res,next)=> {
+export const updateCall =  async (req,res,next)=> {
     try {
         const {call_id,call_status,duration} = req.body;
-
-        console.log({call_id,call_status,duration})
 
         if(!call_id || !call_status) {
             return res.status(401).json({message:'call id and call status aer required'})

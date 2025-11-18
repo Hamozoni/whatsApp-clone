@@ -1,7 +1,7 @@
 
 import Status from '../models/status.model.js';
 
-export const get_status = async (req,res,next)=> {
+export const getAllStatus = async (req,res,next)=> {
 
     const {_id,contacts} = req.user;
     try  {
@@ -9,6 +9,6 @@ export const get_status = async (req,res,next)=> {
         return res.status(200).json(status)
     }
     catch (error) {
-        next(error)
+        next(error);
     }
 }

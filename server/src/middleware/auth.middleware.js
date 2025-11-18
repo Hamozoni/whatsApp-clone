@@ -1,7 +1,7 @@
 import admin from '../config/firebase_admin.js';
 import User from '../models/user.model.js';
 
-const auth_middleware = async (req,res,next)=> {
+const authMiddleware = async (req,res,next)=> {
 
     try {
 
@@ -13,8 +13,6 @@ const auth_middleware = async (req,res,next)=> {
 
         const id_token = auth_header.split('Bearer ')[1];
         const decoded_token = await admin.auth().verifyIdToken(id_token);
-
-        console.log(decoded_token)
 
         let user = await User.findOne({firebaseUid: decoded_token?.uid});
 
@@ -34,8 +32,6 @@ const auth_middleware = async (req,res,next)=> {
             await user.save()
         };
 
-        console.log(user);
-
         req.user = user;
 
         next();
@@ -47,4 +43,4 @@ const auth_middleware = async (req,res,next)=> {
 };
 
 
-export default auth_middleware;
+export default authMiddleware;

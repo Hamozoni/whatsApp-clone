@@ -9,7 +9,7 @@ import connect_db from "./src/config/db.js";
 
 // importing Status and file models for deleting expired status
 import Status from "./src/models/status.model.js";
-import File from "./src/models/file.model.js";
+import Media from "./src/models/media.model.js";
 
 import cloudinary from "./src/config/cloudinary.js";
 
@@ -43,57 +43,7 @@ const online_users = new Map();
 
 socket_io.on('connection',socket => {
 
-  const {user_id} = socket.handshake.query;
-
-  online_users.set(user_id,socket.id);
-  console.log(online_users);
-
-  socket.on('join_room',(chat_id)=> {
-    socket.join(chat_id);
-    socket.to(chat_id).emit('user_connected',user_id);
-  });
-
-  socket.on('message_sent',(data) => {
-    const socket_id = online_users.get(data?.user);
-    console.log({user: data?.user,socket_id})
-    socket.to(socket_id).emit('message_sent',data);
-  });
-
-  socket.on('call',({from,to,type,call_id})=> {
-    const callee = online_users.get(to);
-    console.log({from,to,type,call_id})
-    socket.to(callee).emit('call',{from,type,call_id}); 
-  });
-
-  socket.on('offer',({to,data})=> {
-    const callee = online_users.get(to);
-    socket.to(callee).emit('offer',{data});
-  });
-
-  socket.on('call_received',({to})=> {
-    const callee = online_users.get(to);
-    socket.to(callee).emit('call_received');
-  });
-
-  socket.on('answer',({to,data})=> {
-    const callee = online_users.get(to);
-    socket.to(callee).emit('answer',{data});
-  });
-
-  socket.on('ice_candidate',({to,data})=> {
-    const callee = online_users.get(to);
-    socket.to(callee).emit('ice_candidate',{data});
-  });
-
-  socket.on('call_end',({to})=> {
-    const callee = online_users.get(to);
-    socket.to(callee).emit('call_end');
-  })
-  
-
-  socket.on('disconnect',()=> {
-    online_users.delete(user_id);
-  })
+  const {user_id} = socket.handshake.auth;
 
 });
 
@@ -103,14 +53,14 @@ socket_io.on('connection',socket => {
 
 cron.schedule('*/30 * * * *', async ()=> {
 
-  const expire_time = new Date(Date.now() - 24 * 60 * 60 * 1000 );
-  const expired_statuses  = await Status.find({createdAt: {$lt: expire_time}}).populate('file')
+  const expireTime = new Date(Date.now() - 24 * 60 * 60 * 1000 );
+  const expiredStatus  = await Status.find({createdAt: {$lt: expireTime}}).populate('file')
 
-  for(const status of expired_statuses) {
+  for(const status of expiredStatus) {
     try {
       if(status.type === 'MEDIA' && status.file) {
-          await cloudinary.uploader.destroy(status.file.public_id);
-          await File.findByIdAndDelete(status.file._id);
+          await cloudinary.uploader.destroy(status.mediaMeta.fileURLId);
+          await Media.findByIdAndDelete(status.mediaMeta._id);
       };
        await status.deleteOne();
     }

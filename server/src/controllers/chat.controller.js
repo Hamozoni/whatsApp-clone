@@ -1,6 +1,6 @@
 import Chat from "../models/chat.model.js";
 
-export const get_all_chats = async (req,res,next) => {
+export const getAllChats = async (req,res,next) => {
     
     const user_id = req.user._id;
 
@@ -14,7 +14,7 @@ export const get_all_chats = async (req,res,next) => {
 };
 
 
-export const get_chat_details = async (req,res,next)=> {
+export const getChatDetails = async (req,res,next)=> {
 
     const chatId = req.params;
     const user_id = req.user._id;

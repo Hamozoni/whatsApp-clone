@@ -1,45 +1,34 @@
 import Channel from "../models/channel.model.js";
-import { upload_file } from "../utils/upload_file.js";
+// import { upload_file } from "../utils/upload_file.js";
 
-export const post_channel = async (req,res,next)=> {
+
+export const getAllChannels = async (req,res,next) => {
+
+    const {_id} = req.user;
 
     try {
-        const {name,description,admin} = req.body;
-
-        if(!name || !description || !admin || !req.file) {
-            return res.status(5000).json({message: 'name and description andadminr are requred'})
-        };
-
-        const file_result = await upload_file(req.file,'channel');
-
-        console.log(file_result);
-
-        const new_channel = await Channel.create({name,description,admins:admin,avatar:file_result?._id})
-
-        return res.status(200).json({new_channel})
-
-
+        const channels = await Channel.find({onwer : {$in: _id},followers: {$in : _id}});
+        return res.status(200).json(channels)
     }
     catch (error) {
         next(error)
-    }
+    };
 
 };
 
-export const get_channel = async (req,res,next) => {
-
-    const {user_id} = req.query;
-
-
-
+export const getChannelDetails = async (req,res,next) => {
+    const {channelId} = req.params;
+    const {limit = 20,page = 1} = req.params;
     try {
-       if(!user_id) return res.status(500)
-        const channels = await Channel.find({admins: {$in: user_id},followers: {$in : user_id}});
-
-        return res.status(200).json({channels})
-
+        const channel = await Channel.findById(channelId)
+        .populate({
+            path: 'messages',
+            limit,
+            skip: limit * (page - 1)
+        })
+        return res.status(200).json(channel)
     }
-    catch (error) {
+    catch(error) {
         next(error)
     }
 }

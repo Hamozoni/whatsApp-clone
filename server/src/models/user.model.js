@@ -9,8 +9,8 @@ const USER_SCHEMA = new mongoose.Schema({
     photoURLId: {type: String,require: false},
     firebaseUid: {type: String,require: true,unique: true},
     lastLoginAt: {type: Date,require: true,default: Date.now()},
-    contacts: [{type: mongoose.Schema.Types.ObjectId,ref: user}],
-    blockedContacts: [{type: mongoose.Schema.Types.ObjectId,ref: user}],
+    contacts: [{type: mongoose.Schema.Types.ObjectId,ref: 'User'}],
+    blockedContacts: [{type: mongoose.Schema.Types.ObjectId,ref: "User"}],
 },{timestamps: true});
 
  const User = mongoose.model('User',USER_SCHEMA);

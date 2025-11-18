@@ -1,11 +1,13 @@
 import { Router } from "express";
-import { get_channel, post_channel } from "../controllers/channel.controller.js";
-import upload_middleware from "../middleware/upload.middleware.js";
+import { getAllChannels,getChannelDetails } from "../controllers/channel.controller.js";
+// import uploadMiddleware from "../middleware/upload.middleware.js";
 
 const router = Router();
 
 router.route('/')
-.post(upload_middleware.single('file'),post_channel)
-.get(get_channel)
+.get(getAllChannels)
+
+router.route('/:channelId')
+.get(getChannelDetails)
 
 export default router;
