@@ -11,8 +11,9 @@ const MESSAGE_SCHEMA = new mongoose.Schema({
         enum: ['SENT', 'DELIVERED', 'READ','PENDING'], 
         default: 'SENT' 
     },
-    deletedFor: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
-    
+    deletedFor: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    isReply: {type: Boolean, default: false},
+    replyTo: {type: mongoose.Schema.Types.ObjectId, ref: 'Message'}
 },{timestamps: true});
 
 

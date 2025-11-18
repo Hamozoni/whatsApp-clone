@@ -1,33 +1,46 @@
 import Chat from "../models/chat.model.js";
-import Message from "../models/message.model.js";
-
 
 export const get_all_chats = async (req,res,next) => {
     
-    const user_uid = req.user.firebaseUid;
+    const user_id = req.user._id;
 
     try {
-        const chats = await Chat.find({participants: {$in: user_uid}});
-        return res.status(200).json({chats});
+        const chats = await Chat.find({participants: {$in: user_id}});
+        return res.status(200).json(chats);
     }
     catch (error) {
        next(error)
     }
 };
 
-export  const get_chat_details = async (req,res,next)=> {
 
-    const user_uid = req.user.firebaseUid;
-    const {chatId} = req.params;
+export const get_chat_details = async (req,res,next)=> {
+
+    const chatId = req.params;
+    const user_id = req.user._id;
+    const {page,limit} = req.query;
+
+
 
     try {
+        const chat = await Chat.findById(chatId)
+        .populate({
+            path: 'messages',
+            options: {
+                sort: {createdAt: -1},
+                limit,
+                skip: limit * (page - 1)
+            }
+        })
+        .populate({
+            path: 'participants',
+            select: '_id firebaseUid displyName photoURL'
+        });
 
-        const chat = await Chat.findById(chatId);
-
-        if(chat.participants.includes(user_uid)){
-            return req.status(201).json({chat})
+        if(chat.participants.includes(user_id)){
+            return res.status(201).json(chat)
         }else {
-            return req.status(401).json({messages: 'unauthorized'})
+            return res.status(401).json({messages: 'unauthorized'})
         }
     
 
@@ -36,8 +49,5 @@ export  const get_chat_details = async (req,res,next)=> {
         next(error)
     }
 
-};
-
-export const get_chat_messages = async (req,res,next)=> {
 
 }
