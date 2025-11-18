@@ -11,7 +11,8 @@ const queryKeys = {
 export const useChannels = ()=> {
     return useQuery({
         queryKey: queryKeys.channels,
-        queryFn: getAllChannels
+        queryFn: getAllChannels,
+        staleTime: 5 * 60 * 1000,
     });
 };
 
@@ -19,6 +20,7 @@ export const useChannelDetails = channelId => {
     return useQuery({
         queryKey: queryKeys.channelDetails(channelId),
         queryFn: ()=> getChannelDetails(channelId),
+        staleTime: 5 * 60 * 1000,
         enabled: !!channelId
     })
 }

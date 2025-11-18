@@ -9,7 +9,8 @@ export const queryKeys = {
 export const useChats  = ()=> {
     return useQuery({
         queryKey: queryKeys.chats,
-        queryFn: getAllChats
+        queryFn: getAllChats,
+        staleTime: 5 * 60 * 1000,
     })
 };
 
@@ -18,6 +19,7 @@ export const useChatDetails = chatId => {
     return useQuery({
         queryKey: queryKeys.chatDetails(chatId),
         queryFn: () => getChatDetails(chatId),
+        staleTime: 5 * 60 * 1000,
         enabled: !!chatId
     });
 };

@@ -11,7 +11,8 @@ const queryKeys = {
 export const useStatus =() => {
     return useQuery({
         queryKey: queryKeys.status,
-        queryFn: getAllStatus
+        queryFn: getAllStatus,
+        staleTime: 5 * 60 * 1000,
     });
 };
 
@@ -20,6 +21,7 @@ export const useStatusDetails = statusId => {
     return useQuery({
         queryKey: queryKeys.statusDetails(statusId),
         queryFn: () => getStatusDetails(statusId),
+        staleTime: 5 * 60 * 1000,
         enabled: !!statusId
     });
 };
