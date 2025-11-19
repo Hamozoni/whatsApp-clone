@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import {firebaseAuth} from '../../../lib/firebaseConfig.js'
+import {auth} from '../../../lib'
 import { signOut } from 'firebase/auth';
 import { UserContext } from '../../../contexts/index.js';
 import { useState } from "react";
@@ -16,7 +16,7 @@ import {
         MdOutlineKeyboard,
         MdOutlineHelpOutline,
      } from "react-icons/md";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const settingButtons = [
     {name: 'account', Icon: BsKey, info: 'Security notifications, acount info' },
@@ -33,16 +33,14 @@ const MainSetting = ()=> {
     const [Loading,setLoading] = useState(false);
     const [error,setError] = useState(null);
 
-    const navigate = useNavigate()
 
-    const {user,setUser} = useContext(UserContext);
+    const {user} = useContext(UserContext);
 
     const logOut = async ()=> {
         setLoading(true);
         setError(null);
         try {
-            await signOut(firebaseAuth);
-            setUser(null)
+            await signOut(auth);
         }
         catch (err) {
            setError(err)
@@ -67,7 +65,7 @@ const MainSetting = ()=> {
                         to='profile'
                         className="flex items-center w-full gap-2 my-4 cursor-pointer p-3 rounded-lg border border-transparent hover:border-[#3b535c] hover:bg-[#1d2c31]"
                         >
-                        <Avatar size='lg' user_photo={user?.profile_picture} />
+                        <Avatar size='lg' user_photo={user?.photoURL} />
                         <div className="flex-1 text-start">
                             <h6 className='capitalize'>{user?.name}</h6>
                             <span  className='text-xs line-clamp-1 text-gray-400'>

@@ -2,7 +2,7 @@ import {Link, useNavigate } from "react-router-dom";
 import {GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import { firebaseAuth } from "../../../lib/firebaseConfig";
+import  {auth} from "../../../lib";
 import { useState } from "react";
 
 
@@ -15,15 +15,16 @@ export function SiginWithPrvider ({link_to}) {
     const handleSigin = async (provider)=> {
 
       setIsLoading(true);
-      const authProvider = provider === 'GitHub' ? new GithubAuthProvider() : new GoogleAuthProvider();
 
-         await signInWithPopup(firebaseAuth,authProvider)
-         .then(()=> {
-             navigate('/chats')
-         })
-        .finally (()=> {
+      const authProvider = provider === 'GitHub' ? new GithubAuthProvider() : new GoogleAuthProvider();
+      try {
+        await signInWithPopup(auth,authProvider)
+        navigate('/chats')
+
+      }
+      finally {
            setIsLoading(false);
-         })
+         }
       
 
     }

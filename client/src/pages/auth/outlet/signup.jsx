@@ -1,20 +1,16 @@
 
-import {useEffect, useState } from "react";
+import {useState } from "react";
 
 import { SiginWithPrvider } from "../components/signinWithProdider";
 import { Input } from "../../../components/ui/input";
-import {createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
-import { firebaseAuth } from "../../../lib/firebaseConfig";
-import axios from "axios";
+import {createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth } from "../../../lib";
 import { useNavigate } from "react-router-dom";
 import { SubmitBtn } from "../../../components/ui/submitBtn";
 
 
 export default function Signup() {
-
-  const auth = getAuth();
-
-  const user = auth.currentUser
+  
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -49,28 +45,8 @@ export default function Signup() {
 
     try {
      
-        await createUserWithEmailAndPassword(firebaseAuth, email, password)
-        .then(async({user})=> {
-
-          const {email,photoURL,phoneNumber,emailVerified,uid} = user;
-
-          const userIfno = {
-            uid,
-            email,
-            displayName: name,
-            photoURL,
-            phoneNumber,
-            emailVerified,
-          }
-
-         await axios.post(`${import.meta.VITE_API_URL}/user`,userIfno);
-
-          navigate('/onboarding')
-
-        })
-        .catch((error)=> {
-          console.log(error)
-        })
+        await createUserWithEmailAndPassword(auth, email, password);
+         navigate('/chats');
       
       } catch (err) {
         setError(err.message);
@@ -80,11 +56,6 @@ export default function Signup() {
       }
   };
 
-      useEffect(()=> {
-        if(user){
-          navigate('/');
-        }
-      },[user])
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#111b21] text-[#f7f8fa]">

@@ -32,15 +32,16 @@ const authMiddleware = async (req,res,next)=> {
             user.lastLoginAt = Date.now();
             await user.save()
         };
+        console.log(user)
 
         req.user = user;
 
-        console.log(user)
 
         next();
 
     }
     catch (error){
+        console.log(error)
         return res.status(401).json({message: 'invalid token'});
     }
 };

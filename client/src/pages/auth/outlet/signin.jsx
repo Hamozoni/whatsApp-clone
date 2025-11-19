@@ -1,8 +1,8 @@
-import {useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Input } from "../../../components/ui/input";
 import {signInWithEmailAndPassword} from 'firebase/auth'
-import  auth  from "../../../lib/firebaseConfig";
+import  {auth } from "../../../lib";
 import {useNavigate } from "react-router-dom";
 import { SubmitBtn } from "../../../components/ui/submitBtn";
 import {SiginWithPrvider} from "../components/signinWithProdider"
@@ -15,7 +15,7 @@ export default function Signin() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const user = auth.currentUser;
+
 
   const navigate = useNavigate();
 
@@ -24,22 +24,16 @@ export default function Signin() {
     setIsLoading(true);
     try {
       await signInWithEmailAndPassword(auth,email,password)
-      .then(()=> {
-        setIsLoading(false);
-        navigate('/');
-      })
+      navigate('/chats');
     }
     catch (error) {
       setError(error?.message);
-      setIsLoading(false);
+    }
+    finally{
+       setIsLoading(false);
     }
   };
-    
-    useEffect(()=> {
-      if(user){
-        navigate('/');
-      }
-    },[user])
+  
 
   return (
       <div className="min-h-screen flex items-center justify-center flex-1 overflow-y-auto bg-[#111b21] text-[#f7f8fa] p-3">

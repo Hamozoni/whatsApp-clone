@@ -1,8 +1,10 @@
 
  import api from './axiosInstance';
+ import auth from './firebaseConfig';
 
 
 
- export default {
-    api
+ export {
+    api,
+    auth
  }

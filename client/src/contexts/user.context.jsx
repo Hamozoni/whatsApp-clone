@@ -1,22 +1,38 @@
-import { createContext } from "react";
+import { createContext, useEffect, useState } from "react";
 import auth from "../lib/firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
+
 
 export const UserContext = createContext();
 
 
 const  UserContextProvider =  ({children})=> {
 
-  const user = auth.currentUser;
+     const [isLoading,setIsLoading] = useState(true);
+     const [user,setUser] = useState(null);
 
 
+     useEffect(()=>{
+         setIsLoading(true);
+        const unsubscribe = onAuthStateChanged(auth,async user => {
+            setUser(user)
+        })
+
+        setIsLoading(false);
+
+        return unsubscribe;
+     },[]);
+
+
+
+     
 
       return (
           <UserContext.Provider 
               value={{user}}>
-              {children}
+              {isLoading ? 'wait' : children}
           </UserContext.Provider>
       );
-
 
 };
 

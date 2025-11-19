@@ -1,11 +1,9 @@
 
 import { initializeApp } from "firebase/app";
 import { 
-  getAuth, 
-  GithubAuthProvider,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword ,
-  createUserWithEmailAndPassword
+  browserLocalPersistence,
+  getAuth,
+  setPersistence, 
 }  from "firebase/auth"
 
 const firebaseConfig = {
@@ -22,8 +20,5 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-export const googleProvider = new GoogleAuthProvider();
-export const githobProvider = new GithubAuthProvider();
-export const signInPassword =  new signInWithEmailAndPassword();
-export const createUserWithPassword = new createUserWithEmailAndPassword()
+setPersistence(auth, browserLocalPersistence)
 export default  auth;

@@ -1,4 +1,4 @@
-import api from "../lib/axiosInstance";
+import {api} from "../lib";
 
 
 export const getAllChats = () => api.get('/chat').then(res=> res.data);
