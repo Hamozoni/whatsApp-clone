@@ -1,12 +1,12 @@
 import { createContext } from "react";
-import {getAuth} from 'firebase/auth'
+import auth from "../lib/firebaseConfig";
 
 export const UserContext = createContext();
 
 
 const  UserContextProvider =  ({children})=> {
 
-  const user = getAuth().currentUser;
+  const user = auth.currentUser;
 
 
 

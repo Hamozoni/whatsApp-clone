@@ -1,8 +1,8 @@
 import {useEffect, useState } from "react";
 
 import { Input } from "../../../components/ui/input";
-import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
-import { firebaseAuth } from "../../../lib/firebaseConfig";
+import {signInWithEmailAndPassword} from 'firebase/auth'
+import  auth  from "../../../lib/firebaseConfig";
 import {useNavigate } from "react-router-dom";
 import { SubmitBtn } from "../../../components/ui/submitBtn";
 import {SiginWithPrvider} from "../components/signinWithProdider"
@@ -15,7 +15,6 @@ export default function Signin() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const auth = getAuth();
   const user = auth.currentUser;
 
   const navigate = useNavigate();
@@ -24,7 +23,7 @@ export default function Signin() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(firebaseAuth,email,password)
+      await signInWithEmailAndPassword(auth,email,password)
       .then(()=> {
         setIsLoading(false);
         navigate('/');
