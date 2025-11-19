@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { postCall,updateCall } from "../controllers/call.cotroller.js";
+import { postCall,updateCall } from "../controllers/call.controller.js";
 
 const router = Router();
 

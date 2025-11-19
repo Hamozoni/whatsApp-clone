@@ -1,62 +1,53 @@
 import axios from "axios";
-import { getAuth } from "firebase/auth";
 import auth from "./firebaseConfig";
 
 
-// import.meta.env.VITE_API_URL
 const api = axios.create({
-    baseURL:'http://localhost:4400/api/chat'
+    baseURL:'http://localhost:4400/api',
+    timeout: 5 * 60 * 1000
 })
 
 
 
-api.interceptors.request.use(async (config)=> {
-
-    
-    const Auth =  getAuth(auth);
-    const user = Auth.currentUser;
-
-    console.log(user)
-    if(user){
-        try {
-                const toket = await user.getIdToken();
-                config.headers.Authorization = `Bearer ${toket}`
-            }
-            catch (error){
-                console.error('Error getting token:', error)
-            }
-        }else {
-            location.href = '/auth/signin'
+api.interceptors.request.use(
+    async config => {
+        const user = auth.currentUser;
+        if(user){
+            const token = await user.getIdToken();
+            config.headers.Authorization = `Bearer ${token}`;
         }
-
         return config;
+    },
+    error => {
+        return new Promise.reject(error)
     }
 );
 
-api.interceptors.response.use(
-    response => {
-        console.log(response)
-    },
-    async (error)=> {
-        if(error.response?.status == 401){
-            const Auth =  getAuth(auth);
-            const user = Auth.currentUser;
+api.interceptors.response.use(response => response,
+    async error => {
+        console.log(error);
+
+        if(error.status?.response === 401) {
+            const user = auth.currentUser;
+
             if(user){
-                try {
+                try{
                     const newToken = await user.getIdToken(true);
-                    error.config.headers.Authorization = `Bearer ${newToken}`
-                    return api.request(error.config)
+                    error.config.headers.Authorization = `Bearer ${newToken}`;
+                    return api.request(error.request)
                 }
                 catch {
-                    await Auth.signOut()
-                    location.href = '/auth/signin'
+                    await auth.signOut();
+                    window.location.href = '/auth/signin'
                 }
             }
-        };
+        }
 
-        return Promise.reject(error);
+        return new Promise.reject(error)
     }
-);
+)
+
+
 
 
 export default api;
