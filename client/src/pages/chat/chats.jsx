@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 
 import Contacts  from "../contact/contacts";
@@ -7,11 +7,14 @@ import { MainCard } from "../../components/shared/mainCard";
 import { ChatCardLastMessage } from "./components/chatCardLastMessage";
 import { useChats } from "../../hooks/queries/useChatsApi";
 import { Loading } from "../../components/modal/loading";
+import { UserContext } from "../../contexts";
 
 const Chats = ()=> {
 
     const [searchText,setSearchText] = useState('');
-    const [isContactPage,setIsContcatPage] = useState(false);
+    const [showContactPage,setShowContcatPage] = useState(false);
+
+    const {user} = useContext(UserContext)
 
     const {data : chats, isLoading} = useChats();
 
@@ -26,39 +29,48 @@ const Chats = ()=> {
 
     if(isLoading){
         return <Loading />
+    };
+
+
+    const ChatsList = ()=> {
+        return (
+            
+            chats?.map(chat => {
+                const contact = chat?.participants.filter(e=> e._id === user?._id);
+
+                return (
+                    <MainCard 
+                        key={chat?._id} 
+                        avatarUrl={contact?.photoURL} 
+                        isActive={contact?._id === contactId}
+                        name={contact?.displyName}
+                        time={chat?.lastMessage?.createdAt}
+                        onClick={() => ''}
+                    >
+                        <ChatCardLastMessage 
+                            chat={chat} 
+                            user={user} 
+                            />
+                    </MainCard>
+                )
+            })
+        )
     }
 
     return (
         <div className="flex h-full gap-1 flex-1 overflow-y-auto">
             <section className="flex flex-col rounded-lg  bg-p max-h-full h-full w-full  min-w-[380px] md:w-[380px] max-w-full">
                 {
-                    isContactPage ? 
-                    <Contacts setIsContcatPage={setIsContcatPage} /> : (
+                    showContactPage ? 
+                    <Contacts setIsContcatPage={setShowContcatPage} /> : (
                         <>
                             <ChatsHeader 
-                                setIsContcatPage={setIsContcatPage} 
+                                setIsContcatPage={setShowContcatPage} 
                                 setSearchText={setSearchText}
                                 searchText={searchText}
                                 />
                             <div className="flex-1 h-full max-h-full overflow-y-auto p-3 pt-0">
-                                {
-                                    chats?.map(chat => (
-                                        chat.last_message &&
-                                        <MainCard 
-                                            key={chat?._id} 
-                                            avatarUrl={chat?.contact?.profile_picture} 
-                                            isActive={chat?.contact?._id === contactId}
-                                            name={chat?.contact?.name}
-                                            time={chat?.last_message?.createdAt}
-                                            onClick={() => ''}
-                                        >
-                                            {/* <ChatCardLastMessage 
-                                                chat={chat} 
-                                                user={user} 
-                                                /> */}
-                                        </MainCard>
-                                    ))
-                                }
+                                  <ChatsList />
                             </div>
                         </>
                     )

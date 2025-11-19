@@ -22,7 +22,7 @@ api.interceptors.request.use(async (config)=> {
                 console.error('Error getting token:', error)
             }
         }else {
-            location.href = '/auht/signin'
+            location.href = '/auth/signin'
         }
 
 

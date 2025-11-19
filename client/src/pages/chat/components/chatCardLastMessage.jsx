@@ -7,30 +7,30 @@ export const ChatCardLastMessage = ({chat,user}) => {
         <div className="flex justify-between items-center">
             <div className="text-sm text-[#667781] truncate flex items-center gap-2">
                 {
-                    (user?._id === chat?.last_message?.sender?._id && chat?.last_message.type !== 'CALL') && 
+                    (user?._id === chat?.lastMessage?.sender?._id && chat?.lastMessage.type !== 'CALL') && 
                     (
-                        <span className={chat?.last_message?.status === 'READ' ? 'text-emerald-400' : ''}>
-                            {chat?.last_message?.status === 'SENT' ? '✓ ' :  '✓✓ ' }
+                        <span className={chat?.lastMessage?.status === 'READ' ? 'text-emerald-400' : ''}>
+                            {chat?.lastMessage?.status === 'SENT' ? '✓ ' :  '✓✓ ' }
                         </span>
                     )
                 }
                 {
                     chat?.last_message.type === 'MEDIA' ? (
-                        chat?.last_message?.file?.type === 'AUDIO' ?
+                        chat?.lastMessage?.mediaMeta?.type === 'AUDIO' ?
                         <><FaMicrophone /> Audio</>: 
-                        chat?.last_message?.file?.type === 'VIDEO' ?
+                        chat?.lastMessage?.mediaMeta?.type === 'VIDEO' ?
                         <><FaVideo /> Video</>:
-                        chat?.last_message?.file?.type === 'IMAGE' ?
+                        chat?.lastMessage?.mediaMeta?.type === 'IMAGE' ?
                         <><FaRegImage /> Photo</>  : 
                         <> <BsFillFileEarmarkPdfFill /> 
-                           <span className=" line-clamp-1"> {chat.last_message.file.name} </span> 
+                           <span className=" line-clamp-1"> {chat.lastMessage.mediaMeta.name} </span> 
                         </> 
                     ) : 
-                    chat?.last_message.type === 'CALL' &&
-                    <CallNotificationCard call={chat?.last_message?.call} />
+                    chat?.lastMessage.type === 'CALL' &&
+                    <CallNotificationCard call={chat?.lastMessage?.call} />
                 }
                 <span className=" line-clamp-1 max-w-full">
-                    {chat?.last_message?.text?.slice(0,30)}{chat?.last_message?.text?.length > 29 ? '...': ''}
+                    {chat?.lastMessage?.text?.slice(0,30)}{chat?.lastMessage?.text?.length > 29 ? '...': ''}
                 </span>
             </div> 
         </div>

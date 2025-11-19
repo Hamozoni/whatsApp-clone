@@ -21,6 +21,7 @@ export const useChannelDetails = channelId => {
         queryKey: queryKeys.channelDetails(channelId),
         queryFn: ()=> getChannelDetails(channelId),
         staleTime: 5 * 60 * 1000,
+        keepPreviousData: true,
         enabled: !!channelId
     })
 }

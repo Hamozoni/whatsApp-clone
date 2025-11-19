@@ -22,6 +22,7 @@ export const useStatusDetails = statusId => {
         queryKey: queryKeys.statusDetails(statusId),
         queryFn: () => getStatusDetails(statusId),
         staleTime: 5 * 60 * 1000,
+        keepPreviousData: true,
         enabled: !!statusId
     });
 };

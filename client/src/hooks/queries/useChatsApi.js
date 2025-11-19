@@ -1,5 +1,5 @@
 import {useQuery} from '@tanstack/react-query';
-import {getAllChats,getChatDetails} from '../../services/apiServices';
+import { getAllChats ,getChatDetals} from '../../services/apiServices';
 
 export const queryKeys = {
     chats: ['chats'],
@@ -9,7 +9,7 @@ export const queryKeys = {
 export const useChats  = ()=> {
     return useQuery({
         queryKey: queryKeys.chats,
-        queryFn: getAllChats,
+        queryFn:  getAllChats ,
         staleTime: 5 * 60 * 1000,
     })
 };
@@ -18,8 +18,9 @@ export const useChats  = ()=> {
 export const useChatDetails = chatId => {
     return useQuery({
         queryKey: queryKeys.chatDetails(chatId),
-        queryFn: () => getChatDetails(chatId),
+        queryFn: () => getChatDetals(chatId),
         staleTime: 5 * 60 * 1000,
+        keepPreviousData: true,
         enabled: !!chatId
     });
 };

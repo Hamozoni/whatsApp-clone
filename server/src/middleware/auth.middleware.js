@@ -4,6 +4,7 @@ import User from '../models/user.model.js';
 const authMiddleware = async (req,res,next)=> {
 
     try {
+        console.log('yes')
 
         const auth_header = req.headers.authorization;
         
@@ -33,6 +34,8 @@ const authMiddleware = async (req,res,next)=> {
         };
 
         req.user = user;
+
+        console.log(user)
 
         next();
 

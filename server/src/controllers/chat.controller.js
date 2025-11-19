@@ -5,7 +5,13 @@ export const getAllChats = async (req,res,next) => {
     const user_id = req.user._id;
 
     try {
-        const chats = await Chat.find({participants: {$in: user_id}});
+        const chats = await Chat.find({participants: {$in: user_id}})
+        .populate({
+            path: 'participants',
+            select: '_id firebaseUid displyName photoURL'
+        });
+
+        console.log(chats)
         return res.status(200).json(chats);
     }
     catch (error) {
@@ -19,8 +25,6 @@ export const getChatDetails = async (req,res,next)=> {
     const chatId = req.params;
     const user_id = req.user._id;
     const {page,limit} = req.query;
-
-
 
     try {
         const chat = await Chat.findById(chatId)

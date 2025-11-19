@@ -1,18 +1,18 @@
 import { createContext } from "react";
-import { Loading } from "../components/modal/loading";
+import {getAuth} from 'firebase/auth'
 
 export const UserContext = createContext();
 
 
 const  UserContextProvider =  ({children})=> {
 
+  const user = getAuth().currentUser;
+
+
 
       return (
           <UserContext.Provider 
-              value={
-                {
-                }
-              }>
+              value={{user}}>
               {children}
           </UserContext.Provider>
       );
