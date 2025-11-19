@@ -16,7 +16,7 @@ const Chats = ()=> {
 
     const {user} = useContext(UserContext)
 
-    const {data : chats, isLoading} = useChats();
+    const {data, isLoading} = useChats();
 
     const {contactId} = useParams();
 
@@ -31,11 +31,13 @@ const Chats = ()=> {
         return <Loading />
     };
 
+    console.log(data)
+
 
     const ChatsList = ()=> {
         return (
             
-            chats?.map(chat => {
+            data?.map(chat => {
                 const contact = chat?.participants.filter(e=> e._id === user?._id);
 
                 return (

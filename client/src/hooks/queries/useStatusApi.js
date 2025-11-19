@@ -13,6 +13,7 @@ export const useStatus =() => {
         queryKey: queryKeys.status,
         queryFn: getAllStatus,
         staleTime: 5 * 60 * 1000,
+        refetchOnWindowFocus: false,
     });
 };
 
@@ -23,6 +24,7 @@ export const useStatusDetails = statusId => {
         queryFn: () => getStatusDetails(statusId),
         staleTime: 5 * 60 * 1000,
         keepPreviousData: true,
+        refetchOnWindowFocus: false,
         enabled: !!statusId
     });
 };

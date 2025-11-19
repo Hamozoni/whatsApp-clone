@@ -13,6 +13,7 @@ export const useChannels = ()=> {
         queryKey: queryKeys.channels,
         queryFn: getAllChannels,
         staleTime: 5 * 60 * 1000,
+        refetchOnWindowFocus: false,
     });
 };
 
@@ -22,6 +23,7 @@ export const useChannelDetails = channelId => {
         queryFn: ()=> getChannelDetails(channelId),
         staleTime: 5 * 60 * 1000,
         keepPreviousData: true,
+        refetchOnWindowFocus: false,
         enabled: !!channelId
     })
 }

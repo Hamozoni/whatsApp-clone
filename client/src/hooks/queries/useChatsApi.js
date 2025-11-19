@@ -11,6 +11,7 @@ export const useChats  = ()=> {
         queryKey: queryKeys.chats,
         queryFn:  getAllChats ,
         staleTime: 5 * 60 * 1000,
+        refetchOnWindowFocus: false,
     })
 };
 
@@ -21,6 +22,7 @@ export const useChatDetails = chatId => {
         queryFn: () => getChatDetals(chatId),
         staleTime: 5 * 60 * 1000,
         keepPreviousData: true,
+        refetchOnWindowFocus: false,
         enabled: !!chatId
     });
 };

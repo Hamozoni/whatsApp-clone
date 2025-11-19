@@ -5,5 +5,6 @@ export const useCall = ()=> {
     return useQuery({
         queryKey: ['calls'],
         queryFn: ()=>  getAllCalls(),
+        refetchOnWindowFocus: false,
     });
 };

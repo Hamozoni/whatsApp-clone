@@ -14,6 +14,7 @@ const authMiddleware = async (req,res,next)=> {
 
         const id_token = auth_header.split('Bearer ')[1];
         const decoded_token = await admin.auth().verifyIdToken(id_token);
+        console.log(decoded_token)
 
         let user = await User.findOne({firebaseUid: decoded_token?.uid});
 
@@ -32,7 +33,6 @@ const authMiddleware = async (req,res,next)=> {
             user.lastLoginAt = Date.now();
             await user.save()
         };
-        console.log(user)
 
         req.user = user;
 
@@ -41,7 +41,7 @@ const authMiddleware = async (req,res,next)=> {
 
     }
     catch (error){
-        console.log(error)
+        console.log(error.message)
         return res.status(401).json({message: 'invalid token'});
     }
 };

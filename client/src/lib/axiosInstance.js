@@ -3,10 +3,10 @@ import { getAuth } from "firebase/auth";
 import auth from "./firebaseConfig";
 
 
+// import.meta.env.VITE_API_URL
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
-    timeout: 15000
-});
+    baseURL:'http://localhost:4400/api/chat'
+})
 
 
 
@@ -15,6 +15,8 @@ api.interceptors.request.use(async (config)=> {
     
     const Auth =  getAuth(auth);
     const user = Auth.currentUser;
+
+    console.log(user)
     if(user){
         try {
                 const toket = await user.getIdToken();
@@ -32,7 +34,9 @@ api.interceptors.request.use(async (config)=> {
 );
 
 api.interceptors.response.use(
-    response => response,
+    response => {
+        console.log(response)
+    },
     async (error)=> {
         if(error.response?.status == 401){
             const Auth =  getAuth(auth);

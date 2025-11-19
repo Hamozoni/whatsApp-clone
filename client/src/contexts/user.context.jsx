@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import auth from "../lib/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
+import {Loading} from '../components/modal/loading'
 
 
 export const UserContext = createContext();
@@ -30,7 +31,7 @@ const  UserContextProvider =  ({children})=> {
       return (
           <UserContext.Provider 
               value={{user}}>
-              {isLoading ? 'wait' : children}
+              {isLoading ? <Loading /> : children}
           </UserContext.Provider>
       );
 
