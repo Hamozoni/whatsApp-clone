@@ -65,9 +65,9 @@ const MainSetting = ()=> {
                         to='profile'
                         className="flex items-center w-full gap-2 my-4 cursor-pointer p-3 rounded-lg border border-transparent hover:border-[#3b535c] hover:bg-[#1d2c31]"
                         >
-                        <Avatar size='lg' user_photo={user?.photoURL} />
+                        <Avatar size='lg' userPhoto={user?.photoURL} />
                         <div className="flex-1 text-start">
-                            <h6 className='capitalize'>{user?.name}</h6>
+                            <h6 className='capitalize'>{user?.displyName}</h6>
                             <span  className='text-xs line-clamp-1 text-gray-400'>
                                 {user?.about || 'active'}
                             </span>

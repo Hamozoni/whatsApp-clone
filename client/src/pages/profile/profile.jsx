@@ -1,4 +1,4 @@
-import { ProfileForm } from "../../components/ui/ProfileForm";
+import { ProfileForm } from "./components/ProfileForm";
 import { PiUserCircleFill } from "react-icons/pi";
 import { RoundedBtn } from "../../components/ui/roundedBtn";
 import { MdArrowBack } from "react-icons/md";

@@ -1,15 +1,15 @@
 import { useContext, useState } from "react";
-import { UserContext } from "../../contexts/user.context";
+import { UserContext } from "../../../contexts";
 import { ImFilePicture } from "react-icons/im";
 import { MdOutlineEdit,MdCheck } from "react-icons/md";
-import { Avatar } from "./avatar";
+import { Avatar } from "../../../components/ui/avatar";
 
 
 export const ProfileForm = ()=> {
 
         const { user } = useContext(UserContext);
-        const [userAvatarURL, setUserAvatarURL] = useState(user?.profile_picture);
-        const [name, setName] = useState(user?.name);
+        const [userAvatarURL, setUserAvatarURL] = useState(user?.photoURL);
+        const [name, setName] = useState(user?.displayName);
         const [isEditName, setIsEditName] = useState(false);
         const [isEditAbout, setIsEditAbout] = useState(false);
         const [about, setAbout] = useState(user?.about);
@@ -26,11 +26,11 @@ export const ProfileForm = ()=> {
               <label className="my-8 text-gray-400 text-xl">{label}</label>
               <div className={`${isEdit ? ' border-b-amber-300' : 'border-b-transparent'} border-b flex justify-center items-center`}>
                   <input
-                     disabled={!isEdit}
-                    className="w-full flex-1"
-                    type="text" 
-                    value={value} 
-                    onChange={(e)=> setValue(e.target.value)}
+                      disabled={!isEdit}
+                      className="w-full flex-1"
+                      type="text" 
+                      value={value} 
+                      onChange={(e)=> setValue(e.target.value)}
                     />
                     <div className="">
                         {
