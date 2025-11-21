@@ -1,7 +1,7 @@
-import { BsChatText } from "react-icons/bs";
 import { IoCallOutline,IoSettingsOutline } from "react-icons/io5";
 import { SiGradleplaypublisher } from "react-icons/si";
-import { GrChannel } from "react-icons/gr";
+import { RiChatVoiceLine } from "react-icons/ri";
+import { RiQuestionAnswerFill } from "react-icons/ri";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/user.context";
 import { NavbarIcon } from "./navbarIcon";
@@ -9,10 +9,10 @@ import { Avatar } from "../ui/avatar";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const options = [
-    {Icon: BsChatText,text: 'chats'},
+    {Icon: RiQuestionAnswerFill,text: 'chats'},
     {Icon: IoCallOutline,text: 'calls'},
     {Icon: SiGradleplaypublisher,text: 'status'},
-    {Icon: GrChannel,text: 'channels'},
+    {Icon: RiChatVoiceLine,text: 'channels'},
 ]
 
 export const Navbar = ()=>  {
@@ -36,7 +36,7 @@ export const Navbar = ()=>  {
                             key={text} 
                             Icon={Icon} 
                             text={text} 
-                                />
+                        />
                     ))
                 }
             </div >
