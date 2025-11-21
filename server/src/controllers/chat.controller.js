@@ -8,7 +8,7 @@ export const getAllChats = async (req,res,next) => {
         const chats = await Chat.find({participants: {$in: user_id}})
         .populate({
             path: 'participants',
-            select: '_id firebaseUid displyName photoURL'
+            select: '_id firebaseUid displyName photoURL bio'
         });
 
         console.log(chats)
@@ -24,7 +24,7 @@ export const getChatDetails = async (req,res,next)=> {
 
     const chatId = req.params;
     const user_id = req.user._id;
-    const {page,limit} = req.query;
+    const {page = 1,limit = 30} = req.query;
 
     try {
         const chat = await Chat.findById(chatId)
@@ -38,7 +38,7 @@ export const getChatDetails = async (req,res,next)=> {
         })
         .populate({
             path: 'participants',
-            select: '_id firebaseUid displyName photoURL'
+            select: '_id firebaseUid displyName photoURL bio'
         });
 
         if(chat.participants.includes(user_id)){

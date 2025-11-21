@@ -4,29 +4,35 @@ import User from '../models/user.model.js';
 const authMiddleware = async (req,res,next)=> {
 
     try {
-        console.log('yes')
 
-        const auth_header = req.headers.authorization;
+        const authHeader = req.headers.authorization;
         
-        if(!auth_header || !auth_header.startsWith('Bearer ')) {
+        if(!authHeader || !authHeader.startsWith('Bearer ')) {
             return res.status(401).json({message: 'unauthorized'})
         };
 
-        const id_token = auth_header.split('Bearer ')[1];
-        const decoded_token = await admin.auth().verifyIdToken(id_token);
-        console.log(decoded_token)
+        const idToken = authHeader.split('Bearer ')[1];
+        const decodedToken = await admin.auth().verifyIdToken(idToken);
 
-        let user = await User.findOne({firebaseUid: decoded_token?.uid});
+        let user = await User.findOne({firebaseUid: decodedToken?.uid})
+        .populate({
+            path: 'contacts',
+            select: '_id firebaseUid displyName photoURL bio'
+        })
+        .populate({
+            path: 'blockedContacts',
+            select: '_id firebaseUid displyName photoURL bio'
+        })
 
         if(!user){
             user = await User.create({
-                displayName: decoded_token.name,
-                email: decoded_token.email,
-                about: decoded_token?.about || 'Hey there! I am using WhatsApp.',
-                emailVerified: decoded_token.email_verified,
-                photoURL: decoded_token?.picture,
-                photoURLId:decoded_token?.photoURLId || null ,
-                firebaseUid: decoded_token.uid,
+                displayName: decodedToken.name,
+                email: decodedToken.email,
+                bio: decodedToken?.bio || 'Hey there! I am using WhatsApp.',
+                emailVerified: decodedToken.email_verified,
+                photoURL: decodedToken?.picture,
+                photoURLId:decodedToken?.photoURLId || null ,
+                firebaseUid: decodedToken.uid,
                 lastLoginAt: Date.now()
             });
         }else {
