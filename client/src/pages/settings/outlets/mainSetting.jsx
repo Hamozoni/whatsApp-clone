@@ -67,9 +67,9 @@ const MainSetting = ()=> {
                         >
                         <Avatar size='lg' userPhoto={user?.photoURL} />
                         <div className="flex-1 text-start">
-                            <h6 className='capitalize'>{user?.displyName}</h6>
+                            <h6 className='capitalize'>{user?.displayName}</h6>
                             <span  className='text-xs line-clamp-1 text-gray-400'>
-                                {user?.about || 'active'}
+                                {user?.bio || 'active'}
                             </span>
                         </div>
                     </Link>

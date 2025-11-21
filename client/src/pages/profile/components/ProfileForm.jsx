@@ -12,7 +12,7 @@ export const ProfileForm = ()=> {
         const [name, setName] = useState(user?.displayName);
         const [isEditName, setIsEditName] = useState(false);
         const [isEditAbout, setIsEditAbout] = useState(false);
-        const [about, setAbout] = useState(user?.about);
+        const [bio, setBio] = useState(user?.bio);
 
  const handleChangeAvatar = (e) => {
     const file = e.target.files?.[0];
@@ -87,8 +87,8 @@ export const ProfileForm = ()=> {
               <Input     
                 isEdit={isEditAbout}
                 setIsEdit={setIsEditAbout}
-                setValue={setAbout}
-                value={about}
+                setValue={setBio}
+                value={bio}
                 label='About'
                 />
           </div>

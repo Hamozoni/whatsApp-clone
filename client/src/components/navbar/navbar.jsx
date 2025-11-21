@@ -48,7 +48,7 @@ export const Navbar = ()=>  {
                 <button   className={` ${pathname === '/profile' ?  'text-emerald-400' :'text-[#f7f8fa]'} flex flex-col items-center justify-center`}>
                     <div 
                         onClick={()=> navigate('/profile')}>
-                        <Avatar  userPhoto={user?.profile_picture} />
+                        <Avatar  userPhoto={user?.photoURL} />
                     </div>
                 </button>
             </div>

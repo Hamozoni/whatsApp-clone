@@ -17,9 +17,9 @@ const  UserContextProvider =  ({children})=> {
          setIsLoading(true);
         const unsubscribe = onAuthStateChanged(auth,async user => {
             setUser(user)
+            setIsLoading(false);
         })
 
-        setIsLoading(false);
 
         return unsubscribe;
      },[]);

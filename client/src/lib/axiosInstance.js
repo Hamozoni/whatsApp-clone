@@ -15,6 +15,8 @@ api.interceptors.request.use(
         if(user){
             const token = await user.getIdToken();
             config.headers.Authorization = `Bearer ${token}`;
+        }else {
+            window.location.href = '/auth/signin'
         }
         return config;
     },
@@ -40,6 +42,8 @@ api.interceptors.response.use(response => response,
                     await auth.signOut();
                     window.location.href = '/auth/signin'
                 }
+            }else {
+                window.location.href = '/auth/signin'
             }
         }
 
