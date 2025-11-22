@@ -4,7 +4,7 @@ const NoActiveChat = ()=> {
         <div className="text-[#f7f8fa] flex-1 rounded-lg mr-1 bg-[#162127]">
             <div className="flex flex-col justify-center items-center h-full max-h-full">
                 <img 
-                    src={'/chat_window.png'} 
+                    src='../../../../public/chat_window.png' 
                     width={300} 
                     height={300} 
                     alt='chat window' 
