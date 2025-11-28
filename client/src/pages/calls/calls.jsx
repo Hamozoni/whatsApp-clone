@@ -7,7 +7,7 @@ import { SearchInput } from "../../components/ui/searchInput";
 import { MainCard } from "../../components/shared/mainCard";
 import { CallNotificationCard } from "../../components/shared/callNotificationCard";
 import { Loading } from "../../components/modal/loading";
-import { useCall } from "../../hooks/queries/useCallsApi";
+import { useGetAllCalls } from "../../hooks/queries/useCallsApi";
 
 const Calls = () => {
 
@@ -17,7 +17,7 @@ const Calls = () => {
 
     };
 
-    const { data: calls, isLoading } = useCall();
+    const { data: calls, isLoading } = useGetAllCalls();
 
     if (isLoading) return <Loading />;
 

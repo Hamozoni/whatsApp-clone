@@ -8,7 +8,7 @@ import { Avatar } from "../../components/ui/avatar";
 import { SiGradleplaypublisher } from "react-icons/si";
 import { MdLockOutline } from "react-icons/md";
 import { CloseModel } from "../../components/modal/closeModel";
-import { useStatus } from "../../hooks/queries/useStatusApi";
+import { useGetAllStatus } from "../../hooks/queries/useStatusApi";
 import { Loading } from "../../components/modal/loading";
 
 
@@ -17,7 +17,7 @@ const Status = () => {
     const { user } = useContext(UserContext);
     const [isUpdate, setIsUpdate] = useState(false);
 
-    const { data: status, isLoading } = useStatus();
+    const { data: status, isLoading } = useGetAllStatus();
 
     if (isLoading) <Loading />;
 

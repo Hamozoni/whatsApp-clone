@@ -1,24 +1,24 @@
-import {useQuery} from '@tanstack/react-query';
-import { getAllChats ,getChatDetals} from '../../services/apiServices';
+import { useQuery } from '@tanstack/react-query';
+import { getAllChats, getChatDetals } from '../../services/apiServices';
 
 export const queryKeys = {
     chats: ['chats'],
-    chatDetails: chatId => ['chatDetails',chatId],
+    chat: chatId => ['chat', chatId],
 };
 
-export const useChats  = ()=> {
+export const useGetAllChats = () => {
     return useQuery({
         queryKey: queryKeys.chats,
-        queryFn:  getAllChats ,
+        queryFn: getAllChats,
         staleTime: 5 * 60 * 1000,
         refetchOnWindowFocus: false,
     })
 };
 
 
-export const useChatDetails = chatId => {
+export const useGetChat = chatId => {
     return useQuery({
-        queryKey: queryKeys.chatDetails(chatId),
+        queryKey: queryKeys.chat(chatId),
         queryFn: () => getChatDetals(chatId),
         staleTime: 5 * 60 * 1000,
         keepPreviousData: true,

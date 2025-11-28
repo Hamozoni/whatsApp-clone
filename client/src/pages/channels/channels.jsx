@@ -7,7 +7,7 @@ import { NewChannelForm } from "./components/newChannelForm";
 import { MainCard } from "../../components/shared/mainCard";
 import { CloseModel } from "../../components/modal/closeModel";
 import { CreateChannelAlert } from "../../components/modal/createChannelAlert";
-import { useChannels } from "../../hooks/queries/useChannelsApi";
+import { useGetAllChannels } from "../../hooks/queries/useChannelsApi";
 import { Loading } from "../../components/modal/loading";
 
 const Channels = () => {
@@ -18,7 +18,7 @@ const Channels = () => {
     const [isCreateChannel, setIsCreateChannel] = useState(false);
     const [isNewChannel, setIsNewChannel] = useState(false);
 
-    const { data: channels, isLoading } = useChannels()
+    const { data: channels, isLoading } = useGetAllChannels();
 
 
     if (isLoading) {

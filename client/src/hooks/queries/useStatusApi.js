@@ -8,7 +8,7 @@ const queryKeys = {
 };
 
 
-export const useStatus = () => {
+export const useGetAllStatus = () => {
     return useQuery({
         queryKey: queryKeys.status,
         queryFn: getAllStatus,
@@ -18,7 +18,7 @@ export const useStatus = () => {
 };
 
 
-export const useStatusDetails = statusId => {
+export const useGetStatus = statusId => {
     return useQuery({
         queryKey: queryKeys.statusDetails(statusId),
         queryFn: () => getStatusDetails(statusId),
