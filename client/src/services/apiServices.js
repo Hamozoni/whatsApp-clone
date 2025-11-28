@@ -1,7 +1,7 @@
 import { api } from "../lib";
 
-export const getUserByEmail = (email) => api.get(`/user/${email}`).then(res => res.data);
-export const getAllUsers = () => api.get('/user').then(res => res.data);
+export const getContact = (email) => api.get(`/contact/${email}`).then(res => res.data);
+export const getAllContacts = () => api.get('/contact').then(res => res.data);
 export const getAllChats = () => api.get('/chat').then(res => res.data);
 export const getChatDetals = (chatId, params = {}) => api.get(`/chat/${chatId}`, { params }).then(res => res.data);
 

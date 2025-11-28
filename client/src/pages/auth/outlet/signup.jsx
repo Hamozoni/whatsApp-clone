@@ -1,16 +1,16 @@
 
-import {useState } from "react";
+import { useState } from "react";
 
 import { SiginWithPrvider } from "../components/signinWithProdider";
 import { Input } from "../../../components/ui/input";
-import {createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { auth } from "../../../lib";
 import { useNavigate } from "react-router-dom";
 import { SubmitBtn } from "../../../components/ui/submitBtn";
 
 
 export default function Signup() {
-  
+
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -44,16 +44,20 @@ export default function Signup() {
     setError(null);
 
     try {
-     
-        await createUserWithEmailAndPassword(auth, email, password);
-         navigate('/chats');
-      
-      } catch (err) {
-        setError(err.message);
-        console.log(error)
-      } finally {
-        setLoading(false);
-      }
+
+      await createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          updateProfile(user, { displayName: name, bio: "" });
+        })
+      navigate('/chats');
+
+    } catch (err) {
+      setError(err.message);
+      console.log(error)
+    } finally {
+      setLoading(false);
+    }
   };
 
 
@@ -66,46 +70,46 @@ export default function Signup() {
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            <Input 
-                label='Full Name' 
-                type='text' 
-                value={name} 
-                set_value={setName} 
-                placeholder="Full Name" 
-                required={true}
-              />
-            
-            <Input 
-                label='Email address' 
-                type='email' 
-                value={email} 
-                set_value={setEmail} 
-                placeholder="Email address" 
-                required={true}
-              />
-            <Input 
-                label='Password' 
-                type='password' 
-                value={password} 
-                set_value={setPassword} 
-                placeholder="Password" 
-                required={true}
-              />
-            <Input 
-                label='Confirm Password' 
-                type='password' 
-                value={confirmPassword}
-                set_value={setConfirmPassword} 
-                placeholder=" Confirm Password" 
-                required={true}
-              />
+          <Input
+            label='Display Name'
+            type='text'
+            value={name}
+            set_value={setName}
+            placeholder="Display Name"
+            required={true}
+          />
+
+          <Input
+            label='Email address'
+            type='email'
+            value={email}
+            set_value={setEmail}
+            placeholder="Email address"
+            required={true}
+          />
+          <Input
+            label='Password'
+            type='password'
+            value={password}
+            set_value={setPassword}
+            placeholder="Password"
+            required={true}
+          />
+          <Input
+            label='Confirm Password'
+            type='password'
+            value={confirmPassword}
+            set_value={setConfirmPassword}
+            placeholder=" Confirm Password"
+            required={true}
+          />
 
           {error && (
             <p className="text-red-500 text-sm text-center">{error}</p>
           )}
-           <SubmitBtn text='sign up' isLoading={loading} /> 
+          <SubmitBtn text='sign up' isLoading={loading} />
         </form>
-        <SiginWithPrvider link_to='/auth/signin'/>
+        <SiginWithPrvider link_to='/auth/signin' />
       </div>
     </div>
   );

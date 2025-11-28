@@ -2,17 +2,58 @@ import { useState } from "react"
 import { ContactHeader } from "./contactHeader"
 import { Input } from "../../../components/ui/input"
 import { MainCard } from "../../../components/shared/mainCard";
-import { SubmitBtn } from "../../../components/ui/submitBtn"
-import { useGetAllUsers, useGetUserByEmail } from "../../../hooks/queries/useUser";
+import { SubmitBtn } from "../../../components/ui/submitBtn";
+import { useGetContact } from "../../../hooks/queries/useContactsApi";
+import { Loading } from "../../../components/modal/loading";
+
+
+const Contact = ({ email, contacts }) => {
+    const { data: contact, error, isLoading } = useGetContact(email);
+
+    console.log(contact)
+    if (isLoading) return <Loading />
+    return (
+        <div className="bt-3">
+            <h6 className="p-3">
+                search result :
+            </h6>
+            <MainCard
+                avatarUrl={contact?.photoURL}
+                name={contact?.displayName}
+            >
+                <span className="text-xs text-gray-400">
+                    {contact?.bio}
+                </span>
+            </MainCard>
+            {(contact && error) && (
+                <p className="text-red-500 text-sm text-center mb-3">
+                    {error}
+                </p>
+            )}
+            {
+                contacts?.find(e => e.email === contact?.email) &&
+                <form onSubmit={handleAddingContact} className="p-3">
+                    <SubmitBtn text='Add To Your Contact ' isLoading={isLoading} />
+                </form>
+
+            }
+        </div>
+    )
+}
 
 export const NewContact = ({ setIsNewContact, contacts }) => {
 
 
-    const [email, setEmail] = useState('');
-    const [contact, setContact] = useState(null);
-    const [error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    // const { data: contact, error, isLoading } = useGetUserByEmail(email);
+    const [email, setEmail] = useState(null);
+    const [contact, setContact] = useState(false);
+
+    const handleFindContact = (e) => {
+        e.preventDefault();
+
+        setEmail(e.target.value);
+        setContact(true);
+
+    }
 
     return (
         <div className="hide_model">
@@ -21,7 +62,7 @@ export const NewContact = ({ setIsNewContact, contacts }) => {
                 setIsContcatPage={setIsNewContact}
             />
             <form
-                onSubmit={() => ''}
+                onSubmit={(e) => handleFindContact(e)}
                 className="p-3 hide_model"
             >
                 <Input
@@ -30,48 +71,18 @@ export const NewContact = ({ setIsNewContact, contacts }) => {
                     set_value={setEmail}
                     placeholder='exable@gmail.com'
                 />
-                {(!contact && error) && (
-                    <p className="text-red-500 text-sm text-center mb-3">
-                        {error}
-                    </p>
-                )}
+
                 {
-                    contact?.email !== email &&
+                    !contact &&
                     <SubmitBtn
                         text='find contact'
-                        isLoading={isLoading}
+                        isLoading={false}
                     />
                 }
             </form>
 
             {
-                contact && (
-                    <div className="bt-3">
-                        <h6 className="p-3">
-                            search result :
-                        </h6>
-                        <MainCard
-                            avatarUrl={contact?.photoURL}
-                            name={contact?.name}
-                        >
-                            <span className="text-xs text-gray-400">
-                                {contact?.about}
-                            </span>
-                        </MainCard>
-                        {(contact && error) && (
-                            <p className="text-red-500 text-sm text-center mb-3">
-                                {error}
-                            </p>
-                        )}
-                        {
-                            !contacts?.find(e => e.email === contact?.email) &&
-                            <form onSubmit={handleAddingContact} className="p-3">
-                                <SubmitBtn text='Add To Your Contact ' isLoading={isLoading} />
-                            </form>
-
-                        }
-                    </div>
-                )
+                (contact && email) && <Contact email={email} contacts={contacts} />
             }
 
         </div>

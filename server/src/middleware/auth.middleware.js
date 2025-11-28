@@ -14,6 +14,8 @@ const authMiddleware = async (req, res, next) => {
         const idToken = authHeader.split('Bearer ')[1];
         const decodedToken = await admin.auth().verifyIdToken(idToken);
 
+        console.log(decodedToken)
+
         let user = await User.findOne({ firebaseUid: decodedToken?.uid })
             .populate({
                 path: 'contacts',

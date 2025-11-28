@@ -1,25 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllUsers, getUserByEmail } from "../../services/apiServices";
+import { getAllContacts, getContact } from "../../services/apiServices";
 
 
 const queryKeys = {
     users: ['users'],
-    user: user_email => ['user', user_email]
+    user: email => ['user', email]
 };
 
-export const useGetAllUsers = () => {
+export const useGetAllContacts = () => {
     return useQuery({
         queryKey: queryKeys.users,
-        queryFn: getAllUsers,
+        queryFn: getAllContacts,
         staleTime: 5 * 60 * 1000,
         refetchOnWindowFocus: false,
     })
 };
 
-export const useGetUserByEmail = email => {
+export const useGetContact = email => {
     return useQuery({
         queryKey: queryKeys.user(email),
-        queryFn: () => getUserByEmail(email),
+        queryFn: () => getContact(email),
         staleTime: 5 * 60 * 1000,
         refetchOnWindowFocus: false,
     })

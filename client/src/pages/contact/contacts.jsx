@@ -5,7 +5,7 @@ import { NewContact } from "./components/newContact";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ContactList from "./components/contactList";
-import { useGetAllUsers } from "../../hooks/queries/useUser";
+import { useGetAllContacts } from "../../hooks/queries/useContactsApi";
 import { Loading } from "../../components/modal/loading";
 
 const Button = ({ Icon, text, handle_cleck }) => {
@@ -26,7 +26,7 @@ const Button = ({ Icon, text, handle_cleck }) => {
 
 const Contacts = ({ setIsContcatPage }) => {
 
-    const { data: contacts, isLoading, error } = useGetAllUsers();
+    const { data: contacts, isLoading, error } = useGetAllContacts();
 
     const [searchText, setSearchText] = useState('');
     const [isNewContact, setIsNewContact] = useState(false);
