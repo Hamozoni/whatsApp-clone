@@ -8,12 +8,18 @@ import { Avatar } from "../../components/ui/avatar";
 import { SiGradleplaypublisher } from "react-icons/si";
 import { MdLockOutline } from "react-icons/md";
 import { CloseModel } from "../../components/modal/closeModel";
+import { useStatus } from "../../hooks/queries/useStatusApi";
+import { Loading } from "../../components/modal/loading";
 
 
-const Status = ()=> {
+const Status = () => {
 
-    const {user,status} = useContext(UserContext);
-    const [isUpdate,setIsUpdate] = useState(false);
+    const { user } = useContext(UserContext);
+    const [isUpdate, setIsUpdate] = useState(false);
+
+    const { data: status, isLoading } = useStatus();
+
+    if (isLoading) <Loading />;
 
     return (
         <div className="flex h-full gap-1 flex-1 overflow-y-auto">
@@ -21,14 +27,14 @@ const Status = ()=> {
                 <header className="relative h-fit">
                     <div className="flex items-center justify-between">
                         <h4 className="text-xl font-bold mb-3">Status</h4>
-                        <button onClick={()=> setIsUpdate(!isUpdate)} className="rounded-full border border-white">
-                            <GrFormAdd size={20}/>
+                        <button onClick={() => setIsUpdate(!isUpdate)} className="rounded-full border border-white">
+                            <GrFormAdd size={20} />
                         </button>
                     </div>
-                    <div 
-                        onClick={()=> setIsUpdate(!isUpdate)} 
+                    <div
+                        onClick={() => setIsUpdate(!isUpdate)}
                         className="flex gap-2 cursor-pointer"
-                        >
+                    >
                         <div className="relative">
                             <Avatar size="lg" user_photo={user?.profile_picture} />
                             <button className=" absolute right-0 bottom-0 rounded-full border border-cyan-950 bg-emerald-500">
@@ -41,26 +47,26 @@ const Status = ()=> {
                         </div>
                     </div>
                     {
-                        isUpdate && 
+                        isUpdate &&
                         <>
                             <CloseModel setCloseModel={setIsUpdate} />
-                            <StatusMenuModel setFile={setFile} setStatusType={setStatusType}/>
+                            <StatusMenuModel setFile={setFile} setStatusType={setStatusType} />
 
                         </>
-                    
+
                     }
 
                 </header>
                 <div className="">
-                     <h6 className="my-4">
+                    <h6 className="my-4">
                         Recent
-                     </h6>
+                    </h6>
                     <div className="">
                         {
-                            status?.map((st)=> (
+                            status?.map((st) => (
                                 <StatusCard
-                                    length={st.length} 
-                                    key={st[0]?._id} 
+                                    length={st.length}
+                                    key={st[0]?._id}
                                     status={st} />
                             ))
                         }

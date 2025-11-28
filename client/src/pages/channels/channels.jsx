@@ -1,24 +1,29 @@
 import { useState } from "react";
 import { GrChannel } from "react-icons/gr";
-import {SearchInput} from '../../components/ui/searchInput';
-import {RoundedBtn} from "../../components/ui/roundedBtn";
+import { SearchInput } from '../../components/ui/searchInput';
+import { RoundedBtn } from "../../components/ui/roundedBtn";
 import { IoMdAdd } from "react-icons/io";
 import { NewChannelForm } from "./components/newChannelForm";
-import { useContext } from "react";
-import { UserContext } from "../../contexts/index";
 import { MainCard } from "../../components/shared/mainCard";
 import { CloseModel } from "../../components/modal/closeModel";
 import { CreateChannelAlert } from "../../components/modal/createChannelAlert";
+import { useChannels } from "../../hooks/queries/useChannelsApi";
+import { Loading } from "../../components/modal/loading";
 
 const Channels = () => {
 
-    const [text,setText] = useState('');
-    const {channels} = useContext(UserContext);
+    const [text, setText] = useState('');
+    // const {channels} = useContext(UserContext);
 
-    const [isCreateChannel,setIsCreateChannel] = useState(false);
-    const [isNewChannel,setIsNewChannel] = useState(false);
+    const [isCreateChannel, setIsCreateChannel] = useState(false);
+    const [isNewChannel, setIsNewChannel] = useState(false);
+
+    const { data: channels, isLoading } = useChannels()
 
 
+    if (isLoading) {
+        return (<Loading />)
+    };
 
     return (
         <div className="flex gap-1 h-full flex-1 overflow-y-auto">
@@ -30,21 +35,21 @@ const Channels = () => {
                         <header className='border-b border-b-gray-800 pb-3'>
                             <div className="flex items-center justify-between mb-4">
                                 <h5 className="text-lg font-bold">Channels</h5>
-                                <RoundedBtn Icon={IoMdAdd} onClick={()=> setIsCreateChannel(true)} />
+                                <RoundedBtn Icon={IoMdAdd} onClick={() => setIsCreateChannel(true)} />
                             </div>
-                            <SearchInput handleSearch={()=> ''} text={text} setText={setText} />
+                            <SearchInput handleSearch={() => ''} text={text} setText={setText} />
                         </header>
 
-                    <div className="py-3 flex-1 max-w-full overflow-y-auto">
+                        <div className="py-3 flex-1 max-w-full overflow-y-auto">
                             {
-                                channels?.map(({_id,name,avatar,createdAt})=> (
-                                    <MainCard 
+                                channels?.map(({ _id, name, avatar, createdAt }) => (
+                                    <MainCard
                                         avatarUrl={avatar.url}
                                         key={_id}
                                         name={name}
                                         time={createdAt}
-                                        >
-                                    <span className="text-gray-400 text-sm">You ctreated this channel</span>
+                                    >
+                                        <span className="text-gray-400 text-sm">You ctreated this channel</span>
                                     </MainCard>
                                 ))
                             }
@@ -55,7 +60,7 @@ const Channels = () => {
                     </div>
                 )
             }
-            
+
             <section className="hidden bg-s  rounded-lg md:flex flex-2 items-center justify-center flex-col gap-5">
                 <GrChannel size={48} className="text-gray-400" />
                 <h3 className='text-3xl'>
@@ -67,15 +72,15 @@ const Channels = () => {
             </section>
 
             {
-            isCreateChannel && (
-                <>
-                <CloseModel setCloseModel={setIsCreateChannel} />
-                <CreateChannelAlert 
-                    setIsCreateChannel={setIsCreateChannel}
-                    setIsNewChannel={setIsNewChannel}
-                    />
-                </>
-            ) 
+                isCreateChannel && (
+                    <>
+                        <CloseModel setCloseModel={setIsCreateChannel} />
+                        <CreateChannelAlert
+                            setIsCreateChannel={setIsCreateChannel}
+                            setIsNewChannel={setIsNewChannel}
+                        />
+                    </>
+                )
             }
         </div>
     )

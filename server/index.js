@@ -23,7 +23,7 @@ connect_db();
 
 const server = http.createServer(app);
 
-const socket_io = new Server(server,{
+const socket_io = new Server(server, {
   cors: {
     origin: process.env.CLIENT_URL,
     methods: ["GET", "POST"],
@@ -41,28 +41,28 @@ const online_users = new Map();
 
 // handling socket io emmits
 
-socket_io.on('connection',socket => {
+socket_io.on('connection', socket => {
 
-  const {user_id} = socket.handshake.auth;
+  const { user_id } = socket.handshake.auth;
 
 });
 
 
 
-  // deleting expired statuses and related files from cloudinary
+// deleting expired statuses and related files from cloudinary
 
-cron.schedule('*/30 * * * *', async ()=> {
+cron.schedule('*/30 * * * *', async () => {
 
-  const expireTime = new Date(Date.now() - 24 * 60 * 60 * 1000 );
-  const expiredStatus  = await Status.find({createdAt: {$lt: expireTime}}).populate('file')
+  const expireTime = new Date(Date.now() - 24 * 60 * 60 * 1000);
+  const expiredStatus = await Status.find({ createdAt: { $lt: expireTime } }).populate('file')
 
-  for(const status of expiredStatus) {
+  for (const status of expiredStatus) {
     try {
-      if(status.type === 'MEDIA' && status.file) {
-          await cloudinary.uploader.destroy(status.mediaMeta.fileURLId);
-          await Media.findByIdAndDelete(status.mediaMeta._id);
+      if (status.type === 'MEDIA' && status.file) {
+        await cloudinary.uploader.destroy(status.mediaMeta.fileURLId);
+        await Media.findByIdAndDelete(status.mediaMeta._id);
       };
-       await status.deleteOne();
+      await status.deleteOne();
     }
     catch {
 
@@ -71,7 +71,6 @@ cron.schedule('*/30 * * * *', async ()=> {
 
 });
 
-
-server.listen(process.env.PORT,()=> {
-    console.log(`server is listening to port ${process.env.PORT}`);
+server.listen(process.env.PORT, () => {
+  console.log(`server is listening to port ${process.env.PORT}`);
 });
