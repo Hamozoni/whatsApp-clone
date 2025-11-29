@@ -28,7 +28,7 @@ const authMiddleware = async (req, res, next) => {
 
         if (!user) {
             user = await User.create({
-                displayName: decodedToken.name,
+                displayName: decodedToken.name || decodedToken.email.split('@')[0],
                 email: decodedToken.email,
                 bio: decodedToken?.bio || 'Hey there! I am using WhatsApp.',
                 emailVerified: decodedToken.email_verified,
