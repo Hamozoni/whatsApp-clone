@@ -40,9 +40,7 @@ const RootLayout = () => {
             />
 
             <Tabs.Screen
-                name="chats"
-                RootLayout={RootLayout}
-                index={0}
+                name="index"
                 options={{
                     headerShown: false,
                     title: "Chats",
