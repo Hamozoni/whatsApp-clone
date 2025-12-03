@@ -1,12 +1,12 @@
 import { Text, View } from "react-native";
 
 
-const Status = () => {
+const Chats = () => {
     return (
         <View>
-            <Text>Status</Text>
+            <Text>Chat</Text>
         </View>
     );
 };
 
-export default Status;
+export default Chats; 
