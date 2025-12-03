@@ -5,15 +5,17 @@ const RootLayout = () => {
         <Tabs
             screenOptions={{
                 headerShown: false,
-                tabBarActiveTintColor: "#000",
-                tabBarInactiveTintColor: "#666",
-                tabBarLabelPosition: "below-icon",
-                tabBarActiveBackgroundColor: "#eee",
             }}
         >
             <Tabs.Screen
                 name="updates"
-                options={{ headerShown: false }}
+                options={{
+                    headerShown: false,
+                    title: "Updates",
+                    tabBarIcon: ({ focused, color, size }) => (
+                        <Ionicons name={focused ? "notifications" : "notifications-outline"} size={size} color={color} />
+                    ),
+                }}
             />
             <Tabs.Screen
                 name="calls"
@@ -21,7 +23,7 @@ const RootLayout = () => {
                     headerShown: false,
                     title: "Calls",
                     tabBarIcon: ({ focused, color, size }) => (
-                        <MaterialIcons name={focused ? "call" : "callOutline"} size={size} color={color} />
+                        <Ionicons name={focused ? "call" : "call-outline"} size={size} color={color} />
                     )
 
                 }} />
@@ -31,7 +33,7 @@ const RootLayout = () => {
                     headerShown: false,
                     title: "Communiies",
                     tabBarIcon: ({ focused, color, size }) => (
-                        <MaterialIcons name={focused ? "groups" : "groups-outline"} size={size} color={color} />
+                        <Ionicons name={focused ? "people" : "people-outline"} size={size} color={color} />
                     )
                 }}
 
@@ -39,11 +41,13 @@ const RootLayout = () => {
 
             <Tabs.Screen
                 name="chats"
+                RootLayout={RootLayout}
+                index={0}
                 options={{
                     headerShown: false,
                     title: "Chats",
                     tabBarIcon: ({ focused, size, color }) => (
-                        <MaterialIcons name={focused ? "chatbubble" : "chatbubble-outline"} size={size} color={color} />
+                        <Ionicons name={focused ? "chatbubble" : "chatbubble-outline"} size={size} color={color} />
                     )
                 }}
             />
@@ -53,7 +57,7 @@ const RootLayout = () => {
                     headerShown: false,
                     title: "Settings",
                     tabBarIcon: ({ focused, color, size }) => (
-                        <MaterialIcons name={focused ? "settings" : "settingsOutline"} size={size} color={color} />
+                        <Ionicons name={focused ? "settings" : "settings-outline"} size={size} color={color} />
                     )
                 }}
             />
