@@ -1,26 +1,29 @@
-import { View, Text } from "react-native";
-const ChatCard = () => {
+import { View, Text, Image } from "react-native";
+const ChatCard = ({ chat }) => {
     return (
-        <View>
-            <View>\
-                <Image source={require("../assets/images/1.jpg")} />
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+            <View>
+                <Image source={{ uri: chat?.contact?.photoURL }} />
             </View>
             <View>
-                <Text>homozoni</Text>
-                <Text>9:00 AM</Text>
-            </View>
-            <View>
-                <Text>hi</Text>
+                <View>
+                    <Text>{chat?.contact?.displayName}</Text>
+                    <Text>{chat?.lastMessage?.createdAt}</Text>
+                </View>
+                <View>
+                    <Text>hi</Text>
+                </View>
             </View>
         </View>
     );
 };
 
-const ChatsLists = () => {
+const ChatsLists = ({ chats }) => {
     return (
-        <View>
-            <Text>ChatsLists</Text>
-        </View>
+        <FileList
+            data={chats}
+            renderItem={({ item }) => (<ChatCard key={item.id} />)}
+        />
     );
 };
 export default ChatsLists;
