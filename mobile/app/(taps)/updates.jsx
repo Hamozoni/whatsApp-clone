@@ -5,7 +5,7 @@ import { RoundedBtn } from "../../components/ui.jsx/roundedBtn";
 
 const Updates = () => {
     return (
-        <View style={{ flex: 1, backgroundColor: "#fff", padding: 10, paddingTop: 40 }}>
+        <View style={{ flex: 1, backgroundColor: "#fff", paddingHorizontal: 10, paddingTop: 40 }}>
             <View>
                 <RoundedBtn IconName="ellipsis-horizontal" />
                 <Text style={{ fontSize: 30, fontWeight: "bold", marginVertical: 10 }}>Updates</Text>

@@ -6,11 +6,13 @@ const ChatCard = ({ chat }) => {
             <View>
                 <Image
                     source={{ uri: chat?.contact?.photoURL }}
-                    style={{ width: 50, height: 50, borderRadius: 50, backgroundColor: "gray" }}
+                    defaultSource={require("../../assets/icon.png")}
+                    onError={() => console.log("Image not found")}
+                    style={{ width: 60, height: 60, borderRadius: 50, borderColor: "#eee", borderWidth: 1, backgroundColor: "#eff" }}
 
                 />
             </View>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, borderBottomColor: "#eee", borderBottomWidth: 1, height: "100%" }}>
                 <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                     <Text style={{ fontSize: 16, fontWeight: "bold" }}>{chat?.contact?.displayName}</Text>
                     <Text style={{ fontSize: 12, color: "#817d7dff", fontWeight: "bold" }}>{chat?.lastMessage?.createdAt}</Text>

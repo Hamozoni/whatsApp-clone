@@ -12,8 +12,14 @@ export const StatusPanel = () => {
             </View>
             <View>
                 <ScrollView>
-                    <View>
-
+                    <View style={{ width: 100, height: 200, borderRadius: 10, borderWidth: 1, borderColor: "#ccc" }}>
+                        <View>
+                            <Image source={require("../../assets/icon.png")}
+                                style={{ width: 60, height: 60, borderRadius: 50 }}
+                            />
+                            <RoundedBtn IconName="add" />
+                        </View>
+                        <Text>Add Status </Text>
                     </View>
                 </ScrollView>
             </View>
