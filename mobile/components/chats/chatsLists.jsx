@@ -1,28 +1,36 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, FlatList, TouchableOpacity } from "react-native";
+
 const ChatCard = ({ chat }) => {
     return (
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+        <TouchableOpacity style={{ flexDirection: "row", flex: 1, alignItems: "center", gap: 5 }}>
             <View>
-                <Image source={{ uri: chat?.contact?.photoURL }} />
+                <Image
+                    source={{ uri: chat?.contact?.photoURL }}
+                    style={{ width: 50, height: 50, borderRadius: 50, backgroundColor: "gray" }}
+
+                />
             </View>
-            <View>
-                <View>
-                    <Text>{chat?.contact?.displayName}</Text>
-                    <Text>{chat?.lastMessage?.createdAt}</Text>
+            <View style={{ flex: 1 }}>
+                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                    <Text style={{ fontSize: 16, fontWeight: "bold" }}>{chat?.contact?.displayName}</Text>
+                    <Text style={{ fontSize: 12, color: "#817d7dff", fontWeight: "bold" }}>{chat?.lastMessage?.createdAt}</Text>
                 </View>
                 <View>
-                    <Text>hi</Text>
+                    <Text style={{ fontSize: 14, color: "#5e5e5eff" }}>{chat?.lastMessage?.text}</Text>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 
 const ChatsLists = ({ chats }) => {
     return (
-        <FileList
+        <FlatList
             data={chats}
-            renderItem={({ item }) => (<ChatCard key={item.id} />)}
+            renderItem={({ item }) => (<ChatCard key={item.id} chat={item} />)}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={{ gap: 10 }}
+            showsVerticalScrollIndicator={false}
         />
     );
 };
