@@ -46,14 +46,14 @@ const RootLayout = () => {
                     headerShown: false,
                     title: "Chats",
                     tabBarIcon: ({ focused, size, color }) => (
-                        <Ionicons name={focused ? "chatbubble" : "chatbubble-outline"} size={size} color={color} />
+                        <Ionicons name={focused ? "chatbubbles" : "chatbubbles-outline"} size={size} color={color} />
                     )
                 }}
             />
             <Tabs.Screen
                 name="settings"
                 options={{
-                    headerShown: false,
+                    headerShown: true,
                     title: "Settings",
                     tabBarIcon: ({ focused, color, size }) => (
                         <Ionicons name={focused ? "settings" : "settings-outline"} size={size} color={color} />

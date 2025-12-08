@@ -1,0 +1,31 @@
+import { View, Text, Image } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+
+export const ProfileInfo = () => {
+    return (
+        <View style={{ padding: 20, borderRadius: 20, backgroundColor: "#fff", marginVertical: 20 }}>
+            <View style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: 1, borderBottomColor: "#eee", marginBottom: 20, paddingBottom: 20, gap: 10 }}>
+                <Image
+                    source={{ uri: "../../assets/images/profile.png" }}
+                    style={{ width: 60, height: 60, borderRadius: 50, backgroundColor: "#d6f897ff" }}
+                />
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", flex: 1 }}>
+                    <View>
+                        <Text style={{ fontSize: 18, fontWeight: "bold" }}>John Doe</Text>
+                        <Text style={{ fontSize: 16 }}>At work</Text>
+                    </View>
+                    <View>
+                        <Ionicons name="qr-code-outline" size={28} color="#000" />
+                    </View>
+                </View>
+            </View>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                <Ionicons name="person-outline" size={20} color="#000" />
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", flex: 1 }}>
+                    <Text>Avatar</Text>
+                    <Ionicons name="chevron-forward" size={16} color="#616161ff" />
+                </View>
+            </View>
+        </View>
+    );
+};
