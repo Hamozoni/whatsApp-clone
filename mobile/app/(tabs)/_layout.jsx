@@ -51,9 +51,9 @@ const RootLayout = () => {
                 }}
             />
             <Tabs.Screen
-                name="settings"
+                name="setting"
                 options={{
-                    headerShown: true,
+                    headerShown: false,
                     title: "Settings",
                     tabBarIcon: ({ focused, color, size }) => (
                         <Ionicons name={focused ? "settings" : "settings-outline"} size={size} color={color} />
