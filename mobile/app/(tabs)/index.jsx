@@ -43,8 +43,8 @@ const Chats = () => {
             </View>
             <Text style={{ fontSize: 30, fontWeight: "bold", marginVertical: 10 }}>Chats</Text>
             <SearchInput />
-            <View >
-                <ScrollView horizontal contentContainerStyle={{ flexDirection: "row", alignItems: "center", justifyContent: "center", marginBottom: 0, height: 50, maxHeight: 50, paddingBottom: 10 }} showsHorizontalScrollIndicator={false}>
+            <View style={{ marginVertical: 10 }}>
+                <ScrollView horizontal contentContainerStyle={{ flexDirection: "row", alignItems: "center", justifyContent: "center", height: 50, maxHeight: 50 }} showsHorizontalScrollIndicator={false}>
                     <Button title="All" active={true} />
                     <Button title="Unread" />
                     <Button title="Favorite" />

@@ -5,7 +5,7 @@ import { StatusCard } from "../cards/statusCard";
 
 export const StatusPanel = () => {
     return (
-        <View>
+        <View style={{ marginTop: 20 }}>
             <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingVertical: 10 }}>
                 <Text style={{ fontSize: 20, fontWeight: "bold" }}>Status</Text>
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>

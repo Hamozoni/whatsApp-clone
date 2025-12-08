@@ -1,16 +1,21 @@
 
+import { View } from "react-native";
 import { ChatCard } from "../cards/chatCard";
-import { FlatList } from "react-native";
 
 const ChannelsList = ({ channels }) => {
     return (
-        <FlatList
-            data={channels}
-            renderItem={({ item }) => (<ChatCard key={item.id} chat={item} />)}
-            keyExtractor={(item) => item.id}
-            contentContainerStyle={{ gap: 10 }}
-            showsVerticalScrollIndicator={false}
-        />
+
+        <View style={{ gap: 10 }}>
+            {
+                channels.length > 0 ? (
+                    channels.map((channel) => (
+                        <ChatCard key={channel.id} chat={channel} />
+                    ))
+                ) : (
+                    <Text>No channels found</Text>
+                )
+            }
+        </View>
     );
 };
 export default ChannelsList;
