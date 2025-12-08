@@ -1,7 +1,7 @@
 import { Text, View } from "react-native";
-import { SearchInput } from "../../components/ui.jsx/searchInput";
-import { RoundedBtn } from "../../components/ui.jsx/roundedBtn";
-
+import { SearchInput } from "../../components/ui/searchInput";
+import { RoundedBtn } from "../../components/ui/roundedBtn";
+import { StatusPanel } from "../../components/status/statusPanel";
 
 const Updates = () => {
     return (
@@ -15,7 +15,7 @@ const Updates = () => {
         >
             <View>
                 <RoundedBtn
-                    conName="ellipsis-horizontal"
+                    iconName="ellipsis-horizontal"
                 />
                 <Text
                     style={{
@@ -27,6 +27,7 @@ const Updates = () => {
                 </Text>
                 <SearchInput />
             </View>
+            <StatusPanel />
         </View>
     );
 };

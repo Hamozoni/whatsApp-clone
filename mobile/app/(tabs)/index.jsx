@@ -3,7 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { CHATS } from "../../constants/chats";
 import ChatsLists from "../../components/chats/chatsLists";
-import { SearchInput } from "../../components/ui.jsx/searchInput";
+import { SearchInput } from "../../components/ui/searchInput";
 
 
 const Button = ({ title, active = false }) => {

@@ -1,10 +1,10 @@
-const constPhotoURL = "../assets/icon.png";
+
 export const CHATS = [
     {
         id: 1,
         contact: {
             displayName: "John Doe",
-            photoURL: constPhotoURL,
+            photoURL: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
         },
         lastMessage: {
             text: "Hello, how are you?",
@@ -14,22 +14,22 @@ export const CHATS = [
     {
         id: 2,
         contact: {
-            displayName: "Jane Smith",
-            photoURL: constPhotoURL,
+            displayName: "John Doe",
+            photoURL: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
         },
         lastMessage: {
-            text: "I'm good, thanks!",
+            text: "Hello, how are you?",
             createdAt: "12:00 PM",
         },
     },
     {
         id: 3,
         contact: {
-            displayName: "Osama Mohamed",
-            photoURL: constPhotoURL,
+            displayName: "John Doe",
+            photoURL: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
         },
         lastMessage: {
-            text: "I'm good, thanks!",
+            text: "Hello, how are you?",
             createdAt: "12:00 PM",
         },
     },
@@ -37,7 +37,7 @@ export const CHATS = [
         id: 4,
         contact: {
             displayName: "John Doe",
-            photoURL: constPhotoURL,
+            photoURL: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
         },
         lastMessage: {
             text: "Hello, how are you?",
@@ -47,67 +47,14 @@ export const CHATS = [
     {
         id: 5,
         contact: {
-            displayName: "Jane Smith",
-            photoURL: constPhotoURL,
-        },
-        lastMessage: {
-            text: "I'm good, thanks!",
-            createdAt: "12:00 PM",
-        },
-    },
-    {
-        id: 6,
-        contact: {
-            displayName: "Osama Mohamed",
-            photoURL: constPhotoURL,
-        },
-        lastMessage: {
-            text: "I'm good, thanks!",
-            createdAt: "12:00 PM",
-        },
-    },
-    {
-        id: 7,
-        contact: {
             displayName: "John Doe",
-            photoURL: constPhotoURL,
+            photoURL: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
         },
         lastMessage: {
             text: "Hello, how are you?",
             createdAt: "12:00 PM",
         },
     },
-    {
-        id: 8,
-        contact: {
-            displayName: "Jane Smith",
-            photoURL: constPhotoURL,
-        },
-        lastMessage: {
-            text: "I'm good, thanks!",
-            createdAt: "12:00 PM",
-        },
-    },
-    {
-        id: 9,
-        contact: {
-            displayName: "Osama Mohamed",
-            photoURL: constPhotoURL,
-        },
-        lastMessage: {
-            text: "I'm good, thanks!",
-            createdAt: "12:00 PM",
-        },
-    },
-    {
-        id: 10,
-        contact: {
-            displayName: "Osama Mohamed",
-            photoURL: constPhotoURL,
-        },
-        lastMessage: {
-            text: "I'm good, thanks!",
-            createdAt: "12:00 PM",
-        },
-    },
+
+
 ];
