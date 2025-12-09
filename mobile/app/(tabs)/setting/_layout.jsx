@@ -6,13 +6,11 @@ export default function SettingLayout() {
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen
                 name="profile"
-
                 options={{
                     headerShown: true,
                     title: "Profile",
                     headerBackButtonMenuEnabled: true,
                     headerBackButtonDisplayMode: "minimal",
-                    headerBackIcon: "arrow-back",
                 }}
             />
         </Stack>

@@ -17,7 +17,7 @@ const settingsData2 = [
     { title: "privacy", iconName: "lock-closed-outline", id: 6 },
     { title: "chats", iconName: "chatbubbles-outline", id: 7 },
     { title: "notifications", iconName: "notifications-outline", id: 8 },
-    { title: "storage and data", iconName: "storage-outline", id: 9 },
+    { title: "storage and data", iconName: "memory", id: 9 },
 ];
 const settingsData3 = [
     { title: "help and feedback", iconName: "help-outline", id: 10 },

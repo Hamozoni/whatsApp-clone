@@ -1,8 +1,12 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
 
 export const ChatCard = ({ chat }) => {
+    const router = useRouter();
     return (
-        <TouchableOpacity style={{ flexDirection: "row", flex: 1, alignItems: "center", gap: 5 }}>
+        <TouchableOpacity
+            onPress={() => router.push(`/chat/${chat?.id}`)}
+            style={{ flexDirection: "row", flex: 1, alignItems: "center", gap: 5 }}>
 
             <Image
                 source={{ uri: chat?.contact?.photoURL }}
