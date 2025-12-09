@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
 import { ChatHeaderLeft, ChatHeaderMiddle, ChatHeaderRight } from "../components/chats/chatHeader";
+import ChatFooter from "../components/chats/chatFooter";
 
 export default function RootLayout() {
 
@@ -17,7 +18,6 @@ export default function RootLayout() {
                         headerLeft: () => <ChatHeaderLeft id={id} />,
                         headerTitle: () => <ChatHeaderMiddle id={id} />,
                         headerRight: () => <ChatHeaderRight id={id} />,
-
 
                     }
                 }}

@@ -18,7 +18,7 @@ export const ChatHeaderMiddle = ({ id }) => {
     return (
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10, flex: 1 }}>
             <Image
-                source={{ uri: CHATS[Number.parseInt(id) - 1]?.contact?.photoURL }}
+                source={{ uri: CHATS[Number.parseInt(id) - 1]?.contact?.photoURL, width: 40, height: 40 }}
                 style={{ width: 40, height: 40, borderRadius: "50%", backgroundColor: "#ccc" }}
             />
             <TouchableOpacity>
