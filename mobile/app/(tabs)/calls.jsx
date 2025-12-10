@@ -14,19 +14,19 @@ const Calls = () => {
             <SearchInput />
             <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 20 }}>
                 <View style={{ flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 5 }}>
-                    <RoundedBtn iconName="call-outline" />
+                    <RoundedBtn iconName="call-outline" large={true} />
                     <Text>Call</Text>
                 </View>
                 <View style={{ flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 5 }}>
-                    <RoundedBtn iconName="calendar-outline" />
+                    <RoundedBtn iconName="calendar-outline" large={true} />
                     <Text>Schedulr</Text>
                 </View>
                 <View style={{ flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 5 }}>
-                    <RoundedBtn iconName="keypad-outline" />
+                    <RoundedBtn iconName="keypad-outline" large={true} />
                     <Text>Keypad</Text>
                 </View>
                 <View style={{ flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 5 }}>
-                    <RoundedBtn iconName="heart-outline" />
+                    <RoundedBtn iconName="heart-outline" large={true} />
                     <Text>Favorite</Text>
                 </View>
             </View>

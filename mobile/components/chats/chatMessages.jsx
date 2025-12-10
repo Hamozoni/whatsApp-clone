@@ -15,7 +15,7 @@ import {
 export default function ChatMessages() {
 
     return (
-        <ScrollView style={{ padding: 20 }} showsVerticalScrollIndicator={false}>
+        <ScrollView style={{ padding: 10 }} showsVerticalScrollIndicator={false}>
             {
                 MESSAGES?.map((message) => (
                     <View
@@ -23,7 +23,7 @@ export default function ChatMessages() {
                             marginVertical: 2,
                             backgroundColor: message?.type === "sticker" ? "unset" : message?.senderId === 1 ? "#007AFF" : "#E5E5EA",
                             borderRadius: 10,
-                            padding: 5,
+                            padding: 3,
                             width: "fit-content",
                             minWidth: 30,
                             maxWidth: "88%",
