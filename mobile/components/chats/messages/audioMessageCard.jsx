@@ -4,6 +4,7 @@ import Slider from "@react-native-community/slider";
 import { Audio } from "expo-av";
 import { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { MessageStatus } from "../../cards/messageCards";
 
 export default function AudioMessage({ message }) {
     const isMe = message.sender === "me";
@@ -14,7 +15,7 @@ export default function AudioMessage({ message }) {
 
     async function loadSound() {
         const { sound } = await Audio.Sound.createAsync(
-            { uri: message.metadata?.url },
+            message?.metadata?.url,
             { shouldPlay: false },
             updateStatus
         );
@@ -53,25 +54,28 @@ export default function AudioMessage({ message }) {
     }, []);
 
     return (
-        <View
-            className={`w-64 p-3 rounded-xl my-1 flex-row items-center
-      ${isMe ? "bg-green-500 self-end" : "bg-gray-200 self-start"}`}
-        >
-            <TouchableOpacity onPress={togglePlay}>
-                {isPlaying ? <Ionicons name="pause" size={24} /> : <Ionicons name="play" size={24} />}
-            </TouchableOpacity>
+        <View >
+            <View>
+                <TouchableOpacity onPress={togglePlay}>
+                    {isPlaying ? <Ionicons name="pause" size={24} /> : <Ionicons name="play" size={24} />}
+                </TouchableOpacity>
 
-            <Slider
-                style={{ flex: 1, marginHorizontal: 10 }}
-                minimumValue={0}
-                maximumValue={duration}
-                value={position}
-                onSlidingComplete={onSeek}
+                <Slider
+                    style={{ flex: 1, marginHorizontal: 10 }}
+                    minimumValue={0}
+                    maximumValue={duration}
+                    value={position}
+                    onSlidingComplete={onSeek}
+                />
+
+                <Text className="text-white text-xs">
+                    {Math.floor(duration / 1000)}s
+                </Text>
+            </View>
+            <MessageStatus
+                status={message?.status}
+                timestamp={message?.timestamp}
             />
-
-            <Text className="text-white text-xs">
-                {Math.floor(duration / 1000)}s
-            </Text>
         </View>
     );
 }

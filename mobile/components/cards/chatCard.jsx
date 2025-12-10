@@ -9,7 +9,7 @@ export const ChatCard = ({ chat }) => {
             style={{ flexDirection: "row", flex: 1, alignItems: "center", gap: 5 }}>
 
             <Image
-                source={{ uri: chat?.contact?.photoURL }}
+                source={require("../../assets/images/pexels-al-amin-muhammad-988616478-29680723.jpg")}
                 onError={() => console.log("Image not found")}
                 style={{ width: 60, height: 60, borderRadius: 50, borderColor: "#eee", borderWidth: 1, backgroundColor: "#eff" }}
 
