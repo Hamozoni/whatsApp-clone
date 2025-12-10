@@ -20,12 +20,13 @@ export default function ChatMessages() {
                 MESSAGES?.map((message) => (
                     <View
                         style={{
-                            marginVertical: 10,
-                            backgroundColor: message?.senderId === 1 ? "#007AFF" : "#E5E5EA",
+                            marginVertical: 2,
+                            backgroundColor: message?.type === "sticker" ? "unset" : message?.senderId === 1 ? "#007AFF" : "#E5E5EA",
                             borderRadius: 10,
                             padding: 5,
                             width: "fit-content",
-                            maxWidth: "85%",
+                            minWidth: 30,
+                            maxWidth: "88%",
                             alignSelf: message?.senderId === 1 ? "flex-end" : "flex-start",
                         }}
                         key={message?.id}

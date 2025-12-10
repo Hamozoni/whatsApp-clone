@@ -8,7 +8,7 @@ export default function ImageMessageBubble({ message }) {
             <Image
                 resizeMode="contain"
                 source={message?.metadata?.url}
-                style={{ width: 150, height: 150 }}
+                style={{ width: 150, height: 150, borderRadius: 10 }}
 
 
             />

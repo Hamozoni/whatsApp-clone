@@ -16,7 +16,7 @@ center=${message?.metadata?.latitude},${message?.metadata?.longitude}
         <TouchableOpacity>
             <Image
                 source={{ uri: locationUrl }}
-                style={{ width: 200, height: 200 }}
+                style={{ width: 200, height: 200, borderRadius: 10 }}
             />
             <MessageStatusBubble
                 message={message}
