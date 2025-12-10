@@ -4,10 +4,9 @@ import Slider from "@react-native-community/slider";
 import { Audio } from "expo-av";
 import { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { MessageStatus } from "../../cards/messageCards";
+import MessageStatusBubble from "./messageStatusBubble";
 
-export default function AudioMessage({ message }) {
-    const isMe = message.sender === "me";
+export default function AudioMessageBubble({ message }) {
     const [sound, setSound] = useState(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [position, setPosition] = useState(0);
@@ -68,11 +67,11 @@ export default function AudioMessage({ message }) {
                     onSlidingComplete={onSeek}
                 />
 
-                <Text className="text-white text-xs">
+                <Text style={{ color: "white" }}>
                     {Math.floor(duration / 1000)}s
                 </Text>
             </View>
-            <MessageStatus
+            <MessageStatusBubble
                 status={message?.status}
                 timestamp={message?.timestamp}
             />

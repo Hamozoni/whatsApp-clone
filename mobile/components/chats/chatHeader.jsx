@@ -13,7 +13,6 @@ export const ChatHeaderLeft = ({ id }) => {
     )
 };
 
-
 export const ChatHeaderMiddle = ({ id }) => {
     return (
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10, flex: 1 }}>

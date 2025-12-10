@@ -1,17 +1,16 @@
-import { View, Text } from "react-native";
+import { ScrollView } from "react-native";
+import { View } from "react-native";
 import { MESSAGES } from "../../constants/messages";
 import {
-    TextMessageCard,
-    ImageMessageCard,
-    VideoMessageCard,
-    ContactMessageCard,
-    LocationMessageCard,
-    CallMessageCard,
-    DocumentMessageCard
-} from "../cards/messageCards";
-
-import AudioMessageCard from "./messages/audioMessageCard";
-import { ScrollView } from "react-native";
+    TextMessageBubble,
+    ImageMessageBubble,
+    VideoMessageBubble,
+    ContactMessageBubble,
+    LocationMessageBubble,
+    CallMessageBubble,
+    DocumentMessageBubble,
+    AudioMessageBubble
+} from "./messagesBubbles";
 
 export default function ChatMessages() {
 
@@ -22,24 +21,24 @@ export default function ChatMessages() {
                     <View key={message?.id}>
                         {
                             message?.type === "text" ? (
-                                <TextMessageCard message={message} />
+                                <TextMessageBubble message={message} />
                             ) : message?.type === "image" ? (
-                                <ImageMessageCard message={message} />
+                                <ImageMessageBubble message={message} />
                             ) : message?.type === "video" ? (
-                                <VideoMessageCard message={message} />
+                                <VideoMessageBubble message={message} />
                             ) : message?.type === "contact" ? (
-                                <ContactMessageCard message={message} />
+                                <ContactMessageBubble message={message} />
                             ) : message?.type === "location" ? (
-                                <LocationMessageCard message={message} />
+                                <LocationMessageBubble message={message} />
                             ) : message?.type === "call" ? (
-                                <CallMessageCard message={message} />
+                                <CallMessageBubble message={message} />
                             ) : message?.type === "audio" ? (
-                                <AudioMessageCard message={message} />
+                                <AudioMessageBubble message={message} />
                             ) : message?.type === "sticker" ? (
-                                <ImageMessageCard message={message} />
+                                <ImageMessageBubble message={message} />
                             ) : message?.type === "document" ? (
-                                <DocumentMessageCard message={message} />
-                            ) : null
+                                <DocumentMessageBubble message={message} />
+                            ) : ""
                         }
 
                     </View>
