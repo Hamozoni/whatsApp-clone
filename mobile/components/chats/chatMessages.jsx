@@ -15,10 +15,21 @@ import {
 export default function ChatMessages() {
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView style={{ padding: 20 }} showsVerticalScrollIndicator={false}>
             {
                 MESSAGES?.map((message) => (
-                    <View key={message?.id}>
+                    <View
+                        style={{
+                            marginVertical: 10,
+                            backgroundColor: message?.senderId === 1 ? "#007AFF" : "#E5E5EA",
+                            borderRadius: 10,
+                            padding: 5,
+                            width: "fit-content",
+                            maxWidth: "85%",
+                            alignSelf: message?.senderId === 1 ? "flex-end" : "flex-start",
+                        }}
+                        key={message?.id}
+                    >
                         {
                             message?.type === "text" ? (
                                 <TextMessageBubble message={message} />

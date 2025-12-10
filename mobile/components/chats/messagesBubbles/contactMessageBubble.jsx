@@ -16,8 +16,7 @@ export default function ContactMessageBubble({ message }) {
             </View>
 
             <MessageStatusBubble
-                status={message?.status}
-                timestamp={message?.timestamp}
+                message={message}
             />
             <View style={{ flexDirection: "row", alignItems: "center", gap: 10, justifyContent: "center" }}>
                 <TouchableOpacity>

@@ -53,28 +53,36 @@ export default function AudioMessageBubble({ message }) {
     }, []);
 
     return (
-        <View >
-            <View>
+        <View style={{ width: "100%", minWidth: "100%", padding: 10, borderRadius: 10, backgroundColor: "#1807071a" }}>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                 <TouchableOpacity onPress={togglePlay}>
-                    {isPlaying ? <Ionicons name="pause" size={24} /> : <Ionicons name="play" size={24} />}
+                    <Ionicons name={isPlaying ? "pause" : "play"} size={30} />
                 </TouchableOpacity>
+                <View style={{ flex: 1 }}>
 
-                <Slider
-                    style={{ flex: 1, marginHorizontal: 10 }}
-                    minimumValue={0}
-                    maximumValue={duration}
-                    value={position}
-                    onSlidingComplete={onSeek}
-                />
+                    <Slider
+                        minimumValue={0}
+                        maximumValue={duration}
+                        value={position}
+                        onSlidingComplete={onSeek}
+                        minimumTrackTintColor="#FFFFFF"
+                        maximumTrackTintColor="#252121ff"
+                        thumbTintColor="#e6dcdcff"
+                        step={1}
+                    />
 
+                </View>
+
+
+            </View>
+            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                 <Text style={{ color: "white" }}>
                     {Math.floor(duration / 1000)}s
                 </Text>
+                <MessageStatusBubble
+                    message={message}
+                />
             </View>
-            <MessageStatusBubble
-                status={message?.status}
-                timestamp={message?.timestamp}
-            />
         </View>
     );
 }

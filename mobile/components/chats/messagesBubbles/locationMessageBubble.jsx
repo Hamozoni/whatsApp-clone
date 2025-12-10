@@ -19,8 +19,7 @@ center=${message?.metadata?.latitude},${message?.metadata?.longitude}
                 style={{ width: 200, height: 200 }}
             />
             <MessageStatusBubble
-                status={message?.status}
-                timestamp={message?.timestamp}
+                message={message}
             />
         </TouchableOpacity>
     );

@@ -1,7 +1,7 @@
 import { Text, View } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-export default function MessageStatusBubble({ status, timestamp }) {
+export default function MessageStatusBubble({ message }) {
     return (
 
         <View
@@ -12,15 +12,15 @@ export default function MessageStatusBubble({ status, timestamp }) {
                 gap: 5
             }}
         >
-            <Text style={{ fontSize: 12 }}>{timestamp}</Text>
+            <Text style={{ fontSize: 10, fontFamily: "Poppins_400Regular", fontWeight: "bold", color: message?.senderId === 1 ? "#ccc" : "#1b1d1bff" }}>{message?.timestamp}</Text>
             <View>
                 {
-                    status === "sent" ? (
-                        <Ionicons name="checkmark-sharp" size={14} color="black" />
-                    ) : status === "delivered" || status === "readed" ? (
-                        <Ionicons name="checkmark-done-sharp" size={14} color={status === "delivered" ? "black" : "green"} />
+                    message?.status === "sent" ? (
+                        <Ionicons name="checkmark-sharp" size={16} color={message?.senderId === 1 ? "#ccc" : "#1b1d1bff"} />
+                    ) : message?.status === "delivered" || message?.status === "readed" ? (
+                        <Ionicons name="checkmark-done-sharp" size={16} color={message?.status === "delivered" ? `${message?.senderId === 1 ? "#ccc" : "#1b1d1bff"}` : "green"} />
                     ) : (
-                        <Ionicons name="stopwatch-outline" size={14} color="black" />
+                        <Ionicons name="stopwatch-outline" size={16} color={message?.senderId === 1 ? "#ccc" : "#1b1d1bff"} />
 
                     )
                 }

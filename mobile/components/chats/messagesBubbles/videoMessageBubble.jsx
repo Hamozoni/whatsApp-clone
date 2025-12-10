@@ -6,11 +6,10 @@ export default function VideoMessageBubble({ message }) {
         <View>
             <Image
                 source={message?.metadata?.thumbnailUrl}
-                style={{ width: 200, height: 200 }}
+                style={{ width: 150, height: 150 }}
             />
             <MessageStatusBubble
-                status={message?.status}
-                timestamp={message?.timestamp}
+                message={message}
             />
         </View>
     );

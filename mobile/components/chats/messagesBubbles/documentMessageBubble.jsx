@@ -10,7 +10,7 @@ export default function DocumentMessageBubble({ message }) {
                     style={{ width: 180, height: 40, overflow: "hidden" }}
                 />
             </View>
-            <MessageStatusBubble status={message?.status} timestamp={message?.timestamp} />
+            <MessageStatusBubble message={message} />
         </View>
     );
 };

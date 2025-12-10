@@ -8,13 +8,12 @@ export default function ImageMessageBubble({ message }) {
             <Image
                 resizeMode="contain"
                 source={message?.metadata?.url}
-                style={{ width: 150, height: 200 }}
+                style={{ width: 150, height: 150 }}
 
 
             />
             <MessageStatusBubble
-                status={message?.status}
-                timestamp={message?.timestamp}
+                message={message}
             />
         </View>
     );

@@ -18,9 +18,10 @@ export default function ChatDetails() {
                 backgroundColor: "#fff"
             }}
         >
-            <View style={{ flex: 1, backgroundColor: "#fffafaff", padding: 20 }}>
+            <View style={{ flex: 1 }}>
                 <ChatMessages />
             </View>
+
             <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 keyboardVerticalOffset="100"

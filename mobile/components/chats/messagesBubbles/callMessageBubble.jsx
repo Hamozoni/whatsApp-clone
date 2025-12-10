@@ -26,8 +26,7 @@ export default function CallMessageBubble({ message }) {
                 </View>
             </View>
             <MessageStatusBubble
-                status={message?.status}
-                timestamp={message?.timestamp}
+                message={message}
             />
         </View>
     );
