@@ -57,6 +57,7 @@ export const MESSAGES = [
         metadata: {
             url: require("../assets/documents/mh.pdf"),
             size: 100,
+            name: "mh.pdf",
             mimeType: "application/pdf",
         },
         text: null,
@@ -68,7 +69,7 @@ export const MESSAGES = [
         id: 6,
         type: "sticker",
         metadata: {
-            stickerUrl: require("../assets/stickers/birthday.png"),
+            url: require("../assets/stickers/birthday.png"),
             size: 100,
             mimeType: "image/webp",
         },
@@ -95,10 +96,8 @@ export const MESSAGES = [
         id: 8,
         type: "location",
         metadata: {
-            latitude: 37.7749,
-            longitude: -122.4194,
-
-
+            latitude: 24.7136,
+            longitude: 46.6753,
         },
         text: null,
         timestamp: "10:00 AM",

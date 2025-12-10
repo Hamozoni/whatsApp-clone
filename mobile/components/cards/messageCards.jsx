@@ -1,6 +1,7 @@
 
 import { Ionicons } from "@expo/vector-icons";
-import { Image, Text, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+// import Pdf from "react-native-pdf";
 
 export const MessageStatus = ({ status, timestamp }) => {
     return (
@@ -76,34 +77,22 @@ export const VideoMessageCard = ({ message }) => {
     );
 };
 
-// export const DocumentMessageCard = ({ message }) => {
-//     return (
-//         <View>
-//             <Document
-//                 source={{ uri: message?.document }}
-//                 style={{ width: 200, height: 200 }}
-//             />
-//             <View>
-//                 <Text>{message?.timestamp}</Text>
-//                 <MessageStatus status={message?.status} />
-//             </View>
-//         </View>
-//     );
-// };
-// export const StickerMessageCard = ({ message }) => {
-//     return (
-//         <View>
-//             <Sticker
-//                 source={{ uri: message?.sticker }}
-//                 style={{ width: 200, height: 200 }}
-//             />
-//             <View>
-//                 <Text>{message?.timestamp}</Text>
-//                 <MessageStatus status={message?.status} />
-//             </View>
-//         </View>
-//     );
-// };
+export const DocumentMessageCard = ({ message }) => {
+    return (
+        <View>
+            <View style={{ height: 180, overflow: "hidden" }}>
+                {/* <Pdf
+                    source={{ uri: message?.metadata?.url }}
+                    page={1}
+                    singlePage
+                    scale={0.6}
+                    style={{ flex: 1 }}
+                /> */}
+            </View>
+            <MessageStatus status={message?.status} timestamp={message?.timestamp} />
+        </View>
+    );
+};
 
 export const ContactMessageCard = ({ message }) => {
     return (
@@ -119,14 +108,25 @@ export const ContactMessageCard = ({ message }) => {
 };
 
 export const LocationMessageCard = ({ message }) => {
+    const locationUrl = `https://maps.googleapis.com/maps/api/staticmap?
+center=${message?.metadata?.latitude},${message?.metadata?.longitude}
+&zoom=16
+&size=600x300
+&maptype=roadmap
+&markers=color:red|${message?.metadata?.latitude},${message?.metadata?.longitude}
+&key=${process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY}`
+    console.log(locationUrl);
     return (
-        <View>
-            <Text>{message?.metadata?.displayName}</Text>
+        <TouchableOpacity>
+            <Image
+                source={{ uri: locationUrl }}
+                style={{ width: 200, height: 200 }}
+            />
             <MessageStatus
                 status={message?.status}
                 timestamp={message?.timestamp}
             />
-        </View>
+        </TouchableOpacity>
     );
 };
 

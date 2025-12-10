@@ -6,7 +6,8 @@ import {
     VideoMessageCard,
     ContactMessageCard,
     LocationMessageCard,
-    CallMessageCard
+    CallMessageCard,
+    DocumentMessageCard
 } from "../cards/messageCards";
 
 import AudioMessageCard from "./messages/audioMessageCard";
@@ -34,6 +35,10 @@ export default function ChatMessages() {
                                 <CallMessageCard message={message} />
                             ) : message?.type === "audio" ? (
                                 <AudioMessageCard message={message} />
+                            ) : message?.type === "sticker" ? (
+                                <ImageMessageCard message={message} />
+                            ) : message?.type === "document" ? (
+                                <DocumentMessageCard message={message} />
                             ) : null
                         }
 
