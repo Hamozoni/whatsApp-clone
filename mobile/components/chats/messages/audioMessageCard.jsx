@@ -1,66 +1,77 @@
+// src/components/messages/AudioMessage.tsx
+import { View, Text, TouchableOpacity } from "react-native";
 import Slider from "@react-native-community/slider";
-
 import { Audio } from "expo-av";
-import { useState } from "react";
-import { Text, View } from "react-native";
+import { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native";
 
-export default function AudioMessageCard({ message }) {
-
+export default function AudioMessage({ message }) {
+    const isMe = message.sender === "me";
+    const [sound, setSound] = useState(null);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [soundRef, setSoundRef] = useState(null);
+    const [position, setPosition] = useState(0);
+    const [duration, setDuration] = useState(1);
 
-    const { sound } = Audio.useAudio({
-        source: { uri: message?.metadata?.url },
-        onPlaybackStatusUpdate: (status) => {
-            if (status?.isLoaded) {
-                setIsPlaying(status?.isPlaying);
-            }
-            setSoundRef(sound);
+    async function loadSound() {
+        const { sound } = await Audio.Sound.createAsync(
+            { uri: message.metadata?.url },
+            { shouldPlay: false },
+            updateStatus
+        );
+        setSound(sound);
+    }
+
+    function updateStatus(status) {
+        if (status.isLoaded) {
+            setPosition(status.positionMillis);
+            setDuration(status.durationMillis);
+            setIsPlaying(status.isPlaying);
         }
+    }
 
-    });
+    async function togglePlay() {
+        if (!sound) return;
 
-    const playAudio = async () => {
-        if (soundRef) {
-            await soundRef.playAsync();
-        }
-    };
-    const pauseAudio = async () => {
-        if (soundRef) {
-            await soundRef.pauseAsync();
-        }
-    };
-
-    const handlePlayPause = () => {
         if (isPlaying) {
-            pauseAudio();
+            await sound.pauseAsync();
         } else {
-            playAudio();
+            await sound.playAsync();
         }
-    };
+    }
+
+    async function onSeek(val) {
+        if (sound) {
+            await sound.setPositionAsync(val);
+        }
+    }
+
+    useEffect(() => {
+        loadSound();
+        return () => {
+            sound && sound.unloadAsync();
+        };
+    }, []);
 
     return (
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-            <TouchableOpacity onPress={handlePlayPause}>
-                {
-                    isPlaying ? (
-                        <Ionicons name="pause" size={24} color="black" />
-                    ) : (
-                        <Ionicons name="play" size={24} color="black" />
-                    )
-                }
+        <View
+            className={`w-64 p-3 rounded-xl my-1 flex-row items-center
+      ${isMe ? "bg-green-500 self-end" : "bg-gray-200 self-start"}`}
+        >
+            <TouchableOpacity onPress={togglePlay}>
+                {isPlaying ? <Ionicons name="pause" size={24} /> : <Ionicons name="play" size={24} />}
             </TouchableOpacity>
+
             <Slider
-                style={{ flex: 1 }}
-                value={0}
+                style={{ flex: 1, marginHorizontal: 10 }}
                 minimumValue={0}
-                maximumValue={100}
-                step={1}
-                onValueChange={(value) => console.log(value)}
+                maximumValue={duration}
+                value={position}
+                onSlidingComplete={onSeek}
             />
-            <Text>00:00</Text>
+
+            <Text className="text-white text-xs">
+                {Math.floor(duration / 1000)}s
+            </Text>
         </View>
     );
 }

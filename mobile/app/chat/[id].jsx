@@ -18,7 +18,7 @@ export default function ChatDetails() {
                 backgroundColor: "#fff"
             }}
         >
-            <View style={{ flex: 1, backgroundColor: "#fffafaff" }}>
+            <View style={{ flex: 1, backgroundColor: "#fffafaff", padding: 20 }}>
                 <ChatMessages />
             </View>
             <KeyboardAvoidingView

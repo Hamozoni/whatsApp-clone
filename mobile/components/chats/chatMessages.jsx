@@ -15,7 +15,7 @@ import { ScrollView } from "react-native";
 export default function ChatMessages() {
 
     return (
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
             {
                 MESSAGES?.map((message) => (
                     <View key={message?.id}>
