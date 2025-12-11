@@ -1,6 +1,4 @@
 
-import MessageStatusBubble from "./messageStatusBubble";
-
 import { Image, TouchableOpacity } from "react-native";
 
 export default function LocationMessageBubble({ message }) {
@@ -17,9 +15,6 @@ center=${message?.metadata?.latitude},${message?.metadata?.longitude}
             <Image
                 source={{ uri: locationUrl }}
                 style={{ width: 200, height: 200, borderRadius: 10 }}
-            />
-            <MessageStatusBubble
-                message={message}
             />
         </TouchableOpacity>
     );

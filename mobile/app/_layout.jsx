@@ -7,7 +7,7 @@ export default function RootLayout() {
         <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="chat/[id]"
+            <Stack.Screen name="chat"
                 options={
                     ({ route }) => {
                         const { id } = route.params;

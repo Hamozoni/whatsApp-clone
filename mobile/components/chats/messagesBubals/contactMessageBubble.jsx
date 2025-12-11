@@ -4,7 +4,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function ContactMessageBubble({ message }) {
     return (
-        <View style={{ padding: 10, borderRadius: 10, backgroundColor: '#00000011', minWidth: 220 }}>
+        <View style={{ minWidth: 220 }}>
             <View style={{ paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: '#00000011' }}>
                 <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
                     <Image

@@ -53,7 +53,7 @@ export default function AudioMessageBubble({ message }) {
     }, []);
 
     return (
-        <View style={{ width: "100%", minWidth: "100%", padding: 10, borderRadius: 10, backgroundColor: "#1807071a", flexDirection: "row", gap: 10 }}>
+        <View style={{ flexDirection: "row", gap: 10, minWidth: "100%" }}>
             <Image
                 source={require("../../../assets/images/pexels-nati-87264186-34295251.jpg")}
                 style={{ width: 40, height: 40, borderRadius: "50%" }}
@@ -77,8 +77,6 @@ export default function AudioMessageBubble({ message }) {
                         />
 
                     </View>
-
-
                 </View>
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                     <Text style={{ color: "white" }}>

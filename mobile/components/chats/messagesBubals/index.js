@@ -6,7 +6,7 @@ import CallMessageBubble from "./callMessageBubble";
 import ImageMessageBubble from "./imageMessageBubble";
 import ContactMessageBubble from "./contactMessageBubble";
 import AudioMessageBubble from "./audioMessageBubble";
-
+import MessageStatusBubble from "./messageStatusBubble";
 
 export {
     TextMessageBubble,
@@ -16,5 +16,6 @@ export {
     CallMessageBubble,
     ImageMessageBubble,
     ContactMessageBubble,
-    AudioMessageBubble
+    AudioMessageBubble,
+    MessageStatusBubble
 };
