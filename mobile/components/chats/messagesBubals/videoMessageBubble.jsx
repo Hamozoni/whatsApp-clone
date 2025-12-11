@@ -1,9 +1,11 @@
 import { Image, TouchableOpacity, View } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useRouter } from "expo-router";
 
 export default function VideoMessageBubble({ message }) {
+    const router = useRouter();
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("/chat/mediaGallery")}>
             <Image
                 source={message?.metadata?.thumbnailUrl}
                 style={{ width: 250, height: 250, borderRadius: 10, objectFit: "cover" }}

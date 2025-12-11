@@ -57,7 +57,7 @@ export default function MessageCard({ message }) {
                 style={{
                     padding: message?.type === "image" || message?.type === "video" || message?.type === "sticker" || message?.type === "document" || message?.type === "location" ? 0 : 10,
                     borderRadius: 10,
-                    backgroundColor: "#1807071a",
+                    backgroundColor: message?.type === "sticker" ? "unset" : "#1807071a",
                 }}>
                 <MessagesBubble />
                 {

@@ -20,15 +20,13 @@ export default function ChatDetails() {
                 backgroundColor: "#fff"
             }}
         >
-            <View style={{ flex: 1 }}>
-                <FlatList
-                    data={MESSAGES}
-                    renderItem={({ item }) => <MessageCard message={item} />}
-                    keyExtractor={(item) => item.id}
-                    style={{ padding: 10 }}
-                    showsVerticalScrollIndicator={false}
-                />
-            </View>
+            <FlatList
+                data={MESSAGES}
+                renderItem={({ item }) => <MessageCard message={item} />}
+                keyExtractor={(item) => item.id}
+                style={{ paddingHorizontal: 10, paddingVertical: 20, flex: 1 }}
+                showsVerticalScrollIndicator={false}
+            />
 
             <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
