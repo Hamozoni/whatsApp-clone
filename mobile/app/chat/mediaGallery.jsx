@@ -2,21 +2,21 @@ import { Image, View, Text, TouchableOpacity } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from 'expo-router';
-import ZoomableImage from '../../components/mediaGallery/zoomableImage';
+// import ZoomableImage from '../../components/mediaGallery/zoomableImage';
 // import { CHATS } from '../constants/chats';
-export default function MediaGallery() {
+
+const MediaGallery = () => {
     const router = useRouter();
 
 
     return (
         <PagerView
-            zoomEnabled={true}
             initialPage={0}
             style={{
                 flex: 1,
             }}>
-            {/* <View style={{ flex: 1, flexDirection: "column", justifyContent: "space-between" }}> */}
-            {/* <View style={{ backgroundColor: "black", opacity: 0.5, padding: 20, paddingTop: 40 }}>
+            <View style={{ flex: 1, flexDirection: "column", justifyContent: "space-between" }}>
+                <View style={{ backgroundColor: "black", opacity: 0.5, padding: 20, paddingTop: 40 }}>
                     <View style={{ flexDirection: "row", alignItems: "center", }}>
                         <TouchableOpacity onPress={() => { router.back() }}>
                             <Ionicons name="chevron-back" size={28} color="white" />
@@ -29,12 +29,18 @@ export default function MediaGallery() {
                             <Ionicons name="pencil" size={20} color="white" />
                         </View>
                     </View>
-                </View> */}
-            <ZoomableImage image={require("../../assets/images/pexels-nati-87264186-34295251.jpg")} />
-            {/* <View style={{ backgroundColor: "black", opacity: 0.5, padding: 20, paddingTop: 40 }}>
+                </View>
+                <View style={{ flex: 1 }}>
+                    <Image
+                        source={require("../../assets/images/pexels-nati-87264186-34295251.jpg")}
+                        style={{ width: "100%", height: "100%", resizeMode: "contain" }} />
+                </View>
+                <View style={{ backgroundColor: "black", opacity: 0.5, padding: 20, paddingTop: 40 }}>
                     <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>John Doe</Text>
-                </View> */}
-            {/* </View> */}
+                </View>
+            </View>
         </PagerView>
     )
-}
+};
+
+export default MediaGallery;

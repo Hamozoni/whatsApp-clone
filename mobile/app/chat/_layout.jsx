@@ -1,3 +1,4 @@
+// import 'react-native-reanimated';
 import { Stack } from "expo-router";
 import { ChatHeaderLeft, ChatHeaderMiddle, ChatHeaderRight } from "../../components/chats/chatHeader";
 export default function ChatLayout() {
