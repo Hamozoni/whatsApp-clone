@@ -3,9 +3,17 @@ module.exports = function (api) {
     return {
         presets: ['babel-preset-expo'],
         plugins: [
-            // other plugins if you have
-            'react-native-reanimated/plugin', // MUST BE LAST
-        ],
+            'react-native-reanimated/plugin',
+            [
+                'module-resolver',
+                {
+                    root: ['./'],
+                    alias: {
+                        '@': './',
+                        '~': './'
+                    }
+                }
+            ]
+        ]
     };
 };
-

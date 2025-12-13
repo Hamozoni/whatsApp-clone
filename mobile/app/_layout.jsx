@@ -1,4 +1,3 @@
-// import 'react-native-reanimated';
 import { Stack } from "expo-router";
 
 export default function RootLayout() {
@@ -8,7 +7,6 @@ export default function RootLayout() {
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="(auth)" options={{ headerShown: false }} />
             <Stack.Screen name="chat" options={{ headerShown: false }} />
-            {/* <Stack.Screen name="chat/mediaGallery" options={{ headerShown: false }} /> */}
         </Stack>
     );
 }

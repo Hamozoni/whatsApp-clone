@@ -1,54 +1,32 @@
 // src/components/messages/AudioMessage.tsx
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import Slider from "@react-native-community/slider";
-import { Audio } from "expo-av";
-import { useEffect, useState } from "react";
+import { useAudioPlayer } from 'expo-audio';
+import { useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import MessageStatusBubble from "./messageStatusBubble";
 
 export default function AudioMessageBubble({ message }) {
-    const [sound, setSound] = useState(null);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [position, setPosition] = useState(0);
-    const [duration, setDuration] = useState(1);
 
-    async function loadSound() {
-        const { sound } = await Audio.Sound.createAsync(
-            message?.metadata?.url,
-            { shouldPlay: false },
-            updateStatus
-        );
-        setSound(sound);
-    }
+    const { play, pause, seekTo, isPlaying, position, duration } = useAudioPlayer(message?.metadata?.url);
 
-    function updateStatus(status) {
-        if (status.isLoaded) {
-            setPosition(status.positionMillis);
-            setDuration(status.durationMillis);
-            setIsPlaying(status.isPlaying);
-        }
-    }
 
-    async function togglePlay() {
-        if (!sound) return;
-
+    function togglePlay() {
         if (isPlaying) {
-            await sound.pauseAsync();
+            pause();
         } else {
-            await sound.playAsync();
+            play();
         }
     }
 
-    async function onSeek(val) {
-        if (sound) {
-            await sound.setPositionAsync(val);
-        }
+    function onSeek(val) {
+        seekTo(val);
+        play();
     }
 
     useEffect(() => {
-        loadSound();
         return () => {
-            sound && sound.unloadAsync();
+            pause();
         };
     }, []);
 
