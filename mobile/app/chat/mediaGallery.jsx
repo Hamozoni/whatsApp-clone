@@ -2,8 +2,7 @@ import { Image, View, Text, TouchableOpacity } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from 'expo-router';
-// import ZoomableImage from '../../components/mediaGallery/zoomableImage';
-// import { CHATS } from '../constants/chats';
+import ZoomableImage from '../../components/mediaGallery/zoomableImage';
 
 const MediaGallery = () => {
     const router = useRouter();
@@ -31,9 +30,7 @@ const MediaGallery = () => {
                     </View>
                 </View>
                 <View style={{ flex: 1 }}>
-                    <Image
-                        source={require("../../assets/images/pexels-nati-87264186-34295251.jpg")}
-                        style={{ width: "100%", height: "100%", resizeMode: "contain" }} />
+                    <ZoomableImage />
                 </View>
                 <View style={{ backgroundColor: "black", opacity: 0.5, padding: 20, paddingTop: 40 }}>
                     <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>John Doe</Text>

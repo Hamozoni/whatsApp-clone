@@ -13,7 +13,8 @@ module.exports = function (api) {
                         '~': './'
                     }
                 }
-            ]
+            ],
+            "react-native-worklets/plugin"
         ]
     };
 };
