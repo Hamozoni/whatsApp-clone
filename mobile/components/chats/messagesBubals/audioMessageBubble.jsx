@@ -2,33 +2,32 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import Slider from "@react-native-community/slider";
 import { useAudioPlayer } from 'expo-audio';
-import { useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import MessageStatusBubble from "./messageStatusBubble";
+import { useState } from "react";
 
 export default function AudioMessageBubble({ message }) {
 
-    const { play, pause, seekTo, isPlaying, position, duration } = useAudioPlayer(message?.metadata?.url);
+    const player = useAudioPlayer(message?.metadata?.url);
+
+    const [isPlaying, setIsPlaying] = useState(false);
 
 
     function togglePlay() {
         if (isPlaying) {
-            pause();
+            player.pause();
+            setIsPlaying(false)
         } else {
-            play();
+            player.play();
+            setIsPlaying(true)
         }
     }
 
     function onSeek(val) {
-        seekTo(val);
-        play();
+        player.seekTo(val);
+        player.play();
     }
 
-    useEffect(() => {
-        return () => {
-            pause();
-        };
-    }, []);
 
     return (
         <View style={{ flexDirection: "row", gap: 10, minWidth: "100%" }}>
@@ -45,8 +44,8 @@ export default function AudioMessageBubble({ message }) {
 
                         <Slider
                             minimumValue={0}
-                            maximumValue={duration}
-                            value={position}
+                            maximumValue={player.duration}
+                            value={player.position}
                             onSlidingComplete={onSeek}
                             minimumTrackTintColor="#FFFFFF"
                             maximumTrackTintColor="#252121ff"
@@ -58,7 +57,7 @@ export default function AudioMessageBubble({ message }) {
                 </View>
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                     <Text style={{ color: "white" }}>
-                        {Math.floor(duration / 1000)}s
+                        {Math.floor(player.duration)}s
                     </Text>
                     <MessageStatusBubble
                         message={message}
