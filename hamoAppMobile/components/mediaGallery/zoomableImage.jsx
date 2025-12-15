@@ -1,9 +1,10 @@
+import { Dimensions } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 
+const { width, height } = Dimensions.get("window");
 
-
-const ZoomableImage = () => {
+const ZoomableImage = ({ metaData }) => {
     const scale = useSharedValue(1);
     const savedScale = useSharedValue(1);
 
@@ -40,10 +41,10 @@ const ZoomableImage = () => {
     }))
 
     return (
-        <GestureDetector gesture={composedGesture}>
+        <GestureDetector gesture={composedGesture} style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
             <Animated.Image
-                source={require("../../assets/images/pexels-nati-87264186-34295251.jpg")}
-                style={[animatedStyle, { width: "100%", height: "100%", resizeMode: "contain" }]}
+                source={metaData?.metadata?.url}
+                style={[animatedStyle, { width, height, resizeMode: "contain" }]}
             />
         </GestureDetector>
     );

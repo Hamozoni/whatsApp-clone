@@ -1,62 +1,32 @@
-import { View, Text, TouchableOpacity } from 'react-native';
-import PagerView from 'react-native-pager-view';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { useRouter } from 'expo-router';
-import ZoomableImage from '../../components/mediaGallery/zoomableImage';
-import VideoPlayer from '../../components/mediaGallery/videoPlayer';
+import { View, FlatList } from 'react-native';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
+import MediaGalleryCard from '../../components/cards/mediaGalleryCard';
+import MediaGalleryHeader from '../../components/mediaGallery/galleryHeader';
+import MediaGalleryFooter from '../../components/mediaGallery/galleryFooter';
 
-const MediaGalleryHeader = () => {
-    const router = useRouter();
-    return (
-        <View style={{ backgroundColor: "black", opacity: 0.5, padding: 20, paddingTop: 40, zIndex: 3 }}>
-            <View style={{ flexDirection: "row", alignItems: "center", }}>
-                <TouchableOpacity onPress={() => { router.back() }}>
-                    <Ionicons name="chevron-back" size={28} color="white" />
-                </TouchableOpacity>
-                <View style={{ flexDirection: "row", flex: 1, justifyContent: "space-between", alignItems: "center" }}>
-                    <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
-                        <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>John Doe</Text>
-                        <Text style={{ color: "white", fontSize: 12 }}>12/12/2025,12:34</Text>
-                    </View>
-                    <Ionicons name="pencil" size={20} color="white" />
-                </View>
-            </View>
-        </View>
-    )
-};
+import { MESSAGES } from '../../constants/messages';
 
-const MediaGalleryFooter = () => {
-    return (
-        <View style={{ backgroundColor: "black", opacity: 0.5, padding: 20, paddingTop: 40, zIndex: 3 }}>
-            <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>John Doe</Text>
-        </View>
-    )
-};
+const messages = MESSAGES.filter((item) => item.type === "image" || item.type === "video");
+
 
 const MediaGallery = () => {
 
-    const router = useRouter();
     const swipeTranslateY = useSharedValue(0);
-
-
     const onBack = () => {
         // router.back();
     };
 
     const onSwipeDown = Gesture.Pan()
         .onUpdate((e) => {
-            if (e.translationY > 0) {
-                swipeTranslateY.value = e.translationY
-            }
+            swipeTranslateY.value = e.translationY
         })
         .onEnd(() => {
             if (swipeTranslateY.value > 150) {
                 scheduleOnRN(onBack)();
             } else {
-                swipeTranslateY.value = withTiming(0);
+                swipeTranslateY.value = withSpring(0);
             }
         });
 
@@ -70,17 +40,18 @@ const MediaGallery = () => {
         <GestureDetector gesture={onSwipeDown}>
             <View style={{ flex: 1 }}>
                 <MediaGalleryHeader />
-                <Animated.View style={[{ flex: 1 }, style]}>
-                    <PagerView
-                        initialPage={0}
-                        horizontal={true}
-                        style={{ flex: 1, flexDirection: "column" }}
-                    >
-                        <VideoPlayer />
-                        <ZoomableImage />
-                        <VideoPlayer />
-                        <ZoomableImage />
-                    </PagerView>
+                <Animated.View style={[{ flex: 1, alignItems: "center", justifyContent: "center" }, style]}>
+                    <FlatList
+                        horizontal
+                        pagingEnabled
+                        style={{ flex: 1 }}
+                        data={messages}
+                        renderItem={({ item }) => <MediaGalleryCard metaData={item} />}
+                        keyExtractor={(item) => item.id}
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
+
+                    />
                 </Animated.View>
                 <MediaGalleryFooter />
 

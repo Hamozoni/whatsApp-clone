@@ -1,31 +1,60 @@
 import { useVideoPlayer, VideoView } from 'expo-video';
-import { View } from 'react-native';
+import { Dimensions, View } from 'react-native';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
-import { useRouter } from "expo-router";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+const { width, height } = Dimensions.get("window");
 
-const videoSource =
-    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+export default function VideoScreen({ metaData }) {
 
-export default function VideoScreen() {
-
-    const player = useVideoPlayer(videoSource, player => {
+    const player = useVideoPlayer(metaData?.metadata?.url, player => {
         player.loop = true;
     });
 
-    return (
-        <View style={{ flex: 1, backgroundColor: "black", width: "100%", height: "100%" }}>
-            <VideoView
-                style={{ width: "100%", height: "100%" }}
-                player={player}
-                onBlur={() => console.log("blur")}
-                onFocus={() => console.log("focus")}
-                fullscreenOptions={{
-                    enabled: true,
-                    exitFullscreenOnEnd: true,
+    const scale = useSharedValue(1);
+    const savedScale = useSharedValue(1);
 
-                }}
-            />
-        </View>
+    const translateX = useSharedValue(0);
+    const translateY = useSharedValue(0);
+    const savedX = useSharedValue(0);
+    const savedY = useSharedValue(0);
+
+
+    const doubleTap = Gesture.Tap()
+        .numberOfTaps(2)
+        .onEnd(() => {
+            if (scale.value > 1) {
+                scale.value = withSpring(1);
+                translateX.value = withSpring(0);
+                translateY.value = withSpring(0);
+                savedScale.value = 1;
+                savedX.value = 0;
+                savedY.value = 0;
+            } else {
+                scale.value = withSpring(2.5);
+                savedScale.value = 2.5;
+            }
+        });
+
+    const composedGesture = Gesture.Simultaneous(doubleTap);
+
+    const animatedStyle = useAnimatedStyle(() => ({
+        transform: [
+            { scale: scale.value },
+            { translateX: translateX.value },
+            { translateY: translateY.value },
+        ]
+    }))
+
+    return (
+        <GestureDetector gesture={composedGesture}>
+            <Animated.View style={animatedStyle}>
+                <VideoView
+                    style={{ width, height }}
+                    player={player}
+                    nativeControls={false}
+                />
+            </Animated.View>
+        </GestureDetector>
     );
 }
