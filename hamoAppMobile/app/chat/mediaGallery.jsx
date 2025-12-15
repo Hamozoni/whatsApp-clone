@@ -1,11 +1,11 @@
 import { View, FlatList } from 'react-native';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
-import { scheduleOnRN } from 'react-native-worklets';
+import { runOnJS } from 'react-native-worklets';
 import MediaGalleryCard from '../../components/cards/mediaGalleryCard';
 import MediaGalleryHeader from '../../components/mediaGallery/galleryHeader';
 import MediaGalleryFooter from '../../components/mediaGallery/galleryFooter';
-
+import { useRouter } from 'expo-router';
 import { MESSAGES } from '../../constants/messages';
 
 const messages = MESSAGES.filter((item) => item.type === "image" || item.type === "video");
@@ -14,8 +14,9 @@ const messages = MESSAGES.filter((item) => item.type === "image" || item.type ==
 const MediaGallery = () => {
 
     const swipeTranslateY = useSharedValue(0);
+    const router = useRouter();
     const onBack = () => {
-        // router.back();
+        router.back();
     };
 
     const onSwipeDown = Gesture.Pan()
@@ -23,8 +24,8 @@ const MediaGallery = () => {
             swipeTranslateY.value = e.translationY
         })
         .onEnd(() => {
-            if (swipeTranslateY.value > 150) {
-                scheduleOnRN(onBack)();
+            if (swipeTranslateY.value > 150 || swipeTranslateY.value < -150) {
+                runOnJS(onBack)();
             } else {
                 swipeTranslateY.value = withSpring(0);
             }
