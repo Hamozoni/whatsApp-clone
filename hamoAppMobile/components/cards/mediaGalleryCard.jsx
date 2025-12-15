@@ -5,7 +5,6 @@ import VideoPlayer from "../mediaGallery/videoPlayer";
 export default function MediaGalleryCard({ metaData }) {
 
     const CardComponent = () => {
-        console.log(metaData);
         switch (metaData.type) {
             case "image":
                 return <ZoomableImage metaData={metaData} />;

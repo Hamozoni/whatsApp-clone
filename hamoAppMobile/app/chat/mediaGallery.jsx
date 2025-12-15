@@ -13,8 +13,10 @@ const messages = MESSAGES.filter((item) => item.type === "image" || item.type ==
 
 const MediaGallery = () => {
 
+    const showHeaderAndFooter = useSharedValue(true);
     const swipeTranslateY = useSharedValue(0);
     const router = useRouter();
+
     const onBack = () => {
         router.back();
     };
@@ -31,30 +33,55 @@ const MediaGallery = () => {
             }
         });
 
+    const oneTap = Gesture.Tap()
+        .numberOfTaps(1)
+        .onEnd(() => {
+            showHeaderAndFooter.value = !showHeaderAndFooter.value;
+
+        });
+
     const style = useAnimatedStyle(() => ({
         transform: [
             { translateY: swipeTranslateY.value }
         ]
     }));
 
-    return (
-        <GestureDetector gesture={onSwipeDown}>
-            <View style={{ flex: 1 }}>
-                <MediaGalleryHeader />
-                <Animated.View style={[{ flex: 1, alignItems: "center", justifyContent: "center" }, style]}>
-                    <FlatList
-                        horizontal
-                        pagingEnabled
-                        style={{ flex: 1 }}
-                        data={messages}
-                        renderItem={({ item }) => <MediaGalleryCard metaData={item} />}
-                        keyExtractor={(item) => item.id}
-                        showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
+    const headerStyle = useAnimatedStyle(() => ({
+        transform: [
+            { translateY: showHeaderAndFooter.value ? 0 : -100 }
+        ]
+    }));
 
-                    />
+    const footerStyle = useAnimatedStyle(() => ({
+        transform: [
+            { translateY: showHeaderAndFooter.value ? 0 : 100 }
+        ]
+    }));
+
+    const gesture = Gesture.Simultaneous(onSwipeDown);
+
+    return (
+        <GestureDetector gesture={gesture}>
+            <View style={{ flex: 1 }}>
+                <Animated.View style={[headerStyle, { position: "absolute", top: 0, left: 0, right: 0, zIndex: 3 }]}>
+                    <MediaGalleryHeader />
                 </Animated.View>
-                <MediaGalleryFooter />
+                <Animated.View style={[{ flex: 1, alignItems: "center", justifyContent: "center" }, style]}>
+                    <GestureDetector gesture={oneTap}>
+                        <FlatList
+                            horizontal
+                            pagingEnabled
+                            style={{ flex: 1 }}
+                            data={messages}
+                            renderItem={({ item }) => <MediaGalleryCard metaData={item} />}
+                            keyExtractor={(item) => item.id}
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
+
+                        />
+                    </GestureDetector>
+                </Animated.View>
+                <Animated.View style={[footerStyle, { position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 3 }]}><MediaGalleryFooter /></Animated.View>
 
             </View>
         </GestureDetector>
