@@ -1,9 +1,7 @@
-import { Dimensions, Image } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 
 
-const { width, height } = Dimensions.get("window");
 
 const ZoomableImage = () => {
     const scale = useSharedValue(1);
@@ -14,30 +12,6 @@ const ZoomableImage = () => {
     const savedX = useSharedValue(0);
     const savedY = useSharedValue(0);
 
-    const pinch = Gesture.Pinch()
-        .onUpdate((e) => {
-            scale.value = savedScale.value * e.scale;
-        })
-        .onEnd(() => {
-            savedScale.value = scale.value;
-
-            if (scale.value < 1) {
-                scale.value = withTiming(1);
-                savedScale.value = 1;
-            }
-        });
-
-    const pen = Gesture.Pan()
-        .onUpdate((e) => {
-            if (scale.value > 1) {
-                translateX.value = savedX.value + e.translationX;
-                translateY.value = savedY.value + e.translationY;
-            }
-        })
-        .onEnd(() => {
-            savedX.value = translateX.value;
-            savedY.value = translateY.value;
-        });
 
     const doubleTap = Gesture.Tap()
         .numberOfTaps(2)
@@ -55,7 +29,7 @@ const ZoomableImage = () => {
             }
         });
 
-    const composedGesture = Gesture.Simultaneous(pinch, pen, doubleTap);
+    const composedGesture = Gesture.Simultaneous(doubleTap);
 
     const animatedStyle = useAnimatedStyle(() => ({
         transform: [
@@ -67,7 +41,10 @@ const ZoomableImage = () => {
 
     return (
         <GestureDetector gesture={composedGesture}>
-            <Animated.Image source={require("../../assets/images/pexels-nati-87264186-34295251.jpg")} style={[animatedStyle, { width, height, resizeMode: "contain" }]} />
+            <Animated.Image
+                source={require("../../assets/images/pexels-nati-87264186-34295251.jpg")}
+                style={[animatedStyle, { width: "100%", height: "100%", resizeMode: "contain" }]}
+            />
         </GestureDetector>
     );
 };

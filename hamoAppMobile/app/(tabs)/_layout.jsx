@@ -1,5 +1,6 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { Image } from "react-native";
 
 const RootLayout = () => {
     return (
@@ -14,6 +15,7 @@ const RootLayout = () => {
                     headerShown: false,
                     title: "Updates",
                     tabBarIcon: ({ focused, color, size }) => (
+                        // <Image source={require("../../assets/application.png")} style={{ width: 24, height: 24 }} />
                         <Ionicons name={focused ? "notifications" : "notifications-outline"} size={size} color={color} />
                     ),
                 }}
@@ -56,7 +58,7 @@ const RootLayout = () => {
                     headerShown: false,
                     title: "Settings",
                     tabBarIcon: ({ focused, color, size }) => (
-                        <Ionicons name={focused ? "settings" : "settings-outline"} size={size} color={color} />
+                        <Ionicons name={focused ? "cog" : "cog-outline"} size={size} color={color} />
                     )
                 }}
             />

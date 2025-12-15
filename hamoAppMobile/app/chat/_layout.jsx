@@ -23,6 +23,7 @@ export default function ChatLayout() {
                 name="mediaGallery"
                 options={{
                     headerShown: false,
+                    gestureEnabled: false,
                 }}
             />
         </Stack>

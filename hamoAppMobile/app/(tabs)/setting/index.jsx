@@ -18,8 +18,9 @@ const settingsData2 = [
     { title: "notifications", iconName: "notifications-outline", id: 8 },
     { title: "storage and data", iconName: "file-tray-stacked-outline", id: 9 },
 ];
+
 const settingsData3 = [
-    { title: "help and feedback", iconName: "help-outline", id: 10 },
+    { title: "help and feedback", iconName: "help-circle-outline", id: 10 },
     { title: "invite a friend", iconName: "person-add-outline", id: 11 },
 ];
 
