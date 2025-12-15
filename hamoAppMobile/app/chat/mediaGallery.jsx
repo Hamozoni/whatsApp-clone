@@ -3,6 +3,7 @@ import PagerView from 'react-native-pager-view';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from 'expo-router';
 import ZoomableImage from '../../components/mediaGallery/zoomableImage';
+import VideoPlayer from '../../components/mediaGallery/videoPlayer';
 
 const MediaGallery = () => {
     const router = useRouter();
@@ -30,7 +31,8 @@ const MediaGallery = () => {
                     </View>
                 </View>
                 <View style={{ flex: 1 }}>
-                    <ZoomableImage />
+                    {/* <ZoomableImage /> */}
+                    <VideoPlayer />
                 </View>
                 <View style={{ backgroundColor: "black", opacity: 0.5, padding: 20, paddingTop: 40 }}>
                     <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>John Doe</Text>
