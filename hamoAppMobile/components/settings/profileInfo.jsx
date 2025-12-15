@@ -10,7 +10,7 @@ export const ProfileInfo = () => {
             <View style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: 1, borderBottomColor: "#eee", marginBottom: 20, paddingBottom: 20, gap: 10 }}>
                 <TouchableOpacity onPress={() => router.push("/setting/profile")}>
                     <Image
-                        source={{ uri: "../../assets/images/profile.png" }}
+                        source={require("../../assets/images/pexels-al-amin-muhammad-988616478-29680723.jpg")}
                         style={{ width: 60, height: 60, borderRadius: 50, backgroundColor: "#d6f897ff" }}
                     />
                 </TouchableOpacity>

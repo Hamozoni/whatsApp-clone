@@ -25,7 +25,7 @@ export default function Profile() {
             <View style={{ alignItems: "center", marginVertical: 20 }}>
                 <TouchableOpacity style={{ alignItems: "center", marginBottom: 10 }}>
                     <Image
-                        source={{ uri: "../../assets/images/profile.png" }}
+                        source={require("../../../assets/images/pexels-al-amin-muhammad-988616478-29680723.jpg")}
                         style={{ width: 150, height: 150, borderRadius: "50%", backgroundColor: "#e4f7c2ff" }}
                     />
                 </TouchableOpacity>

@@ -4,12 +4,11 @@ import { SearchInput } from "../../../components/ui/searchInput";
 import { SettingsCard } from "../../../components/cards/settingsCard";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-
 const settingsData1 = [
-    { title: "lists", iconName: "list-outline", id: 1 },
-    { title: "broadcasts messages", iconName: "microphone-outline", id: 2 },
+    { title: "lists", iconName: "albums-outline", id: 1 },
+    { title: "broadcasts messages", iconName: "megaphone-outline", id: 2 },
     { title: "starrd", iconName: "star-outline", id: 3 },
-    { title: "linked devices", iconName: "device-outline", id: 4 },
+    { title: "linked devices", iconName: "laptop-outline", id: 4 },
 
 ];
 const settingsData2 = [
@@ -17,7 +16,7 @@ const settingsData2 = [
     { title: "privacy", iconName: "lock-closed-outline", id: 6 },
     { title: "chats", iconName: "chatbubbles-outline", id: 7 },
     { title: "notifications", iconName: "notifications-outline", id: 8 },
-    { title: "storage and data", iconName: "memory", id: 9 },
+    { title: "storage and data", iconName: "file-tray-stacked-outline", id: 9 },
 ];
 const settingsData3 = [
     { title: "help and feedback", iconName: "help-outline", id: 10 },
