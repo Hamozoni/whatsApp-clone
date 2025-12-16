@@ -3,8 +3,16 @@ import { RoundedBtn } from "../ui/roundedBtn";
 import { STATUSES } from "../../constants/status";
 import { StatusCard } from "../cards/statusCard";
 import { Ionicons } from "@expo/vector-icons";
+import { groupStatusByContact } from "../utils/groupStatusBycontact";
+import { useEffect, useState } from "react";
 
 export const StatusPanel = () => {
+
+    const [status, setStatus] = useState([]);
+    useEffect(() => {
+        setStatus(groupStatusByContact(STATUSES));
+    }, [STATUSES])
+
     return (
         <View style={{ marginTop: 20 }}>
             <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingVertical: 10 }}>
@@ -30,8 +38,8 @@ export const StatusPanel = () => {
                         </TouchableOpacity>
                     </View>
                     {
-                        STATUSES.map((status) => (
-                            <StatusCard key={status.id} status={status} />
+                        status.map((status) => (
+                            <StatusCard key={status[0].id} status={status} />
                         ))
                     }
                 </ScrollView>

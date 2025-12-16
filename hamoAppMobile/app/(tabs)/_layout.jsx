@@ -7,6 +7,7 @@ const RootLayout = () => {
         <Tabs
             screenOptions={{
                 headerShown: false,
+                tabBarActiveTintColor: "#02d85bff",
             }}
         >
             <Tabs.Screen

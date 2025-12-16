@@ -6,29 +6,29 @@ export const STATUSES = [
         contact: {
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
-            contactId: "1"
+            _id: "1"
         }
     },
     {
         id: 2,
         type: "video",
-        photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
+        thumbnail: require("../assets/images/pexels-al-amin-muhammad-988616478-29680723.jpg"),
         contact: {
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
-            contactId: "1"
+            _id: "1"
         }
     },
     {
         id: 3,
         type: "text",
         text: "Hello",
-        bgColor: "#4ef16aff",
+        bgColor: "#cc6fe4ff",
         textColor: "#ffffffff",
         contact: {
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
-            contactId: "1"
+            _id: "1"
         }
     },
     {
@@ -38,7 +38,7 @@ export const STATUSES = [
         contact: {
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
-            contactId: "2"
+            _id: "2"
         }
     },
     {
@@ -49,7 +49,7 @@ export const STATUSES = [
         contact: {
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
-            contactId: "2"
+            _id: "2"
         }
     },
     {
@@ -59,7 +59,7 @@ export const STATUSES = [
         contact: {
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
-            contactId: "2"
+            _id: "2"
         }
     },
     {
@@ -69,16 +69,17 @@ export const STATUSES = [
         contact: {
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
-            contactId: "3"
+            _id: "3"
         }
     },
     {
         id: 8,
-        photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
+        type: "image",
+        photoURL: require("../assets/images/pexels-al-amin-muhammad-988616478-29680723.jpg"),
         contact: {
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
-            contactId: "4"
+            _id: "4"
         }
     },
     {
@@ -89,19 +90,19 @@ export const STATUSES = [
         contact: {
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
-            contactId: "4"
+            _id: "4"
         }
     },
     {
         id: 10,
         type: "text",
         text: "Hello",
-        bgColor: "#4ef16aff",
+        bgColor: "#064110ff",
         textColor: "#ffffffff",
         contact: {
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
-            contactId: "4"
+            _id: "4"
         }
     },
     {
@@ -111,7 +112,7 @@ export const STATUSES = [
         contact: {
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
-            contactId: "5"
+            _id: "5"
         }
     },
     {
@@ -122,7 +123,7 @@ export const STATUSES = [
         contact: {
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
-            contactId: "5"
+            _id: "5"
         }
     }
 ]
