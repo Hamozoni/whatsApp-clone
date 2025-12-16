@@ -7,7 +7,8 @@ export const STATUSES = [
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
             _id: "1"
-        }
+        },
+        createdAt: "2025-12-16T17:14:06.000Z"
     },
     {
         id: 2,
@@ -17,7 +18,8 @@ export const STATUSES = [
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
             _id: "1"
-        }
+        },
+        createdAt: "2025-12-16T17:14:06.000Z"
     },
     {
         id: 3,
@@ -29,7 +31,8 @@ export const STATUSES = [
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
             _id: "1"
-        }
+        },
+        createdAt: "2025-12-16T17:14:06.000Z"
     },
     {
         id: 4,
@@ -39,7 +42,8 @@ export const STATUSES = [
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
             _id: "2"
-        }
+        },
+        createdAt: "2025-12-16T17:14:06.000Z"
     },
     {
         id: 5,
@@ -50,7 +54,8 @@ export const STATUSES = [
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
             _id: "2"
-        }
+        },
+        createdAt: "2025-12-16T17:14:06.000Z"
     },
     {
         id: 6,
@@ -60,7 +65,8 @@ export const STATUSES = [
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
             _id: "2"
-        }
+        },
+        createdAt: "2025-12-16T17:14:06.000Z"
     },
     {
         id: 7,
@@ -70,7 +76,8 @@ export const STATUSES = [
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
             _id: "3"
-        }
+        },
+        createdAt: "2025-12-16T17:14:06.000Z"
     },
     {
         id: 8,
@@ -80,7 +87,8 @@ export const STATUSES = [
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
             _id: "4"
-        }
+        },
+        createdAt: "2025-12-16T17:14:06.000Z"
     },
     {
         id: 9,
@@ -91,7 +99,8 @@ export const STATUSES = [
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
             _id: "4"
-        }
+        },
+        createdAt: "2025-12-16T17:14:06.000Z"
     },
     {
         id: 10,
@@ -103,7 +112,8 @@ export const STATUSES = [
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
             _id: "4"
-        }
+        },
+        createdAt: "2025-12-16T17:14:06.000Z"
     },
     {
         id: 11,
@@ -113,7 +123,8 @@ export const STATUSES = [
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
             _id: "5"
-        }
+        },
+        createdAt: "2025-12-16T17:14:06.000Z"
     },
     {
         id: 12,
@@ -124,6 +135,7 @@ export const STATUSES = [
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),
             _id: "5"
-        }
+        },
+        createdAt: "2025-12-16T17:14:06.000Z"
     }
-]
+];

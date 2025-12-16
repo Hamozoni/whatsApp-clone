@@ -1,6 +1,5 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { Image } from "react-native";
 
 const RootLayout = () => {
     return (
