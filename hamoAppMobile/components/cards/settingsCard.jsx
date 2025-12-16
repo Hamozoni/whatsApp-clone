@@ -17,8 +17,8 @@ export const SettingsCard = ({ iconName, title }) => {
                     height: 50
                 }}
             >
-                <Text style={{ fontSize: 18, color: "#555353ff" }}>{title}</Text>
-                <Ionicons name="chevron-forward" size={16} color="#555353ff" />
+                <Text style={{ fontSize: 16, color: "#000" }}>{title}</Text>
+                <Ionicons name="chevron-forward" size={24} color="#000" />
             </View>
         </TouchableOpacity>
     );

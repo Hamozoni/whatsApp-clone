@@ -1,7 +1,8 @@
-import { Image, ScrollView, Text, View } from "react-native";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { RoundedBtn } from "../ui/roundedBtn";
 import { STATUSES } from "../../constants/status";
 import { StatusCard } from "../cards/statusCard";
+import { Ionicons } from "@expo/vector-icons";
 
 export const StatusPanel = () => {
     return (
@@ -15,14 +16,18 @@ export const StatusPanel = () => {
             </View>
             <View>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 5 }}>
-                    <View style={{ width: 90, height: 180, borderRadius: 15, borderWidth: 1, borderColor: "#ccc" }}>
-                        <View style={{ padding: 10, alignItems: "center", justifyContent: "center" }}>
+                    <View style={{ width: 90, height: 180, borderRadius: 15, borderWidth: 1, borderColor: "#ccc", flexDirection: "column", justifyContent: "space-around", alignItems: "center" }}>
+                        <View style={{ padding: 10, alignItems: "center", justifyContent: "center", position: "relative" }}>
                             <Image source={require("../../assets/icon.png")}
                                 style={{ width: 60, height: 60, borderRadius: 50 }}
                             />
-                            <RoundedBtn iconName="add" />
+                            <TouchableOpacity style={{ position: "absolute", bottom: 10, right: 10, borderRadius: "50%", backgroundColor: "#4ef16aff", borderWidth: 2, borderColor: "#ffffffff" }}>
+                                <Ionicons name="add" size={24} color="#fff" />
+                            </TouchableOpacity>
                         </View>
-                        <Text>Add Status </Text>
+                        <TouchableOpacity style={{ padding: 10 }}>
+                            <Text>Add Status </Text>
+                        </TouchableOpacity>
                     </View>
                     {
                         STATUSES.map((status) => (

@@ -7,7 +7,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 export default function GalleryHeader() {
     const router = useRouter();
     return (
-        <View style={{ position: "absolute", top: 0, left: 0, right: 0, backgroundColor: "black", opacity: 0.5, padding: 20, paddingTop: 40, zIndex: 3 }}>
+        <View >
             <View style={{ flexDirection: "row", alignItems: "center", }}>
                 <TouchableOpacity onPress={() => { router.back() }}>
                     <Ionicons name="chevron-back" size={30} color="white" />

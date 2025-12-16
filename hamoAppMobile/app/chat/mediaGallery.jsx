@@ -1,4 +1,4 @@
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Image, StyleSheet } from 'react-native';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { runOnJS } from 'react-native-worklets';
@@ -7,6 +7,7 @@ import MediaGalleryHeader from '../../components/mediaGallery/galleryHeader';
 import MediaGalleryFooter from '../../components/mediaGallery/galleryFooter';
 import { useRouter } from 'expo-router';
 import { MESSAGES } from '../../constants/messages';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const messages = MESSAGES.filter((item) => item.type === "image" || item.type === "video");
 
@@ -49,43 +50,106 @@ const MediaGallery = () => {
     const headerStyle = useAnimatedStyle(() => ({
         transform: [
             { translateY: showHeaderAndFooter.value ? 0 : -100 }
-        ]
+        ],
+        opacity: showHeaderAndFooter.value ? 1 : 0,
     }));
 
     const footerStyle = useAnimatedStyle(() => ({
         transform: [
             { translateY: showHeaderAndFooter.value ? 0 : 100 }
-        ]
+        ],
+        opacity: showHeaderAndFooter.value ? 1 : 0
     }));
+
+    const FooterMediaGallery = ({ data }) => {
+        return (
+            <Image
+                source={data?.type === "image" ? data?.metadata?.url : data?.metadata?.thumbnailUrl}
+                style={{ width: 50, height: 50 }}
+            />
+
+
+        )
+    }
 
     const gesture = Gesture.Simultaneous(onSwipeDown);
 
     return (
-        <GestureDetector gesture={gesture}>
-            <View style={{ flex: 1 }}>
-                <Animated.View style={[headerStyle, { position: "absolute", top: 0, left: 0, right: 0, zIndex: 3 }]}>
-                    <MediaGalleryHeader />
-                </Animated.View>
-                <Animated.View style={[{ flex: 1, alignItems: "center", justifyContent: "center" }, style]}>
-                    <GestureDetector gesture={oneTap}>
-                        <FlatList
-                            horizontal
-                            pagingEnabled
-                            style={{ flex: 1 }}
-                            data={messages}
-                            renderItem={({ item }) => <MediaGalleryCard metaData={item} />}
-                            keyExtractor={(item) => item.id}
-                            showsHorizontalScrollIndicator={false}
-                            contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
+        <SafeAreaView style={{ flex: 1, backgroundColor: "black" }} options={{ edges: ["top", "bottom"] }} >
+            <GestureDetector gesture={gesture}>
+                <View style={{ flex: 1, backgroundColor: "#eee" }}>
+                    <Animated.View
+                        style=
+                        {[
+                            headerStyle,
+                            styles.headerContainer
+                        ]}
+                    >
+                        <MediaGalleryHeader />
+                    </Animated.View>
+                    <Animated.View style={[styles.galleryContainer, style]}>
+                        <GestureDetector gesture={oneTap}>
+                            <FlatList
+                                horizontal
+                                pagingEnabled
+                                style={{ flex: 1 }}
+                                data={messages}
+                                renderItem={({ item }) => <MediaGalleryCard metaData={item} />}
+                                keyExtractor={(item) => item.id}
+                                showsHorizontalScrollIndicator={false}
+                                contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
 
-                        />
-                    </GestureDetector>
-                </Animated.View>
-                <Animated.View style={[footerStyle, { position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 3 }]}><MediaGalleryFooter /></Animated.View>
+                            />
+                        </GestureDetector>
+                    </Animated.View>
+                    <Animated.View
+                        style={[
+                            footerStyle,
+                            styles.footerContainer
+                        ]}
+                    >
+                        <View style={{ flex: 1, marginBottom: 10 }}>
+                            <FlatList
+                                horizontal
+                                data={messages}
+                                renderItem={({ item }) => <FooterMediaGallery data={item} />}
+                                keyExtractor={(item) => item.id}
+                                showsHorizontalScrollIndicator={false}
+                                contentContainerStyle={{ alignItems: "center", gap: 2 }}
+                            />
+                        </View>
+                        <MediaGalleryFooter />
+                    </Animated.View>
 
-            </View>
-        </GestureDetector>
+                </View>
+            </GestureDetector>
+        </SafeAreaView >
     )
 };
+
+
+const styles = StyleSheet.create({
+    headerContainer: {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 3,
+        backgroundColor: "black",
+        padding: 10
+    },
+    footerContainer: {
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 3,
+        backgroundColor: "black",
+        padding: 10
+    },
+    galleryContainer: {
+        flex: 1, alignItems: "center", justifyContent: "center"
+    },
+})
 
 export default MediaGallery;

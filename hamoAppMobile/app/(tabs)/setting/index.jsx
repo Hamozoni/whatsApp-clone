@@ -5,23 +5,23 @@ import { SettingsCard } from "../../../components/cards/settingsCard";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const settingsData1 = [
-    { title: "lists", iconName: "albums-outline", id: 1 },
-    { title: "broadcasts messages", iconName: "megaphone-outline", id: 2 },
-    { title: "starrd", iconName: "star-outline", id: 3 },
-    { title: "linked devices", iconName: "laptop-outline", id: 4 },
+    { title: "Lists", iconName: "albums-outline", id: 1 },
+    { title: "Broadcasts messages", iconName: "megaphone-outline", id: 2 },
+    { title: "Starred", iconName: "star-outline", id: 3 },
+    { title: "Linked devices", iconName: "laptop-outline", id: 4 },
 
 ];
 const settingsData2 = [
-    { title: "account", iconName: "person-outline", id: 5 },
-    { title: "privacy", iconName: "lock-closed-outline", id: 6 },
-    { title: "chats", iconName: "chatbubbles-outline", id: 7 },
-    { title: "notifications", iconName: "notifications-outline", id: 8 },
-    { title: "storage and data", iconName: "file-tray-stacked-outline", id: 9 },
+    { title: "Account", iconName: "person-outline", id: 5 },
+    { title: "Privacy", iconName: "lock-closed-outline", id: 6 },
+    { title: "Chats", iconName: "chatbubbles-outline", id: 7 },
+    { title: "Notifications", iconName: "notifications-outline", id: 8 },
+    { title: "Storage and data", iconName: "file-tray-stacked-outline", id: 9 },
 ];
 
 const settingsData3 = [
-    { title: "help and feedback", iconName: "help-circle-outline", id: 10 },
-    { title: "invite a friend", iconName: "person-add-outline", id: 11 },
+    { title: "Help and feedback", iconName: "help-circle-outline", id: 10 },
+    { title: "Invite a friend", iconName: "person-add-outline", id: 11 },
 ];
 
 const Settings = () => {

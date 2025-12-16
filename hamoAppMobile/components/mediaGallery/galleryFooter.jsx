@@ -5,7 +5,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 export default function GalleryFooter() {
     return (
-        <View style={{ backgroundColor: "black", opacity: 0.5, padding: 20, paddingBottom: 40, }}>
+        <View >
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                 <TouchableOpacity>
                     <Octicons name="share" size={28} color="white" />
