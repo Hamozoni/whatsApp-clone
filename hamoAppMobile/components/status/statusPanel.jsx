@@ -16,7 +16,7 @@ export const StatusPanel = () => {
             </View>
             <View>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 5 }}>
-                    <View style={{ width: 90, height: 180, borderRadius: 15, borderWidth: 1, borderColor: "#ccc", flexDirection: "column", justifyContent: "space-around", alignItems: "center" }}>
+                    <View style={{ width: 100, height: 180, borderRadius: 15, borderWidth: 1, borderColor: "#ccc", flexDirection: "column", justifyContent: "space-around", alignItems: "center" }}>
                         <View style={{ padding: 10, alignItems: "center", justifyContent: "center", position: "relative" }}>
                             <Image source={require("../../assets/icon.png")}
                                 style={{ width: 60, height: 60, borderRadius: 50 }}

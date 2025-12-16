@@ -42,7 +42,7 @@ const Settings = () => {
                         <SettingsCard key={item.id} iconName={item.iconName} title={item.title} />
                     ))}
                 </View>
-                <View style={{ backgroundColor: "#fff", padding: 20, borderRadius: 20 }}>
+                <View style={{ backgroundColor: "#fff", padding: 20, borderRadius: 20, marginBottom: 20 }}>
                     {settingsData3.map((item) => (
                         <SettingsCard key={item.id} iconName={item.iconName} title={item.title} />
                     ))}
