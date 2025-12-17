@@ -3,15 +3,9 @@ import { RoundedBtn } from "../ui/roundedBtn";
 import { STATUSES } from "../../constants/status";
 import { StatusCard } from "../cards/statusCard";
 import { Ionicons } from "@expo/vector-icons";
-import { groupStatusByContact } from "../utils/groupStatusBycontact";
-import { useEffect, useState } from "react";
 
 export const StatusPanel = () => {
 
-    const [status, setStatus] = useState([]);
-    useEffect(() => {
-        setStatus(groupStatusByContact(STATUSES));
-    }, [STATUSES])
 
     return (
         <View style={{ marginTop: 20 }}>
@@ -38,8 +32,8 @@ export const StatusPanel = () => {
                         </TouchableOpacity>
                     </View>
                     {
-                        status.map((status) => (
-                            <StatusCard key={status[0].id} status={status} />
+                        STATUSES.map((status, index) => (
+                            <StatusCard key={status._id} status={status} index={index} />
                         ))
                     }
                 </ScrollView>

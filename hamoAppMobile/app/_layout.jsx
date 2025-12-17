@@ -9,7 +9,7 @@ export default function RootLayout() {
                 <Stack.Screen name="(tabs)" />
                 <Stack.Screen name="(auth)" />
                 <Stack.Screen name="chat" />
-                <Stack.Screen name="statusGallery" />
+                <Stack.Screen name="status" />
             </Stack>
         </GestureHandlerRootView>
     );
