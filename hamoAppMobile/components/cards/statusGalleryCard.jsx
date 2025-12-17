@@ -12,6 +12,7 @@ export default function StatusGalleryCard({ status }) {
 
 
     const [statusIndex, setStatusIndex] = useState(0);
+    const [isTimerRunning, setIsTimerRunning] = useState(true);
     const { index } = useLocalSearchParams();
     const router = useRouter();
 
@@ -42,10 +43,25 @@ export default function StatusGalleryCard({ status }) {
                 router.replace(`/status/${Number.parseInt(index) + 1}`);
             }
         }
-    }
+    };
+
+
+    const handleTimer = (type) => {
+
+        if (type === "start") {
+            setIsTimerRunning((prev) => {
+                console.log(prev);
+                return false;
+            });
+        } else {
+            setIsTimerRunning((prev) => {
+                console.log(prev);
+                return true;
+            });
+        }
+    };
 
     const tapLeft = Gesture.Tap()
-        .numberOfTaps(1)
         .onEnd((e) => {
             if (e.x < 170 && e.y > 100 && e.y < 500) {
                 runOnJS(handlePrev)()
@@ -55,21 +71,32 @@ export default function StatusGalleryCard({ status }) {
             }
         });
 
+    const longPress = Gesture.Pan()
+        .onBegin(() => {
+            runOnJS(handleTimer)("start");
+        })
+        .onFinalize(() => {
+            runOnJS(handleTimer)("end");
+        });
+
+    const composedGesture = Gesture.Simultaneous(tapLeft, longPress);
+
     return (
-        <GestureDetector style={{ flex: 1 }} gesture={tapLeft}>
+        <GestureDetector style={{ flex: 1 }} gesture={composedGesture}>
             <View style={{ flex: 1, width: "100%", flexDirection: "column" }}>
                 <StatusGalleryHeader
                     status={status}
                     statusIndex={statusIndex}
                     handleNext={handleNext}
                     durationInSec={status.statuses[statusIndex]?.durationInSec || 10}
+                    isTimerRunning={isTimerRunning}
                 />
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                     {
                         status.statuses[statusIndex]?.type === "image" ? (
                             <ZoomableImage url={status.statuses[statusIndex]?.photoURL} />
                         ) : status.statuses[statusIndex]?.type === "video" ? (
-                            <VideoPlayer url={status.statuses[statusIndex]?.videoURL} />
+                            <VideoPlayer url={status.statuses[statusIndex]?.videoURL} isTimerRunning={isTimerRunning} />
                         ) : status.statuses[statusIndex]?.type === "video" &&
                         <View style={{ flex: 1, width: "100%", height: "100%", justifyContent: "center", alignItems: "center", backgroundColor: status.statuses[statusIndex]?.bgColor }}>
                             <Text style={{ color: status.statuses[statusIndex]?.textColor }}>{status.statuses[statusIndex]?.text}</Text>

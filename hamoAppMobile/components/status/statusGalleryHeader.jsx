@@ -6,18 +6,17 @@ import { useEffect, useState } from "react";
 const width = Dimensions.get("window").width;
 
 
-const StatusGalleryHeader = ({ status, statusIndex, handleNext, durationInSec = 10 }) => {
+const StatusGalleryHeader = ({ status, statusIndex, handleNext, durationInSec = 10, isTimerRunning }) => {
 
+    const { index } = useLocalSearchParams();
     const router = useRouter();
 
     const [time, setTime] = useState(0);
 
-    const { index } = useLocalSearchParams();
 
 
     useEffect(() => {
 
-        setTime(0);
         const timer = setInterval(() => {
 
             setTime((prevTime) => {
@@ -25,14 +24,17 @@ const StatusGalleryHeader = ({ status, statusIndex, handleNext, durationInSec = 
                     handleNext();
                 }
                 if (prevTime < durationInSec) {
-                    return prevTime + 0.1;
+                    if (isTimerRunning === true) {
+                        return prevTime + 0.1;
+                    }
+                    return prevTime;
                 }
                 return 0;
             });
         }, 100);
 
         return () => clearInterval(timer);
-    }, [index]);
+    }, [isTimerRunning]);
 
     useEffect(() => {
         setTime(0);

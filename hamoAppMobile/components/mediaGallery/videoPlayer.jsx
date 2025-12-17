@@ -6,7 +6,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-na
 
 const { width, height } = Dimensions.get("window");
 
-export default function VideoScreen({ url }) {
+export default function VideoScreen({ url, isTimerRunning = true }) {
 
     const player = useVideoPlayer(url, player => {
         player.loop = true;
@@ -48,10 +48,14 @@ export default function VideoScreen({ url }) {
     }));
 
     useEffect(() => {
-        if (player) {
+        if (player && isTimerRunning) {
             if (!player.isPlaying) {
                 player.play();
             }
+        }
+        if (player && !isTimerRunning) {
+            player.pause();
+
         }
 
         return () => {
@@ -61,7 +65,7 @@ export default function VideoScreen({ url }) {
                 }
             }
         }
-    }, [player]);
+    }, [player, isTimerRunning]);
 
     return (
         <GestureDetector gesture={composedGesture}>
