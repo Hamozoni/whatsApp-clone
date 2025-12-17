@@ -31,8 +31,11 @@ const StatusGalleryHeader = ({ status, statusIndex, handleNext, setStatusIndex }
             });
         }, 500);
 
-        setStatusIndex(0)
-        return () => clearInterval(timer);
+        return () => {
+            setStatusIndex(0)
+            setTime(0);
+            clearInterval(timer)
+        };
     }, [index]);
 
 
