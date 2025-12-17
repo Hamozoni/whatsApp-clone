@@ -15,6 +15,8 @@ export const STATUSES = [
                 type: "video",
                 thumbnail: require("../assets/images/pexels-al-amin-muhammad-988616478-29680723.jpg"),
                 videoURL: require("../assets/videos/v1.mp4"),
+                createdAt: "2025-12-16T17:14:06.000Z",
+                durationInSec: 40
 
             }
 
@@ -36,6 +38,8 @@ export const STATUSES = [
                 type: "video",
                 thumbnail: require("../assets/images/pexels-al-amin-muhammad-988616478-29680723.jpg"),
                 videoURL: require("../assets/videos/v1.mp4"),
+                createdAt: "2025-12-16T17:14:06.000Z",
+                durationInSec: 40
 
             }
 
@@ -65,7 +69,8 @@ export const STATUSES = [
                 type: "video",
                 thumbnail: require("../assets/images/pexels-al-amin-muhammad-988616478-29680723.jpg"),
                 videoURL: require("../assets/videos/v1.mp4"),
-                createdAt: "2025-12-16T17:14:06.000Z"
+                createdAt: "2025-12-16T17:14:06.000Z",
+                durationInSec: 40
             }
 
         ]

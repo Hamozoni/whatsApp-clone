@@ -9,7 +9,6 @@ const StatusGallery = () => {
 
     const { index } = useLocalSearchParams();
 
-
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>

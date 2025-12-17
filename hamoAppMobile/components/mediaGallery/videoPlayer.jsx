@@ -1,11 +1,12 @@
 import { useVideoPlayer, VideoView } from 'expo-video';
+import { useEffect } from 'react';
 import { Dimensions, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 const { width, height } = Dimensions.get("window");
 
-export default function VideoScreen(url) {
+export default function VideoScreen({ url }) {
 
     const player = useVideoPlayer(url, player => {
         player.loop = true;
@@ -44,7 +45,23 @@ export default function VideoScreen(url) {
             { translateX: translateX.value },
             { translateY: translateY.value },
         ]
-    }))
+    }));
+
+    useEffect(() => {
+        if (player) {
+            if (!player.isPlaying) {
+                player.play();
+            }
+        }
+
+        return () => {
+            if (player) {
+                if (player.isPlaying) {
+                    player.pause()
+                }
+            }
+        }
+    }, [player]);
 
     return (
         <GestureDetector gesture={composedGesture}>

@@ -5,9 +5,8 @@ import { useEffect, useState } from "react";
 
 const width = Dimensions.get("window").width;
 
-const maxTime = 5
 
-const StatusGalleryHeader = ({ status, statusIndex, handleNext, setStatusIndex }) => {
+const StatusGalleryHeader = ({ status, statusIndex, handleNext, durationInSec = 10 }) => {
 
     const router = useRouter();
 
@@ -15,28 +14,29 @@ const StatusGalleryHeader = ({ status, statusIndex, handleNext, setStatusIndex }
 
     const { index } = useLocalSearchParams();
 
+
     useEffect(() => {
 
         setTime(0);
         const timer = setInterval(() => {
 
             setTime((prevTime) => {
-                if (prevTime === maxTime && statusIndex < status?.statuses?.length) {
+                if (prevTime === durationInSec && statusIndex < status?.statuses?.length) {
                     handleNext();
                 }
-                if (prevTime < maxTime) {
-                    return prevTime + 0.5;
+                if (prevTime < durationInSec) {
+                    return prevTime + 0.1;
                 }
                 return 0;
             });
-        }, 500);
+        }, 100);
 
-        return () => {
-            setStatusIndex(0)
-            setTime(0);
-            clearInterval(timer)
-        };
+        return () => clearInterval(timer);
     }, [index]);
+
+    useEffect(() => {
+        setTime(0);
+    }, [statusIndex, index]);
 
 
     return (
@@ -44,11 +44,11 @@ const StatusGalleryHeader = ({ status, statusIndex, handleNext, setStatusIndex }
             <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
                 {
                     status?.statuses?.map((status, index, s) => (
-                        <View key={status.id} style={{ flex: 1, width: (width / s.length - 20), height: 8, backgroundColor: "#201d1dff", borderRadius: 5 }}>
+                        <View key={status.id} style={{ flex: 1, width: (width / s.length), height: 6, backgroundColor: "#696767ff", borderRadius: 5 }}>
                             <View
                                 style={{
-                                    width: index === statusIndex ? `${time / maxTime * 100}%` : index < statusIndex ? "100%" : "0%",
-                                    height: 8,
+                                    width: index === statusIndex ? `${time / durationInSec * 100}%` : index < statusIndex ? "100%" : "0%",
+                                    height: 6,
                                     backgroundColor: "#afafafff",
                                     borderRadius: 5
                                 }}
