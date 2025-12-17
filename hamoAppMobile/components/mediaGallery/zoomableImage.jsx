@@ -4,7 +4,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-na
 
 const { width, height } = Dimensions.get("window");
 
-const ZoomableImage = ({ metaData }) => {
+const ZoomableImage = ({ url }) => {
     const scale = useSharedValue(1);
     const savedScale = useSharedValue(1);
 
@@ -41,9 +41,9 @@ const ZoomableImage = ({ metaData }) => {
     }))
 
     return (
-        <GestureDetector gesture={composedGesture} style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <GestureDetector gesture={composedGesture} style={{ flex: 1 }}>
             <Animated.Image
-                source={metaData?.metadata?.url}
+                source={url}
                 style={[animatedStyle, { width, height, resizeMode: "contain" }]}
             />
         </GestureDetector>

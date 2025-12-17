@@ -19,6 +19,8 @@ const StatusGallery = () => {
                 <FlatList
                     horizontal
                     pagingEnabled
+                    bounces={true}
+                    alwaysBounceHorizontal
                     showsHorizontalScrollIndicator={false}
                     data={statuses}
                     renderItem={({ item }) => (

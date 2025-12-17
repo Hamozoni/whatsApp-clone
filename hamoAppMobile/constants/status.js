@@ -14,6 +14,7 @@ export const STATUSES = [
         id: 2,
         type: "video",
         thumbnail: require("../assets/images/pexels-al-amin-muhammad-988616478-29680723.jpg"),
+        videoURL: require("../assets/videos/v1.mp4"),
         contact: {
             name: "John Doe",
             photoURL: require("../assets/images/pexels-nati-87264186-34295251.jpg"),

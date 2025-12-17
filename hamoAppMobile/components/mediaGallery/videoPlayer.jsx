@@ -5,9 +5,9 @@ import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-na
 
 const { width, height } = Dimensions.get("window");
 
-export default function VideoScreen({ metaData }) {
+export default function VideoScreen(url) {
 
-    const player = useVideoPlayer(metaData?.metadata?.url, player => {
+    const player = useVideoPlayer(url, player => {
         player.loop = true;
     });
 
